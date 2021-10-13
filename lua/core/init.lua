@@ -1,0 +1,11 @@
+require('core.packer').plugins()
+require('core.packer').autocompile()
+require('core.settings').settings()
+require('core.settings').python()
+require('core.keymap').setup()
+require('core.keymap').register()
+require('core.style').statusline()
+require('core.style').tabline()
+require('core.style').theme()
+require('core.style').colorizer()
+

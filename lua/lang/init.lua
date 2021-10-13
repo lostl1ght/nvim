@@ -1,0 +1,14 @@
+require('lang.completion').setup()
+require('lang.debug').ui()
+require('lang.debug.cpptools').setup()
+require('lang.debug.python').setup()
+require('lang.sql').setup()
+require('lang.syntax').setup()
+require('lang.server.ccls').setup()
+require('lang.server.pyright').setup()
+require('lang.server.sumneko').setup()
+require('lang.server.cmake').setup()
+require('lang.server.texlab').setup()
+require('lsp_signature').setup{hint_prefix = '☛ ',}
+require('lang.format').clang()
+
