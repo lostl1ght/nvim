@@ -4,8 +4,8 @@ local M = {}
 function M.setup()
     require'which-key'.setup{
         triggers_blacklist = {
-            i = { 'i' },
-            v = { 'i' },
+            i = {'i'},
+            v = {'i'},
         },
         key_labels = {
             ['<space>'] = 'SPC',
@@ -15,191 +15,300 @@ function M.setup()
     }
 end
 
--- Default vim bindings
-function M.register()
+function M.window()
     require'which-key'.register({
         ['<leader>'] = {
             w = {
                 name = '+window',
-                q = { '<C-w>q', 'Close window' },
-                v = { '<C-w>v', 'Vertical split' },
-                s = { '<C-w>s', 'Horizontal split' },
+                q = {'<C-w>q', 'Close window'},
+                v = {'<C-w>v', 'Vertical split'},
+                s = {'<C-w>s', 'Horizontal split'},
             },
-            ['<tab>'] = {
-                name = '+tabs',
-                ['0'] = { '1gt', 'Switch to tab 1' },
-                ['1'] = { '2gt', 'Switch to tab 2' },
-                ['2'] = { '3gt', 'Switch to tab 3' },
-                ['3'] = { '4gt', 'Switch to tab 4' },
-                ['4'] = { '5gt', 'Switch to tab 5' },
-                ['5'] = { '6gt', 'Switch to tab 6' },
-                ['6'] = { '7gt', 'Switch to tab 7' },
-                ['7'] = { '8gt', 'Switch to tab 8' },
-                ['8'] = { '9gt', 'Switch to tab 9' },
-                ['-1'] = { '<cmd>tablast<cr>', 'Switch to the last tab' },
-                c = { '<cmd>tabnew<cr>', 'New tab' },
-                n = { '<cmd>tabn<cr>', 'Next tab' },
-                p = { '<cmd>tabp<cr>', 'Previous tab' },
-            },
-            l = { '<cmd>tabn<cr>', 'Next tab' },
-            h = { '<cmd>tabp<cr>', 'Previous tab' },
-            q = {
-                name = '+quit',
-                q = { '<cmd>qa<cr>', 'Quit' },
-                Q = { '<cmd>qa!<cr>', 'Quit without saving' },
-                s = { '<cmd>x<cr>', 'Save and quit' },
-            },
-            f = {
-                name = '+file',
-                n = { '<cmd>enew<cr>', 'New file' },
-                s = { '<cmd>w<cr>', 'Save' },
-                f = { '<cmd>lua require("telescope.builtin").find_files()<cr>', 'Open file' },
-                w = { '<cmd>lua require("telescope.builtin").live_grep()<cr>', 'Find word' },
-                h = { '<cmd>lua require("telescope.builtin").help_tags()<cr>', 'Help tags' },
-                e = { '<cmd>lua require("telescope.builtin").file_browser()<cr>', 'File browser' },
-                r = { '<cmd>lua require("telescope.builtin").oldfiles()<cr>', 'Recent file' },
-            },
-            b = {
-                name = '+buffer',
-                d = { '<cmd>bd<cr>', 'Delete buffer' },
-                n = { '<cmd>bn<cr>', 'Next buffer' },
-                p = { '<cmd>bp<cr>', 'Previous buffer' },
-                b = { '<cmd>b#<cr>', 'Switch buffer' },
-                f = { '<cmd>bf<cr>', 'First buffer' },
-                l = { '<cmd>bl<cr>', 'Last buffer' },
-                c = { '<cmd>%bd|e#<cr>', 'Clear buffers' },
-                s = { '<cmd>Telescope buffers<cr>', 'Open buffer' },
-            },
-            d = {
-                name = '+debug',
-                s = { '<cmd>lua require("dapui").open()<cr> <cmd>lua require("dap").continue()<cr>', 'Start' },
-                c = { '<cmd>lua require("dap").continue()<cr>', 'Continue' },
-                e = { '<cmd>lua require("dap").disconnect()<cr> <cmd>lua require("dap").close()<cr> <cmd>lua require("dapui").close()<cr> <C-w>j <cmd>lua require("core.util").close_term()<cr>', 'End' },
-            },
-            o = {
-                name = '+open',
-                d = { '<cmd>lua require("dapui").toggle()<cr>', 'Debugger' },
-                b = { '<cmd>DBUIToggle<cr>', 'Database' },
-                m = { '<cmd>MarkdownPreviewToggle<cr>', 'Markdown preview' },
-                t = { '<cmd>NvimTreeToggle<cr>', 'File tree' },
-            },
-            c = {
-                name = '+code',
-                f = { '<cmd>Format<cr>', 'Format' },
-                n = { '<cmd>lua vim.lsp.buf.rename()<cr>', 'Rename' },
-                D = { '<cmd>lua vim.lsp.buf.declaration()<cr>', 'Declaration' },
-                --[[d = { '<cmd>lua vim.lsp.buf.definition()<cr>', 'Definition' },
-                i = { '<cmd>lua vim.lsp.buf.implementation()<cr>', 'Implementation' },
-                r = { '<cmd>lua vim.lsp.buf.references()<cr>', 'References' },
-                t = { '<cmd>lua vim.lsp.buf.type_definition()<cr>', 'Type definition' },
-                a = { '<cmd>lua vim.lsp.buf.code_action()<cr>', 'Code action' },]]--
-                d = { '<cmd>lua require("telescope.builtin").lsp_definitions()<cr>', 'Definition' },
-                i = { '<cmd>lua require("telescope.builtin").lsp_implementations()<cr>', 'Implementation' },
-                r = { '<cmd>lua require("telescope.builtin").lsp_references()<cr>', 'References' },
-                t = { '<cmd>lua require("telescope.builtin").lsp_type_definitions()<cr>', 'Type definition' },
-                a = { '<cmd>lua require("telescope.builtin").lsp_code_actions()<cr>', 'Code action' },
-                s = { '<cmd>lua require("telescope.builtin").lsp_document_symbols()<cr>', 'Document symbols' },
-                e = { '<cmd>lua require("telescope.builtin").lsp_document_diagnostics()<cr>', 'Document symbols' },
-            },
-            g = {
-                name = '+git',
-                g = { '<cmd>lua require("neogit").open({kind="vsplit"})<cr>', 'Open neogit' },
-                s = { '<cmd>lua require("gitsigns").stage_hunk()<cr>', 'Stage hunk' },
-                u = { '<cmd>lua require("gitsigns").undo_stage_hunk()<cr>', 'Undo stage hunk' },
-                r = { '<cmd>lua require("gitsigns").reset_hunk()<cr>', 'Reset hunk' },
-                R = { '<cmd>lua require("gitsigns").reset_buffer()<cr>', 'Reset buffer' },
-                p = { '<cmd>lua require("gitsigns").preview_hunk()<cr>', 'Preview hunk' },
-                b = { '<cmd>lua require("gitsigns").blame_line(true)<cr>'; 'Blame line' },
-                S = { '<cmd>lua require("gitsigns").stage_buffer()<cr>', 'Stage buffer' },
-                U = { '<cmd>lua require("gitsigns").reset_buffer_index()<cr>', 'Reset buffer index' },
-                d = {
-                    name = '+diff',
-                    d = { '<cmd>DiffviewOpen<cr>', 'Open diffs' },
-                    c = { '<cmd>DiffviewClose<cr>', 'Close diffs' },
-                },
-            },
-            ['<space>'] = {
-                name = '+hop',
-                w = { '<cmd>HopWordAC<cr>', 'Hop word before' },
-                b = { '<cmd>HopWordBC<cr>', 'Hop word after' },
-                c = { '<cmd>HopChar1<cr>', 'Hop char' },
-                l = { '<cmd>HopLine<cr>', 'Hop line' },
-            },
-            j = {
-                name = '+ipython',
-                e = { '<cmd>IPythonCellExecuteCellJump<cr>', 'Execute cell' },
-                n = { '<cmd>IPythonCellNextCell<cr>', 'Next cell' },
-                p = { '<cmd>IPythonCellPrevCell<cr>', 'Previous cell' },
-                a = { '<cmd>IPythonCellInsertAbove<cr>', 'Insert cell above' },
-                b = { '<cmd>IPythonCellInsertBelow<cr>', 'Insert cell below' },
-            },
-            s = {
-                name = '+session',
-                s = { '<cmd>Telescope sessions<cr>', 'Open session' },
-                l = { '<cmd>LoadSession<cr>', 'Last session' },
-                k = { '<cmd>SaveSession<cr>', 'Save session' },
+        },
+    },
+    {mode = 'n'})
+end
 
+function M.tab()
+    require'which-key'.register({
+        ['<leader>'] = {
+            ['t'] = {
+                name = '+tabs',
+                ['1'] = {'1gt', 'Switch to tab 1'},
+                ['2'] = {'2gt', 'Switch to tab 2'},
+                ['3'] = {'3gt', 'Switch to tab 3'},
+                ['4'] = {'4gt', 'Switch to tab 4'},
+                ['5'] = {'5gt', 'Switch to tab 5'},
+                ['6'] = {'6gt', 'Switch to tab 6'},
+                ['7'] = {'7gt', 'Switch to tab 7'},
+                ['8'] = {'8gt', 'Switch to tab 8'},
+                ['9'] = {'9gt', 'Switch to tab 9'},
+                ['0'] = {':tabl<cr>', 'Switch to the last tab'},
+                n = {':tabnew<cr>', 'New tab'},
             },
-            --[[t = {
-                name = '+term',
-                t = { '<cmd>exe v:count1 . "ToggleTerm"<cr>', 'Toggle terminal' },
-                o = { '<cmd>ToggleTermOpenAll<cr>', 'Open all terminals' },
-                c = { '<cmd>ToggleTermCloseAll<cr>', 'Close all terminals' },
-            },]]--
-            p = { '<cmd>Telescope sessions<cr>', 'Open session' },
-            [','] = { '<cmd>Telescope find_files<cr>', 'Open file' },
-            ['.'] = { '<cmd>Telescope buffers<cr>', 'Open buffer' },
-            ['/'] = { '<cmd>b#<cr>', 'Switch buffer' },
+            l = {':tabn<cr>', 'Next tab'},
+            h = {':tabp<cr>', 'Previous tab'},
         },
         ['['] = {
-            b = { '<cmd>bp<cr>', 'Previous buffer' },
-            B = { '<cmd>bf<cr>', 'Previous buffer' },
-            t = { '<cmd>tabp<cr>', 'Previous tab' },
-            T = { '<cmd>tabl<cr>', 'Previous tab' },
-            c = { '<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>', 'Previous code error' },
-            h = { '<cmd>lua require("gitsigns.actions").prev_hunk()<cr>', 'Previous hunk' },
+            t = {':tabp<cr>', 'Previous tab'},
+            T = {':tabf<cr>', 'First tab'},
         },
         [']'] = {
-            b = { '<cmd>bn<cr>', 'Next buffer' },
-            B = { '<cmd>bl<cr>', 'Next buffer' },
-            t = { '<cmd>tabn<cr>', 'Next tab' },
-            T = { '<cmd>tabf<cr>', 'Next tab' },
-            c = { '<cmd>lua vim.lsp.diagnostic.goto_next()<cr>', 'Next code error' },
-            h = { '<cmd>lua require("gitsigns.actions").next_hunk()<cr>', 'Next hunk' },
+            t = {':tabn<cr>', 'Next tab'},
+            T = {':tabl<cr>', 'Last tab'},
         },
-        K = { '<cmd>lua vim.lsp.buf.hover()<cr>', 'Hover' },
-        ['<f9>'] = { '<cmd>lua require("dap").toggle_breakpoint()<cr>', 'Toggle breakpoint' },
-        ['<f10>'] = { '<cmd>lua require("dap").step_over()<cr>', 'Step over' },
-        ['<f11>'] = { '<cmd>lua require("dap").step_into()<cr>', 'Step into' },
-        ['<f12>'] = { '<cmd>lua require("dap").step_out()<cr>', 'Step out' },
     },
-    { mode = 'n' })
+    {mode = 'n'})
+end
 
+function M.quit()
+    require'which-key'.register({
+        ['<leader>'] = {
+            q = {
+                name = '+quit',
+                q = {':qa<cr>', 'Quit'},
+                Q = {':qa!<cr>', 'Quit without saving'},
+                s = {':x<cr>', 'Save and quit'},
+            },
+        },
+    },
+    {mode = 'n'})
+end
+
+function M.telescope()
+    require'which-key'.register({
+        ['<leader>'] = {
+            f = {
+                name = '+file',
+                f = {':Telescope find_files<cr>', 'Open file'},
+                w = {':Telescope live_grep<cr>', 'Find word'},
+                h = {':Telescope help_tags<cr>', 'Help tags'},
+                e = {':Telescope file_browser<cr>', 'File browser'},
+                r = {':Telescope oldfiles<cr>', 'Recent file'},
+            },
+            [','] = {':Telescope find_files<cr>', 'Open file'},
+        },
+    },
+    {mode = 'n'})
+end
+
+function M.buffer()
+    require'which-key'.register({
+        ['<leader>'] = {
+            b = {
+                name = '+buffer',
+                n = {':enew<cr>', 'New buffer'},
+                d = {':bd<cr>', 'Delete buffer'},
+                c = {':%bd|e#<cr>', 'Clear buffers'},
+            },
+            ['.'] = {':ls<cr>:b<space>', 'Open buffer'},
+            ['/'] = {':b#<cr>', 'Switch buffer'},
+        },
+        ['['] = {
+            b = {':bp<cr>', 'Previous buffer'},
+            B = {':bf<cr>', 'First buffer'},
+        },
+        [']'] = {
+            b = {':bn<cr>', 'Next buffer'},
+            B = {':bl<cr>', 'Last buffer'},
+        },
+    },
+    {mode = 'n'})
+end
+
+function M.debug()
+    vim.cmd('command! DapBegin lua require("dapui").open()<cr> require("dap").continue()<cr>')
+    vim.cmd('command! DapStop lua require("dap").disconnect() require("dap").close() require("dapui").close() vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-w>j", true, true, true), "")')
+    vim.cmd('command! DapCloseTerm lua require("core.util").close_term()')
+    vim.cmd('command! DapToggle lua require("dapui").toggle()')
+    vim.cmd('command! DapContinue lua require("dap").continue()')
+    vim.cmd('command! DapToggleBreakpoint lua require("dap").toggle_breakpoint()')
+    vim.cmd('command! DapStepOver lua require("dap").step_over()')
+    vim.cmd('command! DapStepInto lua require("dap").step_into()')
+    vim.cmd('command! DapStepOut lua require("dap").step_out()')
+    vim.cmd('command! DapEval lua require("dapui").eval()')
+    require'which-key'.register({
+        ['<leader>'] = {
+            d = {
+                name = '+debug',
+                b = {':DapBegin<cr>', 'Begin'},
+                c = {':DapContinue<cr>', 'Continue'},
+                s = {':DapStop<cr> :DapCloseTerm<cr>', 'Stop'},
+            },
+            o = {
+                d = {':DapToggle<cr>', 'Debugger'},
+            },
+        },
+        ['<f9>'] = {':DapToggleBreakpoint<cr>', 'Toggle breakpoint'},
+        ['<f10>'] = {':DapStepOver<cr>', 'Step over'},
+        ['<f11>'] = {':DapStepInto<cr>', 'Step into'},
+        ['<f12>'] = {':DapStepOut<cr>', 'Step out'},
+    },
+    {mode = 'n'})
     require('which-key').register({
         ['<leader>'] = {
             d = {
                 name = '+debug',
-                e = { '<cmd>lua require("dapui").eval()<cr>', 'Eval expression' },
-            },
-            g = {
-                name = '+git',
-                h = { '<cmd>lua require("gitsigns").stage_hunk({vim.fn.line("."), vim.fn.line("v")})<cr>', 'Stage hunk' },
-                r = { '<cmd>lua require("gitsigns").reset_hunk({vim.fn.line("."), vim.fn.line("v")})<cr>', 'Reset hunk' },
+                e = {':DapEval<cr>', 'Eval expression'},
             },
         },
     },
-    { mode = 'v' })
+    {mode = 'v'})
+end
+
+function M.open()
+    require'which-key'.register({
+        ['<leader>'] = {
+            o = {
+                name = '+open',
+                b = {':DBUIToggle<cr>', 'Database'},
+                m = {':MarkdownPreviewToggle<cr>', 'Markdown preview'},
+                t = {':NvimTreeToggle<cr>', 'File tree'},
+            },
+        },
+    },
+    {mode = 'n'})
+end
+
+function M.code()
+    require'which-key'.register({
+        ['<leader>'] = {
+            c = {
+                name = '+code',
+                f = {':Format<cr>', 'Format'},
+                n = {':lua vim.lsp.buf.rename()<cr>', 'Rename'},
+                D = {':lua vim.lsp.buf.declaration()<cr>', 'Declaration'},
+                d = {':lua vim.lsp.buf.definition()<cr>', 'Definition'},
+                i = {':lua vim.lsp.buf.implementation()<cr>', 'Implementation'},
+                t = {':lua vim.lsp.buf.type_definition()<cr>', 'Type definition'},
+                r = {':lua require("telescope.builtin").lsp_references()<cr>', 'References'},
+                a = {':lua require("telescope.builtin").lsp_code_actions()<cr>', 'Code action'},
+                s = {':lua require("telescope.builtin").lsp_document_symbols()<cr>', 'Document symbols'},
+                e = {':lua require("telescope.builtin").lsp_document_diagnostics()<cr>', 'Document diagnostics'},
+            },
+        },
+        ['['] = {
+            c = {':lua vim.lsp.diagnostic.goto_prev()<cr>', 'Previous code error'},
+        },
+        [']'] = {
+            c = {':lua vim.lsp.diagnostic.goto_next()<cr>', 'Next code error'},
+        },
+        K = {':lua vim.lsp.buf.hover()<cr>', 'Hover'},
+    },
+    {mode = 'n'})
+end
+
+function M.git()
+    require'which-key'.register({
+        ['<leader>'] = {
+            g = {
+                name = '+git',
+                g = {':lua require("neogit").open({kind="vsplit"})<cr>', 'Open neogit'},
+                s = {':lua require("gitsigns").stage_hunk()<cr>', 'Stage hunk'},
+                u = {':lua require("gitsigns").undo_stage_hunk()<cr>', 'Undo stage hunk'},
+                r = {':lua require("gitsigns").reset_hunk()<cr>', 'Reset hunk'},
+                R = {':lua require("gitsigns").reset_buffer()<cr>', 'Reset buffer'},
+                p = {':lua require("gitsigns").preview_hunk()<cr>', 'Preview hunk'},
+                b = {':lua require("gitsigns").blame_line(true)<cr>'; 'Blame line'},
+                S = {':lua require("gitsigns").stage_buffer()<cr>', 'Stage buffer'},
+                U = {':lua require("gitsigns").reset_buffer_index()<cr>', 'Reset buffer index'},
+                d = {
+                    name = '+diff',
+                    d = {':DiffviewOpen<cr>', 'Open diffs'},
+                    c = {':DiffviewClose<cr>', 'Close diffs'},
+                },
+            },
+        },
+        ['['] = {
+            h = {':lua require("gitsigns.actions").prev_hunk()<cr>', 'Previous hunk'},
+        },
+        [']'] = {
+            h = {':lua require("gitsigns.actions").next_hunk()<cr>', 'Next hunk'},
+        },
+    },
+    {mode = 'n'})
 
     require('which-key').register({
-        ['ih'] = { ':<c-u>lua require("gitsigns.actions").select_hunk()<cr>', 'select hunk' }
+        ['<leader>'] = {
+            g = {
+                name = '+git',
+                h = {':lua require("gitsigns").stage_hunk({vim.fn.line("."), vim.fn.line("v")})<cr>', 'Stage hunk'},
+                r = {':lua require("gitsigns").reset_hunk({vim.fn.line("."), vim.fn.line("v")})<cr>', 'Reset hunk'},
+            },
+        },
     },
-    { mode = 'x' })
+    {mode = 'v'})
 
     require('which-key').register({
-        ['ih'] = { ':<c-u>lua require("gitsigns.actions").select_hunk()<cr>', 'select hunk' }
+        ['ih'] = {':<c-u>lua require("gitsigns.actions").select_hunk()<cr>', 'select hunk'}
     },
-    { mode = 'o' })
+    {mode = 'x'})
 
+    require('which-key').register({
+        ['ih'] = {':<c-u>lua require("gitsigns.actions").select_hunk()<cr>', 'select hunk'}
+    },
+    {mode = 'o'})
+end
+
+function M.hop()
+    require'which-key'.register({
+        ['<leader>'] = {
+            ['<space>'] = {
+                name = '+hop',
+                w = {':HopWord<cr>', 'Hop word'},
+                c = {':HopChar1<cr>', 'Hop char'},
+                l = {':HopLine<cr>', 'Hop line'},
+            },
+        },
+    },
+    {mode = 'n'})
+end
+
+function M.ipython()
+    require'which-key'.register({
+        ['<leader>'] = {
+            j = {
+                name = '+ipython',
+                e = {':IPythonCellExecuteCellJump<cr>', 'Execute cell'},
+                n = {':IPythonCellNextCell<cr>', 'Next cell'},
+                p = {':IPythonCellPrevCell<cr>', 'Previous cell'},
+                a = {':IPythonCellInsertAbove<cr>', 'Insert cell above'},
+                b = {':IPythonCellInsertBelow<cr>', 'Insert cell below'},
+            },
+        },
+    },
+    {mode = 'n'})
+end
+
+function M.session()
+    require'which-key'.register({
+        ['<leader>'] = {
+            s = {
+                name = '+session',
+                s = {':Telescope sessions<cr>', 'Open session'},
+                l = {':LoadSession<cr>', 'Last session'},
+                k = {':SaveSession<cr>', 'Save session'},
+
+            },
+            p = {':Telescope sessions<cr>', 'Open session'},
+        },
+    },
+    {mode = 'n'})
+end
+
+function M.register()
+    M.buffer()
+    M.code()
+    M.debug()
+    M.git()
+    M.hop()
+    M.ipython()
+    M.open()
+    M.quit()
+    M.session()
+    M.tab()
+    M.telescope()
+    M.window()
 end
 
 return M
