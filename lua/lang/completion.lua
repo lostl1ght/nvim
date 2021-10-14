@@ -1,4 +1,11 @@
 local M = {}
+
+function M.capabilities()
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+    return capabilities
+end
+
 -- Completion settings
 function M.setup()
     vim.o.completeopt = 'menu,menuone,noselect'
@@ -41,9 +48,9 @@ function M.setup()
             end,
         },
         sources = {
+            { name = 'luasnip' },
             { name = 'nvim_lsp' },
             { name = 'vim-dadbod-completion' },
-            { name = 'luasnip' },
             { name = 'buffer' },
         },
     }

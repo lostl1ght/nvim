@@ -1,9 +1,7 @@
 local M = {}
 -- Latex language server
 function M.setup()
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
+    local capabilities = require('lang.completion').capabilities()
     require'lspconfig'.texlab.setup{
         cmd = { "texlab" },
         filetypes = { "tex", "bib" },

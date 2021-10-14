@@ -1,10 +1,8 @@
 local M = {}
 -- C/C++ language server
 function M.setup()
-    local capabilities = vim.lsp.protocol.make_client_capabilities()
-    capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
-
-    local util = require('lspconfig/util')
+    local capabilities = require('lang.completion').capabilities()
+    local util = require('lspconfig.util')
     require'lspconfig'.clangd.setup{
     cmd = { "clangd", "--background-index" },
         filetypes = { "c", "cpp", "objc", "objcpp" },
