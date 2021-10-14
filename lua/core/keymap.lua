@@ -20,7 +20,7 @@ end
 function M.window()
     wk.register({
         ['<leader>'] = {
-            w = {
+            e = {
                 name = '+window',
                 q = {'<C-w>q', 'Close window'},
                 v = {'<C-w>v', 'Vertical split'},
@@ -70,7 +70,7 @@ function M.quit()
                 name = '+quit',
                 q = {':qa<cr>', 'Quit'},
                 Q = {':qa!<cr>', 'Quit without saving'},
-                s = {':x<cr>', 'Save and quit'},
+                s = {':xa<cr>', 'Save and quit'},
             },
         },
     },
@@ -102,9 +102,11 @@ function M.buffer()
                 n = {':enew<cr>', 'New buffer'},
                 d = {':bd<cr>', 'Delete buffer'},
                 c = {':%bd|e#<cr>', 'Clear buffers'},
+                a = {':wa<cr>', 'Save all'},
             },
-            ['.'] = {':ls<cr>:b<space>', 'Open buffer'},
+            ['.'] = {':Telescope buffers<cr>', 'Open buffer'},
             ['/'] = {':b#<cr>', 'Switch buffer'},
+            w = {':w<cr>', 'Save'},
         },
         ['['] = {
             b = {':bp<cr>', 'Previous buffer'},
