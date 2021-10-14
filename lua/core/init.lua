@@ -1,4 +1,3 @@
-require('core.packer').plugins()
 require('core.packer').autocompile()
 require('core.settings').settings()
 require('core.settings').python()

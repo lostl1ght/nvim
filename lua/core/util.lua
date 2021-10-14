@@ -7,11 +7,6 @@ function M.close_term()
     end
 end
 
-function M.cache()
-    require('impatient').enable_profile()
-end
-
-
 -- Bootstrapping
 function M.installed()
     local fn = vim.fn
@@ -25,7 +20,7 @@ function M.installed()
 end
 
 function M.install()
-    require('core.packer').plugins()
+    require('core.plugins')
     require('packer').sync()
     require('core.packer').autocompile()
 end

@@ -1,8 +1,10 @@
 local M = {}
 
+local wk = require('which-key')
+
 -- Which-key setup
 function M.setup()
-    require'which-key'.setup{
+    wk.setup{
         triggers_blacklist = {
             i = {'i'},
             v = {'i'},
@@ -16,7 +18,7 @@ function M.setup()
 end
 
 function M.window()
-    require'which-key'.register({
+    wk.register({
         ['<leader>'] = {
             w = {
                 name = '+window',
@@ -30,7 +32,7 @@ function M.window()
 end
 
 function M.tab()
-    require'which-key'.register({
+    wk.register({
         ['<leader>'] = {
             ['t'] = {
                 name = '+tabs',
@@ -62,7 +64,7 @@ function M.tab()
 end
 
 function M.quit()
-    require'which-key'.register({
+    wk.register({
         ['<leader>'] = {
             q = {
                 name = '+quit',
@@ -76,7 +78,7 @@ function M.quit()
 end
 
 function M.telescope()
-    require'which-key'.register({
+    wk.register({
         ['<leader>'] = {
             f = {
                 name = '+file',
@@ -93,7 +95,7 @@ function M.telescope()
 end
 
 function M.buffer()
-    require'which-key'.register({
+    wk.register({
         ['<leader>'] = {
             b = {
                 name = '+buffer',
@@ -127,7 +129,7 @@ function M.debug()
     vim.cmd('command! DapStepInto lua require("dap").step_into()')
     vim.cmd('command! DapStepOut lua require("dap").step_out()')
     vim.cmd('command! DapEval lua require("dapui").eval()')
-    require'which-key'.register({
+    wk.register({
         ['<leader>'] = {
             d = {
                 name = '+debug',
@@ -157,7 +159,7 @@ function M.debug()
 end
 
 function M.open()
-    require'which-key'.register({
+    wk.register({
         ['<leader>'] = {
             o = {
                 name = '+open',
@@ -171,7 +173,7 @@ function M.open()
 end
 
 function M.code()
-    require'which-key'.register({
+    wk.register({
         ['<leader>'] = {
             c = {
                 name = '+code',
@@ -199,7 +201,7 @@ function M.code()
 end
 
 function M.git()
-    require'which-key'.register({
+    wk.register({
         ['<leader>'] = {
             g = {
                 name = '+git',
@@ -228,7 +230,7 @@ function M.git()
     },
     {mode = 'n'})
 
-    require('which-key').register({
+    wk.register({
         ['<leader>'] = {
             g = {
                 name = '+git',
@@ -239,19 +241,19 @@ function M.git()
     },
     {mode = 'v'})
 
-    require('which-key').register({
+    wk.register({
         ['ih'] = {':<c-u>lua require("gitsigns.actions").select_hunk()<cr>', 'select hunk'}
     },
     {mode = 'x'})
 
-    require('which-key').register({
+    wk.register({
         ['ih'] = {':<c-u>lua require("gitsigns.actions").select_hunk()<cr>', 'select hunk'}
     },
     {mode = 'o'})
 end
 
 function M.hop()
-    require'which-key'.register({
+    wk.register({
         ['<leader>'] = {
             ['<space>'] = {
                 name = '+hop',
@@ -265,7 +267,7 @@ function M.hop()
 end
 
 function M.ipython()
-    require'which-key'.register({
+    wk.register({
         ['<leader>'] = {
             j = {
                 name = '+ipython',
@@ -281,7 +283,7 @@ function M.ipython()
 end
 
 function M.session()
-    require'which-key'.register({
+    wk.register({
         ['<leader>'] = {
             s = {
                 name = '+session',

@@ -8,7 +8,8 @@
        Neovim init file
 --]]
 if require('core.util').installed() then
-    require('core.util').cache()
+    require('impatient').enable_profile()
+    require('core.plugins')
     require('core')
     require('lang')
     require('tools')
