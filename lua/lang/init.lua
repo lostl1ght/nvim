@@ -9,7 +9,7 @@ require('lang.server.pyright').setup()
 require('lang.server.sumneko').setup()
 require('lang.server.cmake').setup()
 require('lang.server.texlab').setup()
---require('lsp_signature').setup{hint_prefix = '☛ ',}
+require('lsp_signature').setup({hint_enable = false,})
 require('lang.format').clang()
 require('lspsaga').setup()
 

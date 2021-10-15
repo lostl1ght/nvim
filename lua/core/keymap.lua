@@ -1,6 +1,21 @@
 local M = {}
 
 local wk = require('which-key')
+local keymap_n = {}
+local keymap_v = {}
+local keymap_x = {}
+local keymap_o = {}
+
+function M.merge(t1, t2)
+    for k, v in pairs(t2) do
+        if (type(v) == "table") and (type(t1[k] or false) == "table") then
+            M.merge(t1[k], t2[k])
+        else
+            t1[k] = v
+        end
+    end
+    return t1
+end
 
 -- Which-key setup
 function M.setup()
@@ -18,7 +33,7 @@ function M.setup()
 end
 
 function M.window()
-    wk.register({
+    M.merge(keymap_n, {
         ['<leader>'] = {
             w = {
                 name = '+window',
@@ -27,12 +42,11 @@ function M.window()
                 s = {'<C-w>s', 'Horizontal split'},
             },
         },
-    },
-    {mode = 'n'})
+    })
 end
 
 function M.tab()
-    wk.register({
+    M.merge(keymap_n, {
         ['<leader>'] = {
             ['t'] = {
                 name = '+tabs',
@@ -59,12 +73,11 @@ function M.tab()
             t = {':tabn<cr>', 'Next tab'},
             T = {':tabl<cr>', 'Last tab'},
         },
-    },
-    {mode = 'n'})
+    })
 end
 
 function M.quit()
-    wk.register({
+    M.merge(keymap_n, {
         ['<leader>'] = {
             q = {
                 name = '+quit',
@@ -73,12 +86,11 @@ function M.quit()
                 s = {':xa<cr>', 'Save and quit'},
             },
         },
-    },
-    {mode = 'n'})
+    })
 end
 
 function M.telescope()
-    wk.register({
+    M.merge(keymap_n, {
         ['<leader>'] = {
             f = {
                 name = '+file',
@@ -90,12 +102,11 @@ function M.telescope()
             },
             [','] = {':Telescope find_files<cr>', 'Open file'},
         },
-    },
-    {mode = 'n'})
+    })
 end
 
 function M.buffer()
-    wk.register({
+    M.merge(keymap_n, {
         ['<leader>'] = {
             b = {
                 name = '+buffer',
@@ -117,8 +128,7 @@ function M.buffer()
             b = {':bn<cr>', 'Next buffer'},
             B = {':bl<cr>', 'Last buffer'},
         },
-    },
-    {mode = 'n'})
+    })
 end
 
 function M.debug()
@@ -131,7 +141,7 @@ function M.debug()
     vim.cmd('command! DapStepInto lua require("dap").step_into()')
     vim.cmd('command! DapStepOut lua require("dap").step_out()')
     vim.cmd('command! DapEval lua require("dapui").eval()')
-    wk.register({
+    M.merge(keymap_n, {
         ['<leader>'] = {
             d = {
                 name = '+debug',
@@ -147,21 +157,19 @@ function M.debug()
         ['<f10>'] = {':DapStepOver<cr>', 'Step over'},
         ['<f11>'] = {':DapStepInto<cr>', 'Step into'},
         ['<f12>'] = {':DapStepOut<cr>', 'Step out'},
-    },
-    {mode = 'n'})
-    require('which-key').register({
+    })
+    M.merge(keymap_v, {
         ['<leader>'] = {
             d = {
                 name = '+debug',
                 e = {':DapEval<cr>', 'Eval expression'},
             },
         },
-    },
-    {mode = 'v'})
+    })
 end
 
 function M.open()
-    wk.register({
+    M.merge(keymap_n, {
         ['<leader>'] = {
             o = {
                 name = '+open',
@@ -170,12 +178,11 @@ function M.open()
                 t = {':NvimTreeToggle<cr>', 'File tree'},
             },
         },
-    },
-    {mode = 'n'})
+    })
 end
 
 function M.code()
-    wk.register({
+    M.merge(keymap_n, {
         ['<leader>'] = {
             c = {
                 name = '+code',
@@ -198,12 +205,11 @@ function M.code()
             c = {':lua vim.lsp.diagnostic.goto_next()<cr>', 'Next code error'},
         },
         K = {':lua vim.lsp.buf.hover()<cr>', 'Hover'},
-    },
-    {mode = 'n'})
+    })
 end
 
 function M.lspsaga()
-    wk.register({
+    M.merge(keymap_n, {
         ['<leader>'] = {
             c = {
                 name = '+code',
@@ -223,12 +229,11 @@ function M.lspsaga()
             c = {':Lspsaga diagnostic_jump_next<cr>', 'Next code error'},
         },
         K = {':Lspsaga hover_doc<cr>', 'Hover'},
-    },
-    {mode = 'n'})
+    })
 end
 
 function M.git()
-    wk.register({
+    M.merge(keymap_n, {
         ['<leader>'] = {
             g = {
                 name = '+git',
@@ -254,10 +259,9 @@ function M.git()
         [']'] = {
             h = {':lua require("gitsigns.actions").next_hunk()<cr>', 'Next hunk'},
         },
-    },
-    {mode = 'n'})
+    })
 
-    wk.register({
+    M.merge(keymap_v, {
         ['<leader>'] = {
             g = {
                 name = '+git',
@@ -265,22 +269,19 @@ function M.git()
                 r = {':lua require("gitsigns").reset_hunk({vim.fn.line("."), vim.fn.line("v")})<cr>', 'Reset hunk'},
             },
         },
-    },
-    {mode = 'v'})
+    })
 
-    wk.register({
+    M.merge(keymap_x, {
         ['ih'] = {':<c-u>lua require("gitsigns.actions").select_hunk()<cr>', 'select hunk'}
-    },
-    {mode = 'x'})
+    })
 
-    wk.register({
+    M.merge(keymap_o, {
         ['ih'] = {':<c-u>lua require("gitsigns.actions").select_hunk()<cr>', 'select hunk'}
-    },
-    {mode = 'o'})
+    })
 end
 
 function M.hop()
-    wk.register({
+    M.merge(keymap_n, {
         ['<leader>'] = {
             ['<space>'] = {
                 name = '+hop',
@@ -289,12 +290,11 @@ function M.hop()
                 l = {':HopLine<cr>', 'Hop line'},
             },
         },
-    },
-    {mode = 'n'})
+    })
 end
 
 function M.ipython()
-    wk.register({
+    M.merge(keymap_n, {
         ['<leader>'] = {
             j = {
                 name = '+ipython',
@@ -305,12 +305,11 @@ function M.ipython()
                 b = {':IPythonCellInsertBelow<cr>', 'Insert cell below'},
             },
         },
-    },
-    {mode = 'n'})
+    })
 end
 
 function M.session()
-    wk.register({
+    M.merge(keymap_n, {
         ['<leader>'] = {
             k = {
                 name = '+session',
@@ -321,8 +320,7 @@ function M.session()
             },
             p = {':Telescope sessions<cr>', 'Open session'},
         },
-    },
-    {mode = 'n'})
+    })
 end
 
 function M.register()
@@ -338,6 +336,10 @@ function M.register()
     M.tab()
     M.telescope()
     M.window()
+    wk.register(keymap_n, {mode = 'n'})
+    wk.register(keymap_v, {mode = 'v'})
+    wk.register(keymap_x, {mode = 'x'})
+    wk.register(keymap_o, {mode = 'o'})
 end
 
 return M
