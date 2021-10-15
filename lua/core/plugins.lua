@@ -23,6 +23,7 @@ return require('packer').startup({function()
     use {
         'marko-cerovac/material.nvim'
     }
+    use 'shaunsingh/moonlight.nvim'
         -- Color highlighter
     use {
         'norcalli/nvim-colorizer.lua'

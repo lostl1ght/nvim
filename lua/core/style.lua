@@ -6,7 +6,8 @@ function M.theme()
     vim.o.cursorline = true
     vim.g.material_style = 'oceanic'
     --vim.g.material_style = 'lighter'
-    vim.api.nvim_command('colorscheme material')
+    --vim.api.nvim_command('colorscheme material')
+    vim.api.nvim_command('colorscheme moonlight')
 end
 
 -- Statusline
@@ -14,9 +15,10 @@ function M.statusline()
     vim.o.showmode = false
     require('lualine').setup({
         options = {
-            theme = 'material-nvim',
+            --theme = 'material-nvim',
+            theme = 'moonlight',
             icons_enabled = true,
-            disabled_filetypes = { "dashboard", "NvimTree" },
+            disabled_filetypes = {'dashboard', 'NvimTree',},
         },
         sections = {
             lualine_b = {
