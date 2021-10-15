@@ -20,7 +20,7 @@ end
 function M.window()
     wk.register({
         ['<leader>'] = {
-            e = {
+            w = {
                 name = '+window',
                 q = {'<C-w>q', 'Close window'},
                 v = {'<C-w>v', 'Vertical split'},
@@ -103,10 +103,11 @@ function M.buffer()
                 d = {':bd<cr>', 'Delete buffer'},
                 c = {':%bd|e#<cr>', 'Clear buffers'},
                 a = {':wa<cr>', 'Save all'},
+                h = {':set hlsearch!<cr>', 'Toggle hlsearch'},
             },
             ['.'] = {':Telescope buffers<cr>', 'Open buffer'},
             ['/'] = {':b#<cr>', 'Switch buffer'},
-            w = {':w<cr>', 'Save'},
+            s = {':w<cr>', 'Save'},
         },
         ['['] = {
             b = {':bp<cr>', 'Previous buffer'},
@@ -122,7 +123,7 @@ end
 
 function M.debug()
     vim.cmd('command! DapBegin lua require("dapui").open()<cr> require("dap").continue()<cr>')
-    vim.cmd('command! DapStop lua require("dap").disconnect() require("dap").close() require("dapui").close() require("core.util").close_term()')
+    vim.cmd('command! DapStop lua require("dap").disconnect() require("dap").close() require("dapui").close() require("lang.debug").close_term()')
     vim.cmd('command! DapToggle lua require("dapui").toggle()')
     vim.cmd('command! DapContinue lua require("dap").continue()')
     vim.cmd('command! DapBreakpoint lua require("dap").toggle_breakpoint()')
@@ -197,6 +198,31 @@ function M.code()
             c = {':lua vim.lsp.diagnostic.goto_next()<cr>', 'Next code error'},
         },
         K = {':lua vim.lsp.buf.hover()<cr>', 'Hover'},
+    },
+    {mode = 'n'})
+end
+
+function M.lspsaga()
+    wk.register({
+        ['<leader>'] = {
+            c = {
+                name = '+code',
+                h = {':Format<cr>', 'Format'},
+                n = {':Lspsaga rename<cr>', 'Rename'},
+                f = {':Lspsaga lsp_finder<cr>', 'Find symbol'},
+                d = {':Lspsaga preview_definition<cr>', 'Definition'},
+                a = {':Lspsaga code_action<cr>', 'Code action'},
+                s = {':Lspsaga signature_help<cr>', 'Signature help'},
+                e = {':Lspsaga show_line_diagnostics<cr>', 'Line diagnostics'},
+            },
+        },
+        ['['] = {
+            c = {':Lspsaga diagnostic_jump_prev<cr>', 'Previous code error'},
+        },
+        [']'] = {
+            c = {':Lspsaga diagnostic_jump_next<cr>', 'Next code error'},
+        },
+        K = {':Lspsaga hover_doc<cr>', 'Hover'},
     },
     {mode = 'n'})
 end
@@ -286,9 +312,9 @@ end
 function M.session()
     wk.register({
         ['<leader>'] = {
-            s = {
+            k = {
                 name = '+session',
-                s = {':Telescope sessions<cr>', 'Open session'},
+                o = {':Telescope sessions<cr>', 'Open session'},
                 l = {':LoadSession<cr>', 'Last session'},
                 k = {':SaveSession<cr>', 'Save session'},
 
@@ -301,7 +327,7 @@ end
 
 function M.register()
     M.buffer()
-    M.code()
+    M.lspsaga()
     M.debug()
     M.git()
     M.hop()
