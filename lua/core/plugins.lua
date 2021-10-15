@@ -169,6 +169,7 @@ return require('packer').startup({function()
     use {
         'mhartington/formatter.nvim'
     }
+    use 'tami5/lspsaga.nvim'
 
 end,
 config = {
