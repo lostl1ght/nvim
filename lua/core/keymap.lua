@@ -122,8 +122,7 @@ end
 
 function M.debug()
     vim.cmd('command! DapBegin lua require("dapui").open()<cr> require("dap").continue()<cr>')
-    vim.cmd('command! DapStop lua require("dap").disconnect() require("dap").close() require("dapui").close() vim.fn.feedkeys(vim.api.nvim_replace_termcodes("<C-w>j", true, true, true), "")')
-    vim.cmd('command! DapCloseTerm lua require("core.util").close_term()')
+    vim.cmd('command! DapStop lua require("dap").disconnect() require("dap").close() require("dapui").close() require("core.util").close_term()')
     vim.cmd('command! DapToggle lua require("dapui").toggle()')
     vim.cmd('command! DapContinue lua require("dap").continue()')
     vim.cmd('command! DapToggleBreakpoint lua require("dap").toggle_breakpoint()')
@@ -137,7 +136,7 @@ function M.debug()
                 name = '+debug',
                 b = {':DapBegin<cr>', 'Begin'},
                 c = {':DapContinue<cr>', 'Continue'},
-                s = {':DapStop<cr> :DapCloseTerm<cr>', 'Stop'},
+                s = {':DapStop<cr>', 'Stop'},
             },
             o = {
                 d = {':DapToggle<cr>', 'Debugger'},
