@@ -125,7 +125,7 @@ function M.debug()
     vim.cmd('command! DapStop lua require("dap").disconnect() require("dap").close() require("dapui").close() require("core.util").close_term()')
     vim.cmd('command! DapToggle lua require("dapui").toggle()')
     vim.cmd('command! DapContinue lua require("dap").continue()')
-    vim.cmd('command! DapToggleBreakpoint lua require("dap").toggle_breakpoint()')
+    vim.cmd('command! DapBreakpoint lua require("dap").toggle_breakpoint()')
     vim.cmd('command! DapStepOver lua require("dap").step_over()')
     vim.cmd('command! DapStepInto lua require("dap").step_into()')
     vim.cmd('command! DapStepOut lua require("dap").step_out()')
@@ -142,7 +142,7 @@ function M.debug()
                 d = {':DapToggle<cr>', 'Debugger'},
             },
         },
-        ['<f9>'] = {':DapToggleBreakpoint<cr>', 'Toggle breakpoint'},
+        ['<f9>'] = {':DapBreakpoint<cr>', 'Toggle breakpoint'},
         ['<f10>'] = {':DapStepOver<cr>', 'Step over'},
         ['<f11>'] = {':DapStepInto<cr>', 'Step into'},
         ['<f12>'] = {':DapStepOut<cr>', 'Step out'},
