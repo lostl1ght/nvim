@@ -132,5 +132,5 @@ return packer.startup({function()
 --[[ Format ]]--
     use {'mhartington/formatter.nvim',}
 
-
 end})
+
