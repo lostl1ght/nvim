@@ -48,7 +48,7 @@ end
 function M.tab()
     M.merge(keymap_n, {
         ['<leader>'] = {
-            ['t'] = {
+            ['<tab>'] = {
                 name = '+tabs',
                 ['1'] = {'1gt', 'Switch to tab 1'},
                 ['2'] = {'2gt', 'Switch to tab 2'},
@@ -61,9 +61,8 @@ function M.tab()
                 ['9'] = {'9gt', 'Switch to tab 9'},
                 ['0'] = {':tabl<cr>', 'Switch to the last tab'},
                 n = {':tabnew<cr>', 'New tab'},
+                q = {':tabclose<cr>', 'Close tab'},
             },
-            l = {':tabn<cr>', 'Next tab'},
-            h = {':tabp<cr>', 'Previous tab'},
         },
         ['['] = {
             t = {':tabp<cr>', 'Previous tab'},
@@ -111,7 +110,8 @@ function M.buffer()
             b = {
                 name = '+buffer',
                 n = {':enew<cr>', 'New buffer'},
-                d = {':bd<cr>', 'Delete buffer'},
+                d = {':bd<cr>', 'Close buffer'},
+                D = {':bd!<cr>', 'Override close buffer'},
                 c = {':%bd|e#<cr>', 'Clear buffers'},
                 a = {':wa<cr>', 'Save all'},
                 h = {':set hlsearch!<cr>', 'Toggle hlsearch'},
@@ -145,12 +145,10 @@ function M.debug()
         ['<leader>'] = {
             d = {
                 name = '+debug',
-                b = {':DapBegin<cr>', 'Begin'},
+                d = {':DapBegin<cr>', 'Begin'},
                 c = {':DapContinue<cr>', 'Continue'},
                 s = {':DapStop<cr>', 'Stop'},
-            },
-            o = {
-                d = {':DapToggle<cr>', 'Debugger'},
+                t = {':DapToggle<cr>', 'Toggle UI'},
             },
         },
         ['<f9>'] = {':DapBreakpoint<cr>', 'Toggle breakpoint'},
