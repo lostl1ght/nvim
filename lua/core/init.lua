@@ -1,6 +1,3 @@
 require('core.settings')
 require('core.provider')
 require('core.keymap')
-require('color.lualine')
-require('color.tabline')
-require('color.theme')

@@ -17,8 +17,10 @@ require('plugin')
 
 if present then
     require('core')
+    require('color')
     require('lang')
     require('config')
+    require('debugger')
 else
     require('packer').sync()
 end

@@ -12,7 +12,7 @@ require('lspconfig').cmake.setup{
             "compile_commands.json",
             "build",
         }
-        return util.find_git_ancestor(fname) or util.root_pattern(table.unpack(root_files))(fname) or util.path.dirname(fname)
+        return util.find_git_ancestor(fname) or util.root_pattern(unpack(root_files))(fname) or util.path.dirname(fname)
     end,
     capabilities = capabilities,
 }

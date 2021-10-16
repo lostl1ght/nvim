@@ -13,7 +13,7 @@ require('lspconfig').pyright.setup{
             'Pipfile',
             'pyrightconfig.json',
         }
-        return util.root_pattern(table.unpack(root_files))(fname) or util.find_git_ancestor(fname) or util.path.dirname(fname)
+        return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname) or util.path.dirname(fname)
     end,
     settings = {
         python = {
