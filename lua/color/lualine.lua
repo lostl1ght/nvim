@@ -3,7 +3,6 @@ vim.o.showmode = false
 require('lualine').setup({
     options = {
         theme = 'material-nvim',
-        --theme = 'moonlight',
         icons_enabled = true,
         disabled_filetypes = {'dashboard', 'NvimTree',},
     },

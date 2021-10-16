@@ -11,26 +11,26 @@ require('packer_compiled')
 return packer.startup({function()
         -- Package manager
     use {'wbthomason/packer.nvim',}
+        -- Cache
+    use {'lewis6991/impatient.nvim',}
         -- Key bindings
     use {'folke/which-key.nvim',}
-    use {'lewis6991/impatient.nvim',}
 
 --[[ Style ]]--
+        -- Theme
+    use {'marko-cerovac/material.nvim',}
         -- Statusline
     use {
         'hoob3rt/lualine.nvim',
         requires = 'kyazdani42/nvim-web-devicons'
     }
-        -- Theme
-    use {'marko-cerovac/material.nvim',}
-    use 'shaunsingh/moonlight.nvim'
-        -- Color highlighter
-    use {'norcalli/nvim-colorizer.lua',}
-
+        -- Tabline
     use {
         'alvarosevilla95/luatab.nvim',
         requires='kyazdani42/nvim-web-devicons'
     }
+        -- Color highlighter
+    use {'norcalli/nvim-colorizer.lua',}
 
 --[[ Language servers ]]--
         -- Built-in LSP client
@@ -84,7 +84,8 @@ return packer.startup({function()
         }
     }
         -- Git client
-    use {'kdheepak/lazygit.nvim',
+    use {
+        'kdheepak/lazygit.nvim',
         config = function ()
             vim.g.lazygit_floating_window_use_plenary = 1
             vim.g.lazygit_use_neovim_remote = 1
