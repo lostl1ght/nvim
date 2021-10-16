@@ -18,6 +18,7 @@ if present then
     require('lang')
     require('config')
     require('debugger')
+    require('snippet')
 else
     require('packer').sync()
 end
