@@ -7,12 +7,9 @@
 
        Neovim init file
 --]]
-local present, impatient = pcall(require, 'impatient')
-if present then
-    impatient.enable_profile()
-end
-
+local present, _ = pcall(require, 'impatient')
 present, _ = pcall(require, 'packer')
+
 require('plugin')
 
 if present then
