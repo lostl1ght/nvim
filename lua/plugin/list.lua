@@ -88,6 +88,7 @@ return packer.startup({function()
         config = function ()
             vim.g.lazygit_floating_window_use_plenary = 1
             vim.g.lazygit_use_neovim_remote = 1
+            vim.env.GIT_EDITOR = "nvr --remote-wait +'set bufhidden=wipe'"
         end
     }
 
