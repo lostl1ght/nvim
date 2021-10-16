@@ -1,6 +1,12 @@
-require('packer_compiled')
+local present, packer = pcall(require, 'plugin.packer')
+
+
+if not present then
+   return false
+end
+
     -- Plugins
-return require('packer').startup({function()
+return packer.startup({function()
         -- Package manager
     use {
         'wbthomason/packer.nvim'
@@ -172,13 +178,4 @@ return require('packer').startup({function()
     }
     use 'tami5/lspsaga.nvim'
 
-end,
-config = {
-    display = {
-        open_fn = require('packer.util').float,
-    },
-    compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',
-    git = {
-        clone_timeout = 180,
-    },
-}})
+end})

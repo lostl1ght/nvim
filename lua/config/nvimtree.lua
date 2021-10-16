@@ -1,6 +1,4 @@
-local M = {}
 -- Nvim tree setup
-function M.setup()
 require('nvim-web-devicons').get_icons()
 
 require('nvim-tree').setup{
@@ -13,6 +11,3 @@ require('nvim-tree').setup{
         update_cwd  = false,
     },
 }
-end
-
-return M

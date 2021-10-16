@@ -7,13 +7,18 @@
 
        Neovim init file
 --]]
-if require('core.util').installed() then
-    require('impatient').enable_profile()
-    require('core.plugins')
-    require('core')
-    require('lang')
-    require('tools')
-else
-    require('core.util').install()
+local present, impatient = pcall(require, 'impatient')
+if present then
+    impatient.enable_profile()
 end
 
+present, _ = pcall(require, 'packer')
+require('plugin')
+
+if present then
+    require('core')
+    require('lang')
+    require('config')
+else
+    require('packer').sync()
+end
