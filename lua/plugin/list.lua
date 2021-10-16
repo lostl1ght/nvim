@@ -84,7 +84,12 @@ return packer.startup({function()
         }
     }
         -- Git client
-    use 'kdheepak/lazygit.nvim'
+    use {'kdheepak/lazygit.nvim',
+        config = function ()
+            vim.g.lazygit_floating_window_use_plenary = 1
+            vim.g.lazygit_use_neovim_remote = 1
+        end
+    }
 
 -- File management
         -- File tree
