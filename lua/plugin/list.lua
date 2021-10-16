@@ -5,19 +5,15 @@ if not present then
    return false
 end
 
+require('packer_compiled')
+
     -- Plugins
 return packer.startup({function()
         -- Package manager
-    use {
-        'wbthomason/packer.nvim'
-    }
+    use {'wbthomason/packer.nvim',}
         -- Key bindings
-    use {
-        'folke/which-key.nvim',
-    }
-    use {
-        'lewis6991/impatient.nvim',
-    }
+    use {'folke/which-key.nvim',}
+    use {'lewis6991/impatient.nvim',}
 
 --[[ Style ]]--
         -- Statusline
@@ -26,14 +22,10 @@ return packer.startup({function()
         requires = 'kyazdani42/nvim-web-devicons'
     }
         -- Theme
-    use {
-        'marko-cerovac/material.nvim'
-    }
+    use {'marko-cerovac/material.nvim',}
     use 'shaunsingh/moonlight.nvim'
         -- Color highlighter
-    use {
-        'norcalli/nvim-colorizer.lua'
-    }
+    use {'norcalli/nvim-colorizer.lua',}
 
     use {
         'alvarosevilla95/luatab.nvim',
@@ -42,50 +34,29 @@ return packer.startup({function()
 
 --[[ Language servers ]]--
         -- Built-in LSP client
-    use {
-        'neovim/nvim-lspconfig'
-    }
+    use {'neovim/nvim-lspconfig',}
         -- Signature help
-    use {
-        'ray-x/lsp_signature.nvim'
-    }
+    use {'ray-x/lsp_signature.nvim',}
+        -- Bettter UI
+    use {'tami5/lspsaga.nvim',}
 
 --[[ Debuggers ]]--
         -- DAP client
-    use {
-        'mfussenegger/nvim-dap',
-    }
+    use {'mfussenegger/nvim-dap',}
         -- Debugger UI
-    use {
-        'rcarriga/nvim-dap-ui',
-    }
+    use {'rcarriga/nvim-dap-ui',}
         -- Python adapter
-    use {
-        'mfussenegger/nvim-dap-python',
-    }
+    use {'mfussenegger/nvim-dap-python',}
 
 --[[ Tools ]]--
         -- Tmux integration
-    use {
-        'aserowy/tmux.nvim'
-    }
+    use {'aserowy/tmux.nvim',}
         -- Move faster
-    use {
-        'phaazon/hop.nvim'
-    }
+    use {'phaazon/hop.nvim',}
         -- Git decorations
     use {
         'lewis6991/gitsigns.nvim',
         requires = 'nvim-lua/plenary.nvim'
-    }
-        -- Magit for neovim
-    use {
-        'TimUntersberger/neogit',
-        requires = 'nvim-lua/plenary.nvim'
-    }
-        -- Terminal
-    use {
-        'akinsho/toggleterm.nvim'
     }
         -- Markdown preview
     use {
@@ -103,9 +74,7 @@ return packer.startup({function()
         requires = 'jpalardy/vim-slime'
     }
         -- Starting screen
-    use {
-        'glepnir/dashboard-nvim'
-    }
+    use {'glepnir/dashboard-nvim',}
         -- Session manager
     use {
         'Shatur/neovim-session-manager',
@@ -114,10 +83,8 @@ return packer.startup({function()
             'nvim-lua/plenary.nvim'
         }
     }
-        -- Diff tool
-    use {
-        'sindrets/diffview.nvim'
-    }
+        -- Git client
+    use 'kdheepak/lazygit.nvim'
 
 -- File management
         -- File tree
@@ -133,49 +100,31 @@ return packer.startup({function()
 
 -- Syntax
         -- Gas syntax
-    use {
-        'Shirk/vim-gas'
-    }
+    use {'Shirk/vim-gas',}
         -- Other
-    use {
-        'nvim-treesitter/nvim-treesitter'
-    }
+    use {'nvim-treesitter/nvim-treesitter',}
 
 -- Completion
         -- Autocompletion plugin
-    use {
-        'hrsh7th/nvim-cmp'
-    }
+    use {'hrsh7th/nvim-cmp',}
         -- LSP source for nvim-cmp
-    use {
-        'hrsh7th/cmp-nvim-lsp'
-    }
+    use {'hrsh7th/cmp-nvim-lsp',}
         -- Buffer completion
-    use {
-        'hrsh7th/cmp-buffer'
-    }
+    use {'hrsh7th/cmp-buffer',}
         -- Snippets source for nvim-cmp
-    use {
-        'saadparwaiz1/cmp_luasnip'
-    }
+    use {'saadparwaiz1/cmp_luasnip',}
         -- Snippets plugin
-    use {
-        'L3MON4D3/LuaSnip'
-    }
+    use {'L3MON4D3/LuaSnip',}
         -- SQL completion
     use {
         'kristijanhusak/vim-dadbod-completion',
         requires = 'tpope/vim-dadbod'
     }
         -- Comit UI
-    use {
-        'rhysd/committia.vim'
-    }
+    use {'rhysd/committia.vim',}
 
 --[[ Format ]]--
-    use {
-        'mhartington/formatter.nvim'
-    }
-    use 'tami5/lspsaga.nvim'
+    use {'mhartington/formatter.nvim',}
+
 
 end})

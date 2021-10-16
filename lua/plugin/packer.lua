@@ -30,7 +30,7 @@ end
 cmd([[
     augroup packer_user_config
         autocmd!
-        autocmd BufWritePost init.lua source <afile> | PackerCompile
+        autocmd BufWritePost list.lua source <afile> | PackerCompile
     augroup end
 ]])
 

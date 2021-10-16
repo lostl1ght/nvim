@@ -10,7 +10,7 @@
 local present, _ = pcall(require, 'impatient')
 present, _ = pcall(require, 'packer')
 
-require('plugin')
+require('plugin.list')
 
 if present then
     require('core')
