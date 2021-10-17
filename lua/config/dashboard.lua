@@ -57,7 +57,7 @@ g.dashboard_custom_section = {
         command = 'enew',
     },
     e = {
-        description = {'⏳Load session      SPC s s'},
+        description = {'⌀ Load session      SPC s s'},
         command = 'Telescope sessions',
     },
     f = {
