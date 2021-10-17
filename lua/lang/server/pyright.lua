@@ -2,8 +2,8 @@
 local capabilities = require('lang.completion.capabilities')
 local util = require('lspconfig.util')
 require('lspconfig').pyright.setup{
-    cmd = { "pyright-langserver", "--stdio" },
-    filetypes = { "python" },
+    cmd = { 'pyright-langserver', '--stdio' },
+    filetypes = { 'python' },
     root_dir = function(fname)
         local root_files = {
             'pyproject.toml',
@@ -19,7 +19,7 @@ require('lspconfig').pyright.setup{
         python = {
             analysis = {
                 autoSearchPaths = true,
-                diagnosticMode = "workspace",
+                diagnosticMode = 'workspace',
                 useLibraryCodeForTypes = true
             }
         }

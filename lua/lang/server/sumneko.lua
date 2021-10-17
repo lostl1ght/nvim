@@ -1,8 +1,8 @@
 -- Lua language server
 local capabilities = require('lang.completion.capabilities')
 local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
+table.insert(runtime_path, 'lua/?.lua')
+table.insert(runtime_path, 'lua/?/init.lua')
 
 require('lspconfig').sumneko_lua.setup {
     cmd = {'lua-language-server'};
@@ -20,7 +20,7 @@ require('lspconfig').sumneko_lua.setup {
             },
             workspace = {
                 -- Make the server aware of Neovim runtime files
-                library = vim.api.nvim_get_runtime_file("", true),
+                library = vim.api.nvim_get_runtime_file('', true),
             },
             -- Disable telemetry
             telemetry = {

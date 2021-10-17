@@ -2,8 +2,8 @@
 local capabilities = require('lang.completion.capabilities')
 local util = require('lspconfig.util')
 require'lspconfig'.clangd.setup{
-cmd = { "clangd", "--background-index" },
-    filetypes = { "c", "cpp", "objc", "objcpp" },
+cmd = { 'clangd', '--background-index' },
+    filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
     root_dir = function(fname)
         local root_files = {
             'compile_commands.json',

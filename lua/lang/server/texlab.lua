@@ -1,16 +1,16 @@
 -- Latex language server
 local capabilities = require('lang.completion.capabilities')
 require'lspconfig'.texlab.setup{
-    cmd = { "texlab" },
-    filetypes = { "tex", "bib" },
+    cmd = { 'texlab' },
+    filetypes = { 'tex', 'bib' },
     --root_dir = vim's starting directory
     settings = {
         texlab = {
-            auxDirectory = ".",
-            bibtexFormatter = "texlab",
+            auxDirectory = '.',
+            bibtexFormatter = 'texlab',
             build = {
-                args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
-                executable = "latexmk",
+                args = { '-pdf', '-interaction=nonstopmode', '-synctex=1', '%f' },
+                executable = 'latexmk',
                 forwardSearchAfter = false,
                 onSave = false
             },
@@ -23,7 +23,7 @@ require'lspconfig'.texlab.setup{
             forwardSearch = {
                 args = {}
             },
-            latexFormatter = "latexindent",
+            latexFormatter = 'latexindent',
             latexindent = {
                 modifyLineBreaks = false
             }
