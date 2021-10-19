@@ -317,7 +317,7 @@ end
 
 M.setup()
 M.buffer()
-M.lspsaga()
+M.code()
 M.debug()
 M.git()
 M.hop()

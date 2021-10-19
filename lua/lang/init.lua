@@ -5,7 +5,7 @@ require('lang.server.pyright')
 require('lang.server.sumneko')
 require('lang.server.cmake')
 require('lang.server.texlab')
+require('lang.server.rust')
 require('lsp_signature').setup({hint_enable = false,})
 require('lang.format.clang')
-require('lspsaga').setup()
 

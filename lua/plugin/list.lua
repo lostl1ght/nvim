@@ -37,8 +37,6 @@ return packer.startup({function()
     use {'neovim/nvim-lspconfig',}
         -- Signature help
     use {'ray-x/lsp_signature.nvim',}
-        -- Bettter UI
-    use {'tami5/lspsaga.nvim',}
 
 --[[ Debuggers ]]--
         -- DAP client
