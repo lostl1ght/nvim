@@ -72,7 +72,8 @@ return packer.startup({function()
         requires = 'jpalardy/vim-slime'
     }
         -- Starting screen
-    use {'glepnir/dashboard-nvim',}
+    use {'goolord/alpha-nvim',}
+    --use {'glepnir/dashboard-nvim',}
         -- Session manager
     use {
         'Shatur/neovim-session-manager',

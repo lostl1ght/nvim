@@ -4,7 +4,7 @@ require('lualine').setup({
     options = {
         theme = 'material-nvim',
         icons_enabled = true,
-        disabled_filetypes = {'dashboard', 'NvimTree',},
+        disabled_filetypes = {'alpha', 'NvimTree',},
     },
     sections = {
         lualine_b = {
