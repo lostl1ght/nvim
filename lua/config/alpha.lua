@@ -30,6 +30,7 @@ dashboard.section.buttons.val = {
     dashboard.button('SPC b n', '  New file', ':enew<cr>'),
     dashboard.button('SPC k o', '⌀  Load session', ':Telescope sessions<cr>'),
     dashboard.button('SPC f w', '  Find word', ':Telescope live_grep<cr>'),
+    dashboard.button('q',       '  Quit', ':qa<cr>'),
 }
 
 dashboard.section.footer.val = 'i use arch btw'
