@@ -139,6 +139,7 @@ return packer.startup({function()
 --[[ Format ]]--
     use {'mhartington/formatter.nvim',}
     use {'godlygeek/tabular',}
+    use {'b3nj5m1n/kommentary',}
 
 end})
 
