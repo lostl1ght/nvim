@@ -305,12 +305,12 @@ function M.session()
         ['<leader>'] = {
             k = {
                 name = '+session',
-                o = {':Telescope sessions<cr>', 'Open session'},
+                o = {':Telescope sessions save_current=true<cr>', 'Open session'},
                 l = {':LoadSession<cr>', 'Last session'},
                 k = {':SaveSession<cr>', 'Save session'},
-
+                a = {':echo "lol"<cr>', 'desc'}
             },
-            p = {':Telescope sessions<cr>', 'Open session'},
+            m = {':Telescope sessions save_current=true<cr>', 'Open session'},
         },
     })
 end
