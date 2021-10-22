@@ -44,12 +44,12 @@ cmp.setup {
         end,
     },
     sources = {
-        { name = 'luasnip' },
-        { name = 'nvim_lua'},
-        { name = 'nvim_lsp' },
-        { name = 'vim-dadbod-completion' },
-        { name = 'path' },
-        { name = 'buffer', keyword_length = 5 },
+        {name = 'luasnip'},
+        {name = 'nvim_lua'},
+        {name = 'nvim_lsp', keyword_length = 4},
+        {name = 'vim-dadbod-completion'},
+        {name = 'path'},
+        {name = 'buffer', keyword_length = 5},
     },
     formatting = {
         format = lspkind.cmp_format {

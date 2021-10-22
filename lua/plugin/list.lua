@@ -114,11 +114,11 @@ return packer.startup({function()
 -- Completion
         -- Autocompletion plugin
     use {'hrsh7th/nvim-cmp',}
-        -- LSP source for nvim-cmp
+        -- LSP source for cmp
     use {'hrsh7th/cmp-nvim-lsp',}
         -- Buffer completion
     use {'hrsh7th/cmp-buffer',}
-        -- Snippets source for nvim-cmp
+        -- Snippets source for cmp
     use {'saadparwaiz1/cmp_luasnip',}
         -- Snippets plugin
     use {'L3MON4D3/LuaSnip',}
@@ -127,14 +127,18 @@ return packer.startup({function()
         'kristijanhusak/vim-dadbod-completion',
         requires = 'tpope/vim-dadbod'
     }
+        -- Neovim api completion
     use {'hrsh7th/cmp-nvim-lua',}
+        -- Path completion
     use {'hrsh7th/cmp-path',}
+        -- Icons for cmp
     use {'onsails/lspkind-nvim',}
         -- Comit UI
     use {'rhysd/committia.vim',}
 
 --[[ Format ]]--
     use {'mhartington/formatter.nvim',}
+    use {'godlygeek/tabular',}
 
 end})
 
