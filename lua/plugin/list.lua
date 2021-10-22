@@ -73,7 +73,7 @@ return packer.startup({function()
     }
         -- Starting screen
     use {'goolord/alpha-nvim',}
-    --use {'glepnir/dashboard-nvim',}
+    -- use {'glepnir/dashboard-nvim',}
         -- Session manager
     use {
         --'Shatur/neovim-session-manager',
