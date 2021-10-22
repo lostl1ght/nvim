@@ -127,6 +127,9 @@ return packer.startup({function()
         'kristijanhusak/vim-dadbod-completion',
         requires = 'tpope/vim-dadbod'
     }
+    use {'hrsh7th/cmp-nvim-lua',}
+    use {'hrsh7th/cmp-path',}
+    use {'onsails/lspkind-nvim',}
         -- Comit UI
     use {'rhysd/committia.vim',}
 
