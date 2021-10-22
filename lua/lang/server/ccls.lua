@@ -18,10 +18,16 @@ require('lspconfig').ccls.setup{
             threads = 0,
         },
         clang = {
-            excludeArgs = { '-frounding-math'} ;
+            excludeArgs = {'-frounding-math',}
         },
         cache = {
-            directory = '.ccls-cache';
+            directory = '.ccls-cache',
+        },
+        client = {
+            snippetSupport = false,
+        },
+        completion = {
+            placeholder = false,
         },
     },
     flags = {
