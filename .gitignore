@@ -1,3 +1,6 @@
 # Compiled plugins
 packer_compiled.lua
 
+# Debug lib
+inspect.lua
+
