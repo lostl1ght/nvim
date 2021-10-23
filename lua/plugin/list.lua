@@ -67,10 +67,10 @@ return packer.startup({function()
         requires = 'tpope/vim-dadbod'
     }
         -- IPython
-    use {
+    --[[ use {
         'hanschen/vim-ipython-cell',
         requires = 'jpalardy/vim-slime'
-    }
+    } ]]
         -- Starting screen
     use {'goolord/alpha-nvim',}
     -- use {'glepnir/dashboard-nvim',}
