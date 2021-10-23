@@ -118,7 +118,7 @@ function M.buffer()
             },
             ['.'] = {':Telescope buffers<cr>', 'Open buffer'},
             ['/'] = {':b#<cr>', 'Switch buffer'},
-            s = {':w<cr>', 'Save'},
+            s = {':wa<cr>', 'Save'},
         },
         ['['] = {
             b = {':bp<cr>', 'Previous buffer'},
