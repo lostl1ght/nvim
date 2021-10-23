@@ -25,10 +25,10 @@ return packer.startup({function()
         requires = 'kyazdani42/nvim-web-devicons'
     }
         -- Tabline
-    --[[ use {
-        'alvarosevilla95/luatab.nvim',
+    use {
+        'akinsho/bufferline.nvim',
         requires='kyazdani42/nvim-web-devicons'
-    } ]]
+    }
         -- Color highlighter
     use {'norcalli/nvim-colorizer.lua',}
 
