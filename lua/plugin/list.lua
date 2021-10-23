@@ -20,10 +20,10 @@ return packer.startup({function()
         -- Theme
     use {'marko-cerovac/material.nvim',}
         -- Statusline
-    --[[ use {
-        'hoob3rt/lualine.nvim',
+    use {
+        'famiu/feline.nvim',
         requires = 'kyazdani42/nvim-web-devicons'
-    } ]]
+    }
         -- Tabline
     --[[ use {
         'alvarosevilla95/luatab.nvim',
