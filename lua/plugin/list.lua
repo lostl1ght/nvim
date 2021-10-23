@@ -76,8 +76,7 @@ return packer.startup({function()
     -- use {'glepnir/dashboard-nvim',}
         -- Session manager
     use {
-        --'Shatur/neovim-session-manager',
-        'lostl1ght/neovim-session-manager',
+        'Shatur/neovim-session-manager',
         requires = {
             'nvim-telescope/telescope.nvim',
             'nvim-lua/plenary.nvim'
