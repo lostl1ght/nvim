@@ -20,9 +20,8 @@ map('i', 'ii', '<esc>', {noremap = true})           -- Better ESC mapping
 map('t', 'ii', '<c-\\><c-n>', {noremap = true})     -- Escape terminal the same way
 map('t', '<esc>', '<c-\\><c-n>', {noremap = true})
 map('', '<space>', '<leader>', {noremap = false})   -- Better Leader mapping
-map('', '<f1>', '<nop>', {noremap = false})         -- Disable F1
-map('!', '<f1>', '<nop>', {noremap = false})
-map('t', '<f1>', '<nop>', {noremap = false})
+map('n', '<f1>', '<nop>', {noremap = false})         -- Disable F1
+map('i', '<f1>', '<nop>', {noremap = false})
 
 local disabled_built_ins = {
     'netrw',
