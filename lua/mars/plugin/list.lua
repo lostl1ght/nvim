@@ -3,7 +3,11 @@ pcall(require, 'packer_compiled')
 return {
     {'wbthomason/packer.nvim',},
     {'lewis6991/impatient.nvim',},
-    {'folke/which-key.nvim',},
+    {'folke/which-key.nvim',
+        config = function ()
+            require('mars.core.keymap')
+        end,
+    },
 
     {'marko-cerovac/material.nvim',
         config = function ()
@@ -14,14 +18,14 @@ return {
         requires = 'kyazdani42/nvim-web-devicons',
         config = function ()
             require('mars.color.feline')
-        end
+        end,
     },
     {'akinsho/bufferline.nvim',
         requires='kyazdani42/nvim-web-devicons',
         config = function ()
             vim.o.termguicolors = true
             require('bufferline').setup{}
-        end
+        end,
     },
     {'norcalli/nvim-colorizer.lua',
         config = function ()

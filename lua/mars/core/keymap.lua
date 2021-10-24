@@ -1,6 +1,10 @@
+local present, wk = pcall(require, 'which-key')
+if not present then
+    return
+end
+
 local M = {}
 
-local wk = require('which-key')
 local keymap_n = {}
 local keymap_v = {}
 local keymap_x = {}
