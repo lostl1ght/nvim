@@ -1,6 +1,6 @@
 local present, ls = pcall(require, 'luasnip')
 if not present then
-    return
+    return print('luasnip not found')
 end
 local c = require('ll.snippet.c')
 

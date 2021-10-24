@@ -34,16 +34,15 @@ function M:init()
     cmd 'packadd packer.nvim'
 
     packer.init {
-    display = {
-        open_fn = function()
-            return require('packer.util').float { border = 'rounded' }
-        end,
-    },
-    git = {clone_timeout = 600},
-    auto_clean = true,
-    compile_on_sync = true,
-    compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',
-    --    auto_reload_compiled = true
+        display = {
+            open_fn = function()
+                return require('packer.util').float { border = 'rounded' }
+            end,
+        },
+        git = {clone_timeout = 600},
+        auto_clean = true,
+        compile_on_sync = true,
+        compile_path = vim.fn.stdpath('config') .. '/lua/packer_compiled.lua',
     }
     self.packer = packer
     return self

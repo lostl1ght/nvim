@@ -1,6 +1,6 @@
 local present, formatter = pcall(require, 'formatter')
 if not present then
-    return
+    return print('formatter not found')
 end
 -- Clang formatter
 formatter.setup({

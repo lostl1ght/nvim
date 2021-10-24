@@ -1,6 +1,6 @@
 local present, tmux = pcall(require, 'tmux')
 if not present then
-    return
+    return print('tmux not found')
 end
 tmux.setup{
     copy_sync = {

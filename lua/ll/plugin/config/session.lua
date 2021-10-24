@@ -1,7 +1,7 @@
 local t_present, tele = pcall(require, 'telescope')
 local s_present, sess = pcall(require, 'session_manager')
 if not t_present or not s_present then
-    return
+    return print('telescope or session_manager not found')
 end
 -- Session manager
 sess.setup({

@@ -1,5 +1,5 @@
 if not pcall(require, "feline") then
-    return
+    return print('feline not found')
 end
 
 vim.o.termguicolors = true

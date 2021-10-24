@@ -4,7 +4,7 @@ k, lspkind = pcall(require, 'lspkind')
 s, luasnip = pcall(require, 'luasnip')
 c, cmp = pcall(require, 'cmp')
 if not k or not s or not c then
-    return
+    return print('lspkind or luasnip or cmp not found')
 end
 
 -- Completion settings

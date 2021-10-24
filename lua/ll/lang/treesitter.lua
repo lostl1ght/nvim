@@ -1,6 +1,6 @@
 local present, treesitter_configs = pcall(require, 'nvim-treesitter.configs')
 if not present then
-    return
+    return print('treesitter not found')
 end
 
 treesitter_configs.setup {

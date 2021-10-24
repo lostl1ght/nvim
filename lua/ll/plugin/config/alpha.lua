@@ -1,6 +1,6 @@
 local present, alpha = pcall(require, 'alpha')
 if not present then
-    return
+    return print('alpha not found')
 end
 
 local dashboard = require('alpha.themes.dashboard')

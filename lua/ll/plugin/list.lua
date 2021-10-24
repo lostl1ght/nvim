@@ -25,7 +25,7 @@ return {
         config = function ()
             local present, line = pcall(require, 'bufferline')
             if not present then
-                return
+                return print('bufferline not found')
             end
             vim.o.termguicolors = true
             line.setup{}
@@ -35,7 +35,7 @@ return {
         config = function ()
             local present, color = pcall(require, 'colorizer')
             if not present then
-                return
+                return print('colorizer not found')
             end
             vim.o.termguicolors = true
             color.setup()
@@ -57,7 +57,7 @@ return {
         config = function ()
             local present, sign = pcall(require, 'lsp_signature')
             if not present then
-                return
+                return print('lsp_signature not found')
             end
             sign.setup({hint_enable = false,})
         end
@@ -185,7 +185,11 @@ return {
     {'godlygeek/tabular',},
     {'numToStr/Comment.nvim',
         config = function()
-            require('Comment').setup()
+            local present, comment = pcall(require, 'Comment')
+            if not present then
+                return print('comment not found')
+            end
+            comment.setup()
         end
     }
 }

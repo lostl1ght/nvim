@@ -1,6 +1,6 @@
 local present, git = pcall(require, 'gitsigns')
 if not present then
-    return
+    return print('gitsigns not found')
 end
 vim.o.updatetime= 500  -- Faster gutter update
 

@@ -1,6 +1,6 @@
 local present, wk = pcall(require, 'which-key')
 if not present then
-    return
+    return print('which-key not found')
 end
 
 local M = {}

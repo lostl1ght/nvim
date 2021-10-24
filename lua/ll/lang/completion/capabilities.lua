@@ -1,6 +1,6 @@
 local present, cmp_lsp = pcall(require, 'cmp_nvim_lsp')
 if not present then
-   return
+   return print('cmp_nvim_lsp not found')
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()

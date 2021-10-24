@@ -1,6 +1,6 @@
 local present, tele = pcall(require, 'telescope')
 if not present then
-    return
+    return print('telescope not found')
 end
 -- Telescope setup
 tele.setup{

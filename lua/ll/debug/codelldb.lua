@@ -1,6 +1,6 @@
 local present, dap = pcall(require, 'dap')
 if not present then
-  return
+  return print('dap not found')
 end
 
 dap.adapters.codelldb = function(on_adapter)

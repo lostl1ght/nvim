@@ -1,6 +1,6 @@
 local present, dapui = pcall(require, 'dapui')
 if not present then
-    return
+    return print('dapui not found')
 end
 -- UI setup
 dapui.setup({

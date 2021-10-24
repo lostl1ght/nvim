@@ -1,6 +1,6 @@
 local capabilities = require('ll.lang.completion.capabilities')
 if not pcall(require, 'lspconfig') or not capabilities then
-    return
+    return print('lspconfig not found')
 end
 -- Python language server
 local util = require('lspconfig.util')
