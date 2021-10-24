@@ -182,5 +182,9 @@ return {
         end
     },
     {'godlygeek/tabular',},
-    {'b3nj5m1n/kommentary',},
+    {'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    }
 }
