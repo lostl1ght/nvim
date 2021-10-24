@@ -137,7 +137,7 @@ end
 
 function M.debug()
     vim.cmd('command! DapBegin lua require("dapui").open()<cr> require("dap").continue()<cr>')
-    vim.cmd('command! DapStop lua require("dap").disconnect() require("dap").close() require("dapui").close() require("util").close_term()')
+    vim.cmd('command! DapStop lua require("dap").disconnect() require("dap").close() require("dapui").close() require("mars.util").close_term()')
     vim.cmd('command! DapToggle lua require("dapui").toggle()')
     vim.cmd('command! DapContinue lua require("dap").continue()')
     vim.cmd('command! DapBreakpoint lua require("dap").toggle_breakpoint()')

@@ -1,4 +1,8 @@
-require('tmux').setup{
+local present, tmux = pcall(require, 'tmux')
+if not present then
+    return
+end
+tmux.setup{
     copy_sync = {
         -- enables copy sync and overwrites all register actions to
         -- sync registers *, +, unnamed, and 0 till 9 from tmux in advance

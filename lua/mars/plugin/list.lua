@@ -23,14 +23,22 @@ return {
     {'akinsho/bufferline.nvim',
         requires='kyazdani42/nvim-web-devicons',
         config = function ()
+            local present, line = pcall(require, 'bufferline')
+            if not present then
+                return
+            end
             vim.o.termguicolors = true
-            require('bufferline').setup{}
+            line.setup{}
         end,
     },
     {'norcalli/nvim-colorizer.lua',
         config = function ()
+            local present, color = pcall(require, 'colorizer')
+            if not present then
+                return
+            end
             vim.o.termguicolors = true
-            require('colorizer').setup()
+            color.setup()
         end,
     },
 
@@ -55,11 +63,26 @@ return {
     },
 
     {'mfussenegger/nvim-dap',
-        requires = 'mfussenegger/nvim-dap-python',
+        config = function ()
+            require('mars.debugger.codelldb')
+        end,
     },
-    {'rcarriga/nvim-dap-ui',},
+    {'mfussenegger/nvim-dap-python',
+        config = function ()
+            require('mars.debugger.python')
+        end,
+    },
+    {'rcarriga/nvim-dap-ui',
+        config = function ()
+            require('mars.debugger.dapui')
+        end,
+    },
 
-    {'aserowy/tmux.nvim',},
+    {'aserowy/tmux.nvim',
+        config = function ()
+            require('mars.plugin.config.tmux')
+        end,
+    },
     {'phaazon/hop.nvim',},
     {'lewis6991/gitsigns.nvim',
         requires = 'nvim-lua/plenary.nvim',
