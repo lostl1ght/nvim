@@ -43,6 +43,7 @@ return {
     },
 
     {'neovim/nvim-lspconfig',
+        requires =  'hrsh7th/cmp-nvim-lsp',
         config = function ()
             require('mars.lang.server.ccls')
             require('mars.lang.server.pyright')
@@ -86,23 +87,45 @@ return {
     {'phaazon/hop.nvim',},
     {'lewis6991/gitsigns.nvim',
         requires = 'nvim-lua/plenary.nvim',
+        config = function ()
+            require('mars.plugin.config.gitsigns')
+        end,
     },
     {'iamcco/markdown-preview.nvim',
         run = ':call mkdp#util#install()'
     },
     {'kristijanhusak/vim-dadbod-ui',
-        requires = 'tpope/vim-dadbod'
+        requires = 'tpope/vim-dadbod',
+        config = function ()
+            require('mars.plugin.config.sql')
+        end,
     },
-    {'hanschen/vim-ipython-cell',
-        requires = 'jpalardy/vim-slime',
+    -- {'hanschen/vim-ipython-cell',
+    --     requires = 'jpalardy/vim-slime',
+    --     config = function ()
+    --         require('mars.plugin.config.ipython')
+    --     end,
+    -- },
+    {'goolord/alpha-nvim',
+        config = function ()
+            require('mars.plugin.config.alpha')
+        end,
     },
-    {'goolord/alpha-nvim',},
     -- {'glepnir/dashboard-nvim',},
+    {'nvim-telescope/telescope.nvim',
+        config = function ()
+            require('mars.plugin.config.telescope')
+        end,
+    },
+            
     {'Shatur/neovim-session-manager',
         requires = {
             'nvim-telescope/telescope.nvim',
             'nvim-lua/plenary.nvim',
         },
+        config = function ()
+            require('mars.plugin.config.session')
+        end,
     },
     {'kdheepak/lazygit.nvim',
         config = function ()
@@ -113,14 +136,25 @@ return {
     },
 
     {'kyazdani42/nvim-tree.lua',
-        requires = 'kyazdani42/nvim-web-devicons'
-    },
-    {'nvim-telescope/telescope.nvim',
-        requires = 'nvim-lua/plenary.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function ()
+            require('mars.plugin.config.nvimtree')
+        end,
     },
 
-    {'Shirk/vim-gas',},
-    {'nvim-treesitter/nvim-treesitter',},
+    {'Shirk/vim-gas',
+        config = function ()
+            local cmd = vim.cmd
+            cmd 'au BufRead,BufNewFile *.ASM set ft=masm'
+            cmd 'au BufRead,BufNewFile *.asm set ft=masm'
+            cmd 'au BufRead,BufNewFile *.s set ft=gas'
+        end,
+    },
+    {'nvim-treesitter/nvim-treesitter',
+        config = function ()
+            require('mars.lang.treesitter')
+        end
+    },
 
     {'hrsh7th/nvim-cmp',
         requires = {
@@ -132,14 +166,21 @@ return {
             'hrsh7th/cmp-path',
             'hrsh7th/cmp-nvim-lsp',
             'L3MON4D3/LuaSnip',
+            'onsails/lspkind-nvim',
         },
+        config = function ()
+            require('mars.lang.completion')
+            require('mars.snippet')
+        end
     },
-    {'onsails/lspkind-nvim',},
 
     {'rhysd/committia.vim',},
 
-    {'mhartington/formatter.nvim',},
+    {'mhartington/formatter.nvim',
+        config = function ()
+            require('mars.lang.format.clang')
+        end
+    },
     {'godlygeek/tabular',},
     {'b3nj5m1n/kommentary',},
-
 }

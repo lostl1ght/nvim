@@ -1,7 +1,11 @@
+local present, git = pcall(require, 'gitsigns')
+if not present then
+    return
+end
 vim.o.updatetime= 500  -- Faster gutter update
 
 -- Gitsigns setup
-require('gitsigns').setup({
+git.setup({
     signs = {
         add          = {hl = 'GitSignsAdd'   , text = '│', numhl='GitSignsAddNr'   , linehl='GitSignsAddLn'},
         change       = {hl = 'GitSignsChange', text = '│', numhl='GitSignsChangeNr', linehl='GitSignsChangeLn'},

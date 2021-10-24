@@ -2,8 +2,8 @@ local lspkind = require('lspkind')
 
 -- Completion settings
 vim.o.completeopt = 'menu,menuone,noselect'
-local luasnip = require 'luasnip'
-local cmp = require 'cmp'
+local luasnip = require('luasnip')
+local cmp = require('cmp')
 cmp.setup {
     mapping = {
         --['<C-p>'] = cmp.mapping.select_prev_item(),

@@ -1,5 +1,9 @@
+local present, tele = pcall(require, 'telescope')
+if not present then
+    return
+end
 -- Telescope setup
-require('telescope').setup{
+tele.setup{
     pickers = {
         find_files = {
             hidden = true,

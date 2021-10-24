@@ -1,4 +1,7 @@
-local dap = require('dap')
+local present, dap = pcall(require, 'dap')
+if not present then
+  return
+end
 
 dap.adapters.codelldb = function(on_adapter)
   local stdout = vim.loop.new_pipe(false)

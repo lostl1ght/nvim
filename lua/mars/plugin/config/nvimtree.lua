@@ -1,7 +1,13 @@
--- Nvim tree setup
-require('nvim-web-devicons').get_icons()
+local d_present, devicons = pcall(require, 'nvim-web-devicons')
+local t_present, tree = pcall(require, 'nvim-tree')
+if not d_present or not t_present then
+    return
+end
 
-require('nvim-tree').setup{
+-- Nvim tree setup
+devicons.get_icons()
+
+tree.setup{
     update_to_buf_dir = {
         enable = true,
     },

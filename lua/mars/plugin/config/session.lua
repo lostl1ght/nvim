@@ -1,5 +1,10 @@
+local t_present, tele = pcall(require, 'telescope')
+local s_present, sess = pcall(require, 'session_manager')
+if not t_present or not s_present then
+    return
+end
 -- Session manager
-require('session_manager').setup({
+sess.setup({
     sessions_dir = vim.fn.stdpath('data') .. '/sessions',     -- Session directory
     path_replacer = '__',                                     -- Path separator
     colon_replacer = '++',                                    -- Colon symbol
@@ -8,4 +13,4 @@ require('session_manager').setup({
     autosave_ignore_paths = { '~' },                          -- Folders to ignore when autosaving
     autosave_ignore_not_normal = true,
 })
-require('telescope').load_extension('sessions')
+tele.load_extension('sessions')
