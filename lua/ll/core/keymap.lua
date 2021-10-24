@@ -118,7 +118,8 @@ function M.buffer()
             },
             ['.'] = {':Telescope buffers<cr>', 'Open buffer'},
             ['/'] = {':b#<cr>', 'Switch buffer'},
-            s = {':wa<cr>', 'Save'},
+            s = {':w<cr>', 'Save'},
+            S = {':wa<cr>', 'Save all'},
         },
         ['['] = {
             b = {':bp<cr>', 'Previous buffer'},
@@ -133,7 +134,7 @@ end
 
 function M.debug()
     vim.cmd('command! DapBegin lua require("dapui").open()<cr> require("dap").continue()<cr>')
-    vim.cmd('command! DapStop lua require("dap").disconnect() require("dap").close() require("dapui").close() require("mars.util").close_term()')
+    vim.cmd('command! DapStop lua require("dap").disconnect() require("dap").close() require("dapui").close() require("ll.util").close_term()')
     vim.cmd('command! DapToggle lua require("dapui").toggle()')
     vim.cmd('command! DapContinue lua require("dap").continue()')
     vim.cmd('command! DapBreakpoint lua require("dap").toggle_breakpoint()')

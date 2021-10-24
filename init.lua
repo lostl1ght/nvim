@@ -1,6 +1,6 @@
 vim.g.color_theme = 'oceanic'
 
-require('ll.bootstrap'):init()
+require('ll.core.bootstrap'):init()
 
 local plugins = require('ll.plugin.list')
 require('ll.plugin.loader'):load(plugins)
