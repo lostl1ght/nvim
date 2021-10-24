@@ -5,19 +5,19 @@ return {
     {'lewis6991/impatient.nvim',},
     {'folke/which-key.nvim',
         config = function ()
-            require('mars.core.keymap')
+            require('lostlight.core.keymap')
         end,
     },
 
     {'marko-cerovac/material.nvim',
         config = function ()
-            require('mars.color.material')
+            require('lostlight.color.material')
         end,
     },
     {'famiu/feline.nvim',
         requires = 'kyazdani42/nvim-web-devicons',
         config = function ()
-            require('mars.color.feline')
+            require('lostlight.color.feline')
         end,
     },
     {'akinsho/bufferline.nvim',
@@ -45,12 +45,12 @@ return {
     {'neovim/nvim-lspconfig',
         requires =  'hrsh7th/cmp-nvim-lsp',
         config = function ()
-            require('mars.lang.server.ccls')
-            require('mars.lang.server.pyright')
-            require('mars.lang.server.sumneko')
-            require('mars.lang.server.cmake')
-            require('mars.lang.server.texlab')
-            require('mars.lang.server.rust')
+            require('lostlight.lang.server.ccls')
+            require('lostlight.lang.server.pyright')
+            require('lostlight.lang.server.sumneko')
+            require('lostlight.lang.server.cmake')
+            require('lostlight.lang.server.texlab')
+            require('lostlight.lang.server.rust')
         end,
     },
     {'ray-x/lsp_signature.nvim',
@@ -65,30 +65,30 @@ return {
 
     {'mfussenegger/nvim-dap',
         config = function ()
-            require('mars.debugger.codelldb')
+            require('lostlight.debugger.codelldb')
         end,
     },
     {'mfussenegger/nvim-dap-python',
         config = function ()
-            require('mars.debugger.python')
+            require('lostlight.debugger.python')
         end,
     },
     {'rcarriga/nvim-dap-ui',
         config = function ()
-            require('mars.debugger.dapui')
+            require('lostlight.debugger.dapui')
         end,
     },
 
     {'aserowy/tmux.nvim',
         config = function ()
-            require('mars.plugin.config.tmux')
+            require('lostlight.plugin.config.tmux')
         end,
     },
     {'phaazon/hop.nvim',},
     {'lewis6991/gitsigns.nvim',
         requires = 'nvim-lua/plenary.nvim',
         config = function ()
-            require('mars.plugin.config.gitsigns')
+            require('lostlight.plugin.config.gitsigns')
         end,
     },
     {'iamcco/markdown-preview.nvim',
@@ -97,24 +97,24 @@ return {
     {'kristijanhusak/vim-dadbod-ui',
         requires = 'tpope/vim-dadbod',
         config = function ()
-            require('mars.plugin.config.sql')
+            require('lostlight.plugin.config.sql')
         end,
     },
     -- {'hanschen/vim-ipython-cell',
     --     requires = 'jpalardy/vim-slime',
     --     config = function ()
-    --         require('mars.plugin.config.ipython')
+    --         require('lostlight.plugin.config.ipython')
     --     end,
     -- },
     {'goolord/alpha-nvim',
         config = function ()
-            require('mars.plugin.config.alpha')
+            require('lostlight.plugin.config.alpha')
         end,
     },
     -- {'glepnir/dashboard-nvim',},
     {'nvim-telescope/telescope.nvim',
         config = function ()
-            require('mars.plugin.config.telescope')
+            require('lostlight.plugin.config.telescope')
         end,
     },
             
@@ -124,7 +124,7 @@ return {
             'nvim-lua/plenary.nvim',
         },
         config = function ()
-            require('mars.plugin.config.session')
+            require('lostlight.plugin.config.session')
         end,
     },
     {'kdheepak/lazygit.nvim',
@@ -138,7 +138,7 @@ return {
     {'kyazdani42/nvim-tree.lua',
         requires = 'kyazdani42/nvim-web-devicons',
         config = function ()
-            require('mars.plugin.config.nvimtree')
+            require('lostlight.plugin.config.nvimtree')
         end,
     },
 
@@ -152,7 +152,7 @@ return {
     },
     {'nvim-treesitter/nvim-treesitter',
         config = function ()
-            require('mars.lang.treesitter')
+            require('lostlight.lang.treesitter')
         end
     },
 
@@ -169,8 +169,8 @@ return {
             'onsails/lspkind-nvim',
         },
         config = function ()
-            require('mars.lang.completion')
-            require('mars.snippet')
+            require('lostlight.lang.completion')
+            require('lostlight.snippet')
         end
     },
 
@@ -178,7 +178,7 @@ return {
 
     {'mhartington/formatter.nvim',
         config = function ()
-            require('mars.lang.format.clang')
+            require('lostlight.lang.format.clang')
         end
     },
     {'godlygeek/tabular',},

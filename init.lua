@@ -1,8 +1,8 @@
 vim.g.color_theme = 'darker'
 
-require('mars.bootstrap'):init()
+require('lostlight.bootstrap'):init()
 
-local plugins = require('mars.plugin.list')
-require('mars.plugin.loader'):load(plugins)
+local plugins = require('lostlight.plugin.list')
+require('lostlight.plugin.loader'):load(plugins)
 
-require('mars.core')
+require('lostlight.core')
