@@ -1,3 +1,7 @@
+local present, material = pcall(require, 'material')
+if not present then
+    return
+end
 -- Color scheme
 vim.o.termguicolors = true
 vim.o.cursorline = true

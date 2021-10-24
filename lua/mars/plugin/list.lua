@@ -1,10 +1,15 @@
+pcall(require, 'packer_compiled')
     -- Plugins
 return {
     {'wbthomason/packer.nvim',},
     {'lewis6991/impatient.nvim',},
     {'folke/which-key.nvim',},
 
-    {'marko-cerovac/material.nvim',},
+    {'marko-cerovac/material.nvim',
+        config = function ()
+            require('mars.color.material')
+        end
+    },
     {'famiu/feline.nvim',
         requires = 'kyazdani42/nvim-web-devicons',
     },
