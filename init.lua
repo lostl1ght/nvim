@@ -1,4 +1,4 @@
-vim.g.color_theme = 'darker'
+vim.g.color_theme = 'oceanic'
 
 require('mars.bootstrap'):init()
 

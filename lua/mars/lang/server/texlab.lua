@@ -1,5 +1,8 @@
--- Latex language server
 local capabilities = require('mars.lang.completion.capabilities')
+if not pcall(require, 'lspconfig') or not capabilities then
+    return
+end
+-- Latex language server
 require'lspconfig'.texlab.setup{
     cmd = { 'texlab' },
     filetypes = { 'tex', 'bib' },

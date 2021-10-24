@@ -1,5 +1,8 @@
--- C/C++ language server
 local capabilities = require('mars.lang.completion.capabilities')
+if not pcall(require, 'lspconfig') or not capabilities then
+    return
+end
+-- C/C++ language server
 local util = require('lspconfig.util')
 require'lspconfig'.clangd.setup{
 cmd = { 'clangd', '--background-index' },

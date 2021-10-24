@@ -1,5 +1,8 @@
--- Rust analyzer
 local capabilities = require('mars.lang.completion.capabilities')
+if not pcall(require, 'lspconfig') or not capabilities then
+    return
+end
+-- Rust analyzer
 local util = require('lspconfig.util')
 require('lspconfig').rust_analyzer.setup{
     cmd = { 'rust-analyzer' },

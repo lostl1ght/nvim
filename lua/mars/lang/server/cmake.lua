@@ -1,5 +1,8 @@
--- Cmake language server
 local capabilities = require('mars.lang.completion.capabilities')
+if not pcall(require, 'lspconfig') or not capabilities then
+    return
+end
+-- Cmake language server
 local util = require('lspconfig.util')
 require('lspconfig').cmake.setup{
     cmd = { '/home/master/.pyenv/versions/cmake-ls/bin/cmake-language-server' },

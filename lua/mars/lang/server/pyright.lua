@@ -1,5 +1,8 @@
--- Python language server
 local capabilities = require('mars.lang.completion.capabilities')
+if not pcall(require, 'lspconfig') or not capabilities then
+    return
+end
+-- Python language server
 local util = require('lspconfig.util')
 require('lspconfig').pyright.setup{
     cmd = { 'pyright-langserver', '--stdio' },

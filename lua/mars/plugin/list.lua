@@ -34,8 +34,25 @@ return {
         end,
     },
 
-    {'neovim/nvim-lspconfig',},
-    {'ray-x/lsp_signature.nvim',},
+    {'neovim/nvim-lspconfig',
+        config = function ()
+            require('mars.lang.server.ccls')
+            require('mars.lang.server.pyright')
+            require('mars.lang.server.sumneko')
+            require('mars.lang.server.cmake')
+            require('mars.lang.server.texlab')
+            require('mars.lang.server.rust')
+        end,
+    },
+    {'ray-x/lsp_signature.nvim',
+        config = function ()
+            local present, sign = pcall(require, 'lsp_signature')
+            if not present then
+                return
+            end
+            sign.setup({hint_enable = false,})
+        end
+    },
 
     {'mfussenegger/nvim-dap',
         requires = 'mfussenegger/nvim-dap-python',
@@ -90,10 +107,10 @@ return {
             'kristijanhusak/vim-dadbod-completion',
             'hrsh7th/cmp-nvim-lua',
             'hrsh7th/cmp-path',
+            'hrsh7th/cmp-nvim-lsp',
+            'L3MON4D3/LuaSnip',
         },
     },
-    {'hrsh7th/cmp-nvim-lsp',},
-    {'L3MON4D3/LuaSnip',},
     {'onsails/lspkind-nvim',},
 
     {'rhysd/committia.vim',},
