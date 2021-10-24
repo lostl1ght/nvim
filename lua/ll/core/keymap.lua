@@ -82,12 +82,8 @@ end
 function M.quit()
     M.merge(keymap_n, {
         ['<leader>'] = {
-            q = {
-                name = '+quit',
-                q = {':qa<cr>', 'Quit'},
-                Q = {':qa!<cr>', 'Quit without saving'},
-                s = {':xa<cr>', 'Save and quit'},
-            },
+            q = {':qa<cr>', 'Quit'},
+            Q = {':qa!<cr>', 'Quit without saving'},
         },
     })
 end
@@ -322,10 +318,11 @@ end
 M.setup()
 M.buffer()
 M.code()
+-- M.lspsaga()
 M.debug()
 M.git()
 M.hop()
-M.ipython()
+-- M.ipython()
 M.open()
 M.quit()
 M.session()
