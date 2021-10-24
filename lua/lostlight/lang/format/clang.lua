@@ -1,5 +1,9 @@
+local present, formatter = pcall(require, 'formatter')
+if not present then
+    return
+end
 -- Clang formatter
-require('formatter').setup({
+formatter.setup({
     filetype = {
         cpp = {
             -- clang-format

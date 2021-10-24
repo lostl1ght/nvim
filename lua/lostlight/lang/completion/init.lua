@@ -1,9 +1,14 @@
-local lspkind = require('lspkind')
+local lspkind, luasnip, cmp
+local k, s, c
+k, lspkind = pcall(require, 'lspkind')
+s, luasnip = pcall(require, 'luasnip')
+c, cmp = pcall(require, 'cmp')
+if not k or not s or not c then
+    return
+end
 
 -- Completion settings
 vim.o.completeopt = 'menu,menuone,noselect'
-local luasnip = require('luasnip')
-local cmp = require('cmp')
 cmp.setup {
     mapping = {
         --['<C-p>'] = cmp.mapping.select_prev_item(),
