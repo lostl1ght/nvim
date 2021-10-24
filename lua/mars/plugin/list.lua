@@ -8,15 +8,27 @@ return {
     {'marko-cerovac/material.nvim',
         config = function ()
             require('mars.color.material')
-        end
+        end,
     },
     {'famiu/feline.nvim',
         requires = 'kyazdani42/nvim-web-devicons',
+        config = function ()
+            require('mars.color.feline')
+        end
     },
     {'akinsho/bufferline.nvim',
         requires='kyazdani42/nvim-web-devicons',
+        config = function ()
+            vim.o.termguicolors = true
+            require('bufferline').setup{}
+        end
     },
-    {'norcalli/nvim-colorizer.lua',},
+    {'norcalli/nvim-colorizer.lua',
+        config = function ()
+            vim.o.termguicolors = true
+            require('colorizer').setup()
+        end,
+    },
 
     {'neovim/nvim-lspconfig',},
     {'ray-x/lsp_signature.nvim',},
