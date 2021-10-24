@@ -1,8 +1,8 @@
 vim.g.color_theme = 'oceanic'
 
-require('lostlight.bootstrap'):init()
+require('ll.bootstrap'):init()
 
-local plugins = require('lostlight.plugin.list')
-require('lostlight.plugin.loader'):load(plugins)
+local plugins = require('ll.plugin.list')
+require('ll.plugin.loader'):load(plugins)
 
-require('lostlight.core')
+require('ll.core')

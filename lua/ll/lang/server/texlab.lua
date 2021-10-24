@@ -1,4 +1,4 @@
-local capabilities = require('lostlight.lang.completion.capabilities')
+local capabilities = require('ll.lang.completion.capabilities')
 if not pcall(require, 'lspconfig') or not capabilities then
     return
 end
