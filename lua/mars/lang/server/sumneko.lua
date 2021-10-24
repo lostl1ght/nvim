@@ -1,5 +1,5 @@
 -- Lua language server
-local capabilities = require('lang.completion.capabilities')
+local capabilities = require('mars.lang.completion.capabilities')
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')

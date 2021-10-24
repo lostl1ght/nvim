@@ -1,5 +1,5 @@
-require('color.material')
+require('mars.color.material')
 require('colorizer').setup()
-require('color.feline')
+require('mars.color.feline')
 require('bufferline').setup{}
 

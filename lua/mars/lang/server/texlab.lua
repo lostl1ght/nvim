@@ -1,5 +1,5 @@
 -- Latex language server
-local capabilities = require('lang.completion.capabilities')
+local capabilities = require('mars.lang.completion.capabilities')
 require'lspconfig'.texlab.setup{
     cmd = { 'texlab' },
     filetypes = { 'tex', 'bib' },

@@ -1,5 +1,5 @@
 local ls = require('luasnip')
-local c = require('snippet.c')
+local c = require('mars.snippet.c')
 
 ls.filetype_extend('cpp', {'c'})
 ls.snippets = {

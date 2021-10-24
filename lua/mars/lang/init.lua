@@ -1,0 +1,11 @@
+require('mars.lang.completion')
+require('mars.lang.syntax')
+require('mars.lang.server.ccls')
+require('mars.lang.server.pyright')
+require('mars.lang.server.sumneko')
+require('mars.lang.server.cmake')
+require('mars.lang.server.texlab')
+require('mars.lang.server.rust')
+require('lsp_signature').setup({hint_enable = false,})
+require('mars.lang.format.clang')
+

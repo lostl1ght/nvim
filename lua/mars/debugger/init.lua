@@ -39,6 +39,6 @@ require("dapui").setup({
   windows = { indent = 1 },
 })
 
-require('debugger.codelldb')
-require('debugger.python')
+require('mars.debugger.codelldb')
+require('mars.debugger.python')
 

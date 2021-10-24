@@ -1,5 +1,5 @@
 -- Rust analyzer
-local capabilities = require('lang.completion.capabilities')
+local capabilities = require('mars.lang.completion.capabilities')
 local util = require('lspconfig.util')
 require('lspconfig').rust_analyzer.setup{
     cmd = { 'rust-analyzer' },

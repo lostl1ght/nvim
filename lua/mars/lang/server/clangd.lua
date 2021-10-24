@@ -1,5 +1,5 @@
 -- C/C++ language server
-local capabilities = require('lang.completion.capabilities')
+local capabilities = require('mars.lang.completion.capabilities')
 local util = require('lspconfig.util')
 require'lspconfig'.clangd.setup{
 cmd = { 'clangd', '--background-index' },

@@ -1,5 +1,5 @@
 -- Cmake language server
-local capabilities = require('lang.completion.capabilities')
+local capabilities = require('mars.lang.completion.capabilities')
 local util = require('lspconfig.util')
 require('lspconfig').cmake.setup{
     cmd = { '/home/master/.pyenv/versions/cmake-ls/bin/cmake-language-server' },

@@ -1,25 +1,11 @@
---[[
-  _       _ _     _
- (_)_ __ (_) |_  | |_   _  __ _
- | | '_ \| | __| | | | | |/ _` |
- | | | | | | |_ _| | |_| | (_| |
- |_|_| |_|_|\__(_)_|\__,_|\__,_|
+require('mars.bootstrap'):init()
 
-       Neovim init file
---]]
-local present, _ = pcall(require, 'impatient')
-present, _ = pcall(require, 'packer')
+local plugins = require('mars.plugin.list')
+require('mars.plugin.loader'):load(plugins)
 
-require('plugin.list')
-
-if present then
-    require('core')
-    require('color')
-    require('lang')
-    require('config')
-    require('debugger')
-    require('snippet')
-else
-    require('packer').sync()
-end
-
+require('mars.core')
+require('mars.color')
+require('mars.lang')
+require('mars.plugin.config')
+require('mars.debugger')
+require('mars.snippet')
