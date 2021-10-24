@@ -23,12 +23,7 @@ return {
     {'akinsho/bufferline.nvim',
         requires='kyazdani42/nvim-web-devicons',
         config = function ()
-            local present, line = pcall(require, 'bufferline')
-            if not present then
-                return print('bufferline not found')
-            end
-            vim.o.termguicolors = true
-            line.setup{}
+            require('ll.color.bufferline')
         end,
     },
     {'norcalli/nvim-colorizer.lua',
