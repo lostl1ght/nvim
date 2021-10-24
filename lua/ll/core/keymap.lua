@@ -309,9 +309,23 @@ function M.session()
                 o = {':Telescope sessions save_current=true<cr>', 'Open session'},
                 l = {':LoadSession<cr>', 'Last session'},
                 k = {':SaveSession<cr>', 'Save session'},
-                a = {':echo "lol"<cr>', 'desc'}
             },
             m = {':Telescope sessions save_current=true<cr>', 'Open session'},
+        },
+    })
+end
+
+function M.packer()
+    M.merge(keymap_n, {
+        ['<leader>'] = {
+            p = {
+                name = '+packer',
+                c = {':PackerCompile<cr>', 'Compile'},
+                s = {':PackerSync<cr>', 'Sync'},
+                i = {':PackerInstall<cr>', 'Install'},
+                w = {':PackerClean<cr>', 'Clean'},
+                t = {':PackerStatus<cr>', 'Status'},
+            },
         },
     })
 end
@@ -330,6 +344,7 @@ M.session()
 M.tab()
 M.telescope()
 M.window()
+M.packer()
 wk.register(keymap_n, {mode = 'n'})
 wk.register(keymap_v, {mode = 'v'})
 wk.register(keymap_x, {mode = 'x'})
