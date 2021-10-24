@@ -100,12 +100,13 @@ return {
             require('ll.plugin.config.sql')
         end,
     },
-    -- {'hanschen/vim-ipython-cell',
-    --     requires = 'jpalardy/vim-slime',
-    --     config = function ()
-    --         require('ll.plugin.config.ipython')
-    --     end,
-    -- },
+    {'hanschen/vim-ipython-cell',
+        requires = 'jpalardy/vim-slime',
+        config = function ()
+            require('ll.plugin.config.ipython')
+        end,
+        disable = true,
+    },
     {'goolord/alpha-nvim',
         config = function ()
             require('ll.plugin.config.alpha')
@@ -117,7 +118,7 @@ return {
             require('ll.plugin.config.telescope')
         end,
     },
-            
+
     {'Shatur/neovim-session-manager',
         requires = {
             'nvim-telescope/telescope.nvim',
