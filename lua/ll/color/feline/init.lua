@@ -5,7 +5,7 @@ end
 vim.o.termguicolors = true
 vim.o.showmode = false
 
-local colors = require('ll.color.feline.' .. vim.g.color_theme)
+local colors = require('ll.color.feline.' .. llvim.style)
 
 local vi_mode_colors = {
     NORMAL = colors.green,

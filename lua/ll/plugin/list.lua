@@ -13,6 +13,7 @@ return {
         config = function ()
             require('ll.color.material')
         end,
+        disable = llvim.theme ~= 'material',
     },
     {'famiu/feline.nvim',
         requires = 'kyazdani42/nvim-web-devicons',
