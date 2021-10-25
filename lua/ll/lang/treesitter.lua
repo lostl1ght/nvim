@@ -13,6 +13,7 @@ treesitter_configs.setup {
         'lua',
         'python',
         'rust',
+        'toml',
     },
     highlight = {
         enable = true,
