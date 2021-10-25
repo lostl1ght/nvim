@@ -1,8 +1,13 @@
--- Cpptools
-local dap = require('dap')
+local present, dap = pcall(require, 'dap')
+if not present then
+    return print('dap not found')
+end
+
+require('ll.debug.signs')
+
 dap.adapters.cppdbg = {
     type = 'executable',
-    command = '/home/master/.local/share/nvim/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
+    command = vim.fn.stdpath('data') .. '/cpptools/extension/debugAdapters/bin/OpenDebugAD7',
 }
 dap.configurations.cpp = {
     {

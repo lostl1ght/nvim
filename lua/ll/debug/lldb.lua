@@ -1,16 +1,22 @@
-local dap = require('dap')
+local present, dap = pcall(require, 'dap')
+if not present then
+    return print('dap not found')
+end
+
+require('ll.debug.signs')
+
 dap.adapters.lldb = {
-  type = 'executable',
-  command = '/usr/bin/lldb-vscode', -- adjust as needed
-  name = "lldb"
+    type = 'executable',
+    command = 'lldb-vscode',
+    name = 'lldb'
 }
 dap.configurations.cpp = {
-  {
-    name = "Launch",
-    type = "lldb",
-    request = "launch",
+    {
+    name = 'Launch',
+    type = 'lldb',
+    request = 'launch',
     program = function()
-      return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+        return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
     end,
     cwd = '${workspaceFolder}',
     stopOnEntry = false,
@@ -27,11 +33,8 @@ dap.configurations.cpp = {
     -- But you should be aware of the implications:
     -- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
     runInTerminal = true,
-  },
+    },
 }
-
-
--- If you want to use this for rust and c, add something like this:
 
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
