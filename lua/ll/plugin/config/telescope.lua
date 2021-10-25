@@ -7,7 +7,7 @@ local telescope_actions = require("telescope.actions.set")
 
 local attach_mappings = function(_)
     telescope_actions.select:enhance({
-        post = function()	vim.cmd(":normal! zx zi") end,
+        post = function()	vim.cmd(":normal! zx zR") end,
     })
     return true
 end
