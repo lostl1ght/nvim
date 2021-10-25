@@ -3,12 +3,13 @@ if not present then
   return print('dap not found')
 end
 
+require('ll.debug.signs')
+
 dap.adapters.codelldb = function(on_adapter)
   local stdout = vim.loop.new_pipe(false)
   local stderr = vim.loop.new_pipe(false)
 
-  -- CHANGE THIS!
-  local cmd = vim.env.HOME .. '/.local/share/nvim/codelldb/extension/adapter/codelldb'
+  local cmd = vim.fn.stdpath('data') .. '/codelldb/extension/adapter/codelldb'
 
   local handle, pid_or_err
   local opts = {
