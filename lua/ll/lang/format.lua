@@ -2,7 +2,7 @@ local present, formatter = pcall(require, 'formatter')
 if not present then
     return print('formatter not found')
 end
--- Clang formatter
+
 formatter.setup({
     filetype = {
         cpp = {
@@ -13,6 +13,16 @@ formatter.setup({
                     args = {'--assume-filename', vim.api.nvim_buf_get_name(0)},
                     stdin = true,
                     cwd = vim.fn.expand('%:p:h')  -- Run clang-format in cwd of the file.
+                }
+            end
+        },
+        rust = {
+            -- Rustfmt
+            function()
+                return {
+                    exe = "rustfmt",
+                    args = {"--emit=stdout"},
+                    stdin = true
                 }
             end
         },

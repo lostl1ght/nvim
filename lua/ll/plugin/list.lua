@@ -175,7 +175,7 @@ return {
 
     {'mhartington/formatter.nvim',
         config = function ()
-            require('ll.lang.format.clang')
+            require('ll.lang.format')
         end
     },
     {'godlygeek/tabular',},
