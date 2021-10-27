@@ -330,6 +330,15 @@ function M.packer()
     })
 end
 
+function M.terminal()
+    M.merge(keymap_n, {
+        ['<leader>'] = {
+            t = {':terminal<cr>', 'Terminal'},
+            T = {':tabnew term://$SHELL<cr>', 'Tab terminal'},
+        },
+    })
+end
+
 M.setup()
 M.buffer()
 M.code()
@@ -345,6 +354,7 @@ M.tab()
 M.telescope()
 M.window()
 M.packer()
+M.terminal()
 wk.register(keymap_n, {mode = 'n'})
 wk.register(keymap_v, {mode = 'v'})
 wk.register(keymap_x, {mode = 'x'})
