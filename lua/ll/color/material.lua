@@ -6,12 +6,7 @@ end
 vim.o.termguicolors = true
 vim.o.cursorline = true
 
-local style = llvim.style
-if style == 'deep-ocean' then
-    style = 'deep ocean'
-end
-
-vim.g.material_style = style
+vim.g.material_style = llvim.style
 
 material.setup({
 	contrast = true,
