@@ -1,4 +1,4 @@
-if not pcall(require, "feline") then
+if not pcall(require, 'feline') then
     return print('feline not found')
 end
 
@@ -24,21 +24,31 @@ local vi_mode_colors = {
     NONE = colors.yellow
 }
 
-local function file_osinfo()
-    local os = vim.bo.fileformat:upper()
-    local icon
-    if os == 'UNIX' then
-        icon = ' '
-    elseif os == 'MAC' then
-        icon = ' '
-    else
-        icon = ' '
-    end
-    return icon .. os
+local osinfo = function()
+    return vim.bo.fileformat
 end
 
-local lsp = require 'feline.providers.lsp'
-local vi_mode_utils = require 'feline.providers.vi_mode'
+local osicon = function()
+    local os = osinfo()
+    if os == 'unix' then
+        return ' '
+    elseif os == 'mac' then
+        return ' '
+    else
+        return ' '
+    end
+end
+
+local filetype = function()
+    local name = vim.fn.expand('%:t')
+    local ext = vim.fn.expand('%:e')
+    local icon, _ = require('nvim-web-devicons').get_icon(name, ext, { default = true })
+    return icon .. ' ' .. vim.bo.filetype
+end
+
+
+local lsp = require('feline.providers.lsp')
+local vi_mode_utils = require('feline.providers.vi_mode')
 
 local lsp_get_diag = function(str)
     local count = vim.lsp.diagnostic.get_count(0, str)
@@ -49,20 +59,19 @@ local comps = {
     vi_mode = {
         left = {
             provider = function()
-              return '  ' .. vi_mode_utils.get_vim_mode()
+              -- return '  ' .. vi_mode_utils.get_vim_mode()
+              return ' ' .. osicon() .. vi_mode_utils.get_vim_mode()
             end,
             hl = function()
                 local val = {
                     name = vi_mode_utils.get_mode_highlight_name(),
                     fg = vi_mode_utils.get_mode_color(),
-                    -- fg = colors.bg
+                    style = 'bold',
                 }
                 return val
             end,
-            right_sep = ' '
         },
         right = {
-            -- provider = '▊',
             provider = '' ,
             hl = function()
                 local val = {
@@ -77,8 +86,14 @@ local comps = {
     },
     file = {
         info = {
-            provider = 'file_info',
-            file_modified_icon = '',
+            provider = {
+                name ='file_info',
+                opts = {
+                    type = 'unique',
+                    file_modified_icon = '',
+                },
+            },
+            left_sep = ' ',
             hl = {
                 fg = colors.blue,
                 style = 'bold'
@@ -93,10 +108,14 @@ local comps = {
             }
         },
         type = {
-            provider = 'file_type'
+            provider = filetype,
+            left_sep = ' ',
+            hl = {
+                fg = colors.blue,
+            }
         },
         os = {
-            provider = file_osinfo,
+            provider = osinfo,
             left_sep = ' ',
             hl = {
                 fg = colors.violet,
@@ -108,7 +127,6 @@ local comps = {
             left_sep = ' ',
             hl = {
                 fg = colors.cyan,
-                -- style = 'bold'
             }
         },
     },
@@ -138,7 +156,7 @@ local comps = {
         err = {
             -- provider = 'diagnostic_errors',
             provider = function()
-                return '' .. lsp_get_diag("Error")
+                return '' .. lsp_get_diag('Error')
             end,
             -- left_sep = ' ',
             enabled = function() return lsp.diagnostics_exist('Error') end,
@@ -149,7 +167,7 @@ local comps = {
         warn = {
             -- provider = 'diagnostic_warnings',
             provider = function()
-                return '' ..  lsp_get_diag("Warning")
+                return '' ..  lsp_get_diag('Warning')
             end,
             -- left_sep = ' ',
             enabled = function() return lsp.diagnostics_exist('Warning') end,
@@ -160,7 +178,7 @@ local comps = {
         info = {
             -- provider = 'diagnostic_info',
             provider = function()
-                return '' .. lsp_get_diag("Information")
+                return '' .. lsp_get_diag('Information')
             end,
             -- left_sep = ' ',
             enabled = function() return lsp.diagnostics_exist('Information') end,
@@ -171,7 +189,7 @@ local comps = {
         hint = {
             -- provider = 'diagnostic_hints',
             provider = function()
-                return '' .. lsp_get_diag("Hint")
+                return '' .. lsp_get_diag('Hint')
             end,
             -- left_sep = ' ',
             enabled = function() return lsp.diagnostics_exist('Hint') end,
@@ -183,9 +201,8 @@ local comps = {
     lsp = {
         name = {
             provider = 'lsp_client_names',
-            -- left_sep = ' ',
-            right_sep = ' ',
-            icon = '  ',
+            left_sep = ' ',
+            icon = ' ',
             hl = {
                 fg = colors.yellow
             }
@@ -223,8 +240,8 @@ local comps = {
 }
 
 local components = {
-  active = {},
-  inactive = {},
+    active = {},
+    inactive = {},
 }
 
 table.insert(components.active, {})
@@ -234,57 +251,56 @@ table.insert(components.inactive, {})
 table.insert(components.inactive, {})
 
 table.insert(components.active[1], comps.vi_mode.left)
-table.insert(components.active[1], comps.file.info)
 table.insert(components.active[1], comps.git.branch)
 table.insert(components.active[1], comps.git.add)
 table.insert(components.active[1], comps.git.change)
 table.insert(components.active[1], comps.git.remove)
-table.insert(components.inactive[1], comps.vi_mode.left)
-table.insert(components.inactive[1], comps.file.info)
 table.insert(components.active[3], comps.diagnos.err)
 table.insert(components.active[3], comps.diagnos.warn)
 table.insert(components.active[3], comps.diagnos.hint)
 table.insert(components.active[3], comps.diagnos.info)
 table.insert(components.active[3], comps.lsp.name)
-table.insert(components.active[3], comps.file.os)
+table.insert(components.active[3], comps.file.type)
 table.insert(components.active[3], comps.file.position)
 table.insert(components.active[3], comps.line_percentage)
 table.insert(components.active[3], comps.scroll_bar)
 table.insert(components.active[3], comps.vi_mode.right)
 
+table.insert(components.inactive[1], comps.vi_mode.left)
+table.insert(components.inactive[1], comps.file.type)
 
 -- TreeSitter
--- local ts_utils = require("nvim-treesitter.ts_utils")
--- local ts_parsers = require("nvim-treesitter.parsers")
--- local ts_queries = require("nvim-treesitter.query")
+-- local ts_utils = require('nvim-treesitter.ts_utils')
+-- local ts_parsers = require('nvim-treesitter.parsers')
+-- local ts_queries = require('nvim-treesitter.query')
 --[[ table.insert(components.active[2], {
   provider = function()
-    local node = require("nvim-treesitter.ts_utils").get_node_at_cursor()
-    return ("%d:%s [%d, %d] - [%d, %d]")
+    local node = require('nvim-treesitter.ts_utils').get_node_at_cursor()
+    return ('%d:%s [%d, %d] - [%d, %d]')
       :format(node:symbol(), node:type(), node:range())
   end,
   enabled = function()
-    local ok, ts_parsers = pcall(require, "nvim-treesitter.parsers")
+    local ok, ts_parsers = pcall(require, 'nvim-treesitter.parsers')
     return ok and ts_parsers.has_parser()
   end
-}) ]]
+}) --]]
 
--- require'feline'.setup {}
 require'feline'.setup {
     colors = { bg = colors.bg, fg = colors.fg },
     components = components,
     vi_mode_colors = vi_mode_colors,
     force_inactive = {
-        buftypes = {'terminal'},
-        bufnames = {},
-    },
-    disable = {
         filetypes = {
             'man',
             'packer',
             'NvimTree',
             'alpha',
         },
+        buftypes = {'terminal'},
+        bufnames = {},
+    },
+    disable = {
+        filetypes = {},
         buftypes = {},
         bufnames = {},
     },
