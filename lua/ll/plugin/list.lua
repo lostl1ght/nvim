@@ -56,7 +56,7 @@ return {
                 return print('lsp_signature not found')
             end
             sign.setup({hint_enable = false,})
-        end
+        end,
     },
 
     {'mfussenegger/nvim-dap',
