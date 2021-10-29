@@ -302,17 +302,17 @@ require'feline'.setup {
     components = components,
     vi_mode_colors = vi_mode_colors,
     force_inactive = {
+        filetypes = {},
+        buftypes = {'terminal'},
+        bufnames = {},
+    },
+    disable = {
         filetypes = {
             'man',
             'packer',
             'NvimTree',
             'alpha',
         },
-        buftypes = {'terminal'},
-        bufnames = {},
-    },
-    disable = {
-        filetypes = {},
         buftypes = {},
         bufnames = {},
     },
