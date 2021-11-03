@@ -1,6 +1,6 @@
 local M = {}
 
--- If close debugger terminal
+-- Close debugger terminal
 function M.close_term()
     local bufinfo = vim.fn.getbufinfo()
     for _, k in ipairs(bufinfo) do
@@ -15,20 +15,26 @@ function M.is_normal_buffer(buffer)
 end
 
 function M.clear_abnormal()
+    local num = 0
     for _, buffer in ipairs(vim.api.nvim_list_bufs()) do
         if vim.api.nvim_buf_is_valid(buffer) and not M.is_normal_buffer(buffer) then
             vim.api.nvim_buf_delete(buffer, { force = true })
+            num = num + 1
         end
     end
+    print(string.format('Deleted buffers: %d', num))
 end
 
 function M.clear_normal()
+    local num = 0
     local cur_buf = vim.api.nvim_get_current_buf()
     for _, buffer in ipairs(vim.api.nvim_list_bufs()) do
         if vim.api.nvim_buf_is_valid(buffer) and M.is_normal_buffer(buffer) and buffer ~= cur_buf then
             vim.api.nvim_buf_delete(buffer, { force = true })
+            num = num + 1
         end
     end
+    print(string.format('Deleted buffers: %d', num))
 end
 
 return M
