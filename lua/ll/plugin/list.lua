@@ -86,7 +86,11 @@ return {
             require('ll.plugin.config.tmux')
         end,
     },
-    {'phaazon/hop.nvim',},
+    {'phaazon/hop.nvim',
+        config = function ()
+            require('hop').setup()
+        end
+    },
     {'lewis6991/gitsigns.nvim',
         requires = 'nvim-lua/plenary.nvim',
         config = function ()
