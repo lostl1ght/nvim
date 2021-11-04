@@ -15,6 +15,12 @@ return {
         end,
         disable = llvim.theme ~= 'material',
     },
+    {'Yagua/nebulous.nvim',
+        config = function ()
+            require('ll.color.nebulous')
+        end,
+        disable = llvim.theme ~= 'nebulous',
+    },
     {'famiu/feline.nvim',
         requires = 'kyazdani42/nvim-web-devicons',
         config = function ()
