@@ -10,21 +10,19 @@ end
 --     })
 --     return true
 -- end
+-- Usage: attach_mappings = attach_mappings,
 
 -- Telescope setup
 tele.setup{
     pickers = {
         find_files = {
             hidden = true,
-            -- attach_mappings = attach_mappings,
         },
         live_grep = {
             hidden = true,
-            -- attach_mappings = attach_mappings,
         },
         help_tags = {
             hidden = true,
-            -- attach_mappings = attach_mappings,
             mappings = {
                 i = {
                     ['<cr>'] = 'select_tab'
@@ -35,11 +33,9 @@ tele.setup{
             },
         },
         file_browser = {
-            -- attach_mappings = attach_mappings,
             hidden = true,
         },
         oldfiles = {
-            -- attach_mappings = attach_mappings,
             hidden = true,
         },
     },
