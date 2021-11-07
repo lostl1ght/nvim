@@ -76,10 +76,26 @@ local shfmt = {
     end,
 }
 
+local latexindent = {
+    -- latexindent
+    function()
+        return {
+            exe = 'latexindent',
+            args = {
+                '-l ' .. os.getenv('HOME') .. '/.config/latexindent/defaultSettings.yaml',
+                '-c /tmp',
+                vim.api.nvim_buf_get_name(0),
+            },
+            stdin = true,
+        }
+    end,
+}
+
 formatter.setup({
     filetype = {
         c = clang,
         cpp = clang,
+        tex = latexindent,
         lua = stylua,
         python = yapf,
         rust = rustfmt,
