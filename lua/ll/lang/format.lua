@@ -41,6 +41,7 @@ local stylua = {
 }
 
 local autopep8 = {
+    -- autopep8
     function()
         return {
             exe = 'autopep8',
@@ -54,6 +55,7 @@ local autopep8 = {
 }
 
 local yapf = {
+    -- yapf
     function()
         return {
             exe = 'yapf',
