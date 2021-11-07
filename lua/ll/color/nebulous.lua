@@ -7,7 +7,7 @@ nebulous.setup {
     variant = llvim.style,
     disable = {
         background = false,
-        endOfBuffer = false,
+        endOfBuffer = true,
     },
     italic = {
         comments   = true,
