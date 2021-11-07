@@ -171,10 +171,7 @@ return {
     {
         'Shirk/vim-gas',
         config = function()
-            local cmd = vim.cmd
-            cmd('au BufRead,BufNewFile *.ASM set ft=masm')
-            cmd('au BufRead,BufNewFile *.asm set ft=masm')
-            cmd('au BufRead,BufNewFile *.s set ft=gas')
+            vim.cmd('au BufRead,BufNewFile *.s set ft=gas')
         end,
     },
     {
