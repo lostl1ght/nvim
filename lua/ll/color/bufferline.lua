@@ -4,8 +4,10 @@ if not present then
 end
 
 vim.o.termguicolors = true
+
 line.setup({
     options = {
         separator_style = 'slant',
+        modified_icon = '',
     },
 })

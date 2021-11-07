@@ -36,12 +36,12 @@ local vi_mode_colors = {
     NONE = colors.yellow,
 }
 
-local osinfo = function()
+local os_info = function()
     return vim.bo.fileformat
 end
 
-local osicon = function()
-    local os = osinfo()
+local os_icon = function()
+    local os = os_info()
     if os == 'unix' then
         return ' '
     elseif os == 'mac' then
@@ -51,27 +51,30 @@ local osicon = function()
     end
 end
 
-local filetype = function()
+local ro_icon = function()
+    return vim.bo.ro and '' or ''
+end
+
+local file_type = function()
     local name = vim.fn.expand('%:t')
     local ext = vim.fn.expand('%:e')
     local icon, _ = require('nvim-web-devicons').get_icon(name, ext, { default = true })
     return icon .. ' ' .. vim.bo.filetype
 end
 
-local lsp = require('feline.providers.lsp')
-local vi_mode_utils = require('feline.providers.vi_mode')
-
 local lsp_get_diag = function(str)
     local count = vim.lsp.diagnostic.get_count(0, str)
     return (count > 0) and ' ' .. count .. ' ' or ''
 end
 
+local lsp = require('feline.providers.lsp')
+local vi_mode_utils = require('feline.providers.vi_mode')
+
 local comps = {
     vi_mode = {
         left = {
             provider = function()
-                -- return '  ' .. vi_mode_utils.get_vim_mode()
-                return ' ' .. osicon() .. vi_mode_utils.get_vim_mode()
+                return ro_icon() .. ' ' .. vi_mode_utils.get_vim_mode()
             end,
             hl = function()
                 local val = {
@@ -81,15 +84,18 @@ local comps = {
                 }
                 return val
             end,
+            left_sep = ' ',
         },
         right = {
-            provider = '',
+            provider = function()
+                return os_icon() .. os_info():upper()
+            end,
             hl = function()
-                local val = {
+                return {
                     name = vi_mode_utils.get_mode_highlight_name(),
                     fg = vi_mode_utils.get_mode_color(),
+                    style = 'bold',
                 }
-                return val
             end,
             left_sep = ' ',
             right_sep = ' ',
@@ -111,26 +117,19 @@ local comps = {
             },
         },
         encoding = {
-            provider = 'file_encoding',
-            left_sep = ' ',
-            hl = {
-                fg = colors.violet,
-                style = 'bold',
-            },
-        },
-        type = {
-            provider = filetype,
+            provider = function()
+                return vim.bo.fenc ~= '' and vim.bo.fenc or vim.o.enc
+            end,
             left_sep = ' ',
             hl = {
                 fg = colors.blue,
             },
         },
-        os = {
-            provider = osinfo,
+        type = {
+            provider = file_type,
             left_sep = ' ',
             hl = {
-                fg = colors.violet,
-                style = 'bold',
+                fg = colors.blue,
             },
         },
         position = {
@@ -141,37 +140,26 @@ local comps = {
             },
         },
     },
-    left_end = {
-        provider = function()
-            return ''
-        end,
-        hl = {
-            fg = colors.bg,
-            bg = colors.blue,
-        },
-    },
     line_percentage = {
         provider = 'line_percentage',
         left_sep = ' ',
         hl = {
-            style = 'bold',
+            fg = colors.cyan,
         },
     },
     scroll_bar = {
         provider = 'scroll_bar',
         left_sep = ' ',
+        right_sep = ' ',
         hl = {
             fg = colors.blue,
-            style = 'bold',
         },
     },
     diagnos = {
         err = {
-            -- provider = 'diagnostic_errors',
             provider = function()
                 return '' .. lsp_get_diag('Error')
             end,
-            -- left_sep = ' ',
             enabled = function()
                 return lsp.diagnostics_exist('Error')
             end,
@@ -180,11 +168,9 @@ local comps = {
             },
         },
         warn = {
-            -- provider = 'diagnostic_warnings',
             provider = function()
                 return '' .. lsp_get_diag('Warning')
             end,
-            -- left_sep = ' ',
             enabled = function()
                 return lsp.diagnostics_exist('Warning')
             end,
@@ -193,11 +179,9 @@ local comps = {
             },
         },
         info = {
-            -- provider = 'diagnostic_info',
             provider = function()
                 return '' .. lsp_get_diag('Information')
             end,
-            -- left_sep = ' ',
             enabled = function()
                 return lsp.diagnostics_exist('Information')
             end,
@@ -206,11 +190,9 @@ local comps = {
             },
         },
         hint = {
-            -- provider = 'diagnostic_hints',
             provider = function()
                 return '' .. lsp_get_diag('Hint')
             end,
-            -- left_sep = ' ',
             enabled = function()
                 return lsp.diagnostics_exist('Hint')
             end,
@@ -223,7 +205,7 @@ local comps = {
         name = {
             provider = 'lsp_client_names',
             left_sep = ' ',
-            icon = ' ',
+            icon = ' ',
             hl = {
                 fg = colors.yellow,
             },
@@ -232,7 +214,7 @@ local comps = {
     git = {
         branch = {
             provider = 'git_branch',
-            icon = ' ',
+            icon = ' ',
             left_sep = ' ',
             hl = {
                 fg = colors.violet,
@@ -276,12 +258,14 @@ table.insert(components.active[1], comps.git.branch)
 table.insert(components.active[1], comps.git.add)
 table.insert(components.active[1], comps.git.change)
 table.insert(components.active[1], comps.git.remove)
+
 table.insert(components.active[3], comps.diagnos.err)
 table.insert(components.active[3], comps.diagnos.warn)
 table.insert(components.active[3], comps.diagnos.hint)
 table.insert(components.active[3], comps.diagnos.info)
 table.insert(components.active[3], comps.lsp.name)
 table.insert(components.active[3], comps.file.type)
+table.insert(components.active[3], comps.file.encoding)
 table.insert(components.active[3], comps.file.position)
 table.insert(components.active[3], comps.line_percentage)
 table.insert(components.active[3], comps.scroll_bar)
@@ -290,28 +274,17 @@ table.insert(components.active[3], comps.vi_mode.right)
 table.insert(components.inactive[1], comps.vi_mode.left)
 table.insert(components.inactive[1], comps.file.type)
 
--- TreeSitter
--- local ts_utils = require('nvim-treesitter.ts_utils')
--- local ts_parsers = require('nvim-treesitter.parsers')
--- local ts_queries = require('nvim-treesitter.query')
---[[ table.insert(components.active[2], {
-  provider = function()
-    local node = require('nvim-treesitter.ts_utils').get_node_at_cursor()
-    return ('%d:%s [%d, %d] - [%d, %d]')
-      :format(node:symbol(), node:type(), node:range())
-  end,
-  enabled = function()
-    local ok, ts_parsers = pcall(require, 'nvim-treesitter.parsers')
-    return ok and ts_parsers.has_parser()
-  end
-}) --]]
-
 require('feline').setup({
     colors = { bg = colors.bg, fg = colors.fg },
     components = components,
     vi_mode_colors = vi_mode_colors,
     force_inactive = {
-        filetypes = {},
+        filetypes = {
+            'dapui_watches',
+            'dapui_stacks',
+            'dapui_breakpoints',
+            'dapui_scopes',
+        },
         buftypes = { 'terminal' },
         bufnames = {},
     },
