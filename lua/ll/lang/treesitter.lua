@@ -14,6 +14,7 @@ treesitter_configs.setup({
         'python',
         'rust',
         'toml',
+        'yaml',
     },
     highlight = {
         enable = true,
