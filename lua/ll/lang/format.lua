@@ -40,11 +40,25 @@ local stylua = {
     end,
 }
 
+local autopep8 = {
+    function()
+        return {
+            exe = 'autopep8',
+            args = {
+                '--in-place --aggressive --aggressive',
+                vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)),
+            },
+            stdin = false,
+        }
+    end,
+}
+
 formatter.setup({
     filetype = {
-        cpp = clang,
         c = clang,
-        rust = rustfmt,
+        cpp = clang,
         lua = stylua,
+        python = autopep8,
+        rust = rustfmt,
     },
 })
