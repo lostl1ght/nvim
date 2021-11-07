@@ -37,7 +37,7 @@ dashboard.section.buttons.val = {
     dashboard.button('q', '  Quit', ':qa<cr>'),
 }
 
-dashboard.section.footer.val = 'i use arch btw'
+dashboard.section.footer.val = require('ll.util.quotes').get_quote()
 alpha.setup(dashboard.opts)
 
 --[[
