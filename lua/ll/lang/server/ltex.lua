@@ -3,27 +3,27 @@ if not pcall(require, 'lspconfig') or not capabilities then
     return print('lspconfig not found')
 end
 
-require'lspconfig'.ltex.setup{
-    cmd = { "ltex-ls" },
-    filetypes = { "tex", "bib", "markdown" },
+require('lspconfig').ltex.setup({
+    cmd = { 'ltex-ls' },
+    filetypes = { 'tex', 'bib', 'markdown' },
     settings = {
         ltex = {
             additionalRules = {
                 enablePickyRules = true,
-                motherTongue = "en"
+                motherTongue = 'en',
             },
-            checkFrequency = "edit",
-            diagnosticSeverity = "information",
+            checkFrequency = 'edit',
+            diagnosticSeverity = 'information',
             dictionary = {},
             disabledRules = {},
-            enabled = { "latex", "tex", "bib", "markdown" },
+            enabled = { 'latex', 'tex', 'bib', 'markdown' },
             hiddenFalsePositives = {},
-            language = "en",
-            setenceCacheSize = 2000
-        }
+            language = 'en',
+            setenceCacheSize = 2000,
+        },
     },
     flags = {
         debounce_text_changes = 150,
     },
     capabilities = capabilities,
-}
+})

@@ -8,7 +8,7 @@ require('ll.debug.signs')
 dap.adapters.lldb = {
     type = 'executable',
     command = 'lldb-vscode',
-    name = 'lldb'
+    name = 'lldb',
 }
 dap.configurations.cpp = {
     {

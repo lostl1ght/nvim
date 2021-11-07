@@ -7,8 +7,8 @@ local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, 'lua/?.lua')
 table.insert(runtime_path, 'lua/?/init.lua')
 
-require('lspconfig').sumneko_lua.setup {
-    cmd = {'lua-language-server'};
+require('lspconfig').sumneko_lua.setup({
+    cmd = { 'lua-language-server' },
     settings = {
         Lua = {
             runtime = {
@@ -19,7 +19,7 @@ require('lspconfig').sumneko_lua.setup {
             },
             diagnostics = {
                 -- Predefined globals
-                globals = {'vim', 'use'},
+                globals = { 'vim', 'use' },
             },
             workspace = {
                 -- Make the server aware of Neovim runtime files
@@ -35,4 +35,4 @@ require('lspconfig').sumneko_lua.setup {
         debounce_text_changes = 150,
     },
     capabilities = capabilities,
-}
+})

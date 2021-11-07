@@ -4,11 +4,11 @@ if not pcall(require, 'lspconfig') or not capabilities then
 end
 -- Cmake language server
 local util = require('lspconfig.util')
-require('lspconfig').cmake.setup{
+require('lspconfig').cmake.setup({
     cmd = { '/home/master/.pyenv/versions/cmake-ls/bin/cmake-language-server' },
     filetypes = { 'cmake' },
     init_options = {
-    buildDirectory = 'build'
+        buildDirectory = 'build',
     },
     root_dir = function(fname)
         local root_files = {
@@ -18,4 +18,4 @@ require('lspconfig').cmake.setup{
         return util.find_git_ancestor(fname) or util.root_pattern(unpack(root_files))(fname) or util.path.dirname(fname)
     end,
     capabilities = capabilities,
-}
+})

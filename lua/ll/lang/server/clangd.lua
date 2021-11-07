@@ -4,8 +4,8 @@ if not pcall(require, 'lspconfig') or not capabilities then
 end
 -- C/C++ language server
 local util = require('lspconfig.util')
-require'lspconfig'.clangd.setup{
-cmd = { 'clangd', '--background-index' },
+require('lspconfig').clangd.setup({
+    cmd = { 'clangd', '--background-index' },
     filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
     root_dir = function(fname)
         local root_files = {
@@ -18,4 +18,4 @@ cmd = { 'clangd', '--background-index' },
         debounce_text_changes = 150,
     },
     capabilities = capabilities,
-}
+})

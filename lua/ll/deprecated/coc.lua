@@ -25,18 +25,20 @@ require('which-key').register({
     },
     ['[e'] = { '<plug>(coc-diagnostic-prev)', 'previous code error' },
     [']e'] = { '<plug>(coc-diagnostic-next)', 'Next code error' },
-},
-{ mode = 'n' })
+}, {
+    mode = 'n',
+})
 
 require('which-key').register({
     ['<leader>'] = {
         r = {
             name = '+format',
             f = { '<plug>(coc-format-selected)', 'Format selected' },
-        }
-    }
-},
-{ mode = 'x' })
+        },
+    },
+}, {
+    mode = 'x',
+})
 
 local map = vim.api.nvim_set_keymap
 
@@ -59,27 +61,26 @@ function Smart_stab()
     return vim.fn.pumvisible() == 1 and t('<c-p>') or t('<c-h')
 end
 
-map('i', '<tab>', 'v:lua.Smart_tab()', {silent = true, expr = true, noremap = true})
-map('i', '<s-tab>', 'v:lua.Smart_stab()', {silent = true, expr = true, noremap = true})
+map('i', '<tab>', 'v:lua.Smart_tab()', { silent = true, expr = true, noremap = true })
+map('i', '<s-tab>', 'v:lua.Smart_stab()', { silent = true, expr = true, noremap = true })
 
 -- Select on return
 function Cr_select()
     local tldr = t('<c-g>') .. 'u' .. t('<cr>') .. t('<c-r>') .. '=coc#on_enter()' .. t('<cr>')
-    return vim.fn.pumvisible() == 1 and  vim.fn['coc#_select_confirm']() or tldr
+    return vim.fn.pumvisible() == 1 and vim.fn['coc#_select_confirm']() or tldr
 end
 
-map('i', '<cr>', 'v:lua.Cr_select()', {silent = true, expr = true, noremap = true})
+map('i', '<cr>', 'v:lua.Cr_select()', { silent = true, expr = true, noremap = true })
 
 -- Show documentation
 function Show_documentation()
-   local filetype = vim.bo.filetype
+    local filetype = vim.bo.filetype
 
-   if filetype == 'vim'  or filetype == 'help' then
+    if filetype == 'vim' or filetype == 'help' then
         vim.api.nvim_command('h ' .. filetype)
-   elseif vim.fn['coc#rpc#ready']() then
-     vim.fn.CocActionAsync('doHover')
-   end
+    elseif vim.fn['coc#rpc#ready']() then
+        vim.fn.CocActionAsync('doHover')
+    end
 end
 
-map('n', 'K', '<cmd>lua Show_documentation()<cr>', {noremap = true, silent = true})
-
+map('n', 'K', '<cmd>lua Show_documentation()<cr>', { noremap = true, silent = true })

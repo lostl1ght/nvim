@@ -4,7 +4,7 @@ if not pcall(require, 'lspconfig') or not capabilities then
 end
 -- C/C++ language server
 local util = require('lspconfig.util')
-require('lspconfig').ccls.setup{
+require('lspconfig').ccls.setup({
     cmd = { 'ccls' },
     filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
     root_dir = function(fname)
@@ -21,7 +21,7 @@ require('lspconfig').ccls.setup{
             threads = 0,
         },
         clang = {
-            excludeArgs = {'-frounding-math',}
+            excludeArgs = { '-frounding-math' },
         },
         cache = {
             directory = '.ccls-cache',
@@ -37,4 +37,4 @@ require('lspconfig').ccls.setup{
         debounce_text_changes = 150,
     },
     capabilities = capabilities,
-}
+})

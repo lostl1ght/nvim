@@ -4,7 +4,7 @@ if not pcall(require, 'lspconfig') or not capabilities then
 end
 -- Python language server
 local util = require('lspconfig.util')
-require('lspconfig').pyright.setup{
+require('lspconfig').pyright.setup({
     cmd = { 'pyright-langserver', '--stdio' },
     filetypes = { 'python' },
     root_dir = function(fname)
@@ -23,12 +23,12 @@ require('lspconfig').pyright.setup{
             analysis = {
                 autoSearchPaths = true,
                 diagnosticMode = 'workspace',
-                useLibraryCodeForTypes = true
-            }
-        }
+                useLibraryCodeForTypes = true,
+            },
+        },
     },
     flags = {
         debounce_text_changes = 150,
     },
     capabilities = capabilities,
-}
+})

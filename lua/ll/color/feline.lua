@@ -16,7 +16,7 @@ local colors = {
     violet = '#a9a1e1',
     magenta = '#c678dd',
     blue = '#61afef',
-    red = '#e86671'
+    red = '#e86671',
 }
 
 local vi_mode_colors = {
@@ -33,7 +33,7 @@ local vi_mode_colors = {
     COMMAND = colors.green,
     SHELL = colors.green,
     TERM = colors.green,
-    NONE = colors.yellow
+    NONE = colors.yellow,
 }
 
 local osinfo = function()
@@ -58,21 +58,20 @@ local filetype = function()
     return icon .. ' ' .. vim.bo.filetype
 end
 
-
 local lsp = require('feline.providers.lsp')
 local vi_mode_utils = require('feline.providers.vi_mode')
 
 local lsp_get_diag = function(str)
     local count = vim.lsp.diagnostic.get_count(0, str)
-    return (count > 0) and ' '..count..' ' or ''
+    return (count > 0) and ' ' .. count .. ' ' or ''
 end
 
 local comps = {
     vi_mode = {
         left = {
             provider = function()
-              -- return '  ' .. vi_mode_utils.get_vim_mode()
-              return ' ' .. osicon() .. vi_mode_utils.get_vim_mode()
+                -- return '  ' .. vi_mode_utils.get_vim_mode()
+                return ' ' .. osicon() .. vi_mode_utils.get_vim_mode()
             end,
             hl = function()
                 local val = {
@@ -84,22 +83,22 @@ local comps = {
             end,
         },
         right = {
-            provider = '' ,
+            provider = '',
             hl = function()
                 local val = {
                     name = vi_mode_utils.get_mode_highlight_name(),
-                    fg = vi_mode_utils.get_mode_color()
+                    fg = vi_mode_utils.get_mode_color(),
                 }
                 return val
             end,
             left_sep = ' ',
-            right_sep = ' '
-        }
+            right_sep = ' ',
+        },
     },
     file = {
         info = {
             provider = {
-                name ='file_info',
+                name = 'file_info',
                 opts = {
                     type = 'unique',
                     file_modified_icon = '',
@@ -108,61 +107,63 @@ local comps = {
             left_sep = ' ',
             hl = {
                 fg = colors.blue,
-                style = 'bold'
-            }
+                style = 'bold',
+            },
         },
         encoding = {
             provider = 'file_encoding',
             left_sep = ' ',
             hl = {
                 fg = colors.violet,
-                style = 'bold'
-            }
+                style = 'bold',
+            },
         },
         type = {
             provider = filetype,
             left_sep = ' ',
             hl = {
                 fg = colors.blue,
-            }
+            },
         },
         os = {
             provider = osinfo,
             left_sep = ' ',
             hl = {
                 fg = colors.violet,
-                style = 'bold'
-            }
+                style = 'bold',
+            },
         },
         position = {
             provider = 'position',
             left_sep = ' ',
             hl = {
                 fg = colors.cyan,
-            }
+            },
         },
     },
     left_end = {
-        provider = function() return '' end,
+        provider = function()
+            return ''
+        end,
         hl = {
             fg = colors.bg,
             bg = colors.blue,
-        }
+        },
     },
     line_percentage = {
         provider = 'line_percentage',
         left_sep = ' ',
         hl = {
-            style = 'bold'
-        }
+            style = 'bold',
+        },
     },
     scroll_bar = {
         provider = 'scroll_bar',
         left_sep = ' ',
         hl = {
             fg = colors.blue,
-            style = 'bold'
-        }
+            style = 'bold',
+        },
     },
     diagnos = {
         err = {
@@ -171,21 +172,25 @@ local comps = {
                 return '' .. lsp_get_diag('Error')
             end,
             -- left_sep = ' ',
-            enabled = function() return lsp.diagnostics_exist('Error') end,
+            enabled = function()
+                return lsp.diagnostics_exist('Error')
+            end,
             hl = {
-                fg = colors.red
-            }
+                fg = colors.red,
+            },
         },
         warn = {
             -- provider = 'diagnostic_warnings',
             provider = function()
-                return '' ..  lsp_get_diag('Warning')
+                return '' .. lsp_get_diag('Warning')
             end,
             -- left_sep = ' ',
-            enabled = function() return lsp.diagnostics_exist('Warning') end,
+            enabled = function()
+                return lsp.diagnostics_exist('Warning')
+            end,
             hl = {
-                fg = colors.yellow
-            }
+                fg = colors.yellow,
+            },
         },
         info = {
             -- provider = 'diagnostic_info',
@@ -193,10 +198,12 @@ local comps = {
                 return '' .. lsp_get_diag('Information')
             end,
             -- left_sep = ' ',
-            enabled = function() return lsp.diagnostics_exist('Information') end,
+            enabled = function()
+                return lsp.diagnostics_exist('Information')
+            end,
             hl = {
-                fg = colors.blue
-            }
+                fg = colors.blue,
+            },
         },
         hint = {
             -- provider = 'diagnostic_hints',
@@ -204,10 +211,12 @@ local comps = {
                 return '' .. lsp_get_diag('Hint')
             end,
             -- left_sep = ' ',
-            enabled = function() return lsp.diagnostics_exist('Hint') end,
+            enabled = function()
+                return lsp.diagnostics_exist('Hint')
+            end,
             hl = {
-                fg = colors.cyan
-            }
+                fg = colors.cyan,
+            },
         },
     },
     lsp = {
@@ -216,9 +225,9 @@ local comps = {
             left_sep = ' ',
             icon = ' ',
             hl = {
-                fg = colors.yellow
-            }
-        }
+                fg = colors.yellow,
+            },
+        },
     },
     git = {
         branch = {
@@ -227,28 +236,28 @@ local comps = {
             left_sep = ' ',
             hl = {
                 fg = colors.violet,
-                style = 'bold'
+                style = 'bold',
             },
         },
         add = {
             provider = 'git_diff_added',
             hl = {
-                fg = colors.green
-            }
+                fg = colors.green,
+            },
         },
         change = {
             provider = 'git_diff_changed',
             hl = {
-                fg = colors.orange
-            }
+                fg = colors.orange,
+            },
         },
         remove = {
             provider = 'git_diff_removed',
             hl = {
-                fg = colors.red
-            }
-        }
-    }
+                fg = colors.red,
+            },
+        },
+    },
 }
 
 local components = {
@@ -297,13 +306,13 @@ table.insert(components.inactive[1], comps.file.type)
   end
 }) --]]
 
-require'feline'.setup {
+require('feline').setup({
     colors = { bg = colors.bg, fg = colors.fg },
     components = components,
     vi_mode_colors = vi_mode_colors,
     force_inactive = {
         filetypes = {},
-        buftypes = {'terminal'},
+        buftypes = { 'terminal' },
         bufnames = {},
     },
     disable = {
@@ -316,4 +325,4 @@ require'feline'.setup {
         buftypes = {},
         bufnames = {},
     },
-}
+})

@@ -5,22 +5,34 @@ local i = ls.insert_node
 
 local c = {
     s('for', {
-        t('for ('), i(1, 'init-expression'), t('; '), i(2, 'cond-expression'), t('; '), i(3, 'loop-expression'), t({') {', '\t'}),
+        t('for ('),
+        i(1, 'init-expression'),
+        t('; '),
+        i(2, 'cond-expression'),
+        t('; '),
+        i(3, 'loop-expression'),
+        t({ ') {', '\t' }),
         i(4, 'statement'),
-        t({'', '}'}),
+        t({ '', '}' }),
     }),
     s('return', {
-        t('return '), i(1, 'extension'), t(';'),
+        t('return '),
+        i(1, 'extension'),
+        t(';'),
     }),
     s('while', {
-        t('while ('), i(1, 'expression'), t({') {', '\t'}),
+        t('while ('),
+        i(1, 'expression'),
+        t({ ') {', '\t' }),
         i(2, 'statement'),
-        t({'', '}'}),
+        t({ '', '}' }),
     }),
     s('define', {
-        t('#define '), i(1, 'identifier'), t(' '), i(2, 'token-string'),
+        t('#define '),
+        i(1, 'identifier'),
+        t(' '),
+        i(2, 'token-string'),
     }),
 }
 
 return c
-

@@ -1,6 +1,6 @@
 local present, dap = pcall(require, 'dap')
 if not present then
-  return print('dap not found')
+    return print('dap not found')
 end
 
 require('ll.debug.signs')
@@ -13,16 +13,16 @@ dap.adapters.codelldb = function(on_adapter)
 
     local handle, pid_or_err
     local opts = {
-        stdio = {nil, stdout, stderr},
+        stdio = { nil, stdout, stderr },
         detached = true,
     }
     handle, pid_or_err = vim.loop.spawn(cmd, opts, function(code)
-    stdout:close()
-    stderr:close()
-    handle:close()
-    if code ~= 0 then
-        print('codelldb exited with code', code)
-    end
+        stdout:close()
+        stderr:close()
+        handle:close()
+        if code ~= 0 then
+            print('codelldb exited with code', code)
+        end
     end)
     assert(handle, 'Error running codelldb: ' .. tostring(pid_or_err))
     stdout:read_start(function(err, chunk)
@@ -34,7 +34,7 @@ dap.adapters.codelldb = function(on_adapter)
                     on_adapter({
                         type = 'server',
                         host = '127.0.0.1',
-                        port = port
+                        port = port,
                     })
                 end)
             else
@@ -69,4 +69,3 @@ dap.configurations.cpp = {
 
 dap.configurations.c = dap.configurations.cpp
 dap.configurations.rust = dap.configurations.cpp
-

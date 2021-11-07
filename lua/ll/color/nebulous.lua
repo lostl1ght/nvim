@@ -3,16 +3,16 @@ if not present then
     return print('nebulous not found')
 end
 
-nebulous.setup {
+nebulous.setup({
     variant = llvim.style,
     disable = {
         background = false,
         endOfBuffer = true,
     },
     italic = {
-        comments   = true,
-        keywords   = false,
-        functions  = false,
-        variables  = false,
+        comments = true,
+        keywords = false,
+        functions = false,
+        variables = false,
     },
-}
+})

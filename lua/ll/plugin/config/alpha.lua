@@ -5,26 +5,26 @@ end
 
 local dashboard = require('alpha.themes.dashboard')
 
-dashboard.section.header.val  = {
-'                   -`                 ',
-'                  .o+`                ',
-'                 `ooo/                ',
-'                `+oooo:               ',
-'               `+oooooo:              ',
-'               -+oooooo+:             ',
-'             `/:-:++oooo+:            ',
-'            `/++++/+++++++:           ',
-'           `/++++++++++++++:          ',
-'          `/+++ooooooooooooo/`        ',
-'         ./ooosssso++osssssso+`       ',
-'        .oossssso-````/ossssss+`      ',
-'       -osssssso.      :ssssssso.     ',
-'      :osssssss/        osssso+++.    ',
-'     /ossssssss/        +ssssooo/-    ',
-'   `/ossssso+/:-        -:/+osssso+-  ',
-'  `+sso+:-`                 `.-/+oso: ',
-' `++:.                           `-/+/',
-' .`                                 `/',
+dashboard.section.header.val = {
+    '                   -`                 ',
+    '                  .o+`                ',
+    '                 `ooo/                ',
+    '                `+oooo:               ',
+    '               `+oooooo:              ',
+    '               -+oooooo+:             ',
+    '             `/:-:++oooo+:            ',
+    '            `/++++/+++++++:           ',
+    '           `/++++++++++++++:          ',
+    '          `/+++ooooooooooooo/`        ',
+    '         ./ooosssso++osssssso+`       ',
+    '        .oossssso-````/ossssss+`      ',
+    '       -osssssso.      :ssssssso.     ',
+    '      :osssssss/        osssso+++.    ',
+    '     /ossssssss/        +ssssooo/-    ',
+    '   `/ossssso+/:-        -:/+osssso+-  ',
+    '  `+sso+:-`                 `.-/+oso: ',
+    ' `++:.                           `-/+/',
+    ' .`                                 `/',
 }
 
 dashboard.section.buttons.val = {
@@ -34,7 +34,7 @@ dashboard.section.buttons.val = {
     dashboard.button('SPC f r', 'ﭯ  Recent files', ':Telescope oldfiles<cr>'),
     dashboard.button('SPC b n', '  New file', ':enew<cr>'),
     dashboard.button('SPC f w', '  Find word', ':Telescope live_grep<cr>'),
-    dashboard.button('q',       '  Quit', ':qa<cr>'),
+    dashboard.button('q', '  Quit', ':qa<cr>'),
 }
 
 dashboard.section.footer.val = 'i use arch btw'
@@ -59,4 +59,3 @@ dashboard.section.header.val = {
 "      .           .'      ",
 }
 --]]
-

@@ -16,7 +16,7 @@ dapui.setup({
     sidebar = {
         -- You can change the order of elements in the sidebar
         elements = {
-        -- Provide as ID strings or tables with 'id' and 'size' keys
+            -- Provide as ID strings or tables with 'id' and 'size' keys
             {
                 id = 'scopes',
                 size = 0.25, -- Can be float or integer > 1

@@ -9,7 +9,7 @@ local colors = {
     violet = '#a9a1e1',
     magenta = '#c678dd',
     blue = '#61afef',
-    red = '#e86671'
+    red = '#e86671',
 }
 
 return colors

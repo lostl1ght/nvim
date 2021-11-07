@@ -5,13 +5,13 @@ function M.close_term()
     local bufinfo = vim.fn.getbufinfo()
     for _, k in ipairs(bufinfo) do
         if string.find(k['name'], 'term://.*/sh') then
-            vim.api.nvim_buf_delete(k['bufnr'], {force = true})
+            vim.api.nvim_buf_delete(k['bufnr'], { force = true })
         end
     end
 end
 
 function M.is_normal_buffer(buffer)
-  return #vim.api.nvim_buf_get_option(buffer, 'buftype') == 0 and vim.api.nvim_buf_get_option(buffer, 'buflisted')
+    return #vim.api.nvim_buf_get_option(buffer, 'buftype') == 0 and vim.api.nvim_buf_get_option(buffer, 'buflisted')
 end
 
 function M.clear_abnormal()
@@ -38,4 +38,3 @@ function M.clear_normal()
 end
 
 return M
-

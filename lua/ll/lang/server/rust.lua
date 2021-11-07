@@ -4,32 +4,32 @@ if not pcall(require, 'lspconfig') or not capabilities then
 end
 -- Rust analyzer
 local util = require('lspconfig.util')
-require('lspconfig').rust_analyzer.setup{
+require('lspconfig').rust_analyzer.setup({
     cmd = { 'rust-analyzer' },
     filetypes = { 'rust' },
-    root_dir = function (fname)
+    root_dir = function(fname)
         local root_files = {
             'Cargo.toml',
-            'rust-project.json'
+            'rust-project.json',
         }
         return util.root_pattern(unpack(root_files))(fname) or util.find_git_ancestor(fname) or util.path.dirname(fname)
     end,
     settings = {
-      ['rust-analyzer'] = {
+        ['rust-analyzer'] = {
             assist = {
                 importGranularity = 'module',
                 importPrefix = 'by_self',
             },
             cargo = {
-                loadOutDirsFromCheck = true
+                loadOutDirsFromCheck = true,
             },
             procMacro = {
-                enable = true
+                enable = true,
             },
-      },
+        },
     },
     flags = {
         debounce_text_changes = 150,
     },
     capabilities = capabilities,
-}
+})

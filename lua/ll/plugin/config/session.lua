@@ -5,12 +5,12 @@ if not t_present or not s_present then
 end
 -- Session manager
 sess.setup({
-    sessions_dir = vim.fn.stdpath('data') .. '/sessions',     -- Session directory
-    path_replacer = '__',                                     -- Path separator
-    colon_replacer = '++',                                    -- Colon symbol
-    autoload_last_session = false,                            -- Load on startup
-    autosave_last_session = true,                             -- Save on exit
-    autosave_ignore_paths = { '~' },                          -- Folders to ignore when autosaving
-    autosave_ignore_not_normal = true,
+    sessions_dir = vim.fn.stdpath('data') .. '/sessions', -- Session directory
+    path_replacer = '__', -- Path separator
+    colon_replacer = '++', -- Colon symbol
+    autoload_last_session = false, -- Load on startup
+    autosave_last_session = true, -- Save on exit
+    autosave_ignore_not_normal = true, -- Plugin will not save a session when no writable and listed buffers are opened.
 })
+
 tele.load_extension('sessions')

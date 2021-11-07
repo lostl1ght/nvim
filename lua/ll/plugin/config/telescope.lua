@@ -13,7 +13,7 @@ end
 -- Usage: attach_mappings = attach_mappings,
 
 -- Telescope setup
-tele.setup{
+tele.setup({
     pickers = {
         find_files = {
             hidden = true,
@@ -25,10 +25,10 @@ tele.setup{
             hidden = true,
             mappings = {
                 i = {
-                    ['<cr>'] = 'select_tab'
+                    ['<cr>'] = 'select_tab',
                 },
                 n = {
-                    ['<cr>'] = 'select_tab'
+                    ['<cr>'] = 'select_tab',
                 },
             },
         },
@@ -39,4 +39,4 @@ tele.setup{
             hidden = true,
         },
     },
-}
+})

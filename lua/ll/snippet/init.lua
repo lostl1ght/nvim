@@ -4,8 +4,7 @@ if not present then
 end
 local c = require('ll.snippet.c')
 
-ls.filetype_extend('cpp', {'c'})
+ls.filetype_extend('cpp', { 'c' })
 ls.snippets = {
     c = c,
 }
-

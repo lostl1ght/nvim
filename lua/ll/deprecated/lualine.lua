@@ -4,7 +4,7 @@ require('lualine').setup({
     options = {
         theme = 'material-nvim',
         icons_enabled = true,
-        disabled_filetypes = {'alpha', 'NvimTree', 'man'},
+        disabled_filetypes = { 'alpha', 'NvimTree', 'man' },
     },
     sections = {
         lualine_b = {
@@ -14,9 +14,9 @@ require('lualine').setup({
             {
                 'filename',
                 file_status = true,
-                path = 1 -- 0 = just filename, 1 = relative path, 2 = absolute path
-            }
-        }
+                path = 1, -- 0 = just filename, 1 = relative path, 2 = absolute path
+            },
+        },
     },
     extensions = {
         'nvim-tree',
