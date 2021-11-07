@@ -53,12 +53,22 @@ local autopep8 = {
     end,
 }
 
+local yapf = {
+    function()
+        return {
+            exe = 'yapf',
+            args = { '--style google', vim.api.nvim_buf_get_name(0) },
+            stdin = true,
+        }
+    end,
+}
+
 formatter.setup({
     filetype = {
         c = clang,
         cpp = clang,
         lua = stylua,
-        python = autopep8,
+        python = yapf,
         rust = rustfmt,
     },
 })
