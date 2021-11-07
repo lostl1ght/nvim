@@ -65,6 +65,17 @@ local yapf = {
     end,
 }
 
+local shfmt = {
+    -- shfmt
+    function()
+        return {
+            exe = 'shfmt',
+            args = { '-i', 4 },
+            stdin = true,
+        }
+    end,
+}
+
 formatter.setup({
     filetype = {
         c = clang,
@@ -72,5 +83,8 @@ formatter.setup({
         lua = stylua,
         python = yapf,
         rust = rustfmt,
+        sh = shfmt,
+        bash = shfmt,
+        zsh = shfmt,
     },
 })
