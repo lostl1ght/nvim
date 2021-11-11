@@ -133,17 +133,18 @@ function M.buffer()
 end
 
 function M.debug()
-    vim.cmd('command! DapBegin lua require("dapui").open()<cr> require("dap").continue()<cr>')
-    vim.cmd(
-        'command! DapStop lua require("dap").disconnect() require("dap").close() require("dapui").close() require("ll.util").clear_abnormal()'
-    )
-    vim.cmd('command! DapToggle lua require("dapui").toggle()')
-    vim.cmd('command! DapContinue lua require("dap").continue()')
-    vim.cmd('command! DapBreakpoint lua require("dap").toggle_breakpoint()')
-    vim.cmd('command! DapStepOver lua require("dap").step_over()')
-    vim.cmd('command! DapStepInto lua require("dap").step_into()')
-    vim.cmd('command! DapStepOut lua require("dap").step_out()')
-    vim.cmd('command! DapEval lua require("dapui").eval()')
+    vim.cmd([[
+        command! DapBegin lua require("nvim-tree").close() require("dapui").open() require("dap").continue()
+        command! DapStop lua require("dap").disconnect() require("dap").close() require("dapui").close() require("ll.util").clear_abnormal()
+        command! DapToggle lua require("dapui").toggle()
+        command! DapContinue lua require("dap").continue()
+        command! DapBreakpoint lua require("dap").toggle_breakpoint()
+        command! DapConditionalBreakpoint lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
+        command! DapStepOver lua require("dap").step_over()
+        command! DapStepInto lua require("dap").step_into()
+        command! DapStepOut lua require("dap").step_out()
+        command! DapEval lua require("dapui").eval()
+    ]])
     M.merge(keymap_n, {
         ['<leader>'] = {
             d = {
@@ -152,6 +153,7 @@ function M.debug()
                 c = { ':DapContinue<cr>', 'Continue' },
                 s = { ':DapStop<cr>', 'Stop' },
                 t = { ':DapToggle<cr>', 'Toggle UI' },
+                B = { ':DapConditionalBreakpoint<cr>', 'Conditional breakpoint' },
             },
         },
         ['<f9>'] = { ':DapBreakpoint<cr>', 'Toggle breakpoint' },
