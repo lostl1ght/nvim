@@ -5,7 +5,38 @@ end
 
 local dashboard = require('alpha.themes.dashboard')
 
+dashboard.section.buttons.val = {
+    dashboard.button('SPC k l', '  Last session', ':LoadSession<cr>'),
+    dashboard.button('SPC k o', '⌀  Load session', ':Telescope sessions<cr>'),
+    dashboard.button('SPC f f', '  Open file', ':Telescope find_files<cr>'),
+    dashboard.button('SPC f r', 'ﭯ  Recent files', ':Telescope oldfiles<cr>'),
+    dashboard.button('SPC b n', '  New file', ':enew<cr>'),
+    dashboard.button('SPC f w', '  Find word', ':Telescope live_grep<cr>'),
+    dashboard.button('q', '  Quit', ':qa<cr>'),
+}
+
+dashboard.section.footer.val = require('ll.util.quotes').get_quote()
+alpha.setup(dashboard.opts)
+
 dashboard.section.header.val = {
+    '      .            .      ',
+    "    .,;'           :,.    ",
+    '  .,;;;,,.         ccc;.  ',
+    ".;c::::,,,'        ccccc: ",
+    '.::cc::,,,,,.      cccccc.',
+    ".cccccc;;;;;;'     llllll.",
+    '.cccccc.,;;;;;;.   llllll.',
+    ".cccccc  ';;;;;;'  oooooo.",
+    "'lllllc   .;;;;;;;.oooooo'",
+    "'lllllc     ,::::::looooo'",
+    "'llllll      .:::::lloddd'",
+    '.looool       .;::coooodo.',
+    "  .cool         'ccoooc.  ",
+    '    .co          .:o:.    ',
+    "      .           .'      ",
+}
+
+--[[ dashboard.section.header.val = {
     '                   -`                 ',
     '                  .o+`                ',
     '                 `ooo/                ',
@@ -25,37 +56,4 @@ dashboard.section.header.val = {
     '  `+sso+:-`                 `.-/+oso: ',
     ' `++:.                           `-/+/',
     ' .`                                 `/',
-}
-
-dashboard.section.buttons.val = {
-    dashboard.button('SPC k l', '  Last session', ':LoadSession<cr>'),
-    dashboard.button('SPC k o', '⌀  Load session', ':Telescope sessions<cr>'),
-    dashboard.button('SPC f f', '  Open file', ':Telescope find_files<cr>'),
-    dashboard.button('SPC f r', 'ﭯ  Recent files', ':Telescope oldfiles<cr>'),
-    dashboard.button('SPC b n', '  New file', ':enew<cr>'),
-    dashboard.button('SPC f w', '  Find word', ':Telescope live_grep<cr>'),
-    dashboard.button('q', '  Quit', ':qa<cr>'),
-}
-
-dashboard.section.footer.val = require('ll.util.quotes').get_quote()
-alpha.setup(dashboard.opts)
-
---[[
-dashboard.section.header.val = {
-"      .            .      ",
-"    .,;'           :,.    ",
-"  .,;;;,,.         ccc;.  ",
-".;c::::,,,'        ccccc: ",
-".::cc::,,,,,.      cccccc.",
-".cccccc;;;;;;'     llllll.",
-".cccccc.,;;;;;;.   llllll.",
-".cccccc  ';;;;;;'  oooooo.",
-"'lllllc   .;;;;;;;.oooooo'",
-"'lllllc     ,::::::looooo'",
-"'llllll      .:::::lloddd'",
-".looool       .;::coooodo.",
-"  .cool         'ccoooc.  ",
-"    .co          .:o:.    ",
-"      .           .'      ",
-}
---]]
+} --]]
