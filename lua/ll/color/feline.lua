@@ -88,7 +88,7 @@ local comps = {
         },
         right = {
             provider = function()
-                return os_icon() .. os_info():upper()
+                return os_icon() .. os_info()
             end,
             hl = function()
                 return {
@@ -267,8 +267,6 @@ table.insert(components.active[3], comps.lsp.name)
 table.insert(components.active[3], comps.file.type)
 table.insert(components.active[3], comps.file.encoding)
 table.insert(components.active[3], comps.file.position)
-table.insert(components.active[3], comps.line_percentage)
-table.insert(components.active[3], comps.scroll_bar)
 table.insert(components.active[3], comps.vi_mode.right)
 
 table.insert(components.inactive[1], comps.vi_mode.left)
