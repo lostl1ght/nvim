@@ -10,7 +10,7 @@ local keymap_v = {}
 local keymap_x = {}
 local keymap_o = {}
 
-function M.merge(t1, t2)
+M.merge = function(t1, t2)
     for k, v in pairs(t2) do
         if (type(v) == 'table') and (type(t1[k] or false) == 'table') then
             M.merge(t1[k], t2[k])
@@ -21,8 +21,7 @@ function M.merge(t1, t2)
     return t1
 end
 
--- Which-key setup
-function M.setup()
+M.setup = function()
     wk.setup({
         triggers_blacklist = {
             i = { 'i' },
@@ -36,75 +35,7 @@ function M.setup()
     })
 end
 
-function M.window()
-    M.merge(keymap_n, {
-        ['<leader>'] = {
-            w = {
-                name = '+window',
-                q = { '<C-w>q', 'Close window' },
-                v = { '<C-w>v', 'Vertical split' },
-                s = { '<C-w>s', 'Horizontal split' },
-            },
-        },
-    })
-end
-
-function M.tab()
-    M.merge(keymap_n, {
-        ['<leader>'] = {
-            ['<tab>'] = {
-                name = '+tabs',
-                ['1'] = { '1gt', 'Switch to tab 1' },
-                ['2'] = { '2gt', 'Switch to tab 2' },
-                ['3'] = { '3gt', 'Switch to tab 3' },
-                ['4'] = { '4gt', 'Switch to tab 4' },
-                ['5'] = { '5gt', 'Switch to tab 5' },
-                ['6'] = { '6gt', 'Switch to tab 6' },
-                ['7'] = { '7gt', 'Switch to tab 7' },
-                ['8'] = { '8gt', 'Switch to tab 8' },
-                ['9'] = { '9gt', 'Switch to tab 9' },
-                ['0'] = { ':tabl<cr>', 'Switch to the last tab' },
-                n = { ':tabnew<cr>', 'New tab' },
-                q = { ':tabclose<cr>', 'Close tab' },
-            },
-        },
-        ['['] = {
-            t = { ':tabp<cr>', 'Previous tab' },
-            T = { ':tabf<cr>', 'First tab' },
-        },
-        [']'] = {
-            t = { ':tabn<cr>', 'Next tab' },
-            T = { ':tabl<cr>', 'Last tab' },
-        },
-    })
-end
-
-function M.quit()
-    M.merge(keymap_n, {
-        ['<leader>'] = {
-            q = { ':qa<cr>', 'Quit' },
-            Q = { ':qa!<cr>', 'Quit without saving' },
-        },
-    })
-end
-
-function M.telescope()
-    M.merge(keymap_n, {
-        ['<leader>'] = {
-            f = {
-                name = '+file',
-                f = { ':Telescope find_files<cr>', 'Open file' },
-                w = { ':Telescope live_grep<cr>', 'Find word' },
-                h = { ':Telescope help_tags<cr>', 'Help tags' },
-                e = { ':Telescope file_browser<cr>', 'File browser' },
-                r = { ':Telescope oldfiles<cr>', 'Recent file' },
-            },
-            [','] = { ':Telescope find_files<cr>', 'Open file' },
-        },
-    })
-end
-
-function M.buffer()
+M.buffer = function()
     M.merge(keymap_n, {
         ['<leader>'] = {
             b = {
@@ -118,8 +49,8 @@ function M.buffer()
             },
             ['.'] = { ':Telescope buffers<cr>', 'Open buffer' },
             ['/'] = { ':b#<cr>', 'Switch buffer' },
-            s = { ':w<cr>', 'Save' },
-            S = { ':wa<cr>', 'Save all' },
+            w = { ':w<cr>', 'Save' },
+            W = { ':wa<cr>', 'Save all' },
         },
         ['['] = {
             b = { ':bp<cr>', 'Previous buffer' },
@@ -132,18 +63,18 @@ function M.buffer()
     })
 end
 
-function M.debug()
+M.debug = function()
     vim.cmd([[
         command! DapBegin lua require("nvim-tree").close() require("dapui").open() require("dap").continue()
-        command! DapStop lua require("dap").disconnect() require("dap").close() require("dapui").close() require("ll.util").clear_abnormal()
-        command! DapToggle lua require("dapui").toggle()
+        command! DapBp lua require("dap").toggle_breakpoint()
+        command! DapCndBp lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
         command! DapContinue lua require("dap").continue()
-        command! DapBreakpoint lua require("dap").toggle_breakpoint()
-        command! DapConditionalBreakpoint lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
-        command! DapStepOver lua require("dap").step_over()
-        command! DapStepInto lua require("dap").step_into()
-        command! DapStepOut lua require("dap").step_out()
         command! DapEval lua require("dapui").eval()
+        command! DapStop lua require("dap").disconnect() require("dap").close() require("dapui").close() require("ll.util").clear_abnormal()
+        command! DapStepInto lua require("dap").step_into()
+        command! DapStepOver lua require("dap").step_over()
+        command! DapStepOut lua require("dap").step_out()
+        command! DapToggle lua require("dapui").toggle()
     ]])
     M.merge(keymap_n, {
         ['<leader>'] = {
@@ -153,10 +84,10 @@ function M.debug()
                 c = { ':DapContinue<cr>', 'Continue' },
                 s = { ':DapStop<cr>', 'Stop' },
                 t = { ':DapToggle<cr>', 'Toggle UI' },
-                B = { ':DapConditionalBreakpoint<cr>', 'Conditional breakpoint' },
+                B = { ':DapCndBp<cr>', 'Conditional breakpoint' },
             },
         },
-        ['<f9>'] = { ':DapBreakpoint<cr>', 'Toggle breakpoint' },
+        ['<f9>'] = { ':DapBp<cr>', 'Toggle breakpoint' },
         ['<f10>'] = { ':DapStepOver<cr>', 'Step over' },
         ['<f11>'] = { ':DapStepInto<cr>', 'Step into' },
         ['<f12>'] = { ':DapStepOut<cr>', 'Step out' },
@@ -171,70 +102,7 @@ function M.debug()
     })
 end
 
-function M.open()
-    M.merge(keymap_n, {
-        ['<leader>'] = {
-            o = {
-                name = '+open',
-                b = { ':DBUIToggle<cr>', 'Database' },
-                m = { ':MarkdownPreviewToggle<cr>', 'Markdown preview' },
-                t = { ':NvimTreeToggle<cr>', 'File tree' },
-            },
-        },
-    })
-end
-
-function M.code()
-    M.merge(keymap_n, {
-        ['<leader>'] = {
-            c = {
-                name = '+code',
-                f = { ':Format<cr>', 'Format' },
-                n = { ':lua vim.lsp.buf.rename()<cr>', 'Rename' },
-                D = { ':lua vim.lsp.buf.declaration()<cr>', 'Declaration' },
-                d = { ':lua vim.lsp.buf.definition()<cr>', 'Definition' },
-                i = { ':lua vim.lsp.buf.implementation()<cr>', 'Implementation' },
-                t = { ':lua vim.lsp.buf.type_definition()<cr>', 'Type definition' },
-                r = { ':lua require("telescope.builtin").lsp_references()<cr>', 'References' },
-                a = { ':lua require("telescope.builtin").lsp_code_actions()<cr>', 'Code action' },
-                s = { ':lua require("telescope.builtin").lsp_document_symbols()<cr>', 'Document symbols' },
-                e = { ':lua require("telescope.builtin").lsp_document_diagnostics()<cr>', 'Document diagnostics' },
-            },
-        },
-        ['['] = {
-            c = { ':lua vim.lsp.diagnostic.goto_prev()<cr>', 'Previous code error' },
-        },
-        [']'] = {
-            c = { ':lua vim.lsp.diagnostic.goto_next()<cr>', 'Next code error' },
-        },
-        K = { ':lua vim.lsp.buf.hover()<cr>', 'Hover' },
-    })
-end
-
-function M.lspsaga()
-    M.merge(keymap_n, {
-        ['<leader>'] = {
-            c = {
-                name = '+code',
-                h = { ':Format<cr>', 'Format' },
-                n = { ':Lspsaga rename<cr>', 'Rename' },
-                f = { ':Lspsaga lsp_finder<cr>', 'Find symbol' },
-                d = { ':Lspsaga preview_definition<cr>', 'Definition' },
-                a = { ':Lspsaga code_action<cr>', 'Code action' },
-                e = { ':Lspsaga show_line_diagnostics<cr>', 'Line diagnostics' },
-            },
-        },
-        ['['] = {
-            c = { ':Lspsaga diagnostic_jump_prev<cr>', 'Previous code error' },
-        },
-        [']'] = {
-            c = { ':Lspsaga diagnostic_jump_next<cr>', 'Next code error' },
-        },
-        K = { ':Lspsaga hover_doc<cr>', 'Hover' },
-    })
-end
-
-function M.git()
+M.git = function()
     M.merge(keymap_n, {
         ['<leader>'] = {
             g = {
@@ -277,7 +145,7 @@ function M.git()
     })
 end
 
-function M.hop()
+M.hop = function()
     M.merge(keymap_n, {
         ['<leader>'] = {
             ['<space>'] = {
@@ -290,7 +158,7 @@ function M.hop()
     })
 end
 
-function M.ipython()
+M.ipython = function()
     M.merge(keymap_n, {
         ['<leader>'] = {
             j = {
@@ -305,21 +173,70 @@ function M.ipython()
     })
 end
 
-function M.session()
+M.lsp = function()
     M.merge(keymap_n, {
         ['<leader>'] = {
-            k = {
-                name = '+session',
-                o = { ':Telescope sessions save_current=true<cr>', 'Open session' },
-                l = { ':LoadSession<cr>', 'Last session' },
-                k = { ':SaveSession<cr>', 'Save session' },
+            c = {
+                name = '+code',
+                f = { ':Format<cr>', 'Format' },
+                n = { ':lua vim.lsp.buf.rename()<cr>', 'Rename' },
+                D = { ':lua vim.lsp.buf.declaration()<cr>', 'Declaration' },
+                d = { ':lua vim.lsp.buf.definition()<cr>', 'Definition' },
+                i = { ':lua vim.lsp.buf.implementation()<cr>', 'Implementation' },
+                t = { ':lua vim.lsp.buf.type_definition()<cr>', 'Type definition' },
+                r = { ':lua require("telescope.builtin").lsp_references()<cr>', 'References' },
+                a = { ':lua require("telescope.builtin").lsp_code_actions()<cr>', 'Code action' },
+                s = { ':lua require("telescope.builtin").lsp_document_symbols()<cr>', 'Document symbols' },
+                e = { ':lua require("telescope.builtin").lsp_document_diagnostics()<cr>', 'Document diagnostics' },
             },
-            m = { ':Telescope sessions save_current=true<cr>', 'Open session' },
+        },
+        ['['] = {
+            c = { ':lua vim.lsp.diagnostic.goto_prev()<cr>', 'Previous code error' },
+        },
+        [']'] = {
+            c = { ':lua vim.lsp.diagnostic.goto_next()<cr>', 'Next code error' },
+        },
+        K = { ':lua vim.lsp.buf.hover()<cr>', 'Hover' },
+    })
+end
+
+M.lspsaga = function()
+    M.merge(keymap_n, {
+        ['<leader>'] = {
+            c = {
+                name = '+code',
+                h = { ':Format<cr>', 'Format' },
+                n = { ':Lspsaga rename<cr>', 'Rename' },
+                f = { ':Lspsaga lsp_finder<cr>', 'Find symbol' },
+                d = { ':Lspsaga preview_definition<cr>', 'Definition' },
+                a = { ':Lspsaga code_action<cr>', 'Code action' },
+                e = { ':Lspsaga show_line_diagnostics<cr>', 'Line diagnostics' },
+            },
+        },
+        ['['] = {
+            c = { ':Lspsaga diagnostic_jump_prev<cr>', 'Previous code error' },
+        },
+        [']'] = {
+            c = { ':Lspsaga diagnostic_jump_next<cr>', 'Next code error' },
+        },
+        K = { ':Lspsaga hover_doc<cr>', 'Hover' },
+    })
+end
+
+M.open = function()
+    M.merge(keymap_n, {
+        ['<leader>'] = {
+            o = {
+                name = '+open',
+                b = { ':DBUIToggle<cr>', 'Database' },
+                m = { ':MarkdownPreviewToggle<cr>', 'Markdown preview' },
+                t = { ':NvimTreeToggle<cr>', 'File tree' },
+            },
         },
     })
 end
 
-function M.packer()
+M.packer = function()
     M.merge(keymap_n, {
         ['<leader>'] = {
             p = {
@@ -334,7 +251,76 @@ function M.packer()
     })
 end
 
-function M.terminal()
+M.quit = function()
+    M.merge(keymap_n, {
+        ['<leader>'] = {
+            q = { ':qa<cr>', 'Quit' },
+            Q = { ':qa!<cr>', 'Quit without saving' },
+        },
+    })
+end
+
+M.session = function()
+    M.merge(keymap_n, {
+        ['<leader>'] = {
+            k = {
+                name = '+session',
+                o = { ':Telescope sessions save_current=true<cr>', 'Open session' },
+                l = { ':LoadSession<cr>', 'Last session' },
+                k = { ':SaveSession<cr>', 'Save session' },
+            },
+            m = { ':Telescope sessions save_current=true<cr>', 'Open session' },
+        },
+    })
+end
+
+M.tab = function()
+    M.merge(keymap_n, {
+        ['<leader>'] = {
+            ['<tab>'] = {
+                name = '+tabs',
+                ['1'] = { '1gt', 'Switch to tab 1' },
+                ['2'] = { '2gt', 'Switch to tab 2' },
+                ['3'] = { '3gt', 'Switch to tab 3' },
+                ['4'] = { '4gt', 'Switch to tab 4' },
+                ['5'] = { '5gt', 'Switch to tab 5' },
+                ['6'] = { '6gt', 'Switch to tab 6' },
+                ['7'] = { '7gt', 'Switch to tab 7' },
+                ['8'] = { '8gt', 'Switch to tab 8' },
+                ['9'] = { '9gt', 'Switch to tab 9' },
+                ['0'] = { ':tabl<cr>', 'Switch to the last tab' },
+                n = { ':tabnew<cr>', 'New tab' },
+                q = { ':tabclose<cr>', 'Close tab' },
+            },
+        },
+        ['['] = {
+            t = { ':tabp<cr>', 'Previous tab' },
+            T = { ':tabf<cr>', 'First tab' },
+        },
+        [']'] = {
+            t = { ':tabn<cr>', 'Next tab' },
+            T = { ':tabl<cr>', 'Last tab' },
+        },
+    })
+end
+
+M.telescope = function()
+    M.merge(keymap_n, {
+        ['<leader>'] = {
+            f = {
+                name = '+file',
+                f = { ':Telescope find_files<cr>', 'Open file' },
+                w = { ':Telescope live_grep<cr>', 'Find word' },
+                h = { ':Telescope help_tags<cr>', 'Help tags' },
+                e = { ':Telescope file_browser<cr>', 'File browser' },
+                r = { ':Telescope oldfiles<cr>', 'Recent file' },
+            },
+            [','] = { ':Telescope find_files<cr>', 'Open file' },
+        },
+    })
+end
+
+M.terminal = function()
     M.merge(keymap_n, {
         ['<leader>'] = {
             t = { ':terminal<cr>', 'Terminal' },
@@ -343,22 +329,37 @@ function M.terminal()
     })
 end
 
+M.window = function()
+    M.merge(keymap_n, {
+        ['<leader>'] = {
+            e = {
+                name = '+window',
+                q = { '<C-w>q', 'Close window' },
+                v = { '<C-w>v', 'Vertical split' },
+                s = { '<C-w>s', 'Horizontal split' },
+            },
+        },
+    })
+end
+
 M.setup()
+
 M.buffer()
-M.code()
--- M.lspsaga()
 M.debug()
 M.git()
 M.hop()
 -- M.ipython()
+M.lsp()
+-- M.lspsaga()
 M.open()
+M.packer()
 M.quit()
 M.session()
 M.tab()
 M.telescope()
-M.window()
-M.packer()
 M.terminal()
+M.window()
+
 wk.register(keymap_n, { mode = 'n' })
 wk.register(keymap_v, { mode = 'v' })
 wk.register(keymap_x, { mode = 'x' })
