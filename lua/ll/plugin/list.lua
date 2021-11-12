@@ -1,5 +1,4 @@
 pcall(require, 'packer_compiled')
--- Plugins
 return {
     { 'wbthomason/packer.nvim' },
     { 'lewis6991/impatient.nvim' },
@@ -9,7 +8,6 @@ return {
             require('ll.core.keymap')
         end,
     },
-
     {
         'marko-cerovac/material.nvim',
         config = function()
@@ -49,7 +47,6 @@ return {
             color.setup()
         end,
     },
-
     {
         'neovim/nvim-lspconfig',
         requires = 'hrsh7th/cmp-nvim-lsp',
@@ -69,10 +66,15 @@ return {
             if not present then
                 return print('lsp_signature not found')
             end
-            sign.setup({ hint_enable = false })
+            sign.setup({
+                hint_enable = false,
+                bind = true,
+                handler_opts = {
+                    border = 'rounded',
+                },
+            })
         end,
     },
-
     {
         'mfussenegger/nvim-dap',
         config = function()
@@ -91,7 +93,6 @@ return {
             require('ll.debug.dapui')
         end,
     },
-
     {
         'aserowy/tmux.nvim',
         config = function()
@@ -133,14 +134,12 @@ return {
             require('ll.plugin.config.alpha')
         end,
     },
-    -- {'glepnir/dashboard-nvim',},
     {
         'nvim-telescope/telescope.nvim',
         config = function()
             require('ll.plugin.config.telescope')
         end,
     },
-
     {
         'Shatur/neovim-session-manager',
         requires = {
@@ -159,7 +158,6 @@ return {
             vim.env.GIT_EDITOR = "nvr --remote-wait +'set bufhidden=wipe'"
         end,
     },
-
     {
         'kyazdani42/nvim-tree.lua',
         requires = 'kyazdani42/nvim-web-devicons',
@@ -167,7 +165,6 @@ return {
             require('ll.plugin.config.nvimtree')
         end,
     },
-
     {
         'Shirk/vim-gas',
         config = function()
@@ -180,7 +177,6 @@ return {
             require('ll.lang.treesitter')
         end,
     },
-
     {
         'hrsh7th/nvim-cmp',
         requires = {
@@ -199,9 +195,7 @@ return {
             require('ll.snippet')
         end,
     },
-
     { 'rhysd/committia.vim' },
-
     {
         'mhartington/formatter.nvim',
         config = function()
@@ -216,7 +210,7 @@ return {
             if not present then
                 return print('comment not found')
             end
-            comment.setup()
+            comment.setup({ ignore = '^$' })
         end,
     },
 }

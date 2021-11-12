@@ -6,4 +6,3 @@ llvim.style = 'midnight'
 
 local plugins = require('ll.plugin.list')
 require('ll.plugin.loader'):load(plugins)
-
