@@ -23,8 +23,6 @@ map('', '<space>', '<leader>', { noremap = false }) -- Better Leader mapping
 map('n', '<f1>', '<nop>', { noremap = false }) -- Disable F1
 map('i', '<f1>', '<nop>', { noremap = false })
 
-vim.g.tex_flavor = 'latex'
-
 local disabled_built_ins = {
     'netrw',
     'netrwPlugin',
@@ -50,6 +48,10 @@ for _, plugin in pairs(disabled_built_ins) do
     vim.g['loaded_' .. plugin] = 1
 end
 
+vim.g.tex_flavor = 'latex'
+
 vim.cmd(
     'set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz'
 )
+
+vim.cmd('set list listchars=tab:>\\ ,eol:↲')
