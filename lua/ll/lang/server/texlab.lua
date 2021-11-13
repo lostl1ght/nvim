@@ -1,8 +1,7 @@
-local capabilities = require('ll.lang.completion.capabilities')
-if not pcall(require, 'lspconfig') or not capabilities then
+if not pcall(require, 'lspconfig') then
     return print('lspconfig not found')
 end
--- Latex language server
+local capabilities = require('ll.lang.completion.capabilities')
 require('lspconfig').texlab.setup({
     cmd = { 'texlab' },
     filetypes = { 'tex', 'bib' },
