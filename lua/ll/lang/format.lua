@@ -82,6 +82,7 @@ local latexindent = {
         return {
             exe = 'latexindent',
             args = {
+                '-m',
                 '-l ' .. os.getenv('HOME') .. '/.config/latexindent/defaultSettings.yaml',
                 '-c /tmp',
                 vim.api.nvim_buf_get_name(0),

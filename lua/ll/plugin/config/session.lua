@@ -1,16 +1,15 @@
-local t_present, tele = pcall(require, 'telescope')
-local s_present, sess = pcall(require, 'session_manager')
+local t_present, ts = pcall(require, 'telescope')
+local s_present, sm = pcall(require, 'session_manager')
 if not t_present or not s_present then
     return print('telescope or session_manager not found')
 end
--- Session manager
-sess.setup({
-    sessions_dir = vim.fn.stdpath('data') .. '/sessions', -- Session directory
-    path_replacer = '__', -- Path separator
-    colon_replacer = '++', -- Colon symbol
-    autoload_last_session = false, -- Load on startup
-    autosave_last_session = true, -- Save on exit
-    autosave_ignore_not_normal = true, -- Plugin will not save a session when no writable and listed buffers are opened.
+sm.setup({
+    sessions_dir = vim.fn.stdpath('data') .. '/sessions',
+    path_replacer = '__',
+    colon_replacer = '++',
+    autoload_mode = require('session_manager.config').AutoloadMode.CurrentDir,
+    autosave_last_session = true,
+    autosave_ignore_not_normal = true,
 })
 
-tele.load_extension('sessions')
+ts.load_extension('sessions')
