@@ -18,7 +18,7 @@ dashboard.section.buttons.val = {
 dashboard.section.footer.val = require('ll.util.quotes').get_quote()
 alpha.setup(dashboard.opts)
 
-dashboard.section.header.val = {
+local neovim = {
     '      .            .      ',
     "    .,;'           :,.    ",
     '  .,;;;,,.         ccc;.  ',
@@ -36,7 +36,7 @@ dashboard.section.header.val = {
     "      .           .'      ",
 }
 
---[[ dashboard.section.header.val = {
+local arch = {
     '                   -`                 ',
     '                  .o+`                ',
     '                 `ooo/                ',
@@ -56,4 +56,23 @@ dashboard.section.header.val = {
     '  `+sso+:-`                 `.-/+oso: ',
     ' `++:.                           `-/+/',
     ' .`                                 `/',
-} --]]
+}
+
+local manjaro = {
+    '██████████████████  ████████',
+    '██████████████████  ████████',
+    '██████████████████  ████████',
+    '██████████████████  ████████',
+    '████████            ████████',
+    '████████  ████████  ████████',
+    '████████  ████████  ████████',
+    '████████  ████████  ████████',
+    '████████  ████████  ████████',
+    '████████  ████████  ████████',
+    '████████  ████████  ████████',
+    '████████  ████████  ████████',
+    '████████  ████████  ████████',
+    '████████  ████████  ████████',
+}
+
+dashboard.section.header.val = manjaro

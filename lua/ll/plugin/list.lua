@@ -83,12 +83,18 @@ return {
     },
     {
         'mfussenegger/nvim-dap-python',
+        requires = {
+            'mfussenegger/nvim-dap',
+        },
         config = function()
             require('ll.debug.python')
         end,
     },
     {
         'rcarriga/nvim-dap-ui',
+        requires = {
+            'mfussenegger/nvim-dap',
+        },
         config = function()
             require('ll.debug.dapui')
         end,
@@ -121,21 +127,11 @@ return {
         end,
     },
     {
-        'hanschen/vim-ipython-cell',
-        requires = 'jpalardy/vim-slime',
-        config = function()
-            require('ll.plugin.config.ipython')
-        end,
-        disable = true,
-    },
-    {
-        'goolord/alpha-nvim',
-        config = function()
-            require('ll.plugin.config.alpha')
-        end,
-    },
-    {
         'nvim-telescope/telescope.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'nvim-treesitter/nvim-treesitter',
+        },
         config = function()
             require('ll.plugin.config.telescope')
         end,
@@ -143,6 +139,7 @@ return {
     {
         'Shatur/neovim-session-manager',
         requires = {
+            'nvim-treesitter/nvim-treesitter',
             'nvim-telescope/telescope.nvim',
             'nvim-lua/plenary.nvim',
         },
