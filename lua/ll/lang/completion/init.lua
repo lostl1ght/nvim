@@ -52,7 +52,7 @@ cmp.setup({
     sources = {
         { name = 'luasnip' },
         { name = 'nvim_lua' },
-        { name = 'nvim_lsp', keyword_length = 4 },
+        { name = 'nvim_lsp' },
         { name = 'vim-dadbod-completion' },
         { name = 'path' },
         { name = 'buffer', keyword_length = 5 },
