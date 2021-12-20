@@ -7,6 +7,7 @@ if not k or not s or not c then
     return print('lspkind or luasnip or cmp not found')
 end
 
+local cmp_buffer = require('cmp_buffer')
 -- Completion settings
 vim.o.completeopt = 'menu,menuone,noselect'
 cmp.setup({
@@ -55,7 +56,27 @@ cmp.setup({
         { name = 'nvim_lsp' },
         { name = 'vim-dadbod-completion' },
         { name = 'path' },
-        { name = 'buffer', keyword_length = 5 },
+        {
+            name = 'buffer',
+            keyword_length = 5,
+            option = {
+                keyword_pattern = [[\k\+]],
+            },
+            get_bufnrs = function()
+                local bufs = {}
+                for _, win in ipairs(vim.api.nvim_list_wins()) do
+                    bufs[vim.api.nvim_win_get_buf(win)] = true
+                end
+                return vim.tbl_keys(bufs)
+            end,
+        },
+    },
+    sorting = {
+        comparators = {
+            function(...)
+                return cmp_buffer:compare_locality(...)
+            end,
+        },
     },
     formatting = {
         format = lspkind.cmp_format({
