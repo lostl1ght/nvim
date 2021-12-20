@@ -1,3 +1,14 @@
+--[[
+
+    {
+        'aserowy/tmux.nvim',
+        config = function()
+            require('ll.plugin.config.tmux')
+        end,
+    },
+
+]]
+
 local present, tmux = pcall(require, 'tmux')
 if not present then
     return print('tmux not found')

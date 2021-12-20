@@ -173,6 +173,16 @@ M.ipython = function()
     })
 end
 
+M.kitty = function ()
+    vim.g.kitty_navigator_no_mappings = 1
+    M.merge(keymap_n, {
+        ['<c-h>'] = { ':KittyNavigateLeft<cr>', 'Kitty Navigate Left' },
+        ['<c-l>'] = { ':KittyNavigateRight<cr>', 'Kitty Navigate Right' },
+        ['<c-j>'] = { ':KittyNavigateDown<cr>', 'Kitty Navigate Down' },
+        ['<c-k>'] = { ':KittyNavigateUp<cr>', 'Kitty Navigate Up' },
+    })
+end
+
 M.lsp = function()
     M.merge(keymap_n, {
         ['<leader>'] = {
@@ -349,6 +359,7 @@ M.debug()
 M.git()
 M.hop()
 -- M.ipython()
+M.kitty()
 M.lsp()
 -- M.lspsaga()
 M.open()

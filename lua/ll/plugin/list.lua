@@ -101,12 +101,6 @@ return {
         end,
     },
     {
-        'aserowy/tmux.nvim',
-        config = function()
-            require('ll.plugin.config.tmux')
-        end,
-    },
-    {
         'phaazon/hop.nvim',
         config = function()
             require('hop').setup()
@@ -210,5 +204,9 @@ return {
             end
             comment.setup({ ignore = '^$' })
         end,
+    },
+    {
+        'knubie/vim-kitty-navigator',
+         run = 'cp ./*.py ~/.config/kitty/',
     },
 }
