@@ -1,6 +1,20 @@
 if not pcall(require, 'lspconfig') then
     return print('lspconfig not found')
 end
+
+-- Bullshit workaround for texlab exiting when
+-- the character after cursor is cyrillic
+vim.notify = function(msg, log_level, _opts)
+    if msg:match('exit code') then
+        vim.cmd('LspStart')
+    end
+    if log_level == vim.log.levels.ERROR then
+        vim.api.nvim_err_writeln(msg)
+    else
+        vim.api.nvim_echo({ { msg } }, true, {})
+    end
+end
+
 local capabilities = require('ll.lang.completion.capabilities')
 local util = require('lspconfig.util')
 require('lspconfig').texlab.setup({
