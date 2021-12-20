@@ -57,6 +57,7 @@ return {
             require('ll.lang.server.cmake')
             require('ll.lang.server.texlab')
             require('ll.lang.server.rust')
+            require('ll.lang.server.gopls')
         end,
     },
     {

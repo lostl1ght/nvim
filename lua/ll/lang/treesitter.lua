@@ -9,6 +9,7 @@ treesitter_configs.setup({
         'c',
         'cmake',
         'cpp',
+        'go',
         'latex',
         'lua',
         'python',
