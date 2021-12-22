@@ -101,12 +101,6 @@ return {
         end,
     },
     {
-        'phaazon/hop.nvim',
-        config = function()
-            require('hop').setup()
-        end,
-    },
-    {
         'lewis6991/gitsigns.nvim',
         requires = 'nvim-lua/plenary.nvim',
         config = function()
@@ -231,4 +225,5 @@ return {
             require('ll.lang.navigator')
         end,
     },
+    { 'ggandor/lightspeed.nvim' },
 }

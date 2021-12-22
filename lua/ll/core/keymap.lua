@@ -145,19 +145,6 @@ M.git = function()
     })
 end
 
-M.hop = function()
-    M.merge(keymap_n, {
-        ['<leader>'] = {
-            ['<space>'] = {
-                name = '+hop',
-                w = { ':HopWord<cr>', 'Hop word' },
-                c = { ':HopChar1<cr>', 'Hop char' },
-                l = { ':HopLine<cr>', 'Hop line' },
-            },
-        },
-    })
-end
-
 M.ipython = function()
     M.merge(keymap_n, {
         ['<leader>'] = {
@@ -359,7 +346,6 @@ M.setup()
 M.buffer()
 M.debug()
 M.git()
-M.hop()
 -- M.ipython()
 M.kitty()
 -- M.lsp()
