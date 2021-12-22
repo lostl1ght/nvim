@@ -210,6 +210,13 @@ return {
         run = 'cp ./*.py ~/.config/kitty/',
     },
     {
+        'folke/trouble.nvim',
+        requires = 'kyazdani42/nvim-web-devicons',
+        config = function()
+            require('trouble').setup({})
+        end,
+    },
+    {
         'catppuccin/nvim',
         as = 'catppuccin',
         config = function()

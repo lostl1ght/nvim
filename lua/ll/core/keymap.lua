@@ -173,7 +173,7 @@ M.ipython = function()
     })
 end
 
-M.kitty = function ()
+M.kitty = function()
     vim.g.kitty_navigator_no_mappings = 1
     M.merge(keymap_n, {
         ['<c-h>'] = { ':KittyNavigateLeft<cr>', 'Kitty Navigate Left' },
@@ -197,7 +197,7 @@ M.lsp = function()
                 r = { ':lua require("telescope.builtin").lsp_references()<cr>', 'References' },
                 a = { ':lua require("telescope.builtin").lsp_code_actions()<cr>', 'Code action' },
                 s = { ':lua require("telescope.builtin").lsp_document_symbols()<cr>', 'Document symbols' },
-                e = { ':lua require("telescope.builtin").lsp_document_diagnostics()<cr>', 'Document diagnostics' },
+                e = { ':TroubleToggle<cr>', 'Diagnostics' },
             },
         },
         ['['] = {
@@ -207,29 +207,6 @@ M.lsp = function()
             c = { ':lua vim.lsp.diagnostic.goto_next()<cr>', 'Next code error' },
         },
         K = { ':lua vim.lsp.buf.hover()<cr>', 'Hover' },
-    })
-end
-
-M.lspsaga = function()
-    M.merge(keymap_n, {
-        ['<leader>'] = {
-            c = {
-                name = '+code',
-                h = { ':Format<cr>', 'Format' },
-                n = { ':Lspsaga rename<cr>', 'Rename' },
-                f = { ':Lspsaga lsp_finder<cr>', 'Find symbol' },
-                d = { ':Lspsaga preview_definition<cr>', 'Definition' },
-                a = { ':Lspsaga code_action<cr>', 'Code action' },
-                e = { ':Lspsaga show_line_diagnostics<cr>', 'Line diagnostics' },
-            },
-        },
-        ['['] = {
-            c = { ':Lspsaga diagnostic_jump_prev<cr>', 'Previous code error' },
-        },
-        [']'] = {
-            c = { ':Lspsaga diagnostic_jump_next<cr>', 'Next code error' },
-        },
-        K = { ':Lspsaga hover_doc<cr>', 'Hover' },
     })
 end
 
@@ -322,8 +299,6 @@ M.telescope = function()
                 f = { ':Telescope find_files<cr>', 'Open file' },
                 w = { ':Telescope live_grep<cr>', 'Find word' },
                 h = { ':Telescope help_tags<cr>', 'Help tags' },
-                e = { ':Telescope file_browser<cr>', 'File browser' },
-                r = { ':Telescope oldfiles<cr>', 'Recent file' },
             },
             [','] = { ':Telescope find_files<cr>', 'Open file' },
         },
@@ -361,7 +336,6 @@ M.hop()
 -- M.ipython()
 M.kitty()
 M.lsp()
--- M.lspsaga()
 M.open()
 M.packer()
 M.quit()
