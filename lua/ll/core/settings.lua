@@ -48,8 +48,21 @@ for _, plugin in pairs(disabled_built_ins) do
     vim.g['loaded_' .. plugin] = 1
 end
 
-vim.cmd(
-    'set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz'
-)
+-- vim.cmd(
+--     'set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz'
+-- )
+
+vim.cmd('set keymap=russian-jcukenwin')
+vim.cmd('set iminsert=0')
+vim.cmd('set imsearch=0')
+map('i', '<c-l>', '<c-^>', { noremap = true })
+
+-- vim.cmd([[
+--     function! SetUsLayout()
+--       silent !qdbus org.kde.keyboard /Layouts setLayout us > /dev/null
+--     endfunction
+
+--     autocmd InsertLeave * call SetUsLayout()
+-- ]])
 
 vim.cmd('set list listchars=tab:>\\ ,eol:↲')
