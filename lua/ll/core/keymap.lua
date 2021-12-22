@@ -229,10 +229,10 @@ M.navigator = function ()
             },
         },
         ['['] = {
-            c = { ':lua ', 'Previous code error' },
+            c = { ':lua vim.lsp.diagnostic.goto_prev()<cr>', 'Previous code error' },
         },
         [']'] = {
-            c = { ':lua ', 'Next code error' },
+            c = { ':lua vim.lsp.diagnostic.goto_next()<cr>', 'Next code error' },
         },
         K = { ':lua vim.lsp.buf.hover()<cr>', 'Hover' }, })
 end
