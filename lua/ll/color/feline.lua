@@ -10,7 +10,6 @@ local colors = {
     fg = '#abb2bf',
     yellow = '#e0af68',
     cyan = '#56b6c2',
-    darkblue = '#081633',
     green = '#98c379',
     orange = '#d19a66',
     violet = '#a9a1e1',
@@ -161,7 +160,7 @@ local comps = {
                 return '' .. lsp_get_diag('Error')
             end,
             enabled = function()
-                return lsp.diagnostics_exist('Error')
+                return lsp.diagnostics_exist(vim.diagnostic.severity.ERROR)
             end,
             hl = {
                 fg = colors.red,
@@ -172,7 +171,7 @@ local comps = {
                 return '' .. lsp_get_diag('Warning')
             end,
             enabled = function()
-                return lsp.diagnostics_exist('Warning')
+                return lsp.diagnostics_exist(vim.diagnostic.severity.WARN)
             end,
             hl = {
                 fg = colors.yellow,
@@ -183,7 +182,7 @@ local comps = {
                 return '' .. lsp_get_diag('Information')
             end,
             enabled = function()
-                return lsp.diagnostics_exist('Information')
+                return lsp.diagnostics_exist(vim.diagnostic.severity.INFO)
             end,
             hl = {
                 fg = colors.blue,
@@ -194,7 +193,7 @@ local comps = {
                 return '' .. lsp_get_diag('Hint')
             end,
             enabled = function()
-                return lsp.diagnostics_exist('Hint')
+                return lsp.diagnostics_exist(vim.diagnostic.severity.HINT)
             end,
             hl = {
                 fg = colors.cyan,
@@ -273,7 +272,7 @@ table.insert(components.inactive[1], comps.vi_mode.left)
 table.insert(components.inactive[1], comps.file.type)
 
 require('feline').setup({
-    colors = { bg = colors.bg, fg = colors.fg },
+    theme = { bg = colors.bg, fg = colors.fg },
     components = components,
     vi_mode_colors = vi_mode_colors,
     force_inactive = {
