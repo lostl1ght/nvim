@@ -210,6 +210,33 @@ M.lsp = function()
     })
 end
 
+M.navigator = function ()
+    M.merge(keymap_n, {
+        ['<leader>'] = {
+            c = {
+                name = '+code',
+                f = { ':Format<cr>', 'Format' },
+                n = { ':lua require("navigator.rename").rename()<cr>', 'Rename' },
+                D = { ':lua vim.lsp.buf.declaration()<cr>', 'Declaration' },
+                d = { ':lua vim.lsp.buf.definition()<cr>', 'Definition' },
+                p = { ':lua require("navigator.definition").definition_preview()<cr>', 'Definition preview' },
+                i = { ':lua vim.lsp.buf.implementation()<cr>', 'Implementation' },
+                t = { ':lua vim.lsp.buf.type_definition()<cr>', 'Type definition' },
+                r = { ':lua require("navigator.reference").reference()<cr>', 'References' },
+                a = { ':lua require("navigator.codeAction").code_action()<cr>', 'Code action' },
+                s = { ':lua require("navigator.treesitter").buf_ts()<cr>', 'Document symbols' },
+                e = { ':TroubleToggle<cr>', 'Diagnostics' },
+            },
+        },
+        ['['] = {
+            c = { ':lua ', 'Previous code error' },
+        },
+        [']'] = {
+            c = { ':lua ', 'Next code error' },
+        },
+        K = { ':lua vim.lsp.buf.hover()<cr>', 'Hover' }, })
+end
+
 M.open = function()
     M.merge(keymap_n, {
         ['<leader>'] = {
@@ -335,7 +362,8 @@ M.git()
 M.hop()
 -- M.ipython()
 M.kitty()
-M.lsp()
+-- M.lsp()
+M.navigator()
 M.open()
 M.packer()
 M.quit()

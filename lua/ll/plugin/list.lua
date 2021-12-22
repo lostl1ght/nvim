@@ -224,4 +224,11 @@ return {
         end,
         disable = llvim.theme ~= 'catppuccin',
     },
+    {
+        'ray-x/navigator.lua',
+        requires = { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' },
+        config = function()
+            require('ll.lang.navigator')
+        end,
+    },
 }
