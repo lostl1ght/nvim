@@ -1,4 +1,6 @@
--- nebulous or material
+-- nebulous
+-- material
+-- catppuccin
 llvim.theme = 'nebulous'
 
 -- nebulous: fullmoon, midnight, twilight, night

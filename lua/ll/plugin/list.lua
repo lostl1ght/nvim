@@ -207,6 +207,14 @@ return {
     },
     {
         'knubie/vim-kitty-navigator',
-         run = 'cp ./*.py ~/.config/kitty/',
+        run = 'cp ./*.py ~/.config/kitty/',
+    },
+    {
+        'catppuccin/nvim',
+        as = 'catppuccin',
+        config = function()
+            require('ll.color.catppuccin')
+        end,
+        disable = llvim.theme ~= 'catppuccin',
     },
 }
