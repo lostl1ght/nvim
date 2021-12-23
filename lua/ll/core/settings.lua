@@ -66,3 +66,5 @@ map('i', '<c-l>', '<c-^>', { noremap = true })
 -- ]])
 
 vim.cmd('set list listchars=tab:>\\ ,eol:↲')
+
+vim.cmd('au TextYankPost * silent! lua vim.highlight.on_yank({timeout = 350})')
