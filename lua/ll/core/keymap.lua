@@ -181,9 +181,9 @@ M.lsp = function()
                 d = { ':lua vim.lsp.buf.definition()<cr>', 'Definition' },
                 i = { ':lua vim.lsp.buf.implementation()<cr>', 'Implementation' },
                 t = { ':lua vim.lsp.buf.type_definition()<cr>', 'Type definition' },
-                r = { ':lua require("telescope.builtin").lsp_references()<cr>', 'References' },
-                a = { ':lua require("telescope.builtin").lsp_code_actions()<cr>', 'Code action' },
-                s = { ':lua require("telescope.builtin").lsp_document_symbols()<cr>', 'Document symbols' },
+                r = { ':lua vim.lsp.buf.references()<cr>', 'References' },
+                a = { ':lua vim.lsp.buf.code_action()<cr>', 'Code action' },
+                s = { ':lua vim.lsp.buf.document_symbol()<cr>', 'Document symbols' },
                 e = { ':TroubleToggle<cr>', 'Diagnostics' },
             },
         },
@@ -348,8 +348,8 @@ M.debug()
 M.git()
 -- M.ipython()
 M.kitty()
--- M.lsp()
-M.navigator()
+M.lsp()
+-- M.navigator()
 M.open()
 M.packer()
 M.quit()

@@ -218,12 +218,19 @@ return {
         end,
         disable = llvim.theme ~= 'catppuccin',
     },
+    -- {
+    --     'ray-x/navigator.lua',
+    --     requires = { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' },
+    --     config = function()
+    --         require('ll.lang.navigator')
+    --     end,
+    -- },
+    { 'ggandor/lightspeed.nvim' },
     {
-        'ray-x/navigator.lua',
-        requires = { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' },
+        'RishabhRD/nvim-lsputils',
+        requires = { 'RishabhRD/popfix' },
         config = function()
-            require('ll.lang.navigator')
+            require('ll.lang.lsputils')
         end,
     },
-    { 'ggandor/lightspeed.nvim' },
 }
