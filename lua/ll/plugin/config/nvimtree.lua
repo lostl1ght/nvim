@@ -1,11 +1,9 @@
-local d_present, devicons = pcall(require, 'nvim-web-devicons')
-local t_present, tree = pcall(require, 'nvim-tree')
-if not d_present or not t_present then
-    return print('nvim-web-devicons or nvim-tree not found')
+local present, tree = pcall(require, 'nvim-tree')
+if not present then
+    return print('nvim-tree not found')
 end
 
--- Nvim tree setup
-devicons.get_icons()
+vim.g.nvim_tree_quit_on_open = 1
 
 tree.setup({
     update_to_buf_dir = {

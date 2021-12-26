@@ -3,7 +3,7 @@ local o = vim.o
 vim.api.nvim_command('filetype plugin indent on')
 o.clipboard = 'unnamedplus' -- System clipboard
 o.mouse = 'a' -- Enable mouse
-o.guifont = 'JetBrainsMono Nerd Font Mono:h12' -- GUI font
+o.guifont = 'JetBrainsMono Nerd Font Mono:h8' -- GUI font
 o.number = true -- Absolute line numbers
 o.backup = false -- No auto backups
 o.swapfile = false -- No swap
@@ -48,14 +48,17 @@ for _, plugin in pairs(disabled_built_ins) do
     vim.g['loaded_' .. plugin] = 1
 end
 
--- vim.cmd(
---     'set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz'
--- )
-
+-- Keyboard layout
 vim.cmd('set keymap=russian-jcukenwin')
 vim.cmd('set iminsert=0')
 vim.cmd('set imsearch=0')
 map('i', '<c-l>', '<c-^>', { noremap = true })
+
+-- Alternatives
+
+-- vim.cmd(
+--     'set langmap=ФИСВУАПРШОЛДЬТЩЗЙКЫЕГМЦЧНЯ;ABCDEFGHIJKLMNOPQRSTUVWXYZ,фисвуапршолдьтщзйкыегмцчня;abcdefghijklmnopqrstuvwxyz'
+-- )
 
 -- vim.cmd([[
 --     function! SetUsLayout()
@@ -65,6 +68,8 @@ map('i', '<c-l>', '<c-^>', { noremap = true })
 --     autocmd InsertLeave * call SetUsLayout()
 -- ]])
 
+-- Eol and tab symbols
 vim.cmd('set list listchars=tab:>\\ ,eol:↲')
 
+-- Highlight yank
 vim.cmd('au TextYankPost * silent! lua vim.highlight.on_yank({timeout = 350})')
