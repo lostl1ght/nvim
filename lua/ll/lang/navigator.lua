@@ -25,5 +25,15 @@ navigator.setup({
         diagnostic_hint = '',
         value_changed = '',
         value_definition = 'ﲏ',
+        treesitter_defult = '',
+        match_kinds = {
+            method = 'ƒ ',
+            ['function'] = ' ',
+            parameter = '',
+            type = '',
+            associated = '',
+            namespace = '',
+            field = '',
+        },
     },
 })
