@@ -61,24 +61,24 @@ local file_type = function()
     return icon .. ' ' .. vim.bo.filetype
 end
 
-local lsp_get_diag = function(str)
-    local count = vim.lsp.diagnostic.get_count(0, str)
+local lsp_diag_count = function(severity)
+    local count = #vim.diagnostic.get(0, { severity = severity })
     return (count > 0) and ' ' .. count .. ' ' or ''
 end
 
 local lsp = require('feline.providers.lsp')
-local vi_mode_utils = require('feline.providers.vi_mode')
+local vi_mode = require('feline.providers.vi_mode')
 
 local comps = {
     vi_mode = {
         left = {
             provider = function()
-                return ro_icon() .. ' ' .. vi_mode_utils.get_vim_mode()
+                return ro_icon() .. ' ' .. vi_mode.get_vim_mode()
             end,
             hl = function()
                 local val = {
-                    name = vi_mode_utils.get_mode_highlight_name(),
-                    fg = vi_mode_utils.get_mode_color(),
+                    name = vi_mode.get_mode_highlight_name(),
+                    fg = vi_mode.get_mode_color(),
                     style = 'bold',
                 }
                 return val
@@ -91,8 +91,8 @@ local comps = {
             end,
             hl = function()
                 return {
-                    name = vi_mode_utils.get_mode_highlight_name(),
-                    fg = vi_mode_utils.get_mode_color(),
+                    name = vi_mode.get_mode_highlight_name(),
+                    fg = vi_mode.get_mode_color(),
                     style = 'bold',
                 }
             end,
@@ -157,7 +157,7 @@ local comps = {
     diagnos = {
         err = {
             provider = function()
-                return '' .. lsp_get_diag('Error')
+                return '' .. lsp_diag_count(vim.diagnostic.severity.ERROR)
             end,
             enabled = function()
                 return lsp.diagnostics_exist(vim.diagnostic.severity.ERROR)
@@ -168,7 +168,7 @@ local comps = {
         },
         warn = {
             provider = function()
-                return '' .. lsp_get_diag('Warning')
+                return '' .. lsp_diag_count(vim.diagnostic.severity.WARN)
             end,
             enabled = function()
                 return lsp.diagnostics_exist(vim.diagnostic.severity.WARN)
@@ -179,7 +179,7 @@ local comps = {
         },
         info = {
             provider = function()
-                return '' .. lsp_get_diag('Information')
+                return '' .. lsp_diag_count(vim.diagnostic.severity.INFO)
             end,
             enabled = function()
                 return lsp.diagnostics_exist(vim.diagnostic.severity.INFO)
@@ -190,7 +190,7 @@ local comps = {
         },
         hint = {
             provider = function()
-                return '' .. lsp_get_diag('Hint')
+                return '' .. lsp_diag_count(vim.diagnostic.severity.HINT)
             end,
             enabled = function()
                 return lsp.diagnostics_exist(vim.diagnostic.severity.HINT)
