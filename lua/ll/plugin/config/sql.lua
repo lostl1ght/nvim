@@ -1,3 +1,3 @@
 vim.g.dbs = {
-    rk3 = 'postgresql://master:@localhost/rk3',
+    agriculture = 'postgresql://master:@localhost/agriculture',
 }

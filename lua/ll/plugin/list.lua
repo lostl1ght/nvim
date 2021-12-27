@@ -182,7 +182,6 @@ return {
             require('ll.snippet')
         end,
     },
-    { 'rhysd/committia.vim' },
     {
         'mhartington/formatter.nvim',
         config = function()
