@@ -53,7 +53,6 @@ cmp.setup({
     sources = {
         { name = 'luasnip' },
         { name = 'nvim_lua' },
-        { name = 'nvim_lsp' },
         { name = 'vim-dadbod-completion' },
         { name = 'path' },
         {

@@ -48,59 +48,6 @@ return {
         end,
     },
     {
-        'neovim/nvim-lspconfig',
-        requires = 'hrsh7th/cmp-nvim-lsp',
-        config = function()
-            require('ll.lang.server.ccls')
-            require('ll.lang.server.pyright')
-            require('ll.lang.server.sumneko')
-            require('ll.lang.server.cmake')
-            require('ll.lang.server.texlab')
-            require('ll.lang.server.rust')
-            require('ll.lang.server.gopls')
-        end,
-    },
-    {
-        'ray-x/lsp_signature.nvim',
-        config = function()
-            local present, sign = pcall(require, 'lsp_signature')
-            if not present then
-                return print('lsp_signature not found')
-            end
-            sign.setup({
-                hint_enable = false,
-                bind = true,
-                handler_opts = {
-                    border = 'rounded',
-                },
-            })
-        end,
-    },
-    {
-        'mfussenegger/nvim-dap',
-        config = function()
-            require('ll.debug.codelldb')
-        end,
-    },
-    {
-        'mfussenegger/nvim-dap-python',
-        requires = {
-            'mfussenegger/nvim-dap',
-        },
-        config = function()
-            require('ll.debug.python')
-        end,
-    },
-    {
-        'rcarriga/nvim-dap-ui',
-        requires = {
-            'mfussenegger/nvim-dap',
-        },
-        config = function()
-            require('ll.debug.dapui')
-        end,
-    },
-    {
         'lewis6991/gitsigns.nvim',
         requires = 'nvim-lua/plenary.nvim',
         config = function()
@@ -108,13 +55,6 @@ return {
         end,
     },
     { 'iamcco/markdown-preview.nvim', run = ':call mkdp#util#install()' },
-    {
-        'kristijanhusak/vim-dadbod-ui',
-        requires = 'tpope/vim-dadbod',
-        config = function()
-            require('ll.plugin.config.sql')
-        end,
-    },
     {
         'nvim-telescope/telescope.nvim',
         requires = {
@@ -171,15 +111,11 @@ return {
             'onsails/lspkind-nvim',
             'saadparwaiz1/cmp_luasnip',
             'hrsh7th/cmp-buffer',
-            'tpope/vim-dadbod',
-            'kristijanhusak/vim-dadbod-completion',
             'hrsh7th/cmp-nvim-lua',
             'hrsh7th/cmp-path',
-            'hrsh7th/cmp-nvim-lsp',
         },
         config = function()
             require('ll.lang.completion')
-            require('ll.snippet')
         end,
     },
     {
@@ -203,34 +139,5 @@ return {
         'knubie/vim-kitty-navigator',
         run = 'cp ./*.py ~/.config/kitty/',
     },
-    {
-        'folke/trouble.nvim',
-        requires = 'kyazdani42/nvim-web-devicons',
-        config = function()
-            require('trouble').setup({})
-        end,
-    },
-    {
-        'catppuccin/nvim',
-        as = 'catppuccin',
-        config = function()
-            require('ll.color.catppuccin')
-        end,
-        disable = llvim.theme ~= 'catppuccin',
-    },
-    {
-        'ray-x/navigator.lua',
-        requires = { 'ray-x/guihua.lua', run = 'cd lua/fzy && make' },
-        config = function()
-            require('ll.lang.navigator')
-        end,
-    },
     { 'ggandor/lightspeed.nvim' },
-    -- {
-    --     'RishabhRD/nvim-lsputils',
-    --     requires = { 'RishabhRD/popfix' },
-    --     config = function()
-    --         require('ll.lang.lsputils')
-    --     end,
-    -- },
 }

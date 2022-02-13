@@ -38,6 +38,7 @@ end
 M.buffer = function()
     M.merge(keymap_n, {
         ['<leader>'] = {
+            ['<tab>'] = { ':b#<cr>', 'Switch buffer' },
             b = {
                 name = '+buffer',
                 n = { ':enew<cr>', 'New buffer' },
@@ -46,11 +47,13 @@ M.buffer = function()
                 c = { ':lua require("ll.util").clear_normal()<cr>', 'Clear normal buffers' },
                 C = { ':lua require("ll.util").clear_abnormal()<cr>', 'Clear abnormal buffers' },
                 h = { ':set hlsearch!<cr>', 'Toggle hlsearch' },
+                s = { ':b#<cr>', 'Switch buffer' },
             },
             ['.'] = { ':Telescope buffers<cr>', 'Open buffer' },
-            ['/'] = { ':b#<cr>', 'Switch buffer' },
-            w = { ':w<cr>', 'Save' },
-            W = { ':wa<cr>', 'Save all' },
+            f = {
+              s = { ':w<cr>', 'Save' },
+              S = { ':wa<cr>', 'Save all' }
+            },
         },
         ['['] = {
             b = { ':bp<cr>', 'Previous buffer' },
@@ -59,45 +62,6 @@ M.buffer = function()
         [']'] = {
             b = { ':bn<cr>', 'Next buffer' },
             B = { ':bl<cr>', 'Last buffer' },
-        },
-    })
-end
-
-M.debug = function()
-    vim.cmd([[
-        command! DapBegin lua require("nvim-tree").close() require("dapui").open() require("dap").continue()
-        command! DapBp lua require("dap").toggle_breakpoint()
-        command! DapCndBp lua require("dap").set_breakpoint(vim.fn.input("Breakpoint condition: "))
-        command! DapContinue lua require("dap").continue()
-        command! DapEval lua require("dapui").eval()
-        command! DapStop lua require("dap").disconnect() require("dap").close() require("dapui").close() require("ll.util").clear_abnormal()
-        command! DapStepInto lua require("dap").step_into()
-        command! DapStepOver lua require("dap").step_over()
-        command! DapStepOut lua require("dap").step_out()
-        command! DapToggle lua require("dapui").toggle()
-    ]])
-    M.merge(keymap_n, {
-        ['<leader>'] = {
-            d = {
-                name = '+debug',
-                d = { ':DapBegin<cr>', 'Begin' },
-                c = { ':DapContinue<cr>', 'Continue' },
-                s = { ':DapStop<cr>', 'Stop' },
-                t = { ':DapToggle<cr>', 'Toggle UI' },
-                B = { ':DapCndBp<cr>', 'Conditional breakpoint' },
-            },
-        },
-        ['<f9>'] = { ':DapBp<cr>', 'Toggle breakpoint' },
-        ['<f10>'] = { ':DapStepOver<cr>', 'Step over' },
-        ['<f11>'] = { ':DapStepInto<cr>', 'Step into' },
-        ['<f12>'] = { ':DapStepOut<cr>', 'Step out' },
-    })
-    M.merge(keymap_v, {
-        ['<leader>'] = {
-            d = {
-                name = '+debug',
-                e = { ':DapEval<cr>', 'Eval expression' },
-            },
         },
     })
 end
@@ -145,21 +109,6 @@ M.git = function()
     })
 end
 
-M.ipython = function()
-    M.merge(keymap_n, {
-        ['<leader>'] = {
-            j = {
-                name = '+ipython',
-                e = { ':IPythonCellExecuteCellJump<cr>', 'Execute cell' },
-                n = { ':IPythonCellNextCell<cr>', 'Next cell' },
-                p = { ':IPythonCellPrevCell<cr>', 'Previous cell' },
-                a = { ':IPythonCellInsertAbove<cr>', 'Insert cell above' },
-                b = { ':IPythonCellInsertBelow<cr>', 'Insert cell below' },
-            },
-        },
-    })
-end
-
 M.kitty = function()
     vim.g.kitty_navigator_no_mappings = 1
     M.merge(keymap_n, {
@@ -170,66 +119,12 @@ M.kitty = function()
     })
 end
 
-M.lsp = function()
-    M.merge(keymap_n, {
-        ['<leader>'] = {
-            c = {
-                name = '+code',
-                f = { ':Format<cr>', 'Format' },
-                n = { ':lua vim.lsp.buf.rename()<cr>', 'Rename' },
-                D = { ':lua vim.lsp.buf.declaration()<cr>', 'Declaration' },
-                d = { ':lua vim.lsp.buf.definition()<cr>', 'Definition' },
-                i = { ':lua vim.lsp.buf.implementation()<cr>', 'Implementation' },
-                t = { ':lua vim.lsp.buf.type_definition()<cr>', 'Type definition' },
-                r = { ':lua vim.lsp.buf.references()<cr>', 'References' },
-                a = { ':lua vim.lsp.buf.code_action()<cr>', 'Code action' },
-                s = { ':lua vim.lsp.buf.document_symbol()<cr>', 'Document symbols' },
-                e = { ':TroubleToggle<cr>', 'Diagnostics' },
-            },
-        },
-        ['['] = {
-            c = { ':lua vim.lsp.diagnostic.goto_prev()<cr>', 'Previous code error' },
-        },
-        [']'] = {
-            c = { ':lua vim.lsp.diagnostic.goto_next()<cr>', 'Next code error' },
-        },
-        K = { ':lua vim.lsp.buf.hover()<cr>', 'Hover' },
-    })
-end
-
-M.navigator = function ()
-    M.merge(keymap_n, {
-        ['<leader>'] = {
-            c = {
-                name = '+code',
-                f = { ':Format<cr>', 'Format' },
-                n = { ':lua require("navigator.rename").rename()<cr>', 'Rename' },
-                D = { ':lua vim.lsp.buf.declaration()<cr>', 'Declaration' },
-                d = { ':lua vim.lsp.buf.definition()<cr>', 'Definition' },
-                p = { ':lua require("navigator.definition").definition_preview()<cr>', 'Definition preview' },
-                i = { ':lua vim.lsp.buf.implementation()<cr>', 'Implementation' },
-                t = { ':lua vim.lsp.buf.type_definition()<cr>', 'Type definition' },
-                r = { ':lua require("navigator.reference").reference()<cr>', 'References' },
-                a = { ':lua require("navigator.codeAction").code_action()<cr>', 'Code action' },
-                s = { ':lua require("navigator.treesitter").buf_ts()<cr>', 'Document symbols' },
-                e = { ':TroubleToggle<cr>', 'Diagnostics' },
-            },
-        },
-        ['['] = {
-            c = { ':lua vim.lsp.diagnostic.goto_prev()<cr>', 'Previous code error' },
-        },
-        [']'] = {
-            c = { ':lua vim.lsp.diagnostic.goto_next()<cr>', 'Next code error' },
-        },
-        K = { ':lua vim.lsp.buf.hover()<cr>', 'Hover' }, })
-end
 
 M.open = function()
     M.merge(keymap_n, {
         ['<leader>'] = {
             o = {
                 name = '+open',
-                b = { ':DBUIToggle<cr>', 'Database' },
                 m = { ':MarkdownPreviewToggle<cr>', 'Markdown preview' },
                 t = { ':NvimTreeToggle<cr>', 'File tree' },
             },
@@ -331,9 +226,9 @@ end
 M.window = function()
     M.merge(keymap_n, {
         ['<leader>'] = {
-            e = {
+            w = {
                 name = '+window',
-                q = { '<C-w>q', 'Close window' },
+                d = { '<C-w>q', 'Close window' },
                 v = { '<C-w>v', 'Vertical split' },
                 s = { '<C-w>s', 'Horizontal split' },
             },
@@ -344,17 +239,13 @@ end
 M.setup()
 
 M.buffer()
-M.debug()
 M.git()
--- M.ipython()
 M.kitty()
--- M.lsp()
-M.navigator()
 M.open()
 M.packer()
 M.quit()
 M.session()
-M.tab()
+-- M.tab()
 M.telescope()
 M.terminal()
 M.window()

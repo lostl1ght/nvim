@@ -8,6 +8,7 @@ treesitter_configs.setup({
         'bash',
         'c',
         'cmake',
+        'commonlisp',
         'cpp',
         'go',
         'latex',
