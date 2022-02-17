@@ -48,6 +48,7 @@ M.buffer = function()
                 C = { ':lua require("ll.util").clear_abnormal()<cr>', 'Clear abnormal buffers' },
                 h = { ':set hlsearch!<cr>', 'Toggle hlsearch' },
                 s = { ':b#<cr>', 'Switch buffer' },
+                f = { ':Format<cr>', 'Format buffer' },
             },
             ['.'] = { ':Telescope buffers<cr>', 'Open buffer' },
             f = {
