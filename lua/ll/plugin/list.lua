@@ -140,4 +140,11 @@ return {
         run = 'cp ./*.py ~/.config/kitty/',
     },
     { 'ggandor/lightspeed.nvim' },
+    {
+        'NTBBloodbath/doom-one.nvim',
+        config = function()
+            require('ll.color.doom-one')
+        end,
+        disable = llvim.theme ~= 'doom-one',
+    },
 }
