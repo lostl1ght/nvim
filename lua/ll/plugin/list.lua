@@ -66,17 +66,6 @@ return {
         end,
     },
     {
-        'Shatur/neovim-session-manager',
-        requires = {
-            'nvim-treesitter/nvim-treesitter',
-            'nvim-telescope/telescope.nvim',
-            'nvim-lua/plenary.nvim',
-        },
-        config = function()
-            require('ll.plugin.config.session')
-        end,
-    },
-    {
         'kdheepak/lazygit.nvim',
         requires = { 'nvim-lua/plenary.nvim' },
         config = function()
