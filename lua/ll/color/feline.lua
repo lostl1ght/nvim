@@ -61,12 +61,6 @@ local file_type = function()
     return icon .. ' ' .. vim.bo.filetype
 end
 
-local lsp_diag_count = function(severity)
-    local count = #vim.diagnostic.get(0, { severity = severity })
-    return (count > 0) and ' ' .. count .. ' ' or ''
-end
-
-local lsp = require('feline.providers.lsp')
 local vi_mode = require('feline.providers.vi_mode')
 
 local comps = {
@@ -154,62 +148,6 @@ local comps = {
             fg = colors.blue,
         },
     },
-    diagnos = {
-        err = {
-            provider = function()
-                return '' .. lsp_diag_count(vim.diagnostic.severity.ERROR)
-            end,
-            enabled = function()
-                return lsp.diagnostics_exist(vim.diagnostic.severity.ERROR)
-            end,
-            hl = {
-                fg = colors.red,
-            },
-        },
-        warn = {
-            provider = function()
-                return '' .. lsp_diag_count(vim.diagnostic.severity.WARN)
-            end,
-            enabled = function()
-                return lsp.diagnostics_exist(vim.diagnostic.severity.WARN)
-            end,
-            hl = {
-                fg = colors.yellow,
-            },
-        },
-        info = {
-            provider = function()
-                return '' .. lsp_diag_count(vim.diagnostic.severity.INFO)
-            end,
-            enabled = function()
-                return lsp.diagnostics_exist(vim.diagnostic.severity.INFO)
-            end,
-            hl = {
-                fg = colors.blue,
-            },
-        },
-        hint = {
-            provider = function()
-                return '' .. lsp_diag_count(vim.diagnostic.severity.HINT)
-            end,
-            enabled = function()
-                return lsp.diagnostics_exist(vim.diagnostic.severity.HINT)
-            end,
-            hl = {
-                fg = colors.cyan,
-            },
-        },
-    },
-    lsp = {
-        name = {
-            provider = 'lsp_client_names',
-            left_sep = ' ',
-            icon = ' ',
-            hl = {
-                fg = colors.yellow,
-            },
-        },
-    },
     git = {
         branch = {
             provider = 'git_branch',
@@ -258,11 +196,6 @@ table.insert(components.active[1], comps.git.add)
 table.insert(components.active[1], comps.git.change)
 table.insert(components.active[1], comps.git.remove)
 
-table.insert(components.active[3], comps.diagnos.err)
-table.insert(components.active[3], comps.diagnos.warn)
-table.insert(components.active[3], comps.diagnos.hint)
-table.insert(components.active[3], comps.diagnos.info)
-table.insert(components.active[3], comps.lsp.name)
 table.insert(components.active[3], comps.file.type)
 table.insert(components.active[3], comps.file.encoding)
 table.insert(components.active[3], comps.file.position)
@@ -276,12 +209,7 @@ require('feline').setup({
     components = components,
     vi_mode_colors = vi_mode_colors,
     force_inactive = {
-        filetypes = {
-            'dapui_watches',
-            'dapui_stacks',
-            'dapui_breakpoints',
-            'dapui_scopes',
-        },
+        filetypes = {},
         buftypes = { 'terminal' },
         bufnames = {},
     },
