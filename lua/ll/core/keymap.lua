@@ -52,8 +52,8 @@ M.buffer = function()
             },
             ['.'] = { ':Telescope buffers<cr>', 'Open buffer' },
             f = {
-              s = { ':w<cr>', 'Save' },
-              S = { ':wa<cr>', 'Save all' }
+                s = { ':w<cr>', 'Save' },
+                S = { ':wa<cr>', 'Save all' },
             },
         },
         ['['] = {
@@ -119,7 +119,6 @@ M.kitty = function()
         ['<c-k>'] = { ':KittyNavigateUp<cr>', 'Kitty Navigate Up' },
     })
 end
-
 
 M.open = function()
     M.merge(keymap_n, {

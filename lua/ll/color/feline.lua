@@ -6,7 +6,8 @@ vim.o.termguicolors = true
 vim.o.showmode = false
 
 local colors = {
-    bg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID('Normal')), 'bg#'),
+    -- bg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID('Normal')), 'bg#'),
+    bg = '#282c34', -- Doom-one
     fg = '#abb2bf',
     yellow = '#e0af68',
     cyan = '#56b6c2',

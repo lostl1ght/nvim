@@ -9,18 +9,10 @@ return {
         end,
     },
     {
-        'marko-cerovac/material.nvim',
+        'NTBBloodbath/doom-one.nvim',
         config = function()
-            require('ll.color.material')
+            require('ll.color.doom-one')
         end,
-        disable = llvim.theme ~= 'material',
-    },
-    {
-        'Yagua/nebulous.nvim',
-        config = function()
-            require('ll.color.nebulous')
-        end,
-        disable = llvim.theme ~= 'nebulous',
     },
     {
         'famiu/feline.nvim',
@@ -129,11 +121,4 @@ return {
         run = 'cp ./*.py ~/.config/kitty/',
     },
     { 'ggandor/lightspeed.nvim' },
-    {
-        'NTBBloodbath/doom-one.nvim',
-        config = function()
-            require('ll.color.doom-one')
-        end,
-        disable = llvim.theme ~= 'doom-one',
-    },
 }
