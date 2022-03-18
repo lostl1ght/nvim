@@ -5,18 +5,19 @@ end
 vim.o.termguicolors = true
 vim.o.showmode = false
 
+-- local colors = { bg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID('Normal')), 'bg#'), fg = '#abb2bf', yellow = '#e0af68', cyan = '#56b6c2', green = '#98c379', orange = '#d19a66', violet = '#a9a1e1', magenta = '#c678dd', blue = '#61afef', red = '#e86671', }
+
 local colors = {
-    -- bg = vim.fn.synIDattr(vim.fn.synIDtrans(vim.fn.hlID('Normal')), 'bg#'),
-    bg = '#282c34', -- Doom-one
-    fg = '#abb2bf',
-    yellow = '#e0af68',
-    cyan = '#56b6c2',
-    green = '#98c379',
-    orange = '#d19a66',
+    bg = '#282c34',
+    fg = '#bbc2cf',
+    yellow = '#ecbe7b',
+    cyan = '#46d9ff',
+    green = '#98be65',
+    orange = '#da8548',
     violet = '#a9a1e1',
     magenta = '#c678dd',
-    blue = '#61afef',
-    red = '#e86671',
+    blue = '#51afef',
+    red = '#ff6c6b',
 }
 
 local vi_mode_colors = {
