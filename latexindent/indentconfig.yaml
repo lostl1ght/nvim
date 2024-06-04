@@ -1,0 +1,20 @@
+defaultIndent: "  "
+indentRules:
+   myenvironment: "    "
+   anotherenvironment: "        "
+   chapter: " "
+   section: " "
+   item: "      "
+   myitem: "        "
+modifyLineBreaks:
+  textWrapOptions:
+    columns: 90
+    blocksBeginWith:
+      other: '\w'
+  # oneSentencePerLine:
+  #   manipulateSentences: 1
+  #   removeSentenceLineBreaks: 0
+  #   sentencesBeginWith:
+  #     other: '[А-ЯЁ]'
+  # sentencesDoNOTcontain:
+  #     other: (\\begin|\\item)
