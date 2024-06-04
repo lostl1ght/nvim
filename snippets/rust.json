@@ -1,0 +1,57 @@
+{
+    "allow": {
+        "prefix": "allow",
+        "body": ["#![allow(${1})]"],
+        "description": "#![allow(…)]"
+    },
+    "deny": {
+        "prefix": "deny",
+        "body": ["#![deny(${1})]"],
+        "description": "#![deny(…)]"
+    },
+    "warn": {
+        "prefix": "warn",
+        "body": ["#![warn(${1})]"],
+        "description": "#![warn(…)]"
+    },
+    "no_std": {
+        "prefix": "no_std",
+        "body": ["#![no_std]"],
+        "description": "#![no_std]"
+    },
+    "no_core": {
+        "prefix": "no_core",
+        "body": ["#![no_core]"],
+        "description": "#![no_core]"
+    },
+    "feature": {
+        "prefix": "feature",
+        "body": ["#![feature(${1})]"],
+        "description": "#![feature(…)]"
+    },
+    "macro_use": {
+        "prefix": "macro_use",
+        "body": ["#[macro_use(${1})]"],
+        "description": "#[macro_use(…)]"
+    },
+    "repr": {
+        "prefix": "repr",
+        "body": ["#[repr(${1})]"],
+        "description": "#[repr(…)]"
+    },
+    "cfg": {
+        "prefix": "cfg",
+        "body": ["#[cfg(${1})]"],
+        "description": "#[cfg(…)]"
+    },
+    "cfg_attr": {
+        "prefix": "cfg_attr",
+        "body": ["#[cfg_attr(${1}, ${2})]"],
+        "description": "#[cfg_attr(…, …)]"
+    },
+    "derive": {
+        "prefix": "derive",
+        "body": ["#[derive(${1})]"],
+        "description": "#[derive(…)]"
+    }
+}
