@@ -1,4 +1,4 @@
-local M = { 'lostl1ght/very-lazygit.nvim' }
+local M = { 'lostl1ght/lazygit.nvim' }
 
 M.cmd = 'Lg'
 
