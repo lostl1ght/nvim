@@ -3,7 +3,7 @@ return {
   event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     require('hlargs').setup({
-      color = '#eceff4',
+      color = vim.g.colors_name ~= 'rose-pine' and '#eceff4' or nil,
       excluded_argnames = {
         declarations = {
           python = { 'self', 'cls' },
