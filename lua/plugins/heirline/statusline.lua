@@ -195,9 +195,9 @@ local WorkDir = {
   hl = hl.WorkDir,
   on_click = {
     callback = function()
-      vim.cmd.Neotree()
+      require('mini.files').open()
     end,
-    name = 'heirline_neotree',
+    name = 'heirline_minifiles',
   },
 }
 
