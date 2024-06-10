@@ -20,6 +20,10 @@
             {
                 "language": ["cpp"],
                 "path": "./snippets/cpp.json"
+            },
+            {
+                "language": ["tex"],
+                "path": "./snippets/tex.json"
             }
         ]
     }

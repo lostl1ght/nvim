@@ -1,0 +1,231 @@
+{
+    "begin": {
+        "prefix": "begin",
+        "body": [
+            "\\begin{${1:env}}",
+            "\t$0",
+            "\\end{$1}"
+        ],
+        "description": "\\begin{} ... \\end{} block"
+    },
+    "tabular": {
+        "prefix": "tab",
+        "body": [
+            "\\begin{${1:tabular}}{${2:c}}",
+            "\t$0",
+            "\\end{$1}"
+        ],
+        "description": "tabular (or arbitrary) environment"
+    },
+    "center": {
+        "prefix": "center",
+        "body": [
+            "\\begin{center}",
+            "\t$0",
+            "\\end{center}"
+        ],
+        "description": "center environment"
+    },
+    "": {
+        "prefix": "",
+        "body": [
+        "\\begin{align${1:ed}}",
+        "\t\\label{eq:${2}}",
+        "\t$0",
+        "\\end{align$1}"
+        ],
+        "description": "align(ed) environment"
+    },
+    "equation": {
+        "prefix": "eq",
+        "body": [
+            "\\begin{equation}",
+            "\t$0",
+            "\\end{equation}"
+        ],
+        "description": "equation environment"
+    },
+    "labeled equation": {
+        "prefix": "",
+        "body": [
+            "\\begin{equation}",
+            "\t\\label{eq:${2}}",
+            "\t$0",
+            "\\end{equation}"
+        ],
+        "description": "labeled equation environment"
+    },
+    "unnumbered equation": {
+        "prefix": "eq*",
+        "body": [
+            "\\begin{equation*}",
+            "\t$0",
+            "\\end{equation*}"
+        ],
+        "description": "unnumbered equation environment"
+    },
+    "enumerate": {
+        "prefix": "enum",
+        "body": [
+            "\\begin{enumerate}",
+            "\t\\item ${1}",
+            "\t${0}",
+            "\\end{enumerate}"
+        ],
+        "description": "enumerate environment"
+    },
+    "itemize": {
+        "prefix": "item",
+        "body": [
+            "\\begin{itemize}",
+            "\t\\item ${1}",
+            "\t${0}",
+            "\\end{itemize}"
+        ],
+        "description": "itemize environment"
+    },
+    "label": {
+        "prefix": "lab",
+        "body": [
+            "\\label{${1:eq:}${2:fig:}${3:tab:}${0}}"
+        ],
+        "description": "\\label"
+    },
+    "item": {
+        "prefix": "-",
+        "body": [
+            "\\item ${1}",
+            "${0}"
+        ],
+        "description": "\item"
+    },
+    "cases": {
+        "prefix": "cas",
+        "body": [
+            "\\begin{cases}",
+            "\t${1:equation}, &\\text{ if }${2:case}\\",
+            "\t${0}",
+            "\\end{cases}"
+        ],
+        "description": "cases environment"
+    },
+    "chapter": {
+        "prefix": "cha",
+        "body": [
+            "\\chapter{${1:chapter name}}",
+            "\\label{cha:${2:$1}}",
+            "${0}"
+        ],
+        "description": "chapter"
+    },
+    "section": {
+        "prefix": "sec",
+        "body": [
+            "\\section{${1:section name}}",
+            "\\label{sec:${2:$1}}",
+            "${0}"
+        ],
+        "description": ""
+    },
+    "unnumbered section": {
+        "prefix": "sec*",
+        "body": [
+            "\\section*{${1:section name}}",
+            "\\label{sec:${2:$1}}",
+            "${0}"
+        ],
+        "description": "unnumbered section"
+    },
+    "subsection": {
+        "prefix": "sub",
+        "body": [
+            "\\subsection{${1:subsection name}}",
+            "\\label{sub:${2:$1}}",
+            "${0}"
+        ],
+        "description": "subsection"
+    },
+    "unnumbered subsection": {
+        "prefix": "sub*",
+        "body": [
+            "\\subsection*{${1:subsection name}}",
+            "\\label{sub:${2:$1}}",
+            "${0}"
+        ],
+        "description": "unnumbered subsection"
+    },
+    "subsubsection": {
+        "prefix": "ssub",
+        "body": [
+            "\\subsubsection{${1:subsection name}}",
+            "\\label{ssub:${2:$1}}",
+            "${0}"
+        ],
+        "description": "sub subsection"
+    },
+    "unnumbered sub subsection": {
+        "prefix": "ssub*",
+        "body": [
+            "\\subsubsection*{${1:subsection name}}",
+            "\\label{ssub:${2:$1}}",
+            "${0}"
+        ],
+        "description": "unnumbered sub subsection"
+    },
+    "cite": {
+        "prefix": "cite",
+        "body": [
+            "\\cite[${1}]{${2}} ${0}"
+        ],
+        "description": "cite"
+    },
+    "ref": {
+        "prefix": "ref",
+        "body": [
+            "\\ref{${1}}"
+        ],
+        "description": "reference"
+    },
+    "italic": {
+        "prefix": "ita",
+        "body": [
+            "\\textit{${1:text}}${0}"
+        ],
+        "description": "italic text"
+    },
+    "bold": {
+        "prefix": "bf",
+        "body": [
+            "\\textbf{${1:text}}${0}"
+        ],
+        "description": "bold face text"
+    },
+    "underline": {
+        "prefix": "under",
+        "body": [
+            "\\underline{${1:text}}${0}"
+        ],
+        "description": "underline text"
+    },
+    "overline": {
+        "prefix": "over",
+        "body": [
+            "\\overline{${1:text}}${0}"
+        ],
+        "description": "underline text"
+    },
+    "emphasized": {
+        "prefix": "emp",
+        "body": [
+            "\\emph{${1:${VISUAL:text}}}${0}"
+        ],
+        "description": ""
+    },
+    "small caps": {
+        "prefix": "sc",
+        "body": [
+            "\\textsc{${1:text}}${0}"
+        ],
+        "description": "small caps text"
+    }
+}
