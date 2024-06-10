@@ -6,16 +6,14 @@ return {
   config = function()
     require('gitsigns').setup({
       attach_to_untracked = true,
-      --[[
-    signs = {
-      add = { text = '│' },
-      change = { text = '│' },
-      delete = { text = '_' },
-      topdelete = { text = '‾' },
-      changedelete = { text = '~' },
-      untracked = { text = '┆' },
-    },
-    ]]
+      signs = {
+        add = { text = '│' },
+        change = { text = '│' },
+        delete = { text = '_' },
+        topdelete = { text = '‾' },
+        changedelete = { text = '~' },
+        untracked = { text = '┆' },
+      },
       on_attach = function(bufnr)
         local gs = require('gitsigns')
         local function map(mode, l, r, opts)
