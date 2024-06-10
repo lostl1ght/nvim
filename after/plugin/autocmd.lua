@@ -1,10 +1,12 @@
 local yank = vim.api.nvim_create_augroup('YankHighlight', {})
 local term = vim.api.nvim_create_augroup('TermOptions', {})
 local bufmod = vim.api.nvim_create_augroup('BufModifiable', {})
-local winaug = vim.api.nvim_create_augroup('HideCursorLine', {})
 local trim = vim.api.nvim_create_augroup('TrimWhiteSpace', {})
 
+--[[
+local winaug = vim.api.nvim_create_augroup('HideCursorLine', {})
 local excluded_filetypes = { 'neo-tree' }
+]]
 
 local autocmds = {
   {
@@ -14,29 +16,20 @@ local autocmds = {
         vim.highlight.on_yank({ higroup = 'YankHighlight', timeout = 350 })
       end,
       group = yank,
+      desc = 'Setup yank highlight',
     },
   },
   {
     'TermOpen',
     {
       callback = function()
-        -- vim.opt_local.scrolloff = 0
-        -- vim.opt_local.sidescrolloff = 0
+        vim.opt_local.scrolloff = 0
+        vim.opt_local.sidescrolloff = 0
         vim.opt_local.number = false
         vim.opt_local.relativenumber = false
       end,
       group = term,
-    },
-  },
-  {
-    'TermClose',
-    {
-      callback = function(arg)
-        if vim.v.event.status == 0 and vim.api.nvim_buf_is_loaded(arg.buf) then
-          vim.api.nvim_cmd({ cmd = 'bdelete', args = { arg.buf } }, {})
-        end
-      end,
-      group = term,
+      desc = 'Set some options for terminal',
     },
   },
   {
@@ -48,8 +41,10 @@ local autocmds = {
         end
       end,
       group = bufmod,
+      desc = "Set 'noma' for 'readonly' files",
     },
   },
+  --[[
   {
     'WinEnter',
     {
@@ -57,6 +52,7 @@ local autocmds = {
         vim.opt_local.cursorlineopt = 'both'
       end,
       group = winaug,
+      desc = "Enable 'cursorline' when leaving certain buffers",
     },
   },
   {
@@ -68,8 +64,10 @@ local autocmds = {
         end
       end,
       group = winaug,
+      desc = "Disable 'cursorline' in certain buffers",
     },
   },
+  ]]
   {
     'BufWritePre',
     {
@@ -95,6 +93,7 @@ local autocmds = {
         end
       end,
       group = trim,
+      desc = 'Trim trailing whitespace',
     },
   },
 }
