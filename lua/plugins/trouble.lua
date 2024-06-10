@@ -26,6 +26,18 @@ return {
             size = 0.3,
           },
         },
+        symbols = {
+          desc = 'document symbols',
+          mode = 'lsp_document_symbols',
+          focus = false,
+          win = { position = 'right' },
+          preview = {
+            type = 'split',
+            relative = 'win',
+            position = 'bottom',
+            size = 0.3,
+          },
+        },
       },
     })
     vim.api.nvim_create_autocmd('LspAttach', {
@@ -41,11 +53,6 @@ return {
             '<leader>cd',
             '<cmd>Trouble diagnostics toggle<cr>',
             desc = 'Diagnostics',
-          },
-          {
-            '<leader>cD',
-            '<cmd>Trouble diagnostics toggle filter.buf=0<cr>',
-            desc = 'Buffer diagnostics',
           },
         }
         for _, map in ipairs(maps) do
