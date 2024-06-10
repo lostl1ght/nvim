@@ -1,5 +1,5 @@
-vim.b.minitrailspace_disable = true
-require('mini.trailspace').highlight()
+-- vim.b.minitrailspace_disable = true
+-- require('mini.trailspace').highlight()
 --[[
 local id
 for _, match in ipairs(vim.fn.getmatches()) do

@@ -83,8 +83,6 @@ local autocmds = {
             vim.api.nvim_buf_set_lines(buf, last_nonblank, n_lines, true, {})
           end
 
-          ---@type integer
-          ---@diagnostic disable-next-line
           local winid = vim.fn.bufwinid(buf)
           local current_win = vim.api.nvim_get_current_win()
           if vim.api.nvim_win_is_valid(winid) and winid == current_win then
