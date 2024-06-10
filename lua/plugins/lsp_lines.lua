@@ -12,8 +12,10 @@ return {
         local map = {
           '<leader>tl',
           function()
+            local new_value = not vim.diagnostic.config().virtual_lines
+            vim.diagnostic.config({ virtual_lines = new_value })
             vim.notify(
-              string.format('lines %s', require('lsp_lines').toggle() and 'enabled' or 'disabled'),
+              string.format('lines %s', new_value and 'enabled' or 'disabled'),
               vim.log.levels.INFO,
               { title = 'Diagnostics' }
             )
