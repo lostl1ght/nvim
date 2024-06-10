@@ -1,4 +1,5 @@
 local excluded_clients = {
+  'lua_ls',
   'texlab',
   'lua-ls',
 }
