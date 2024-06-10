@@ -1,0 +1,4 @@
+- git (lazy)
+- ripgrep (telescope)
+- fd (telescope)
+- c compiler (tree-sitter)
