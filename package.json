@@ -24,6 +24,10 @@
             {
                 "language": ["tex"],
                 "path": "./snippets/tex.json"
+            },
+            {
+                "language": ["go"],
+                "path": "./snippets/go.json"
             }
         ]
     }
