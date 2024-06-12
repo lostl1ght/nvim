@@ -135,20 +135,26 @@ local SearchResults = {
     if not ok or vim.tbl_isempty(search) then
       return false
     end
-    self.search = search
 
-    ---@type string
-    ---@diagnostic disable-next-line
     local query = vim.fn.getreg('/')
     if query == '' then
       return false
     end
 
+    --[[
     if query:find('@') then
       return false
     end
+    ]]
 
-    self.query = query:gsub([[^\V]], ''):gsub([[\<]], ''):gsub([[\>]], '')
+    self.query = table.concat({
+      query:gsub([[^\V]], ''):gsub([[\<]], ''):gsub([[\>]], ''):gsub('%%', '%%%%'),
+      ' [',
+      search.current,
+      '/',
+      math.min(search.total, search.maxcount),
+      ']',
+    })
     return true
   end,
 
@@ -157,14 +163,7 @@ local SearchResults = {
     hl.SearchResults.bg,
     {
       provider = function(self)
-        return table.concat({
-          self.query,
-          ' [',
-          self.search.current,
-          '/',
-          math.min(self.search.total, self.search.maxcount),
-          ']',
-        })
+        return self.query
       end,
       hl = hl.SearchResults,
     }
