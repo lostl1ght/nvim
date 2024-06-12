@@ -34,8 +34,6 @@ return {
           capabilities = clangd_cap,
         },
         lua_ls = {
-          -- name = 'lua-ls',
-          -- before_init = require('neodev.lsp').before_init,
           settings = {
             Lua = {
               completion = { autoRequire = false, keywordSnippet = 'Disable' },
