@@ -6,10 +6,10 @@ local Space = setmetatable({
     return self.tablabel({ ' ' })
   end,
 }, {
-  __call = function(_, n)
+  __call = function(_, opts)
     return {
       provider = function(self)
-        return self.tablabel({ string.rep(' ', n) })
+        return self.tablabel({ string.rep(' ', opts.n) })
       end,
     }
   end,

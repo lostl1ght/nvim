@@ -19,9 +19,9 @@ local priority = {
 
 local Align = { provider = '%=' }
 local Space = setmetatable({ provider = ' ' }, {
-  __call = function(_, phony, n)
-    local space = { provider = string.rep(' ', n or 1) }
-    if phony then
+  __call = function(_, opts)
+    local space = { provider = string.rep(' ', opts.n or 1) }
+    if opts.phony then
       space.on_click = {
         name = 'heirline_phony',
         callback = function() end,
@@ -182,13 +182,13 @@ local WorkDir = {
       provider = function(self)
         return self.pwd
       end,
-      Space(true),
+      Space({ phony = true }),
     },
     {
       provider = function(self)
         return vim.fn.pathshorten(self.pwd)
       end,
-      Space(true),
+      Space({ phony = true }),
     },
     null,
   },
@@ -213,7 +213,7 @@ local GitBranch = {
       provider = function(self)
         return ' ' .. self.git_status.head
       end,
-      Space(true),
+      Space({ phony = true }),
     },
     { provider = '' },
   },
@@ -229,7 +229,7 @@ local GitBranch = {
 local LspIndicator = {
   provider = icons.server,
   hl = hl.LspIndicator,
-  Space(true),
+  Space({ phony = true }),
 }
 
 local LspServer = {
@@ -242,7 +242,7 @@ local LspServer = {
     end
     return ' ' .. names
   end,
-  Space(true),
+  Space({ phony = true }),
   hl = hl.LspServer,
 }
 
@@ -352,7 +352,7 @@ do
         end,
         name = 'heirline_update',
       },
-      Space(true),
+      Space({phony=true}),
     }
   end
 end

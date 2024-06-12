@@ -7,9 +7,9 @@ local git_style = require('plugins.heirline.config').git_style
 
 local Align = { provider = '%=' }
 local Space = setmetatable({ provider = ' ' }, {
-  __call = function(_, phony, n)
-    local space = { provider = string.rep(' ', n or 1) }
-    if phony then
+  __call = function(_, opts)
+    local space = { provider = string.rep(' ', opts.n or 1) }
+    if opts.phony then
       space.on_click = {
         name = 'heirline_phony',
         callback = function() end,
@@ -204,7 +204,7 @@ local GitChanges = {
   {
     provider = ')',
   },
-  Space(true),
+  Space({ phony = true }),
   on_click = {
     minwid = function()
       return vim.api.nvim_get_current_win()
@@ -278,7 +278,7 @@ local Diagnostics = {
       condition = function(self)
         return self.has_warnings() or self.has_info() or self.has_hints()
       end,
-      Space(true),
+      Space({ phony = true }),
     },
     on_click = {
       minwid = function(self)
@@ -300,7 +300,7 @@ local Diagnostics = {
       condition = function(self)
         return self.has_info() or self.has_hints()
       end,
-      Space(true),
+      Space({ phony = true }),
     },
     on_click = {
       minwid = function(self)
@@ -322,7 +322,7 @@ local Diagnostics = {
       condition = function(self)
         return self.has_hints()
       end,
-      Space(true),
+      Space({ phony = true }),
     },
 
     on_click = {
@@ -353,7 +353,7 @@ local Diagnostics = {
   {
     provider = ']',
   },
-  Space(true),
+  Space({ phony = true }),
 }
 
 local Navic = {}
