@@ -203,7 +203,6 @@ local WorkDir = {
 local GitBranch = {
   condition = conditions.is_git_repo,
   init = function(self)
-    ---@diagnostic disable-next-line
     self.git_status = vim.b.gitsigns_status_dict
   end,
   {

@@ -125,7 +125,7 @@ local mode_colors = {
   select = 'teal',
   command = 'blue',
   shell = 'yellow',
-  terminal = 'yellow',
+  terminal = 'gray',
   confirm = 'white',
   none = 'red',
 }
