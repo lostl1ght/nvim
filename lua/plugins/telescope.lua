@@ -124,7 +124,11 @@ return {
             i = {
               ['<c-d>'] = delete_buffer,
               ['<c-u>'] = false,
+              ['<m-d>'] = false,
             },
+            n = {
+              ['<m-d>'] = false
+            }
           },
         },
       },
