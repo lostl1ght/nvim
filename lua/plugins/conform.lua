@@ -7,7 +7,7 @@ return {
       function()
         require('conform').format({
           async = true,
-          lsp_fallback = true,
+          lsp_format = 'fallback',
         }, function()
           vim.cmd({ cmd = 'update', mods = { silent = true } })
         end)
