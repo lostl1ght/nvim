@@ -23,9 +23,10 @@ local maps = {
   {
     '<leader>th',
     function()
+      ---@diagnostic disable-next-line
       vim.cmd('let v:hlsearch=' .. bit.bxor(vim.v.hlsearch, 1))
       vim.schedule(function()
-        pcall(vim.api.nvim_cmd, { cmd = 'ScrollViewRefresh' }, {})
+        -- pcall(vim.api.nvim_cmd, { cmd = 'ScrollViewRefresh' }, {})
         vim.cmd({ cmd = 'redrawstatus' })
       end)
     end,

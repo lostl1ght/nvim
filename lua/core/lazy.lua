@@ -1,5 +1,13 @@
 local lazy_path = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.uv.fs_stat(lazy_path) then
+  if vim.fn.executable('git') == 0 then
+    vim.api.nvim_echo({
+      { 'git is not installed\n', 'ErrorMsg' },
+      { 'Press any key to exit...', 'MoreMsg' },
+    }, true, {})
+    vim.fn.getchar()
+    vim.cmd('quit')
+  end
   vim
     .system({
       'git',
@@ -14,7 +22,18 @@ end
 
 vim.opt.runtimepath:prepend(lazy_path)
 
-require('lazy').setup('plugins', {
+local ok, lazy = pcall(require, 'lazy')
+
+if not ok then
+  vim.api.nvim_echo({
+    { ('Unable to load lazy from: %s\n'):format(lazy_path), 'ErrorMsg' },
+    { 'Press any key to exit...', 'MoreMsg' },
+  }, true, {})
+  vim.fn.getchar()
+  vim.cmd('quit')
+end
+
+lazy.setup('plugins', {
   defaults = {
     lazy = true,
   },
@@ -42,6 +61,10 @@ require('lazy').setup('plugins', {
         'zipPlugin',
       },
     },
+  },
+  profiling = {
+    -- loader = true,
+    -- require = true,
   },
 })
 
