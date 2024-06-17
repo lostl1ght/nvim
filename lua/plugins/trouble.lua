@@ -18,6 +18,7 @@ return {
         lsp = {
           mode = 'lsp',
           focus = true,
+          auto_refresh = false,
           win = { position = 'top' },
           preview = {
             type = 'split',
