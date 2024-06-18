@@ -6,7 +6,7 @@ local function callback(data)
       desc = 'Rename',
     },
     {
-      '<leader>ti',
+      '<leader>ci',
       function()
         local new_state = not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 })
         vim.lsp.inlay_hint.enable(new_state, { bufnr = 0 })
@@ -16,7 +16,7 @@ local function callback(data)
       desc = 'Inlay hints',
     },
     {
-      '<leader>td',
+      '<leader>cd',
       function()
         vim.diagnostic.enable(not vim.diagnostic.is_enabled())
       end,
