@@ -8,8 +8,8 @@ local function callback(data)
     {
       '<leader>ti',
       function()
-        local new_state = not vim.lsp.inlay_hint.is_enabled({bufnr = 0})
-        vim.lsp.inlay_hint.enable(new_state)
+        local new_state = not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 })
+        vim.lsp.inlay_hint.enable(new_state, { bufnr = 0 })
         local msg = 'inlay hints ' .. (new_state and 'enabled' or 'disabled')
         vim.notify(msg, vim.log.levels.INFO, { title = 'Lsp' })
       end,
