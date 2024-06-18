@@ -24,7 +24,10 @@ return {
             type = 'split',
             relative = 'win',
             position = 'right',
-            size = 0.3,
+            size = 0.5,
+          },
+          params = {
+            include_current = true,
           },
         },
         symbols = {
@@ -54,6 +57,11 @@ return {
             '<leader>cd',
             '<cmd>Trouble diagnostics toggle<cr>',
             desc = 'Diagnostics',
+          },
+          {
+            '<leader>cs',
+            '<cmd>Trouble symbols toggle<cr>',
+            desc = 'Symbols',
           },
         }
         for _, map in ipairs(maps) do
