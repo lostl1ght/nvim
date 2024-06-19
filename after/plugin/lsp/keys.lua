@@ -16,7 +16,7 @@ local function callback(data)
       desc = 'Inlay hints',
     },
     {
-      '<leader>cd',
+      '<leader>ct',
       function()
         vim.diagnostic.enable(not vim.diagnostic.is_enabled())
       end,

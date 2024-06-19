@@ -10,7 +10,7 @@ return {
     vim.api.nvim_create_autocmd('LspAttach', {
       callback = function(data)
         local map = {
-          '<leader>tl',
+          '<leader>cl',
           function()
             local new_value = not vim.diagnostic.config().virtual_lines
             vim.diagnostic.config({ virtual_lines = new_value })
