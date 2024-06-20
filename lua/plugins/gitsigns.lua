@@ -7,7 +7,6 @@ return {
     require('gitsigns').setup({
       attach_to_untracked = true,
       current_line_blame = true,
-      numhl = true,
       signs = {
         add = { text = '│' },
         change = { text = '│' },
