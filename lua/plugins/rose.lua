@@ -9,6 +9,7 @@ return {
         YankHighlight = { bg = 'highlight_high' },
         LightBulbVirtualText = { link = 'Comment' },
         Folded = { bg = 'surface' },
+        Hlargs = { fg = 'love' },
       },
     })
     vim.cmd('colorscheme rose-pine')
