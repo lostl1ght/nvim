@@ -16,32 +16,24 @@ return {
     local utils = require('heirline.utils')
 
     local function setup_colors()
+      local colors = {
+        bg = utils.get_highlight('Normal').bg or 'NONE',
+        white = utils.get_highlight('Cursor').bg,
+        black = utils.get_highlight('Cursor').fg,
+        gray = utils.get_highlight('Comment').fg,
+        green = utils.get_highlight('DiagnosticOk').fg,
+        teal = utils.get_highlight('DiagnosticHint').fg,
+        blue = utils.get_highlight('DiagnosticInfo').fg,
+        yellow = utils.get_highlight('DiagnosticWarn').fg,
+        red = utils.get_highlight('DiagnosticError').fg,
+      }
       if vim.g.colors_name == 'rose-pine' then
         local palette = require('rose-pine.palette')
-        return {
-          bg = palette.base,
-          white = palette.text,
-          black = palette.base,
-          gray = palette.subtle,
-          green = palette.pine,
-          teal = palette.foam,
-          blue = palette.iris,
-          yellow = palette.gold,
-          red = palette.love,
-        }
-      else
-        return {
-          bg = utils.get_highlight('Normal').bg or 'NONE',
-          white = utils.get_highlight('Cursor').bg,
-          black = utils.get_highlight('Cursor').fg,
-          gray = utils.get_highlight('Comment').fg,
-          green = utils.get_highlight('DiagnosticOk').fg,
-          teal = utils.get_highlight('DiagnosticHint').fg,
-          blue = utils.get_highlight('DiagnosticInfo').fg,
-          yellow = utils.get_highlight('DiagnosticWarn').fg,
-          red = utils.get_highlight('DiagnosticError').fg,
-        }
+        colors.black = palette.base
+        colors.white = palette.text
       end
+
+      return colors
     end
 
     require('heirline').setup({
