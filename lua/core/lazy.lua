@@ -37,17 +37,11 @@ lazy.setup('plugins', {
   defaults = {
     lazy = true,
   },
+  pkg = { sources = { 'lazy' } },
   lockfile = vim.fn.stdpath('state') .. '/lazy-lock.json',
-  dev = {
-    path = vim.fs.normalize('~/dev/plugins'),
-  },
-  ui = {
-    border = 'single',
-  },
-  checker = {
-    enabled = false,
-    notify = false,
-  },
+  dev = { path = vim.fs.normalize('~/dev/plugins') },
+  ui = { border = 'single' },
+  checker = { enabled = false, notify = false },
   performance = {
     rtp = {
       disabled_plugins = {
@@ -62,10 +56,7 @@ lazy.setup('plugins', {
       },
     },
   },
-  profiling = {
-    -- loader = true,
-    -- require = true,
-  },
+  -- profiling = { loader = true, require = true },
 })
 
 vim.keymap.set('n', '<leader>pl', '<cmd>Lazy<cr>', { desc = 'Lazy' })
