@@ -32,6 +32,7 @@ return {
 
         return {
           CursorLine = { bg = theme.ui.bg_p1 },
+          CursorLineNr = { fg = theme.vcs.changed, bold = false },
           Folded = { fg = theme.ui.special, bg = theme.ui.bg_m1 },
 
           LspReferenceRead = { bg = theme.ui.bg_visual },
