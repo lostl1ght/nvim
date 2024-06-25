@@ -86,6 +86,10 @@ return {
           CmpItemKindEnumMember = { fg = cmp.fg, bg = cmp.green },
           CmpItemKindColor = { fg = cmp.fg, bg = cmp.green },
           CmpItemKindTypeParameter = { fg = cmp.fg, bg = cmp.green },
+
+          IblIndent = { fg = theme.ui.bg_p2 },
+          IblWhitespace = { fg = theme.ui.bg_p2 },
+          IblScope = { fg = theme.ui.whitespace },
         }
       end,
     })
