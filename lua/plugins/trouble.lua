@@ -19,7 +19,7 @@ return {
           mode = 'lsp',
           focus = true,
           auto_refresh = false,
-          win = { position = 'top' },
+          win = { position = 'top', size = 0.4 },
           preview = {
             type = 'split',
             relative = 'win',
@@ -34,7 +34,7 @@ return {
           desc = 'document symbols',
           mode = 'lsp_document_symbols',
           focus = false,
-          win = { position = 'right' },
+          win = { position = 'right', size = 0.25 },
           preview = {
             type = 'split',
             relative = 'win',
