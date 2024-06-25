@@ -54,7 +54,7 @@ return {
 
           LightBulbVirtualText = { link = 'Comment' },
 
-          MiniTrailspace = { fg = palette.samuraiRed, bg = palette.winterRed },
+          MiniTrailspace = { fg = theme.diag.error, bg = theme.diff.delete },
 
           CmpItemKindKeyword = { fg = cmp.fg, bg = cmp.cyan },
 
