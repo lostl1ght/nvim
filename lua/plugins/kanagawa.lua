@@ -17,6 +17,7 @@ return {
       },
       overrides = function(colors)
         local theme = colors.theme
+        local palette = colors.palette
         return {
           CursorLine = { bg = theme.ui.bg_p1 },
           Folded = { fg = theme.ui.special, bg = theme.ui.bg_m1 },
@@ -40,6 +41,8 @@ return {
           TelescopeBorder = { link = 'FloatBorder' },
 
           LightBulbVirtualText = { link = 'Comment' },
+
+          MiniTrailspace = { fg = palette.samuraiRed, bg = palette.winterRed },
         }
       end,
     })
