@@ -17,9 +17,9 @@ return {
       },
       overrides = function(colors)
         local theme = colors.theme
-        print(colors.crystalBlue)
         return {
           CursorLine = { bg = theme.ui.bg_p1 },
+          Folded = { fg = theme.ui.special, bg = theme.ui.bg_m1 },
 
           LspReferenceRead = { bg = theme.ui.bg_visual },
           LspReferenceText = { bg = theme.ui.bg_visual },
