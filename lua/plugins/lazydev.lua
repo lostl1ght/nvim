@@ -5,7 +5,8 @@ return {
     config = function()
       require('lazydev').setup({
         library = {
-          'luvit-meta/library',
+          { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+          { path = 'lazy.nvim', words = { 'Lazy%a' } },
         },
       })
     end,
