@@ -41,8 +41,8 @@ function M.load()
     },
     pkg = { sources = { 'lazy' } },
     lockfile = vim.fn.stdpath('state') .. '/lazy-lock.json',
-    dev = { path = vim.fs.normalize('~/dev/plugins') },
-    ui = { border = 'single', backdrop = 100 },
+    dev = { path = vim.fs.normalize('~/plugins') },
+    ui = { border = 'rounded', backdrop = 100 },
     checker = { enabled = false, notify = false },
     performance = {
       rtp = {

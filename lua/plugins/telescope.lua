@@ -72,7 +72,7 @@ return {
 
     telescope.setup({
       defaults = {
-        borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+        -- borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
         mappings = {
           n = {
             s = flash,
