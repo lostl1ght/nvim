@@ -67,27 +67,23 @@ return {
         ['<c-d>'] = cmp.mapping.scroll_docs(4),
         ['<c-space>'] = cmp.mapping.complete({ reason = cmp.ContextReason.Manual }),
         ['<c-e>'] = cmp.mapping.close(),
-
         -- ['<cr>'] = cmp.mapping.confirm({ select = true }),
         ['<c-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
         ['<c-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-
-        ['<cr>'] = cmp.mapping({
-          i = function(fallback)
-            if cmp.visible() and cmp.get_active_entry() then
-              local luasnip = require('luasnip')
-              if luasnip.expandable() then
-                luasnip.expand()
-              else
-                cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-              end
+        ['<cr>'] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            local luasnip = require('luasnip')
+            if luasnip.expandable() then
+              luasnip.expand()
             else
-              fallback()
+              cmp.confirm({
+                select = true,
+              })
             end
-          end,
-          s = cmp.mapping.confirm({ select = true }),
-          c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-        }),
+          else
+            fallback()
+          end
+        end),
         ['<tab>'] = cmp.mapping(function(fallback)
           local luasnip = require('luasnip')
           if cmp.visible() then
