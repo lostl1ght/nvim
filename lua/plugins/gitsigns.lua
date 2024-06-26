@@ -7,6 +7,7 @@ return {
     require('gitsigns').setup({
       attach_to_untracked = true,
       current_line_blame = true,
+      --[[
       signs = {
         add = { text = '│' },
         change = { text = '│' },
@@ -15,6 +16,7 @@ return {
         changedelete = { text = '~' },
         untracked = { text = '┆' },
       },
+      ]]
       on_attach = function(bufnr)
         local gs = require('gitsigns')
         local function map(mode, l, r, opts)
