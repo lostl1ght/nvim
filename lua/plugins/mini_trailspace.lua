@@ -1,6 +1,10 @@
 return {
   'echasnovski/mini.trailspace',
-  init = function()
+  event = 'VeryLazy',
+  cmd = 'Trim',
+  config = function()
+    require('mini.trailspace').setup()
+
     local function trim_state(buf)
       buf = buf or 0
       local val = vim.b[buf].trim_trailing_whitespace
@@ -67,9 +71,5 @@ return {
       group = vim.api.nvim_create_augroup('TrimWhiteSpace', {}),
       desc = 'Trim trailing whitespace',
     })
-  end,
-  event = 'VeryLazy',
-  config = function()
-    require('mini.trailspace').setup()
   end,
 }

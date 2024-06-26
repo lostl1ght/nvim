@@ -1,6 +1,23 @@
 return {
   'HiPhish/rainbow-delimiters.nvim',
-  init = function()
+  event = { 'BufReadPre', 'BufNewFile' },
+  cmd = 'Rainbow',
+  config = function()
+    local rd = require('rainbow-delimiters')
+    vim.g.rainbow_delimiters = {
+      strategy = {
+        -- [''] = rd.strategy['global'], -- https://github.com/HiPhish/rainbow-delimiters.nvim/issues/2
+        [''] = rd.strategy['local'],
+      },
+      query = {
+        [''] = 'rainbow-delimiters',
+        latex = 'rainbow-blocks',
+      },
+      priority = {
+        [''] = 250,
+      },
+    }
+
     local cmd = 'Rainbow'
     local commands = {
       toggle = function()
@@ -23,23 +40,5 @@ return {
         return require('util').complete(line, cmd, commands)
       end,
     })
-  end,
-  event = { 'BufReadPre', 'BufNewFile' },
-  cmd = 'Rainbow',
-  config = function()
-    local rd = require('rainbow-delimiters')
-    vim.g.rainbow_delimiters = {
-      strategy = {
-        -- [''] = rd.strategy['global'], -- https://github.com/HiPhish/rainbow-delimiters.nvim/issues/2
-        [''] = rd.strategy['local'],
-      },
-      query = {
-        [''] = 'rainbow-delimiters',
-        latex = 'rainbow-blocks',
-      },
-      priority = {
-        [''] = 250,
-      },
-    }
   end,
 }

@@ -2,6 +2,18 @@ return {
   'NvChad/nvim-colorizer.lua',
   init = function()
     vim.g.loaded_colorizer = true
+  end,
+  cmd = 'Colorizer',
+  config = function()
+    require('colorizer').setup({
+      filetypes = { '*' },
+      user_default_options = {
+        RGB = false,
+        RRGGBB = true,
+        names = false,
+      },
+    })
+
     local cmd = 'Colorizer'
     local commands = {
       toggle = function()
@@ -31,17 +43,6 @@ return {
       complete = function(_, line)
         return require('util').complete(line, cmd, commands)
       end,
-    })
-  end,
-  cmd = 'Colorizer',
-  config = function()
-    require('colorizer').setup({
-      filetypes = { '*' },
-      user_default_options = {
-        RGB = false,
-        RRGGBB = true,
-        names = false,
-      },
     })
   end,
 }
