@@ -91,6 +91,8 @@ return {
           IblIndent = { fg = theme.ui.bg_p2 },
           IblWhitespace = { fg = theme.ui.bg_p2 },
           IblScope = { fg = theme.ui.whitespace },
+
+          Hlargs = { fg = palette.lightBlue },
         }
       end,
     })
