@@ -52,11 +52,13 @@ return {
     local cmp = require('cmp')
     local compare = cmp.config.compare
 
+    local win_opts = cmp.config.window.bordered(opts.window_border)
+
     cmp.setup({
       -- preselect = cmp.PreselectMode.None,
       window = {
-        completion = cmp.config.window.bordered(opts.window_border),
-        documentation = cmp.config.window.bordered(opts.window_border),
+        completion = win_opts,
+        documentation = win_opts,
         col_offset = -3,
         side_padding = 0,
       },
