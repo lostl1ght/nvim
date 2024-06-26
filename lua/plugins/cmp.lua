@@ -67,29 +67,43 @@ return {
         ['<c-d>'] = cmp.mapping.scroll_docs(4),
         ['<c-space>'] = cmp.mapping.complete({ reason = cmp.ContextReason.Manual }),
         ['<c-e>'] = cmp.mapping.close(),
-        ['<cr>'] = cmp.mapping.confirm({ select = true }),
+        -- ['<cr>'] = cmp.mapping.confirm({ select = true }),
         ['<c-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
         ['<c-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
-        --[[
-      ['<tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif luasnip.expand_or_jumpable() then
-          luasnip.expand_or_jump()
-        else
-          fallback()
-        end
-      end, { 'i', 's' }),
-      ['<s-tab>'] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end, { 'i', 's' }),
-      ]]
+        ['<cr>'] = cmp.mapping(function(fallback)
+          if cmp.visible() then
+            local luasnip = require('luasnip')
+            if luasnip.expandable() then
+              luasnip.expand()
+            else
+              cmp.confirm({
+                select = true,
+              })
+            end
+          else
+            fallback()
+          end
+        end),
+        ['<tab>'] = cmp.mapping(function(fallback)
+          local luasnip = require('luasnip')
+          if cmp.visible() then
+            cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+          elseif luasnip.expand_or_jumpable() then
+            luasnip.expand_or_jump()
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+        ['<s-tab>'] = cmp.mapping(function(fallback)
+          local luasnip = require('luasnip')
+          if cmp.visible() then
+            cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+          elseif luasnip.jumpable(-1) then
+            luasnip.jump(-1)
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
       },
       snippet = {
         --[[
