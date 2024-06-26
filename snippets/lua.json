@@ -11,7 +11,7 @@
     },
     "assigment": {
         "prefix": "ll",
-        "body": ["local ${1:varName} = ${0:value}"],
+        "body": ["local ${1:varName} = ${2:value}"],
         "description": "create a variable"
     },
     "local": {
@@ -34,7 +34,7 @@
     },
     "if else statement": {
         "prefix": "ife",
-        "body": ["if ${1:true} then", "\t$2", "else", "$3", "end"]
+        "body": ["if ${1:true} then", "\t$2", "else", "\t$3", "end"]
     },
     "else if branch": {
         "prefix": "elseif",
@@ -46,11 +46,11 @@
     },
     "then": {
         "prefix": "then",
-        "body": ["then", "$0", "end"]
+        "body": ["then", "\t$0", "end"]
     },
     "do": {
         "prefix": "do",
-        "body": ["do", "$0", "end"]
+        "body": ["do", "\t$0", "end"]
     },
     "foreach": {
         "prefix": "foreach",
