@@ -17,12 +17,6 @@ function M.keymap_set(map, buffer, wkopts)
   }, { buffer = buffer, mode = map.mode })
 end
 
-function M.trim_state(buf)
-  buf = buf or 0
-  local val = vim.b[buf].trim_trailing_whitespace
-  return val == nil and true or val
-end
-
 function M.parse(cmd, args)
   local parts = vim.split(vim.trim(args), '%s+')
   if parts[1]:find(cmd) then

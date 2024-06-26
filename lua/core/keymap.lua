@@ -33,19 +33,6 @@ local maps = {
     desc = 'Highlight search',
   },
   {
-    '<leader>tW',
-    function()
-      local enabled = require('util').trim_state()
-      vim.b.trim_trailing_whitespace = not enabled
-      vim.notify(
-        ('whitespace trimming %s'):format(enabled and 'disabled' or 'enabled'),
-        vim.log.levels.INFO,
-        { title = 'Neovim' }
-      )
-    end,
-    desc = 'Trailspace trim',
-  },
-  {
     '<leader>fs',
     function()
       local ok, result = pcall(vim.api.nvim_cmd, { cmd = 'write', mods = { silent = true } }, {})

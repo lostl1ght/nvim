@@ -1,7 +1,6 @@
 local yank = vim.api.nvim_create_augroup('YankHighlight', {})
 local term = vim.api.nvim_create_augroup('TermOptions', {})
 local bufmod = vim.api.nvim_create_augroup('BufModifiable', {})
-local trim = vim.api.nvim_create_augroup('TrimWhiteSpace', {})
 
 --[[
 local winaug = vim.api.nvim_create_augroup('HideCursorLine', {})
@@ -68,34 +67,6 @@ local autocmds = {
     },
   },
   ]]
-  {
-    'BufWritePre',
-    {
-      callback = function(data)
-        local buf = data.buf
-        local enabled = require('util').trim_state(buf)
-        if enabled then
-          local n_lines = vim.api.nvim_buf_line_count(buf)
-          local last_nonblank = vim.fn.prevnonblank(n_lines)
-          if last_nonblank < n_lines then
-            vim.api.nvim_buf_set_lines(buf, last_nonblank, n_lines, true, {})
-          end
-
-          local winid = vim.fn.bufwinid(buf)
-          local current_win = vim.api.nvim_get_current_win()
-          if vim.api.nvim_win_is_valid(winid) and winid == current_win then
-            local curpos = vim.api.nvim_win_get_cursor(winid)
-            vim.api.nvim_win_call(winid, function()
-              vim.cmd([[keeppatterns %s/\s\+$//e]])
-              vim.api.nvim_win_set_cursor(winid, curpos)
-            end)
-          end
-        end
-      end,
-      group = trim,
-      desc = 'Trim trailing whitespace',
-    },
-  },
 }
 for _, v in ipairs(autocmds) do
   vim.api.nvim_create_autocmd(unpack(v))
