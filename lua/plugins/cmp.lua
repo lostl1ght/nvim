@@ -129,14 +129,14 @@ return {
           keyword_length = 4,
           option = {
             keyword_pattern = [[\k\+]],
+            get_bufnrs = function()
+              local bufs = {}
+              for _, win in ipairs(vim.api.nvim_list_wins()) do
+                bufs[vim.api.nvim_win_get_buf(win)] = true
+              end
+              return vim.tbl_keys(bufs)
+            end,
           },
-          get_bufnrs = function()
-            local bufs = {}
-            for _, win in ipairs(vim.api.nvim_list_wins()) do
-              table.insert(bufs, vim.api.nvim_win_get_buf(win))
-            end
-            return bufs
-          end,
         },
       },
       sorting = {
