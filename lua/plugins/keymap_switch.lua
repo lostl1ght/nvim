@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'lostl1ght/keymap-switch.nvim',
   keys = {

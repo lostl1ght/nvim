@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'kosayoda/nvim-lightbulb',
   config = function()

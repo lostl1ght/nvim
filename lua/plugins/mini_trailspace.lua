@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'echasnovski/mini.trailspace',
   event = 'VeryLazy',

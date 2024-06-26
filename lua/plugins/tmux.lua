@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'aserowy/tmux.nvim',
   keys = {

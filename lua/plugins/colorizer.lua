@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'NvChad/nvim-colorizer.lua',
   init = function()

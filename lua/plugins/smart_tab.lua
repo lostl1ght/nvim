@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'boltlessengineer/smart-tab.nvim',
   event = 'VeryLazy',

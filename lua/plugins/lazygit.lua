@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'lostl1ght/lazygit.nvim',
   cmd = 'Lg',
