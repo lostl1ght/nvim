@@ -26,7 +26,7 @@ vim.opt.listchars = { tab = '├ ', nbsp = '+', trail = '·', extends = '→', p
 vim.opt.mouse = 'a'
 vim.opt.mousemodel = 'extend'
 vim.opt.number = true
-vim.opt.pumblend = 10
+vim.opt.pumblend = 0
 vim.opt.pumheight = 10
 vim.opt.redrawtime = 1500
 vim.opt.relativenumber = true
