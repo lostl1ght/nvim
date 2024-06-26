@@ -20,7 +20,7 @@ local function callback(data)
       function()
         vim.diagnostic.enable(not vim.diagnostic.is_enabled())
       end,
-      desc = 'Diagnostics',
+      desc = 'Toggle diagnostics',
     },
   }
 
