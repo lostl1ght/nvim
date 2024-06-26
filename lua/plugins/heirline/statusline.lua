@@ -202,14 +202,11 @@ local WorkDir = {
 
 local GitBranch = {
   condition = conditions.is_git_repo,
-  init = function(self)
-    self.git_status = vim.b.gitsigns_status_dict
-  end,
   {
     flexible = priority.GitBranch,
     {
-      provider = function(self)
-        return ' ' .. self.git_status.head
+      provider = function()
+        return ' ' .. vim.b.gitsigns_head
       end,
       Space({ phony = true }),
     },
