@@ -141,9 +141,6 @@ return {
       },
       sorting = {
         comparators = {
-          function(...)
-            return require('cmp_buffer'):compare_locality(...)
-          end,
           compare.offset,
           compare.exact,
           compare.score,
