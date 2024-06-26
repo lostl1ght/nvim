@@ -60,11 +60,7 @@ return {
         map('n', '<leader>uB', function()
           gs.blame_line({ full = true })
         end, { desc = 'Blame line' })
-        map('n', '<leader>ud', gs.diffthis, { desc = 'Diff against index' })
-        map('n', '<leader>ud', function()
-          gs.diffthis('~')
-        end, { desc = 'Diff against last commit' })
-        map('n', '<leader>tD', gs.toggle_deleted, { desc = 'Diff deleted' })
+        map('n', '<leader>ud', gs.toggle_deleted, { desc = 'Diff deleted' })
 
         -- Text object
         map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'Hunk' })
