@@ -23,4 +23,25 @@ function M.trim_state(buf)
   return val == nil and true or val
 end
 
+function M.parse(cmd, args)
+  local parts = vim.split(vim.trim(args), '%s+')
+  if parts[1]:find(cmd) then
+    table.remove(parts, 1)
+  end
+  if args:sub(-1) == ' ' then
+    table.insert(parts, '')
+  end
+  return table.remove(parts, 1) or '', parts
+end
+
+function M.complete(line, cmd, commands)
+  local prefix, args = M.parse(cmd, line)
+  if #args > 0 then
+    return
+  end
+  return vim.tbl_filter(function(key)
+    return key:find(prefix) == 1
+  end, vim.tbl_keys(commands))
+end
+
 return M
