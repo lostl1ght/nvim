@@ -81,6 +81,16 @@ return {
             ['<esc>'] = actions.close,
             ['<m-p>'] = action_layout.toggle_preview,
             ['<c-s>'] = flash,
+            ['<tab>'] = actions.move_selection_next,
+            ['<s-tab>'] = actions.move_selection_previous,
+            ['<c-n>'] = function(prompt_bufnr)
+              actions.toggle_selection(prompt_bufnr)
+              actions.move_selection_next(prompt_bufnr)
+            end,
+            ['<c-p>'] = function(prompt_bufnr)
+              actions.toggle_selection(prompt_bufnr)
+              actions.move_selection_previous(prompt_bufnr)
+            end,
           },
         },
       },
@@ -127,8 +137,8 @@ return {
               ['<m-d>'] = false,
             },
             n = {
-              ['<m-d>'] = false
-            }
+              ['<m-d>'] = false,
+            },
           },
         },
       },
