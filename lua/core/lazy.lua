@@ -40,7 +40,7 @@ lazy.setup('plugins', {
   pkg = { sources = { 'lazy' } },
   lockfile = vim.fn.stdpath('state') .. '/lazy-lock.json',
   dev = { path = vim.fs.normalize('~/dev/plugins') },
-  ui = { border = 'single' },
+  ui = { border = 'single', backdrop = 100 },
   checker = { enabled = false, notify = false },
   performance = {
     rtp = {
