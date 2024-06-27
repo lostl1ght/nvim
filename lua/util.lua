@@ -1,20 +1,27 @@
 local M = {}
 
-function M.keymap_set(map, buffer, wkopts)
+function M.keymap_set(map, buffer, opts)
+  local modes
   if not map.mode then
-    map.mode = 'n'
+    modes = { 'n' }
+  elseif type(map.mode) == 'string' then
+    modes = { map.mode }
+  else
+    ---@type string[]
+    modes = map.mode
   end
-  vim.keymap.set(map.mode, map[1], map[2], { buffer = buffer, desc = map.desc })
-  if not wkopts then
+  vim.keymap.set(modes, map[1], map[2], { buffer = buffer, desc = map.desc })
+
+  if not opts then
     return
   end
-  local ok, wk = pcall(require, 'which-key')
-  if not ok then
-    return
+
+  local okw, wk = pcall(require, 'which-key')
+  if okw then
+    wk.register({
+      [opts.key] = { name = opts.name },
+    }, { buffer = buffer, mode = map.mode })
   end
-  wk.register({
-    [wkopts.prefix.key] = { name = wkopts.prefix.name },
-  }, { buffer = buffer, mode = map.mode })
 end
 
 function M.parse(cmd, args)

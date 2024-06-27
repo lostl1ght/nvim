@@ -23,8 +23,10 @@ return {
           end,
           desc = 'Line diagnostics',
         }
-        local util = require('util')
-        util.keymap_set(map, data.buf)
+        require('util').keymap_set(map, data.buf, {
+          key = '<leader>c',
+          name = 'code',
+        })
       end,
       group = vim.api.nvim_create_augroup('LspLinesGroup', {}),
     })

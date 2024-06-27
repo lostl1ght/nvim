@@ -4,11 +4,9 @@ local function callback(data)
     return
   end
 
-  local wkopts = {
-    prefix = {
-      key = '<leader>m',
-      name = '<localleader>',
-    },
+  local opts = {
+    key = '<leader>m',
+    name = '<localleader>',
   }
 
   local texlab = {
@@ -30,7 +28,7 @@ local function callback(data)
   local util = require('util')
   if client.name == 'texlab' then
     for _, map in ipairs(texlab) do
-      util.keymap_set(map, data.buf, wkopts)
+      util.keymap_set(map, data.buf, opts)
     end
   end
 end

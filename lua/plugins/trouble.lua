@@ -20,7 +20,7 @@ return {
           mode = 'lsp',
           focus = true,
           auto_refresh = false,
-          win = { position = 'top', size = 0.4 },
+          win = { position = 'top', size = 0.3 },
           preview = {
             type = 'split',
             relative = 'win',
@@ -47,7 +47,6 @@ return {
     })
     vim.api.nvim_create_autocmd('LspAttach', {
       callback = function(data)
-        local util = require('util')
         local maps = {
           {
             'gd',
@@ -65,8 +64,13 @@ return {
             desc = 'Symbols',
           },
         }
+        local opts = {
+          key = '<leader>c',
+          name = 'code',
+        }
+        local util = require('util')
         for _, map in ipairs(maps) do
-          util.keymap_set(map, data.buf)
+          util.keymap_set(map, data.buf, opts)
         end
       end,
       group = vim.api.nvim_create_augroup('LspTrouble', {}),

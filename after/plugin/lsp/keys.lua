@@ -24,11 +24,9 @@ local function callback(data)
     },
   }
 
-  local wkopts = {
-    prefix = {
-      key = '<leader>c',
-      name = 'code',
-    },
+  local opts = {
+    key = '<leader>c',
+    name = 'code',
   }
   local client = vim.lsp.get_client_by_id(data.data.client_id)
   if not client then
@@ -37,7 +35,7 @@ local function callback(data)
 
   local util = require('util')
   for _, map in ipairs(keys) do
-    util.keymap_set(map, data.buf)
+    util.keymap_set(map, data.buf, opts)
   end
 
   if client.server_capabilities.codeActionProvider then
@@ -46,7 +44,7 @@ local function callback(data)
       vim.lsp.buf.code_action,
       mode = { 'n', 'v' },
       desc = 'Code actions',
-    }, data.buf, wkopts)
+    }, data.buf, opts)
   end
 end
 
