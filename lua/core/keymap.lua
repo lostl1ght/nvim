@@ -1,9 +1,6 @@
 local M = {}
 function M.load()
   local maps = {
-    { ' ', '', mode = 'x' },
-    { '<leader>qq', '<cmd>qa<cr>', desc = 'Quit' },
-    { '<leader>qQ', '<cmd>qa!<cr>', desc = 'Quit without saving' },
     -- +----------+
     -- + Terminal +
     -- +----------+
@@ -18,10 +15,12 @@ function M.load()
     -- +-------+
     -- + Basic +
     -- +-------+
-    { ' ', '' },
-    { '<f1>', '', remap = true },
+    { ' ', '', mode = '' },
+    { '<f1>', '', mode = '', remap = true },
     { 'Q', 'q', desc = 'Macro' },
     { 'q', '', remap = true },
+    { '<leader>qq', '<cmd>qa<cr>', desc = 'Quit' },
+    { '<leader>qQ', '<cmd>qa!<cr>', desc = 'Quit without saving' },
     {
       '<leader>th',
       function()
