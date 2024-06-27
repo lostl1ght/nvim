@@ -1,18 +1,30 @@
 local M = {}
 
+---@class util.WkOpts
+---@field key string
+---@field name string
+---@field buf integer?
+---@field mode string|string[]?
+
+---@param opts util.WkOpts
+function M.set_which_key(opts)
+  local ok, wk = pcall(require, 'which-key')
+  if not ok then
+    return
+  end
+  wk.register({
+    [opts.key] = { name = opts.name },
+  }, { buffer = opts.buf, mode = opts.mode })
+end
+
 ---@class util.Map
 ---@field [1] string
 ---@field [2] string|function
 ---@field mode string|string[]
 ---@field desc string
 
----@class util.MapOpts
----@field key string
----@field name string
-
 ---@param map util.Map
----@param opts util.MapOpts?
-function M.keymap_set(map, opts)
+function M.keymap_set(map)
   local modes
   if map.mode == nil then
     modes = { 'n' }
@@ -29,18 +41,6 @@ function M.keymap_set(map, opts)
     end
   end
   vim.keymap.set(modes, map[1], map[2], map_opts)
-
-  if not opts then
-    return
-  end
-
-  local buffer = map_opts.buffer
-  local okw, wk = pcall(require, 'which-key')
-  if okw then
-    wk.register({
-      [opts.key] = { name = opts.name },
-    }, { buffer = buffer, mode = map.mode })
-  end
 end
 
 ---@param cmd string

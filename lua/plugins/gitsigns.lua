@@ -20,6 +20,10 @@ return {
       ]]
       on_attach = function(bufnr)
         local gs = require('gitsigns')
+        ---@param mode string|string[]
+        ---@param l string
+        ---@param r string|function
+        ---@param opts table?
         local function map(mode, l, r, opts)
           opts = opts or {}
           opts.buffer = bufnr
@@ -66,13 +70,15 @@ return {
         map('n', '<leader>ud', gs.toggle_deleted, { desc = 'Diff deleted' })
 
         -- Text object
-        map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>', { desc = 'Hunk' })
-        local ok, wk = pcall(require, 'which-key')
-        if ok then
-          wk.register({
-            ['<leader>u'] = { name = 'gitsigns' },
-          }, { buffer = bufnr, mode = { 'n', 'v' } })
-        end
+        map({ 'o', 'x' }, 'ih', ':<c-u>Gitsigns select_hunk<cr>', { desc = 'Hunk' })
+
+        local util = require('util')
+        util.set_which_key({
+          key = '<leader>u',
+          name = 'gitsigns',
+          mode = { 'n', 'v' },
+          buf = bufnr,
+        })
       end,
     })
   end,

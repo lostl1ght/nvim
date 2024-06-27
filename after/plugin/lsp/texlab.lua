@@ -7,6 +7,7 @@ local function callback(data)
   local opts = {
     key = '<leader>m',
     name = '<localleader>',
+    buf = data.buf,
   }
 
   local texlab = {
@@ -30,8 +31,9 @@ local function callback(data)
   local util = require('util')
   if client.name == 'texlab' then
     for _, map in ipairs(texlab) do
-      util.keymap_set(map, opts)
+      util.keymap_set(map)
     end
+    util.set_which_key(opts)
   end
 end
 

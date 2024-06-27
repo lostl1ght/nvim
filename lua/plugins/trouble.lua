@@ -70,11 +70,13 @@ return {
         local opts = {
           key = '<leader>c',
           name = 'code',
+          buf = data.buf,
         }
         local util = require('util')
         for _, map in ipairs(maps) do
-          util.keymap_set(map, opts)
+          util.keymap_set(map)
         end
+        util.set_which_key(opts)
       end,
       group = vim.api.nvim_create_augroup('LspTrouble', {}),
     })
