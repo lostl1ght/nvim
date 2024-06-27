@@ -17,8 +17,8 @@ function M.load()
     -- +-------+
     { ' ', '', mode = '' },
     { '<f1>', '', mode = '', remap = true },
-    { 'Q', 'q', desc = 'Macro' },
-    { 'q', '', remap = true },
+    -- { 'Q', 'q', desc = 'Macro' },
+    -- { 'q', '', remap = true },
     { '<leader>qq', '<cmd>qa<cr>', desc = 'Quit' },
     { '<leader>qQ', '<cmd>qa!<cr>', desc = 'Quit without saving' },
     {
