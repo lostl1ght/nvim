@@ -26,7 +26,7 @@ return {
       mode = { 'n', 'i', 's' },
     },
     {
-      '<c-space>',
+      '<c-l>',
       function()
         require('noice').redirect(vim.fn.getcmdline())
       end,
