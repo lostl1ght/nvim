@@ -132,7 +132,6 @@ return {
           name = 'html-ls',
         },
       },
-      inlay_hints_enabled = false,
     }
   end,
 
@@ -174,18 +173,5 @@ return {
     require('lspconfig.ui.windows').default_options.border = 'single'
 
     require('typescript-tools').setup({})
-
-    vim.api.nvim_create_autocmd('LspAttach', {
-      group = vim.api.nvim_create_augroup('InlayHintsAttach', {}),
-      callback = function(args)
-        local buf = args.buf
-        local client = vim.lsp.get_client_by_id(args.data.client_id)
-        if not client or not client.server_capabilities.inlayHintProvider then
-          return
-        end
-        vim.lsp.inlay_hint.enable(opts.inlay_hints_enabled, { bufnr = buf })
-        vim.b[buf].inlay_hints_enabled = opts.inlay_hints_enabled
-      end,
-    })
   end,
 }

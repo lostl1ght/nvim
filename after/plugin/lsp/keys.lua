@@ -8,11 +8,13 @@ local function callback(data)
   local set = util.keymap_set
   local mc = util.set_mini_clue
 
+  local bufnr = data.buf
+
   set({
     'gr',
     vim.lsp.buf.rename,
     desc = 'Rename',
-    buffer = data.buf,
+    buffer = bufnr,
   })
   set({
     '<leader>ci',
@@ -31,13 +33,13 @@ local function callback(data)
       vim.diagnostic.enable(not vim.diagnostic.is_enabled())
     end,
     desc = 'Toggle diagnostics',
-    buffer = data.buf,
+    buffer = bufnr,
   })
 
   mc({
     key = '<leader>c',
     name = 'code',
-    buf = data.buf,
+    buf = bufnr,
   })
   if client.server_capabilities.codeActionProvider then
     set({
@@ -45,12 +47,12 @@ local function callback(data)
       vim.lsp.buf.code_action,
       mode = { 'n', 'v' },
       desc = 'Code actions',
-      buffer = data.buf,
+      buffer = bufnr,
     })
     mc({
       key = '<leader>c',
       name = 'code',
-      buf = data.buf,
+      buf = bufnr,
       mode = 'v',
     })
   end
@@ -65,7 +67,33 @@ local function callback(data)
         vim.lsp.buf.signature_help()
       end,
       mode = 'i',
-      buffer = data.buf,
+      buffer = bufnr,
+    })
+  end
+
+  if client.server_capabilities.inlayHintProvider then
+    local group = vim.api.nvim_create_augroup('ToggleInlayHints', { clear = false })
+
+    vim.defer_fn(function()
+      local mode = vim.api.nvim_get_mode().mode
+      vim.lsp.inlay_hint.enable(mode == 'n' or mode == 'v', { bufnr = bufnr })
+    end, 500)
+
+    vim.api.nvim_create_autocmd('InsertEnter', {
+      callback = function()
+        vim.lsp.inlay_hint.enable(false, { bufnr = bufnr })
+      end,
+      buffer = bufnr,
+      group = group,
+      desc = 'Enable inlay hints',
+    })
+    vim.api.nvim_create_autocmd('InsertLeave', {
+      callback = function()
+        vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+      end,
+      buffer = bufnr,
+      group = group,
+      desc = 'Disable inlay hints',
     })
   end
 end
