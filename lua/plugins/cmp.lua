@@ -15,7 +15,7 @@ return {
   event = { 'InsertEnter', 'CmdLineEnter' },
 
   opts = {
-    symbol_map = {
+    symbols = {
       Text = '',
       Method = '󰆧',
       Function = '󰊕',
@@ -151,16 +151,17 @@ return {
       },
       formatting = {
         fields = { 'kind', 'abbr', 'menu' },
-        format = function(entry, vim_item)
-          local symbol_map = opts.symbol_map
-          if entry.source.name == 'cmdline' then
-            vim_item.kind = ' ' .. symbol_map.VimCommand .. ' '
-            return vim_item
+        format = function(entry, item)
+          local symbols = opts.symbols
+          if entry.source.name ~= 'cmdline' then
+            ---@type string
+            local kind = item.kind
+            item.kind = (' %s '):format(symbols[kind])
+            item.menu = ('(%s)'):format(kind:gsub('(%a)(%u)', '%1 %2'):lower())
+          else
+            item.kind = (' %s '):format(symbols.VimCommand)
           end
-          local kind_name = vim_item.kind
-          vim_item.kind = ' ' .. symbol_map[kind_name] .. ' '
-          vim_item.menu = ' (' .. kind_name .. ')'
-          return vim_item
+          return item
         end,
       },
       experimental = {
