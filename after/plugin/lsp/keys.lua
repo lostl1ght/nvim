@@ -4,6 +4,7 @@ local function callback(data)
       'gr',
       vim.lsp.buf.rename,
       desc = 'Rename',
+      buffer = data.buf,
     },
     {
       '<leader>ci',
@@ -14,6 +15,7 @@ local function callback(data)
         vim.notify(msg, vim.log.levels.INFO, { title = 'Lsp' })
       end,
       desc = 'Inlay hints',
+      buffer = data.buf,
     },
     {
       '<leader>ct',
@@ -21,6 +23,7 @@ local function callback(data)
         vim.diagnostic.enable(not vim.diagnostic.is_enabled())
       end,
       desc = 'Toggle diagnostics',
+      buffer = data.buf,
     },
   }
 
@@ -35,7 +38,7 @@ local function callback(data)
 
   local util = require('util')
   for _, map in ipairs(keys) do
-    util.keymap_set(map, data.buf, opts)
+    util.keymap_set(map, opts)
   end
 
   if client.server_capabilities.codeActionProvider then
@@ -44,7 +47,8 @@ local function callback(data)
       vim.lsp.buf.code_action,
       mode = { 'n', 'v' },
       desc = 'Code actions',
-    }, data.buf, opts)
+      buffer = data.buf,
+    }, opts)
   end
 end
 

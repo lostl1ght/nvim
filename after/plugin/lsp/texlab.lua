@@ -16,6 +16,7 @@ local function callback(data)
         vim.cmd({ cmd = 'TexlabBuild' })
       end,
       desc = 'Build',
+      buffer = data.buf,
     },
     {
       '<localleader>f',
@@ -23,12 +24,13 @@ local function callback(data)
         vim.cmd({ cmd = 'TexlabForward' })
       end,
       desc = 'Forward',
+      buffer = data.buf,
     },
   }
   local util = require('util')
   if client.name == 'texlab' then
     for _, map in ipairs(texlab) do
-      util.keymap_set(map, data.buf, opts)
+      util.keymap_set(map, opts)
     end
   end
 end

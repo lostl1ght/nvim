@@ -11,11 +11,10 @@ local M = {}
 ---@field name string
 
 ---@param map util.Map
----@param buffer integer?
 ---@param opts util.MapOpts?
-function M.keymap_set(map, buffer, opts)
+function M.keymap_set(map, opts)
   local modes
-  if not map.mode then
+  if map.mode == nil then
     modes = { 'n' }
   elseif type(map.mode) == 'string' then
     modes = { map.mode }
@@ -23,12 +22,19 @@ function M.keymap_set(map, buffer, opts)
     ---@type string[]
     modes = map.mode
   end
-  vim.keymap.set(modes, map[1], map[2], { buffer = buffer, desc = map.desc })
+  local map_opts = {}
+  for key, val in pairs(map) do
+    if type(key) ~= 'number' and key ~= 'mode' then
+      map_opts[key] = val
+    end
+  end
+  vim.keymap.set(modes, map[1], map[2], map_opts)
 
   if not opts then
     return
   end
 
+  local buffer = map_opts.buffer
   local okw, wk = pcall(require, 'which-key')
   if okw then
     wk.register({

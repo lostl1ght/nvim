@@ -90,14 +90,9 @@ function M.load()
     ]]
   }
 
+  local util = require('util')
   for _, map in ipairs(maps) do
-    local opts = {}
-    for key, val in pairs(map) do
-      if type(key) ~= 'number' and key ~= 'mode' then
-        opts[key] = val
-      end
-    end
-    vim.keymap.set(map.mode or 'n', map[1], map[2], opts)
+    util.keymap_set(map)
   end
 end
 return M

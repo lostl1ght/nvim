@@ -22,8 +22,9 @@ return {
             )
           end,
           desc = 'Line diagnostics',
+          buffer = data.buf,
         }
-        require('util').keymap_set(map, data.buf, {
+        require('util').keymap_set(map, {
           key = '<leader>c',
           name = 'code',
         })

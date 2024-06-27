@@ -52,16 +52,19 @@ return {
             'gd',
             '<cmd>Trouble lsp toggle<cr>',
             desc = 'Definitions / references / ...',
+            buffer = data.buf,
           },
           {
             '<leader>cd',
             '<cmd>Trouble diagnostics toggle<cr>',
             desc = 'Diagnostics',
+            buffer = data.buf,
           },
           {
             '<leader>cs',
             '<cmd>Trouble symbols toggle<cr>',
             desc = 'Symbols',
+            buffer = data.buf,
           },
         }
         local opts = {
@@ -70,7 +73,7 @@ return {
         }
         local util = require('util')
         for _, map in ipairs(maps) do
-          util.keymap_set(map, data.buf, opts)
+          util.keymap_set(map, opts)
         end
       end,
       group = vim.api.nvim_create_augroup('LspTrouble', {}),
