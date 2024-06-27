@@ -13,7 +13,7 @@ return {
     end
 
     local function toggle_trim()
-      local enabled = require('util').trim_state()
+      local enabled = trim_state()
       vim.b.trim_trailing_whitespace = not enabled
       vim.notify(
         ('whitespace trimming %s'):format(enabled and 'disabled' or 'enabled'),
