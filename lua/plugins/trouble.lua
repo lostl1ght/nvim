@@ -76,7 +76,7 @@ return {
         for _, map in ipairs(maps) do
           util.keymap_set(map)
         end
-        util.set_which_key(opts)
+        util.set_mini_clue(opts)
       end,
       group = vim.api.nvim_create_augroup('LspTrouble', {}),
     })

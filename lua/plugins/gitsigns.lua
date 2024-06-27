@@ -73,12 +73,14 @@ return {
         map({ 'o', 'x' }, 'ih', ':<c-u>Gitsigns select_hunk<cr>', { desc = 'Hunk' })
 
         local util = require('util')
-        util.set_which_key({
-          key = '<leader>u',
-          name = 'gitsigns',
-          mode = { 'n', 'v' },
-          buf = bufnr,
-        })
+        for _, mode in ipairs({ 'n', 'v' }) do
+          util.set_mini_clue({
+            key = '<leader>u',
+            name = 'gitsigns',
+            mode = mode,
+            buf = bufnr,
+          })
+        end
       end,
     })
   end,

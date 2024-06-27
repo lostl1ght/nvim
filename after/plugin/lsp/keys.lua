@@ -6,7 +6,7 @@ local function callback(data)
 
   local util = require('util')
   local set = util.keymap_set
-  local wk = util.set_which_key
+  local mc = util.set_mini_clue
 
   set({
     'gr',
@@ -34,12 +34,11 @@ local function callback(data)
     buffer = data.buf,
   })
 
-  wk({
+  mc({
     key = '<leader>c',
     name = 'code',
     buf = data.buf,
   })
-
   if client.server_capabilities.codeActionProvider then
     set({
       '<leader>ca',
@@ -48,7 +47,7 @@ local function callback(data)
       desc = 'Code actions',
       buffer = data.buf,
     })
-    wk({
+    mc({
       key = '<leader>c',
       name = 'code',
       buf = data.buf,

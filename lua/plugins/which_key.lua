@@ -1,6 +1,7 @@
 ---@type LazyPluginSpec
 return {
   'folke/which-key.nvim',
+  enabled = false,
   event = 'VeryLazy',
   config = function()
     local wk = require('which-key')

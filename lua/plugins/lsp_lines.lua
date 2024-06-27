@@ -31,7 +31,7 @@ return {
           name = 'code',
           buf = data.buf,
         }
-        util.set_which_key(opts)
+        util.set_mini_clue(opts)
       end,
       group = vim.api.nvim_create_augroup('LspLinesGroup', {}),
     })

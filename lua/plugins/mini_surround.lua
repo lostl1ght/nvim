@@ -18,11 +18,9 @@ return {
       },
     })
     vim.keymap.set('n', 'gm', 'm', { desc = 'Marks' })
-    local ok, wk = pcall(require, 'which-key')
-    if ok then
-      wk.register({
-        ['m'] = { name = 'surround' },
-      }, {})
+    local okc, mc = pcall(require, 'mini.clue')
+    if okc then
+      table.insert(mc.config.triggers, { mode = 'n', keys = 'm' })
     end
   end,
 }

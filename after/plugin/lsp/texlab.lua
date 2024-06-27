@@ -6,7 +6,7 @@ local function callback(data)
 
   local util = require('util')
   local set = util.keymap_set
-  local wk = util.set_which_key
+  local mc = util.set_mini_clue
 
   if client.name == 'texlab' then
     set({
@@ -26,7 +26,7 @@ local function callback(data)
       buffer = data.buf,
     })
 
-    wk({
+    mc({
       key = '<leader>m',
       name = '<localleader>',
       buf = data.buf,

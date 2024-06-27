@@ -1,5 +1,15 @@
 local M = {}
 
+function M.list_concat(...)
+  local res = {}
+  for i = 1, select('#', ...) do
+    for _, x in ipairs(select(i, ...) or {}) do
+      table.insert(res, x)
+    end
+  end
+  return res
+end
+
 ---@class util.WkOpts
 ---@field key string
 ---@field name string
@@ -15,6 +25,38 @@ function M.set_which_key(opts)
   wk.register({
     [opts.key] = { name = opts.name },
   }, { buffer = opts.buf, mode = opts.mode })
+end
+
+---@class util.McOpts
+---@field key string
+---@field name string
+---@field mode string
+---@field buf integer?
+
+---@param opts util.McOpts
+function M.set_mini_clue(opts)
+  local ok, mc = pcall(require, 'mini.clue')
+  if not ok then
+    return
+  end
+  local cfg
+  if opts.buf then
+    cfg = vim.b[opts.buf].miniclue_config or { clues = {} }
+  else
+    cfg = mc.config
+  end
+  local clue = { mode = opts.mode or 'n', keys = opts.key, desc = '+' .. opts.name }
+  if
+    not vim.tbl_contains(cfg.clues, function(v)
+      return v.mode == clue.mode and v.keys == clue.keys
+    end, { predicate = true })
+  then
+    table.insert(cfg.clues, clue)
+  end
+
+  if opts.buf and #cfg.clues > 0 then
+    vim.b[opts.buf].miniclue_config = cfg
+  end
 end
 
 ---@class util.Map
