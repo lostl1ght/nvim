@@ -45,7 +45,7 @@ return {
         disable_winbar_cb = function(args)
           return require('heirline.conditions').buffer_matches({
             buftype = { 'prompt', 'nofile', 'quickfix' },
-            filetype = { 'lazygit', 'trouble' },
+            filetype = { 'git', 'trouble' },
           }, args.buf)
         end,
         colors = setup_colors(),

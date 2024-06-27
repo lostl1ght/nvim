@@ -215,7 +215,7 @@ local GitBranch = {
   hl = hl.Git.branch,
   on_click = {
     callback = function()
-      vim.api.nvim_cmd({ cmd = 'Lg' }, {})
+      vim.cmd('Git')
     end,
     name = 'heirline_git_line',
   },
