@@ -6,7 +6,8 @@ return {
     {
       '<leader>ft',
       function()
-        require('mini.files').open()
+        local mini_files = require('mini.files')
+        mini_files.open(mini_files.get_latest_path())
       end,
       desc = 'Manager',
     },
