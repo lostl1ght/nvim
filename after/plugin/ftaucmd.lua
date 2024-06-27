@@ -6,10 +6,10 @@ local function au(ft, cb)
   vim.api.nvim_create_autocmd('FileType', opts)
 end
 
-au('gitsigns.blame', function(data)
+au({ 'fugitive', 'git', 'gitsigns.blame', 'help' }, function(data)
   local bufnr = data.buf
   vim.keymap.set('n', 'q', function()
-    vim.api.nvim_cmd({ cmd = 'bdelete', args = { bufnr } }, {})
+    vim.api.nvim_cmd({ cmd = 'bwipeout', args = { bufnr } }, {})
   end, { buffer = bufnr })
 end)
 
@@ -21,18 +21,7 @@ au('go', function(data)
   vim.api.nvim_set_option_value('expandtab', false, { buf = data.buf })
 end)
 
-au('git', function(data)
-  local bufnr = data.buf
-  vim.keymap.set('n', 'q', function()
-    vim.api.nvim_cmd({ cmd = 'bdelete', args = { bufnr } }, {})
-  end, { buffer = bufnr })
-end)
-
-au('help', function(data)
-  local bufnr = data.buf
-  vim.keymap.set('n', 'q', function()
-    vim.api.nvim_cmd({ cmd = 'bdelete', args = { bufnr } }, {})
-  end, { buffer = bufnr })
+au('help', function()
   vim.cmd.wincmd('L')
 end)
 
