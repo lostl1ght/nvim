@@ -1,5 +1,18 @@
 local M = {}
 
+---@class util.Map
+---@field [1] string
+---@field [2] string|function
+---@field mode string|string[]
+---@field desc string
+
+---@class util.MapOpts
+---@field key string
+---@field name string
+
+---@param map util.Map
+---@param buffer integer?
+---@param opts util.MapOpts?
 function M.keymap_set(map, buffer, opts)
   local modes
   if not map.mode then
@@ -24,6 +37,10 @@ function M.keymap_set(map, buffer, opts)
   end
 end
 
+---@param cmd string
+---@param args string
+---@return string
+---@return string[]
 function M.parse(cmd, args)
   local parts = vim.split(vim.trim(args), '%s+')
   if parts[1]:find(cmd) then
@@ -35,6 +52,10 @@ function M.parse(cmd, args)
   return table.remove(parts, 1) or '', parts
 end
 
+---@param line string
+---@param cmd string
+---@param commands function[]
+---@return string[]?
 function M.complete(line, cmd, commands)
   local prefix, args = M.parse(cmd, line)
   if #args > 0 then
