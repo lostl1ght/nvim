@@ -26,6 +26,13 @@ au('git', function(data)
   vim.keymap.set('n', 'q', function()
     vim.api.nvim_cmd({ cmd = 'bdelete', args = { bufnr } }, {})
   end, { buffer = bufnr })
+end)
+
+au('help', function(data)
+  local bufnr = data.buf
+  vim.keymap.set('n', 'q', function()
+    vim.api.nvim_cmd({ cmd = 'bdelete', args = { bufnr } }, {})
+  end, { buffer = bufnr })
   vim.cmd.wincmd('L')
 end)
 
