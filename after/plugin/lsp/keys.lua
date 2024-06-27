@@ -54,6 +54,20 @@ local function callback(data)
       mode = 'v',
     })
   end
+  if client.server_capabilities.signatureHelpProvider then
+    set({
+      '<c-k>',
+      function()
+        local cmp = require('cmp')
+        if cmp.visible() then
+          cmp.close()
+        end
+        vim.lsp.buf.signature_help()
+      end,
+      mode = 'i',
+      buffer = data.buf,
+    })
+  end
 end
 
 vim.api.nvim_create_autocmd('LspAttach', {
