@@ -1,5 +1,0 @@
-local bufnr = vim.fn.bufnr()
-vim.keymap.set('n', 'q', function()
-  vim.api.nvim_cmd({ cmd = 'bdelete', args = { bufnr } }, {})
-end, { buffer = bufnr })
-vim.cmd.wincmd('L')
