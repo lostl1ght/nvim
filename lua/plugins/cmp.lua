@@ -15,34 +15,7 @@ return {
   event = { 'InsertEnter', 'CmdLineEnter' },
 
   opts = {
-    symbols = {
-      Text = '',
-      Method = '󰆧',
-      Function = '󰊕',
-      Constructor = '',
-      Field = '󰇽',
-      Variable = '󰂡',
-      Class = '󰠱',
-      Interface = '',
-      Module = '',
-      Property = '󰜢',
-      Unit = '',
-      Value = '󰎠',
-      Enum = '',
-      Keyword = '󰌋',
-      Snippet = '',
-      Color = '󰏘',
-      File = '󰈙',
-      Reference = '',
-      Folder = '󰉋',
-      EnumMember = '',
-      Constant = '󰏿',
-      Struct = '',
-      Event = '',
-      Operator = '󰆕',
-      TypeParameter = '󰅲',
-      VimCommand = '',
-    },
+
     window_border = {
       border = 'none',
       winhighlight = 'Normal:NormalFloat,CursorLine:Visual,Search:None',
@@ -153,7 +126,34 @@ return {
       formatting = {
         fields = { 'kind', 'abbr', 'menu' },
         format = function(entry, item)
-          local symbols = opts.symbols
+          local symbols = {
+            Text = '',
+            Method = '󰆧',
+            Function = '󰊕',
+            Constructor = '',
+            Field = '󰇽',
+            Variable = '󰂡',
+            Class = '󰠱',
+            Interface = '',
+            Module = '',
+            Property = '󰜢',
+            Unit = '',
+            Value = '󰎠',
+            Enum = '',
+            Keyword = '󰌋',
+            Snippet = '',
+            Color = '󰏘',
+            File = '󰈙',
+            Reference = '',
+            Folder = '󰉋',
+            EnumMember = '',
+            Constant = '󰏿',
+            Struct = '',
+            Event = '',
+            Operator = '󰆕',
+            TypeParameter = '󰅲',
+            VimCommand = '',
+          }
           if entry.source.name ~= 'cmdline' then
             ---@type string
             local kind = item.kind
