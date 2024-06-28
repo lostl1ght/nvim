@@ -85,14 +85,15 @@ return {
             fallback()
           end
         end),
-        ['<tab>'] = cmp.mapping(function(fallback)
+        ['<tab>'] = cmp.mapping(function(--[[fallback]])
           local luasnip = require('luasnip')
           if cmp.visible() then
             cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
           elseif luasnip.expand_or_jumpable() then
             luasnip.expand_or_jump()
           else
-            fallback()
+            -- fallback()
+            require('neotab').tabout()
           end
         end, { 'i', 's' }),
         ['<s-tab>'] = cmp.mapping(function(fallback)
