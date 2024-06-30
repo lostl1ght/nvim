@@ -6,7 +6,7 @@ local function au(ft, cb)
   vim.api.nvim_create_autocmd('FileType', opts)
 end
 
-au({ 'fugitive', 'git', 'gitsigns.blame', 'help' }, function(data)
+au({ 'fugitive', 'git', 'gitsigns.blame', 'help', 'qf' }, function(data)
   local bufnr = data.buf
   vim.keymap.set('n', 'q', function()
     vim.api.nvim_cmd({ cmd = 'bwipeout', args = { bufnr } }, {})
