@@ -94,6 +94,14 @@ return {
           IblScope = { fg = theme.ui.whitespace },
 
           Hlargs = { fg = palette.lightBlue },
+
+          RainbowDelimiterRed = { fg = palette.dragonRed },
+          RainbowDelimiterYellow = { fg = palette.dragonYellow },
+          RainbowDelimiterBlue = { fg = palette.dragonBlue2 },
+          RainbowDelimiterOrange = { fg = palette.dragonOrange },
+          RainbowDelimiterGreen = { fg = palette.dragonGreen },
+          RainbowDelimiterViolet = { fg = palette.dragonPink },
+          RainbowDelimiterCyan = { fg = palette.dragonGray },
         }
       end,
     })
