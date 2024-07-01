@@ -1,9 +1,3 @@
-local excluded_clients = {
-  'lua_ls',
-  'texlab',
-  'lua-ls',
-}
-
 local function callback(data)
   local client = vim.lsp.get_client_by_id(data.data.client_id)
   local bufnr = data.buf
@@ -11,10 +5,6 @@ local function callback(data)
     return
   end
   -- client.server_capabilities.semanticTokensProvider = nil
-  if vim.tbl_contains(excluded_clients, client.name) then
-    client.server_capabilities.documentFormattingProvider = nil
-    client.server_capabilities.documentRangeFormattingProvider = nil
-  end
   if client.server_capabilities.documentHighlightProvider then
     local group = vim.api.nvim_create_augroup('LspCursor', { clear = false })
     vim.api.nvim_create_autocmd({ 'CursorHold', 'InsertLeave', 'BufEnter' }, {
