@@ -67,22 +67,14 @@ end
 
 ---@param map util.Map
 function M.keymap_set(map)
-  local modes
-  if map.mode == nil then
-    modes = { 'n' }
-  elseif type(map.mode) == 'string' then
-    modes = { map.mode }
-  else
-    ---@type string[]
-    modes = map.mode
-  end
+  map.mode = map.mode or 'n'
   local map_opts = {}
   for key, val in pairs(map) do
     if type(key) ~= 'number' and key ~= 'mode' then
       map_opts[key] = val
     end
   end
-  vim.keymap.set(modes, map[1], map[2], map_opts)
+  vim.keymap.set(map.mode, map[1], map[2], map_opts)
 end
 
 ---@param cmd string

@@ -10,9 +10,12 @@ return {
     })
     vim.api.nvim_create_autocmd('LspAttach', {
       callback = function(data)
-        local map = {
+        local util = require('util')
+        local set = util.keymap_set
+        set({
           '<leader>cl',
           function()
+            ---@diagnostic disable-next-line: undefined-field
             local new_value = not vim.diagnostic.config().virtual_lines
             vim.diagnostic.config({ virtual_lines = new_value })
             vim.notify(
@@ -23,15 +26,12 @@ return {
           end,
           desc = 'Line diagnostics',
           buffer = data.buf,
-        }
-        local util = require('util')
-        util.keymap_set(map)
-        local opts = {
+        })
+        util.set_mini_clue({
           key = '<leader>c',
           name = 'code',
           buf = data.buf,
-        }
-        util.set_mini_clue(opts)
+        })
       end,
       group = vim.api.nvim_create_augroup('LspLinesGroup', {}),
     })

@@ -47,36 +47,31 @@ return {
     })
     vim.api.nvim_create_autocmd('LspAttach', {
       callback = function(data)
-        local maps = {
-          {
-            'gd',
-            '<cmd>Trouble lsp toggle<cr>',
-            desc = 'Definitions / references / ...',
-            buffer = data.buf,
-          },
-          {
-            '<leader>cd',
-            '<cmd>Trouble diagnostics toggle<cr>',
-            desc = 'Diagnostics',
-            buffer = data.buf,
-          },
-          {
-            '<leader>cs',
-            '<cmd>Trouble symbols toggle<cr>',
-            desc = 'Symbols',
-            buffer = data.buf,
-          },
-        }
-        local opts = {
+        local util = require('util')
+        local set = util.keymap_set
+        set({
+          'gd',
+          '<cmd>Trouble lsp toggle<cr>',
+          desc = 'Definitions / references / ...',
+          buffer = data.buf,
+        })
+        set({
+          '<leader>cd',
+          '<cmd>Trouble diagnostics toggle<cr>',
+          desc = 'Diagnostics',
+          buffer = data.buf,
+        })
+        set({
+          '<leader>cs',
+          '<cmd>Trouble symbols toggle<cr>',
+          desc = 'Symbols',
+          buffer = data.buf,
+        })
+        util.set_mini_clue({
           key = '<leader>c',
           name = 'code',
           buf = data.buf,
-        }
-        local util = require('util')
-        for _, map in ipairs(maps) do
-          util.keymap_set(map)
-        end
-        util.set_mini_clue(opts)
+        })
       end,
       group = vim.api.nvim_create_augroup('LspTrouble', {}),
     })
