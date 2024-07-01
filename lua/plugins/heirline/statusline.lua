@@ -207,7 +207,7 @@ local GitBranch = {
     flexible = priority.GitBranch,
     {
       provider = function()
-        return ' ' .. vim.b.gitsigns_head
+        return vim.b.gitsigns_head and ' ' .. vim.b.gitsigns_head or ''
       end,
       Space({ phony = true }),
     },
