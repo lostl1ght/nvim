@@ -4,7 +4,7 @@ return {
   event = { 'BufReadPre', 'BufNewFile' },
   dependencies = {
     { url = 'https://git.sr.ht/~whynothugo/lsp_lines.nvim' },
-    { 'kosayoda/nvim-lightbulb' },
+    { 'lostl1ght/lightbulb.nvim' },
     { 'williamboman/mason.nvim' },
     { 'williamboman/mason-lspconfig.nvim' },
     { 'hrsh7th/cmp-nvim-lsp' },
