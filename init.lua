@@ -83,3 +83,4 @@ require('plugin.lazydev') -- before lsp
 require('plugin.mason') -- before lsp
 require('plugin.lsp')
 require('plugin.mini_ai')
+require('plugin.mini_align')
