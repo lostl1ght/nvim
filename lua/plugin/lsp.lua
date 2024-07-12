@@ -1,6 +1,6 @@
 local MiniDeps = require('mini.deps')
-local add, later = MiniDeps.add, MiniDeps.later
-later(function()
+local add, now = MiniDeps.add, MiniDeps.now
+now(function()
   add({
     source = 'williamboman/mason.nvim',
     hooks = {
@@ -16,7 +16,7 @@ later(function()
     },
   })
 end)
-later(function()
+now(function()
   add({
     source = 'neovim/nvim-lspconfig',
     depends = {
@@ -152,7 +152,7 @@ later(function()
 
   require('typescript-tools').setup({})
 end)
-later(function()
+now(function()
   add({ source = 'folke/lazydev.nvim', depends = { 'Bilal2453/luvit-meta' } })
   require('lazydev').setup({
     library = {
