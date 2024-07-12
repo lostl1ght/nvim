@@ -1,5 +1,6 @@
 local MiniDeps = require('mini.deps')
 local add, now = MiniDeps.add, MiniDeps.now
+
 now(function()
   add({ source = 'echasnovski/mini.statusline', depends = { 'echasnovski/mini.icons' } })
   local use_icons = MiniIcons.config.style == 'glyph'

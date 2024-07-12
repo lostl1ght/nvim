@@ -1,6 +1,7 @@
 if vim.fn.executable('deno') == 1 then
   local MiniDeps = require('mini.deps')
   local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+
   later(function()
     add({
       source = 'toppair/peek.nvim',
@@ -27,6 +28,7 @@ if vim.fn.executable('deno') == 1 then
       theme = 'light',
     })
   end)
+
   now(function()
     local cmd = 'Peek'
     local commands = {

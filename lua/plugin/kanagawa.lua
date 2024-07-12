@@ -1,5 +1,6 @@
 local MiniDeps = require('mini.deps')
 local add, now = MiniDeps.add, MiniDeps.now
+
 now(function()
   add({ source = 'rebelot/kanagawa.nvim', depends = { 'echasnovski/mini.icons' } })
   require('kanagawa').setup({

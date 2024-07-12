@@ -1,5 +1,6 @@
 local MiniDeps = require('mini.deps')
 local add, later = MiniDeps.add, MiniDeps.later
+
 later(function()
   add({ source = 'folke/trouble.nvim' })
   local set = vim.keymap.set

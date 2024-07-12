@@ -1,5 +1,6 @@
 local MiniDeps = require('mini.deps')
 local add, later = MiniDeps.add, MiniDeps.later
+
 later(function()
   add({ source = 'stevearc/conform.nvim' })
   vim.keymap.set({ 'n', 'x' }, 'gfr', function()

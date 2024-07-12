@@ -1,5 +1,6 @@
 local MiniDeps = require('mini.deps')
 local add, later = MiniDeps.add, MiniDeps.later
+
 later(function()
   add({ source = 'windwp/nvim-autopairs' })
 
@@ -39,6 +40,7 @@ later(function()
     })
   end
 end)
+
 later(function()
   add({
     source = 'L3MON4D3/LuaSnip',
@@ -66,6 +68,7 @@ later(function()
     if require('luasnip').jumpable(-1) then require('luasnip').jump(-1) end
   end)
 end)
+
 later(function()
   add({
     source = 'hrsh7th/nvim-cmp',
