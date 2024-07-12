@@ -73,7 +73,6 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' m'
 vim.g.markdown_recommended_style = 0
 vim.g.tex_flavor = 'latex'
-vim.g.border = 'single'
 
 vim.api.nvim_create_autocmd('FileType', {
   group = vim.api.nvim_create_augroup('FormatOptions', {}),
