@@ -21,8 +21,8 @@ now(function()
 
       local hl = {
         CursorLine = { bg = theme.ui.bg_p1 },
-        CursorLineNr = { link = 'LineNr' },
-        Folded = { fg = theme.ui.special, bg = theme.ui.bg_m1, bold = true },
+        CursorLineNr = { fg = palette.boatYellow1 },
+        Folded = { fg = theme.ui.special, bg = theme.ui.bg_m1 },
 
         LspReferenceRead = { bg = theme.ui.bg_visual },
         LspReferenceText = { bg = theme.ui.bg_visual },
