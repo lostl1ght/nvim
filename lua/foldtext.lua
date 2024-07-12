@@ -23,6 +23,7 @@ end
 ---@return {[1]:string,[2]:string}[]
 local line_foldtext = function() return suffix({ { vim.fn.getline(vim.v.foldstart), 'Folded' } }) end
 
+--[[
 ---@param parser vim.treesitter.LanguageTree
 ---@param query vim.treesitter.Query
 ---@return {[1]:string,[2]:string}[]
@@ -64,5 +65,9 @@ M.foldtext = function()
   end
   return line_foldtext()
 end
+]]
+
+---@return {[1]:string,[2]:string}[]
+M.foldtext = line_foldtext
 
 return M
