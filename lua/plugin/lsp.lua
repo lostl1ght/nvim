@@ -2,6 +2,22 @@ local MiniDeps = require('mini.deps')
 local add, later = MiniDeps.add, MiniDeps.later
 later(function()
   add({
+    source = 'williamboman/mason.nvim',
+    hooks = {
+      post_checkout = function() vim.cmd('MasonUpdate') end,
+      post_install = function() vim.cmd('MasonUpdate') end,
+    },
+  })
+  require('mason').setup({
+    ui = {
+      border = vim.g.border,
+      width = 0.8,
+      height = 0.8,
+    },
+  })
+end)
+later(function()
+  add({
     source = 'neovim/nvim-lspconfig',
     depends = {
       'williamboman/mason.nvim',
@@ -135,4 +151,13 @@ later(function()
   require('lspconfig.ui.windows').default_options.border = vim.g.border
 
   require('typescript-tools').setup({})
+end)
+later(function()
+  add({ source = 'folke/lazydev.nvim', depends = { 'Bilal2453/luvit-meta' } })
+  require('lazydev').setup({
+    library = {
+      { path = 'luvit-meta/library', words = { 'vim%.uv' } },
+      { path = 'lazy.nvim', words = { 'Lazy%a' } },
+    },
+  })
 end)

@@ -78,8 +78,6 @@ require('plugin.hlargs')
 require('plugin.indent_blankline')
 require('plugin.lazygit')
 require('plugin.lightbulb')
-require('plugin.lazydev') -- before lsp
-require('plugin.mason') -- before lsp
 require('plugin.lsp')
 require('plugin.mini_ai')
 require('plugin.mini_align')
