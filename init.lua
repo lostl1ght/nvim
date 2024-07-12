@@ -71,3 +71,4 @@ require('plugin.noice')
 require('plugin.luasnip') -- before cmp
 require('plugin.autopairs') -- before cmp
 require('plugin.cmp')
+require('plugin.conform')
