@@ -1,16 +1,9 @@
 local MiniDeps = require('mini.deps')
-local add, later = MiniDeps.add, MiniDeps.later
+local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 
 later(function()
   add({ source = 'folke/persistence.nvim' })
   require('persistence').setup({ need = 1 })
-  local set = vim.keymap.set
-
-  set('n', 'gss', '<cmd>Persistence load<cr>', { desc = 'Last' })
-  set('n', 'gse', '<cmd>Persistence select<cr>', { desc = 'Select' })
-  set('n', 'gsa', '<cmd>Persistence save<cr>', { desc = 'Save' })
-  set('n', 'gst', '<cmd>Persistence stop<cr>', { desc = 'Stop' })
-  set('n', 'gso', '<cmd>Persistence stop<cr>', { desc = 'Start' })
 
   local cmd = 'Persistence'
   local commands = {
@@ -37,4 +30,13 @@ later(function()
     desc = 'Persistence',
     complete = function(_, line) return require('util').complete(line, cmd, commands) end,
   })
+end)
+
+now(function()
+  local set = vim.keymap.set
+  set('n', 'gss', '<cmd>Persistence load<cr>', { desc = 'Last' })
+  set('n', 'gse', '<cmd>Persistence select<cr>', { desc = 'Select' })
+  set('n', 'gsa', '<cmd>Persistence save<cr>', { desc = 'Save' })
+  set('n', 'gst', '<cmd>Persistence stop<cr>', { desc = 'Stop' })
+  set('n', 'gso', '<cmd>Persistence stop<cr>', { desc = 'Start' })
 end)
