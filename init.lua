@@ -63,3 +63,4 @@ end
 MiniDeps.setup({ path = { package = path_package } })
 
 require('plugin.mini_icons')
+require('plugin.kanagawa')
