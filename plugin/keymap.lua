@@ -49,3 +49,43 @@ map_toggle('c', '<cmd>setlocal cursorline! cursorline?<cr>', 'Cursor line')
 map_toggle('i', '<cmd>setlocal ignorecase! ignorecase?<cr>', 'Ignore case')
 map_toggle('r', '<cmd>setlocal relativenumber! relativenumber?<cr>', 'Relative numbers')
 map_toggle('w', '<cmd>setlocal wrap! wrap?<cr>', 'Wrap')
+
+set('n', 'grn', vim.lsp.buf.rename, {
+  desc = 'Rename',
+})
+set({ 'n', 'x' }, 'gra', vim.lsp.buf.code_action, {
+  desc = 'Code action',
+})
+set('i', '<c-s>', vim.lsp.buf.signature_help, {
+  desc = 'Signature help',
+})
+set('n', '\\l', function()
+  local new_state = not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 })
+  vim.b.inlay_hint_enabled = new_state
+  vim.lsp.inlay_hint.enable(new_state, { bufnr = 0 })
+  local msg = new_state and 'inlayhint' or 'noinlayhint'
+  print(msg)
+end, {
+  desc = 'Inlay hints',
+})
+set('n', '\\t', function()
+  local buf_id = vim.api.nvim_get_current_buf()
+  local new_state = not vim.diagnostic.is_enabled({ bufnr = buf_id })
+  vim.diagnostic.enable(new_state, { bufnr = buf_id })
+  local msg = new_state and 'diagnostic' or 'nodiagnostic'
+  print(msg)
+end, {
+  desc = 'Diagnostics',
+})
+set('n', ']e', function() require('util.goto').next(vim.v.count) end, {
+  desc = 'Reference forward',
+})
+set('n', '[e', function() require('util.goto').prev(vim.v.count) end, {
+  desc = 'Reference backward',
+})
+set('n', ']E', function() require('util.goto').last() end, {
+  desc = 'Reference last',
+})
+set('n', '[E', function() require('util.goto').first() end, {
+  desc = 'Reference first',
+})

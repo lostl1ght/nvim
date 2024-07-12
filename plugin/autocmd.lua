@@ -65,3 +65,49 @@ au('FileType', {
   group = aug('TreesitterIndent'),
   desc = 'Enable treesitter indent',
 })
+
+au('LspAttach', {
+  callback = function(data)
+    local client = vim.lsp.get_client_by_id(data.data.client_id)
+    if not client then return end
+    local bufnr = data.buf
+    if client.server_capabilities.inlayHintProvider then
+      local group = vim.api.nvim_create_augroup('ToggleInlayHints', { clear = false })
+
+      vim.defer_fn(function()
+        local mode = vim.api.nvim_get_mode().mode
+        vim.lsp.inlay_hint.enable(mode == 'n' or mode == 'v', { bufnr = bufnr })
+      end, 500)
+
+      vim.api.nvim_create_autocmd('InsertEnter', {
+        callback = function() vim.lsp.inlay_hint.enable(false, { bufnr = bufnr }) end,
+        buffer = bufnr,
+        group = group,
+        desc = 'Enable inlay hints',
+      })
+      vim.api.nvim_create_autocmd('InsertLeave', {
+        callback = function()
+          vim.lsp.inlay_hint.enable(vim.b.inlay_hint_enabled, { bufnr = bufnr })
+        end,
+        buffer = bufnr,
+        group = group,
+        desc = 'Disable inlay hints',
+      })
+    end
+    if client.server_capabilities.documentHighlightProvider then
+      local group = vim.api.nvim_create_augroup('LspCursor', { clear = false })
+      vim.api.nvim_create_autocmd({ 'CursorHold', 'InsertLeave', 'BufEnter' }, {
+        group = group,
+        buffer = bufnr,
+        callback = vim.lsp.buf.document_highlight,
+      })
+      vim.api.nvim_create_autocmd({ 'CursorMoved', 'InsertEnter', 'BufLeave' }, {
+        group = group,
+        buffer = bufnr,
+        callback = vim.lsp.buf.clear_references,
+      })
+    end
+  end,
+  group = aug('LspOptions'),
+  desc = 'Setup LSP highlight & inlay hints',
+})
