@@ -84,3 +84,4 @@ require('plugin.mason') -- before lsp
 require('plugin.lsp')
 require('plugin.mini_ai')
 require('plugin.mini_align')
+require('plugin.mini_bracketed')
