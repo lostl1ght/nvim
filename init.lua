@@ -73,3 +73,4 @@ require('plugin.autopairs') -- before cmp
 require('plugin.cmp')
 require('plugin.conform')
 require('plugin.dressing')
+require('plugin.flash')
