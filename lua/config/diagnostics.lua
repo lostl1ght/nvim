@@ -1,3 +1,11 @@
+--[[
+text = {
+  [svr.ERROR] = '',
+  [svr.WARN] = '',
+  [svr.HINT] = '󰋽',
+  [svr.INFO] = '󰌶',
+},
+]]
 local svr = vim.diagnostic.severity
 vim.diagnostic.config({
   signs = {
