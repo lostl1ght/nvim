@@ -46,6 +46,10 @@ now(function()
         local fileinfo = MiniStatusline.section_fileinfo({ trunc_width = 120 })
         local location = MiniStatusline.section_location({ trunc_width = 75 })
         local search = MiniStatusline.section_searchcount({ trunc_width = 75 })
+        local macro = (function()
+          if vim.fn.reg_recording() == '' then return '' end
+          return '[' .. vim.fn.reg_recording() .. ']'
+        end)()
 
         return MiniStatusline.combine_groups({
           { hl = mode_hl, strings = { mode } },
@@ -53,6 +57,7 @@ now(function()
           '%<',
           { hl = 'MiniStatuslineFilename', strings = { filename } },
           '%=',
+          { hl = 'MiniStatuslineFilename', strings = { macro } },
           { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
           { hl = mode_hl, strings = { search, location } },
         })
