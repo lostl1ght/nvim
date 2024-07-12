@@ -27,9 +27,9 @@ local get_signs = function(buf, lnum)
 end
 
 local icon = function(sign, len)
-  if not sign then return '' end
-  len = len or 2
-  local text = vim.fn.strcharpart(sign.text, 0, len)
+  sign = sign or {}
+  len = len or 1
+  local text = vim.fn.strcharpart(sign.text or '', 0, len)
   text = text .. string.rep(' ', len - vim.fn.strchars(text))
   return sign.texthl and ('%#' .. sign.texthl .. '#' .. text .. '%*') or text
 end
@@ -55,7 +55,7 @@ M.get = function()
     end
 
     components[2] = icon(git)
-    components[3] = '%=' .. icon(other)
+    components[3] = icon(other)
   end
 
   local is_num = vim.wo[win].number
