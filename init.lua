@@ -72,3 +72,4 @@ require('plugin.luasnip') -- before cmp
 require('plugin.autopairs') -- before cmp
 require('plugin.cmp')
 require('plugin.conform')
+require('plugin.dressing')
