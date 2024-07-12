@@ -75,3 +75,4 @@ require('plugin.conform')
 require('plugin.dressing')
 require('plugin.flash')
 require('plugin.mini_clue') -- before gitsigns
+require('plugin.gitsigns')
