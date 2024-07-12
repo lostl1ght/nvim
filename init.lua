@@ -69,9 +69,7 @@ require('plugin.treesitter')
 require('plugin.noice')
 require('plugin.mini_clue')
 
-require('plugin.luasnip') -- before cmp
-require('plugin.autopairs') -- before cmp
-require('plugin.cmp')
+require('plugin.completion')
 require('plugin.conform')
 require('plugin.dressing')
 require('plugin.flash')
