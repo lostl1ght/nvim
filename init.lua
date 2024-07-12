@@ -78,3 +78,4 @@ require('plugin.mini_clue') -- before gitsigns
 require('plugin.gitsigns')
 require('plugin.indent_blankline')
 require('plugin.lazygit')
+require('plugin.lightbulb')
