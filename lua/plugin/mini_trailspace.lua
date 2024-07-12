@@ -27,8 +27,8 @@ later(function()
       local buf = data.buf
       local enabled = not vim.b[buf].minitrailspace_disable
       if enabled then
-        local MiniTrailspace = MiniTrailspace or require('mini.trailspace')
         MiniTrailspace.trim()
+        MiniTrailspace.trim_last_lines()
       end
     end,
     group = vim.api.nvim_create_augroup('TrimWhiteSpace', {}),
