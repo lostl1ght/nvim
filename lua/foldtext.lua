@@ -1,11 +1,7 @@
 local M = {}
 
----@class util.Text: string
----@class util.Hl: string
----@class util.Part: {[1]:util.Text,[2]:util.Hl}
-
----@param fdt util.Part[]
----@return util.Part
+---@param fdt {[1]:string,[2]:string}[]
+---@return {[1]:string,[2]:string}
 local fill = function(fdt)
   local wininfo = vim.fn.getwininfo(vim.fn.win_getid())[1]
   local n = wininfo.width - wininfo.textoff
@@ -15,8 +11,8 @@ local fill = function(fdt)
   return { (' '):rep(n) or '', 'Folded' }
 end
 
----@param fdt util.Part[]
----@return util.Part[]
+---@param fdt {[1]:string,[2]:string}[]
+---@return {[1]:string,[2]:string}[]
 local suffix = function(fdt)
   table.insert(fdt, { ' <-- ', 'Folded' })
   table.insert(fdt, { ('%d lines '):format(vim.v.foldend - vim.v.foldstart), 'Folded' })
@@ -24,13 +20,12 @@ local suffix = function(fdt)
   return fdt
 end
 
----@return util.Part[]
----@diagnostic disable-next-line: assign-type-mismatch
+---@return {[1]:string,[2]:string}[]
 local line_foldtext = function() return suffix({ { vim.fn.getline(vim.v.foldstart), 'Folded' } }) end
 
 ---@param parser vim.treesitter.LanguageTree
 ---@param query vim.treesitter.Query
----@return util.Part[]
+---@return {[1]:string,[2]:string}[]
 local treesitter_foldtext = function(parser, query)
   local pos = vim.v.foldstart
   local line = vim.fn.getline(vim.v.foldstart)
@@ -60,7 +55,7 @@ local treesitter_foldtext = function(parser, query)
   return suffix(foldtext)
 end
 
----@return util.Part[]
+---@return {[1]:string,[2]:string}[]
 M.foldtext = function()
   local ok, parser = pcall(vim.treesitter.get_parser)
   if ok then
