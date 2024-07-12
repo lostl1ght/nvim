@@ -63,7 +63,8 @@ M.get = function()
 
   if (is_num or is_relnum) and vim.v.virtnum == 0 then
     if vim.v.relnum == 0 then
-      components[4] = (is_num and vim.v.lnum or vim.v.relnum) .. (is_relnum and ' ' or '') -- the current line
+      components[4] = (is_num and vim.v.lnum or vim.v.relnum)
+        .. (is_num and is_relnum and ' ' or '') -- the current line
     else
       components[4] = tostring(is_relnum and vim.v.relnum or vim.v.lnum) -- other lines
     end
