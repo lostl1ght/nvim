@@ -1,6 +1,6 @@
 if vim.fn.executable('deno') == 1 then
   local MiniDeps = require('mini.deps')
-  local add, later = MiniDeps.add, MiniDeps.later
+  local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
   later(function()
     add({
       source = 'toppair/peek.nvim',
@@ -33,7 +33,8 @@ if vim.fn.executable('deno') == 1 then
       app = vim.fn.has('wsl') == 1 and 'firefox.exe' or 'app',
       theme = 'light',
     })
-
+  end)
+  now(function()
     local cmd = 'Peek'
     local commands = {
       open = function() require('peek').open() end,
