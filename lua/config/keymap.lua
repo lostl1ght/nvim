@@ -77,15 +77,15 @@ set('n', '\\t', function()
 end, {
   desc = 'Diagnostics',
 })
-set('n', ']e', function() require('util.goto').next(vim.v.count) end, {
+set('n', ']e', function() require('goto').next(vim.v.count) end, {
   desc = 'Reference forward',
 })
-set('n', '[e', function() require('util.goto').prev(vim.v.count) end, {
+set('n', '[e', function() require('goto').prev(vim.v.count) end, {
   desc = 'Reference backward',
 })
-set('n', ']E', function() require('util.goto').last() end, {
+set('n', ']E', function() require('goto').last() end, {
   desc = 'Reference last',
 })
-set('n', '[E', function() require('util.goto').first() end, {
+set('n', '[E', function() require('goto').first() end, {
   desc = 'Reference first',
 })
