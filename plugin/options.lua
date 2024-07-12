@@ -80,6 +80,9 @@ vim.api.nvim_create_autocmd('FileType', {
   callback = function() vim.opt_local.formatoptions:remove({ 'c', 'r', 'o' }) end,
 })
 
+--[[
+-- NOTE: maybe uncomment on 0.11
 pcall(vim.keymap.del, 'n', 'grr')
 pcall(vim.keymap.del, { 'n', 'x' }, 'gra')
 pcall(vim.keymap.del, 'n', 'grn')
+]]
