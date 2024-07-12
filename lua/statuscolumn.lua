@@ -55,7 +55,7 @@ M.get = function()
     end
 
     components[2] = icon(git)
-    components[3] = icon(other)
+    components[3] = '%=' .. icon(other)
   end
 
   local is_num = vim.wo[win].number
