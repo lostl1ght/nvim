@@ -30,9 +30,14 @@ au('BufRead', {
 })
 
 au('FileType', {
-  callback = function()
+  callback = function(data)
     if vim.bo.buftype ~= '' then return end
-    pcall(vim.treesitter.start)
+    local bufnr = data.buf
+    local started = pcall(vim.treesitter.start, bufnr)
+    if started then
+      local ok, rd = pcall(require, 'rainbow-delimiters')
+      if ok then pcall(rd.enable, bufnr) end
+    end
   end,
   group = aug('TreesitterHighlight'),
   desc = 'Enable treesitter highlight',
@@ -40,12 +45,10 @@ au('FileType', {
 
 au('FileType', {
   callback = function()
-    if vim.bo.buftype ~= '' or vim.bo.filetype == 'minideps-confirm' then return end
+    if vim.bo.buftype ~= '' then return end
     if vim.treesitter.query.get(vim.bo.filetype, 'folds') then
       vim.wo.foldmethod = 'expr'
       vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-    else
-      vim.wo.foldmethod = 'indent'
     end
   end,
   group = aug('TreesitterFold'),
