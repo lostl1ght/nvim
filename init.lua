@@ -69,6 +69,7 @@ require('plugin.lsp')
 require('plugin.noice')
 require('plugin.mini_clue')
 require('plugin.mini_files')
+require('plugin.mini_tabline')
 require('plugin.treesitter')
 
 require('plugin.completion')
