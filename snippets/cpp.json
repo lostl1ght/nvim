@@ -1,0 +1,23 @@
+{
+    "foreach": {
+        "prefix": "foreach",
+        "body": [
+            "for(${1:auto} ${2:var} : ${3:collection}) {",
+            "\t$0",
+            "}"
+        ],
+        "description": "for each"
+    },
+    "try": {
+        "prefix": "try",
+        "body": [
+            "try {",
+            "\t$1",
+            "}",
+            "catch (${2:const std::exception &e}) {",
+            "\t$0",
+            "}"
+        ],
+        "description": "Code snippet for try catch"
+    }
+}

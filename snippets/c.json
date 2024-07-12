@@ -1,0 +1,108 @@
+{
+    "#include <...>": {
+        "prefix": "inc",
+        "body": ["#include <$0>"],
+        "description": "#include <…>"
+    },
+    "#include \"...\"": {
+        "prefix": "incl",
+        "body": ["#include \"$0\""],
+        "description": "#include \"…\""
+    },
+    "#define macro": {
+        "prefix": "def",
+        "body": ["#define ${1:MACRO}"],
+        "description": "define macro"
+    },
+    "#ifdef": {
+        "prefix": "ifdef",
+        "body": ["#ifdef ${1:MACRO}", "$0", "#endif /* ifdef $1 */"],
+        "description": "#ifdef"
+    },
+    "#ifndef": {
+        "prefix": "ifndef",
+        "body": ["#ifndef ${1:MACRO}", "$0", "#endif /* ifndef $1 */"],
+        "description": "#ifndef"
+    },
+    "include once": {
+        "prefix": "once",
+        "body": [
+            "#ifndef ${1:FILE}_H",
+            "#define $1_H",
+            "$0",
+            "",
+            "#endif /* ifndef $1_H */"
+        ],
+        "description": "header include guard"
+    },
+    "if": {
+        "prefix": "if",
+        "body": ["if (${1:cond}) {", "\t$0", "}"],
+        "description": "if statement"
+    },
+    "if else": {
+        "prefix": "ife",
+        "body": ["if (${1:cond}) {", "\t$2", "} else {", "\t$0", "}"],
+        "description": "if-else statement"
+    },
+    "else": {
+        "prefix": "else",
+        "body": ["else {", "\t$0", "}"],
+        "description": "else branch"
+    },
+    "else if": {
+        "prefix": "elif",
+        "body": ["else if (${1:cond}) {", "\t$0", "}"],
+        "description": "else-if branch"
+    },
+    "switch": {
+        "prefix": "switch",
+        "body": ["switch (${1:expression}) {", "\t$0", "}"],
+        "description": "switch statement"
+    },
+    "case": {
+        "prefix": "case",
+        "body": ["case ${1:0}:", "\t$0", "break;"],
+        "description": "case branch"
+    },
+    "default": {
+        "prefix": "default",
+        "body": ["default:", "$0"],
+        "description": "default branch"
+    },
+    "while": {
+        "prefix": "while",
+        "body": ["while (${1:cond}) {", "\t$0", "}"],
+        "description": "while loop"
+    },
+    "do...while": {
+        "prefix": "do",
+        "body": ["do {", "\t$0", "} while (${1:cod});"],
+        "description": "do … while loop"
+    },
+    "for": {
+        "prefix": "for",
+        "body": ["for ($1;$2;$3) {", "\t$0", "}"],
+        "description": "for loop"
+    },
+    "Function declaration": {
+        "prefix": "fnd",
+        "body": ["${2:void} ${1:fun}(${3:void});"],
+        "description": "declare a function"
+    },
+    "Function definition": {
+        "prefix": "fn",
+        "body": ["${2:void} ${1:fun}(${3:void}) {", "\t$0", "}"],
+        "description": "define a function"
+    },
+    "struct type": {
+        "prefix": "typestruct",
+        "body": ["typedef struct $1 {", "\t$0", "} ${1:type}_t;"],
+        "description": "define a type with struct"
+    },
+    "enum type": {
+        "prefix": "typeenum",
+        "body": ["typedef enum $1 {", "\t$0", "} ${1:etype}_e;"],
+        "description": "define a type with enum"
+    }
+}

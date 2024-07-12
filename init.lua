@@ -67,3 +67,5 @@ require('plugin.kanagawa')
 require('plugin.mini_statusline')
 require('plugin.treesitter')
 require('plugin.noice')
+
+require('plugin.luasnip') -- before cmp

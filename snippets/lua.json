@@ -1,0 +1,78 @@
+{
+    "require": {
+        "prefix": "req",
+        "body": ["require('${1:module}')"],
+        "description": "Require module"
+    },
+    "return": {
+        "prefix": "rt",
+        "body": ["return $0"],
+        "description": "return value"
+    },
+    "assigment": {
+        "prefix": "ll",
+        "body": ["local ${1:varName} = ${2:value}"],
+        "description": "create a variable"
+    },
+    "local": {
+        "prefix": "l",
+        "body": ["local ${0}"],
+        "description": "create a variable"
+    },
+    "locreq": {
+        "prefix": "lreq",
+        "body": ["local ${1:var} = require('${2:module}')"],
+        "description": "Require module as a variable"
+    },
+    "if statement": {
+        "prefix": "if",
+        "body": ["if ${1:true} then", "\t$0", "end"]
+    },
+    "if else statement": {
+        "prefix": "ife",
+        "body": ["if ${1:true} then", "\t$2", "else", "\t$3", "end"]
+    },
+    "else if branch": {
+        "prefix": "elseif",
+        "body": ["elseif ${1:true} then", "\t$0"]
+    },
+    "else branch": {
+        "prefix": "el",
+        "body": ["else", "\t$0", "end"]
+    },
+    "then": {
+        "prefix": "then",
+        "body": ["then", "\t$0", "end"]
+    },
+    "do": {
+        "prefix": "do",
+        "body": ["do", "\t$0", "end"]
+    },
+    "foreach": {
+        "prefix": "foreach",
+        "body": ["for ${1:k}, ${2:v} in pairs(${3:table}) do", "\t$4", "end"],
+        "description": "loop over table"
+    },
+    "forin": {
+        "prefix": "forin",
+        "body": ["for ${1:_}, ${2:v} in ipairs(${3:table}) do", "\t$4", "end"],
+        "description": "loop over arrays"
+    },
+    "function": {
+        "prefix": "fu",
+        "body": ["function($1)", "\t$0", "end"]
+    },
+    "print": {
+        "prefix": "p",
+        "body": ["print(${0})"]
+    },
+    "while": {
+        "prefix": "while",
+        "body": ["while ${1:true} do", "\t$0", "end"]
+    },
+    "locpcall": {
+        "prefix": "lpca",
+        "body": ["local ${1:ok}, ${2:value} = pcall(${3:function})"],
+        "description": "Protect call a function as a variable"
+    }
+}
