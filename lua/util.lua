@@ -42,4 +42,22 @@ M.put_empty_line = function(put_above)
   vim.fn.append(target_line, vim.fn['repeat']({ '' }, vim.v.count1))
 end
 
+---@param cmd string[]
+---@param spec {path:string,name:string,source:string}
+M.build_package = function(cmd, spec)
+  local levels = vim.log.levels
+  vim.notify(('(mini.deps) Building `%s`'):format(spec.name), levels.INFO)
+  vim.system(cmd, { text = true }, function(obj)
+    local msg = ''
+    local lvl = levels.INFO
+    if obj.code ~= 0 then
+      lvl = levels.ERROR
+      msg = ('\nCode %d\n%s'):format(obj.code, obj.stderr)
+    end
+    vim.schedule(
+      function() vim.notify(('(mini.deps) Finished building `%s`%s'):format(spec.name, msg), lvl) end
+    )
+  end)
+end
+
 return M
