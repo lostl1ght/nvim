@@ -57,7 +57,7 @@ local treesitter_foldtext = function(parser, query)
 end
 
 ---@return {[1]:string,[2]:string}[]
-M.foldtext = function()
+M.get = function()
   local ok, parser = pcall(vim.treesitter.get_parser)
   if ok then
     local query = vim.treesitter.query.get(parser:lang(), 'highlights')
@@ -68,6 +68,6 @@ end
 ]]
 
 ---@return {[1]:string,[2]:string}[]
-M.foldtext = line_foldtext
+M.get = line_foldtext
 
 return M

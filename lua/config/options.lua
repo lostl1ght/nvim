@@ -16,7 +16,7 @@ vim.opt.fillchars = { diff = '╱', fold = ' ' }
 vim.opt.foldcolumn = 'auto'
 vim.opt.foldlevel = 99
 vim.opt.foldlevelstart = 99
-vim.opt.foldtext = "v:lua.require'foldtext'.foldtext()"
+vim.opt.foldtext = "v:lua.require'foldtext'.get()"
 vim.opt.guifont = 'JetBrainsMono Nerd Font Mono:h09'
 vim.opt.history = 2000
 vim.opt.ignorecase = true
