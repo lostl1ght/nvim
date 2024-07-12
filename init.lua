@@ -32,7 +32,7 @@ if not vim.uv.fs_stat(deps_path) then
     vim.fn.getchar()
     vim.cmd('quit')
   end
-  vim.notify('Installing `mini.deps`', vim.log.levels.WARN)
+  vim.api.nvim_echo({ { 'Installing `mini.deps`', 'WarningMsg' } }, true, {})
   vim
     .system({
       'git',
@@ -44,7 +44,7 @@ if not vim.uv.fs_stat(deps_path) then
     })
     :wait()
   vim.cmd('helptags ALL')
-  vim.notify('Installend `mini.deps`', vim.log.levels.INFO)
+  vim.api.nvim_echo({ { 'Installed `mini.deps`', 'MoreMsg' } }, true, {})
 end
 
 vim.opt.runtimepath:prepend(deps_path)
