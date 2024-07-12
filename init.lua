@@ -69,3 +69,4 @@ require('plugin.treesitter')
 require('plugin.noice')
 
 require('plugin.luasnip') -- before cmp
+require('plugin.autopairs') -- before cmp
