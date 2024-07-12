@@ -1,6 +1,6 @@
 local MiniDeps = require('mini.deps')
-local add, later = MiniDeps.add, MiniDeps.later
-later(function()
+local add, now = MiniDeps.add, MiniDeps.now
+now(function()
   add({ source = 'echasnovski/mini.clue' })
   local MiniClue = require('mini.clue')
   MiniClue.setup({

@@ -67,6 +67,7 @@ require('plugin.kanagawa')
 require('plugin.mini_statusline')
 require('plugin.treesitter')
 require('plugin.noice')
+require('plugin.mini_clue')
 
 require('plugin.luasnip') -- before cmp
 require('plugin.autopairs') -- before cmp
@@ -74,7 +75,6 @@ require('plugin.cmp')
 require('plugin.conform')
 require('plugin.dressing')
 require('plugin.flash')
-require('plugin.mini_clue') -- before gitsigns
 require('plugin.gitsigns')
 require('plugin.hlargs')
 require('plugin.indent_blankline')
