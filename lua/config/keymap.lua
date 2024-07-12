@@ -1,9 +1,12 @@
 local set = vim.keymap.set
-set('t', '<esc><esc>', '<c-\\><c-n>')
-set('i', 'ii', '<esc>')
-set('', '<f1>', '', { remap = true })
-set({ 'n', 'x' }, 'j', [[v:count == 0 ? 'gj' : 'j']], { expr = true })
-set({ 'n', 'x' }, 'k', [[v:count == 0 ? 'gk' : 'k']], { expr = true })
+set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Escape terminal' })
+set('i', 'ii', '<esc>', { desc = 'Escape isert' })
+set('', '<f1>', '', { remap = true, desc = 'Unmap help' })
+set({ 'n', 'x' }, 'j', [[v:count == 0 ? 'gj' : 'j']], {
+  expr = true,
+  desc = 'Down but respect wrap',
+})
+set({ 'n', 'x' }, 'k', [[v:count == 0 ? 'gk' : 'k']], { expr = true, desc = 'Up but respect wrap' })
 set('n', 'x', '"_x', { desc = 'Delete single char without clipboard' })
 set('n', '<c-w>+', function() return vim.v.count1 * 3 .. '<c-w>+' end, {
   expr = true,
