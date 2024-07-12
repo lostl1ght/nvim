@@ -32,12 +32,7 @@ au('BufRead', {
 au('FileType', {
   callback = function(data)
     if vim.bo.buftype ~= '' then return end
-    local bufnr = data.buf
-    local started = pcall(vim.treesitter.start, bufnr)
-    if started then
-      local ok, rd = pcall(require, 'rainbow-delimiters')
-      if ok then pcall(rd.enable, bufnr) end
-    end
+    pcall(vim.treesitter.start, data.buf)
   end,
   group = aug('TreesitterHighlight'),
   desc = 'Enable treesitter highlight',
