@@ -1,5 +1,6 @@
 local MiniDeps = require('mini.deps')
-local add, now = MiniDeps.add, MiniDeps.now
+local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+
 now(function()
   add({
     source = 'williamboman/mason.nvim',
@@ -13,6 +14,7 @@ now(function()
     },
   })
 end)
+
 now(function()
   add({
     source = 'neovim/nvim-lspconfig',
@@ -149,6 +151,7 @@ now(function()
 
   require('typescript-tools').setup({})
 end)
+
 now(function()
   add({ source = 'folke/lazydev.nvim', depends = { 'Bilal2453/luvit-meta' } })
   require('lazydev').setup({
@@ -157,4 +160,9 @@ now(function()
       { path = 'lazy.nvim', words = { 'Lazy%a' } },
     },
   })
+end)
+
+later(function()
+  add({ source = 'lostl1ght/lightbulb.nvim' })
+  require('lightbulb').setup({ virtual_text = { spacing = 1 } })
 end)
