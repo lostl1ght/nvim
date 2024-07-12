@@ -45,6 +45,7 @@ vim.opt.showmode = false
 vim.opt.splitkeep = 'screen'
 vim.opt.shiftround = true
 vim.opt.signcolumn = 'yes'
+vim.opt.statuscolumn = "%!v:lua.require'statuscolumn'.get()"
 vim.opt.smartcase = true
 vim.opt.smartindent = true
 vim.opt.splitbelow = true

@@ -1,0 +1,84 @@
+local M = {}
+
+local get_signs = function(buf, lnum)
+  local signs = {}
+
+  -- Get extmark signs
+  local extmarks = vim.api.nvim_buf_get_extmarks(
+    buf,
+    -1,
+    { lnum - 1, 0 },
+    { lnum - 1, -1 },
+    { details = true, type = 'sign' }
+  )
+  for _, extmark in pairs(extmarks) do
+    signs[#signs + 1] = {
+      name = extmark[4].sign_hl_group or extmark[4].sign_name or '',
+      text = extmark[4].sign_text,
+      texthl = extmark[4].sign_hl_group,
+      priority = extmark[4].priority,
+    }
+  end
+
+  -- Sort by priority
+  table.sort(signs, function(a, b) return (a.priority or 0) < (b.priority or 0) end)
+
+  return signs
+end
+
+local icon = function(sign, len)
+  if not sign then return '' end
+  len = len or 2
+  local text = vim.fn.strcharpart(sign.text, 0, len)
+  text = text .. string.rep(' ', len - vim.fn.strchars(text))
+  return sign.texthl and ('%#' .. sign.texthl .. '#' .. text .. '%*') or text
+end
+
+M.get = function()
+  local win = vim.g.statusline_winid
+  local buf = vim.api.nvim_win_get_buf(win)
+  local show_signs = vim.wo.signcolumn ~= 'no'
+
+  -- fold, git, other, numbers
+  local components = { '%C', '', '', '' }
+
+  if show_signs then
+    local signs = get_signs(buf, vim.v.lnum)
+
+    local git, other
+    for _, s in ipairs(signs) do
+      if s.name and (s.name:find('GitSign') or s.name:find('MiniDiffSign')) then
+        git = s
+      else
+        other = s
+      end
+    end
+
+    components[2] = icon(git)
+    components[3] = icon(other)
+  end
+
+  -- Numbers in Neovim are weird
+  -- They show when either number or relativenumber is true
+  local is_num = vim.wo[win].number
+  local is_relnum = vim.wo[win].relativenumber
+
+  if (is_num or is_relnum) and vim.v.virtnum == 0 then
+    if vim.fn.has('nvim-0.11') == 1 then
+      components[4] = '%l' -- 0.11 handles both the current and other lines with %l
+    else
+      if vim.v.relnum == 0 then
+        components[4] = (is_num and '%l' or '%r') .. (is_relnum and ' ' or '') -- the current line
+      else
+        components[4] = is_relnum and '%r' or '%l' -- other lines
+      end
+    end
+    components[4] = '%=' .. components[4] .. ' ' -- right align
+  end
+
+  if vim.v.virtnum ~= 0 then components[4] = '%= ' end
+
+  return table.concat(components, '')
+end
+
+return M
