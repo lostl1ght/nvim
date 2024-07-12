@@ -76,3 +76,4 @@ require('plugin.dressing')
 require('plugin.flash')
 require('plugin.mini_clue') -- before gitsigns
 require('plugin.gitsigns')
+require('plugin.indent_blankline')
