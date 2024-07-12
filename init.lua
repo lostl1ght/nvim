@@ -61,3 +61,5 @@ if not ok then
 end
 
 MiniDeps.setup({ path = { package = path_package } })
+
+require('plugin.mini_icons')
