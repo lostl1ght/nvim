@@ -40,7 +40,7 @@ now(function()
         MsgArea = { link = 'Normal' },
         NormalFloat = { link = 'Normal' },
         MiniFilesTitle = { link = 'FloatTitle' },
-        MiniFilesTitleFocused = { fg = palette.boatYellow2, bg = theme.ui.bg, bold = true },
+        MiniFilesTitleFocused = { fg = palette.oniViolet2, bg = theme.ui.bg, bold = true },
         MiniPickPrompt = { link = 'FloatTitle' },
         -- NOTE: end
 
@@ -69,8 +69,8 @@ now(function()
         TreesitterContext = { fg = theme.ui.special, bg = theme.ui.bg_m1 },
         TreesitterContextLineNumber = { fg = theme.ui.special, bg = theme.ui.bg_m1 },
 
-       MiniTablineHidden = { fg = theme.ui.special, bg = theme.ui.bg_m3, italic = true },
-       MiniTablineModifiedHidden = { fg = theme.ui.bg_m3, bg = theme.ui.special, italic = true },
+        MiniTablineHidden = { fg = theme.ui.special, bg = theme.ui.bg_m3, italic = true },
+        MiniTablineModifiedHidden = { fg = theme.ui.bg_m3, bg = theme.ui.special, italic = true },
       }
       local kinds = {
         'Class',
