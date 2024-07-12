@@ -79,3 +79,4 @@ require('plugin.gitsigns')
 require('plugin.indent_blankline')
 require('plugin.lazygit')
 require('plugin.lightbulb')
+require('plugin.lazydev') -- before lsp
