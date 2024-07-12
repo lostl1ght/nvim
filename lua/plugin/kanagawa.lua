@@ -40,7 +40,7 @@ now(function()
         MsgArea = { link = 'Normal' },
         NormalFloat = { link = 'Normal' },
         MiniFilesTitle = { link = 'FloatTitle' },
-        MiniFilesTitleFocused = { fg = theme.ui.fg, bg = theme.ui.bg, bold = true },
+        MiniFilesTitleFocused = { fg = palette.boatYellow2, bg = theme.ui.bg, bold = true },
         MiniPickPrompt = { link = 'FloatTitle' },
         -- NOTE: end
 
