@@ -39,8 +39,8 @@ M.get = function()
   local buf = vim.api.nvim_win_get_buf(win)
   local show_signs = vim.wo.signcolumn ~= 'no'
 
-  -- fold, git, other, numbers
-  local components = { '%C', '', '', '' }
+  -- fold, git, other, numbers, padding
+  local components = { '%C', '', '', '', ' ' }
 
   if show_signs then
     local signs = get_signs(buf, vim.v.lnum)
@@ -68,10 +68,10 @@ M.get = function()
     else
       components[4] = tostring(is_relnum and vim.v.relnum or vim.v.lnum) -- other lines
     end
-    components[4] = '%=' .. components[4] .. ' ' -- right align
+    components[4] = '%=' .. components[4] -- right align
   end
 
-  if vim.v.virtnum ~= 0 then components[4] = '%= ' end
+  if vim.v.virtnum ~= 0 then components[4] = '%=' end
 
   return table.concat(components, '')
 end
