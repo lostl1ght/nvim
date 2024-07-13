@@ -5,6 +5,7 @@ vim.filetype.add({
     just = 'just',
     Justfile = 'just',
     justfile = 'just',
+    ovsschema = 'json',
     tex = 'tex',
   },
   filename = {
