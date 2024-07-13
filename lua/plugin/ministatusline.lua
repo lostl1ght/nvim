@@ -7,7 +7,6 @@ now(function()
   local use_icons = miniicons.config.style == 'glyph'
   local icons = {
     [1] = {
-      x = { ascii = 'X', glyph = '' },
       lsp = { ascii = 'LSP', glyph = '' },
     },
   }
