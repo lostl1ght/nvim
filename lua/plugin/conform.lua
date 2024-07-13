@@ -14,7 +14,7 @@ later(function()
     '/dev/null',
     '-m',
     '-l',
-    vim.fs.normalize(vim.fn.stdpath('config') .. '/latexindent/indentconfig.yaml'),
+    vim.fs.normalize(vim.fn.stdpath('config') .. '/indentconfig.yaml'),
     '-',
   }
   require('conform.formatters.rustfmt').args = {

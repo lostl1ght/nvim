@@ -95,7 +95,7 @@ now(function()
           latexindent = {
             modifyLineBreaks = true,
             ['local'] = vim.fs.normalize(
-              vim.fn.stdpath('config') .. '/latexindent/indentconfig.yaml'
+              vim.fn.stdpath('config') .. '/indentconfig.yaml'
             ),
           },
         },
