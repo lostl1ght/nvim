@@ -16,16 +16,11 @@ if not vim.uv.fs_stat(deps_path) then
     vim.cmd('quit')
   end
   vim.api.nvim_echo({ { 'Installing `mini.deps`', 'WarningMsg' } }, true, {})
-  vim
-    .system({
-      'git',
-      'clone',
-      '--filter=blob:none',
-      '--single-branch',
-      'https://github.com/echasnovski/mini.deps',
-      deps_path,
-    })
-    :wait()
+  -- stylua: ignore
+  vim.system({
+    'git', 'clone', '--filter=blob:none', '--single-branch',
+    'https://github.com/echasnovski/mini.deps', deps_path,
+  }):wait()
   vim.cmd('packadd mini.deps')
   vim.cmd('helptags ALL')
   vim.api.nvim_echo({ { 'Installed `mini.deps`', 'MoreMsg' } }, true, {})

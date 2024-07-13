@@ -1,25 +1,16 @@
 vim.loader.enable()
 
-vim.g.loaded_gzip = 1
-vim.g.loaded_tar = 1
-vim.g.loaded_tarPlugin = 1
-vim.g.loaded_zip = 1
-vim.g.loaded_zipPlugin = 1
-vim.g.loaded_getscript = 1
-vim.g.loaded_getscriptPlugin = 1
-vim.g.loaded_vimball = 1
-vim.g.loaded_vimballPlugin = 1
-vim.g.loaded_matchit = 1
-vim.g.loaded_matchparen = 1
-vim.g.loaded_spellfile_plugin = 1
-vim.g.loaded_2html_plugin = 1
-vim.g.loaded_logiPat = 1
-vim.g.loaded_rrhelper = 1
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_netrwSettings = 1
-vim.g.loaded_netrwFileHandlers = 1
-vim.g.loaded_tutor_mode_plugin = 1
+-- stylua: ignore
+local rtp = {
+  'gzip',          'tar',           'tarPlugin',         'zip',
+  'zipPlugin',     'getscript',     'getscriptPlugin',   'vimball',
+  'vimballPlugin', 'matchit',       'matchparen',        'spellfile_plugin',
+  '2html_plugin',  'logiPat',       'rrhelper',          'netrw',
+  'netrwPlugin',   'netrwSettings', 'netrwFileHandlers', 'tutor_mode_plugin',
+}
+for _, p in ipairs(rtp) do
+  vim.g['loaded_' .. p] = 1
+end
 
 local path_package = vim.fn.stdpath('data') .. '/site/'
 local deps_path = path_package .. 'pack/deps/start/mini.deps'
@@ -33,16 +24,11 @@ if not vim.uv.fs_stat(deps_path) then
     vim.cmd('quit')
   end
   vim.api.nvim_echo({ { 'Installing `mini.deps`', 'WarningMsg' } }, true, {})
-  vim
-    .system({
-      'git',
-      'clone',
-      '--filter=blob:none',
-      '--single-branch',
-      'https://github.com/echasnovski/mini.deps',
-      deps_path,
-    })
-    :wait()
+  -- stylua: ignore
+  vim.system({
+    'git', 'clone', '--filter=blob:none', '--single-branch',
+    'https://github.com/echasnovski/mini.deps', deps_path,
+  }):wait()
   vim.cmd('packadd mini.deps')
   vim.cmd('helptags ALL')
   vim.api.nvim_echo({ { 'Installed `mini.deps`', 'MoreMsg' } }, true, {})
