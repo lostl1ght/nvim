@@ -2,11 +2,11 @@ local set = vim.keymap.set
 set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Escape terminal' })
 set('i', 'ii', '<esc>', { desc = 'Escape isert' })
 set('', '<f1>', '', { remap = true, desc = 'Unmap help' })
-set({ 'n', 'x' }, 'j', [[v:count == 0 ? 'gj' : 'j']], {
+set({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", {
   expr = true,
   desc = 'Down but respect wrap',
 })
-set({ 'n', 'x' }, 'k', [[v:count == 0 ? 'gk' : 'k']], { expr = true, desc = 'Up but respect wrap' })
+set({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, desc = 'Up but respect wrap' })
 set('n', 'x', '"_x', { desc = 'Delete single char without clipboard' })
 set('n', '<c-w>+', function() return vim.v.count1 * 3 .. '<c-w>+' end, {
   expr = true,
@@ -49,10 +49,29 @@ map_toggle(
   '<cmd>let v:hlsearch = 1 - v:hlsearch | echo (v:hlsearch ? "  " : "no") . "hlsearch"<cr>',
   'Search highlight'
 )
-map_toggle('u', '<cmd>setlocal cursorline! cursorline?<cr>', 'Cursor line')
+map_toggle('l', '<cmd>setlocal cursorline! cursorline?<cr>', 'Cursor line')
 map_toggle('i', '<cmd>setlocal ignorecase! ignorecase?<cr>', 'Ignore case')
 map_toggle('r', '<cmd>setlocal relativenumber! relativenumber?<cr>', 'Relative numbers')
 map_toggle('w', '<cmd>setlocal wrap! wrap?<cr>', 'Wrap')
+map_toggle('f', function()
+  if vim.wo.foldcolumn == 'auto' then
+    vim.wo.foldcolumn = '0'
+    print('nofoldcolumn')
+  else
+    vim.wo.foldcolumn = 'auto'
+    print('foldcolumn')
+  end
+end, 'Fold column')
+map_toggle('u', '<cmd>setlocal number! number?<cr>', 'Numbers')
+map_toggle('s', function()
+  if vim.wo.signcolumn == 'yes' then
+    vim.wo.signcolumn = 'no'
+    print('nosigncolumn')
+  else
+    vim.wo.signcolumn = 'yes'
+    print('signcolumn')
+  end
+end, 'Sign column')
 
 set('n', 'grn', vim.lsp.buf.rename, {
   desc = 'Rename',
