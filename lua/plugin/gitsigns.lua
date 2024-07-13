@@ -58,7 +58,7 @@ later(function()
       map('n', 'gzp', gs.preview_hunk, { desc = 'Preview hunk' })
       map('n', 'gzb', gs.blame, { desc = 'Blame' })
       map('n', 'gzB', function() gs.blame_line({ full = true }) end, { desc = 'Blame line' })
-      map('n', '\\d', function()
+      map('n', '\\e', function()
         local new_state = gs.toggle_deleted()
         local msg = new_state and 'diffdeleted' or 'nodiffdeleted'
         print(msg)

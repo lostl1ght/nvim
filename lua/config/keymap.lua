@@ -41,7 +41,7 @@ set('n', 'go', "v:lua.require'util'.put_empty_line(v:false)", {
 
 local prefix = '\\'
 ---@param lhs string
----@param rhs string
+---@param rhs string|function
 ---@param desc string
 local map_toggle = function(lhs, rhs, desc) set('n', prefix .. lhs, rhs, { desc = desc }) end
 map_toggle(
@@ -49,7 +49,7 @@ map_toggle(
   '<cmd>let v:hlsearch = 1 - v:hlsearch | echo (v:hlsearch ? "  " : "no") . "hlsearch"<cr>',
   'Search highlight'
 )
-map_toggle('c', '<cmd>setlocal cursorline! cursorline?<cr>', 'Cursor line')
+map_toggle('u', '<cmd>setlocal cursorline! cursorline?<cr>', 'Cursor line')
 map_toggle('i', '<cmd>setlocal ignorecase! ignorecase?<cr>', 'Ignore case')
 map_toggle('r', '<cmd>setlocal relativenumber! relativenumber?<cr>', 'Relative numbers')
 map_toggle('w', '<cmd>setlocal wrap! wrap?<cr>', 'Wrap')
@@ -63,24 +63,20 @@ set({ 'n', 'x' }, 'gra', vim.lsp.buf.code_action, {
 set('i', '<c-s>', vim.lsp.buf.signature_help, {
   desc = 'Signature help',
 })
-set('n', '\\l', function()
+map_toggle('n', function()
   local new_state = not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 })
   vim.b.inlay_hint_enabled = new_state
   vim.lsp.inlay_hint.enable(new_state, { bufnr = 0 })
   local msg = new_state and 'inlayhint' or 'noinlayhint'
   print(msg)
-end, {
-  desc = 'Inlay hints',
-})
-set('n', '\\t', function()
+end, 'Inlay hints')
+map_toggle('d', function()
   local buf_id = vim.api.nvim_get_current_buf()
   local new_state = not vim.diagnostic.is_enabled({ bufnr = buf_id })
   vim.diagnostic.enable(new_state, { bufnr = buf_id })
   local msg = new_state and 'diagnostic' or 'nodiagnostic'
   print(msg)
-end, {
-  desc = 'Diagnostics',
-})
+end, 'Diagnostics')
 set('n', ']e', function() require('goto').next(vim.v.count) end, {
   desc = 'Reference forward',
 })

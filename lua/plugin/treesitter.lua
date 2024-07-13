@@ -82,7 +82,11 @@ end)
 
 later(function()
   add({ source = 'nvim-treesitter/nvim-treesitter-context' })
-  vim.keymap.set('n', 'grc', '<cmd>Context toggle<cr>', { desc = 'Context' })
+  vim.keymap.set('n', '\\c', function()
+    local tsc = require('treesitter-context')
+    tsc.toggle()
+    print((tsc.enabled() and '' or 'no') .. 'context')
+  end, { desc = 'Context' })
   local cmd = 'Context'
   local commands = {
     toggle = function() require('treesitter-context').toggle() end,
