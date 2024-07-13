@@ -1,24 +1,19 @@
 if vim.fn.executable('deno') == 1 then
-  local MiniDeps = require('mini.deps')
-  local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+  local minideps = require('mini.deps')
+  local add, now, later = minideps.add, minideps.now, minideps.later
 
   later(function()
     add({
       source = 'toppair/peek.nvim',
       hooks = {
         post_install = function(spec)
-          later(
-            function()
-              require('util').build_package({
-                'deno',
-                'task',
-                '--cwd',
-                spec.path,
-                '--quiet',
-                'build:fast',
-              }, spec)
-            end
-          )
+          later(function()
+            -- stylua: ignore
+            require('util').build_package({
+              'deno',    'task',    '--cwd',
+              spec.path, '--quiet', 'build:fast',
+            }, spec)
+          end)
         end,
       },
     })

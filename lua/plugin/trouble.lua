@@ -1,5 +1,5 @@
-local MiniDeps = require('mini.deps')
-local add, later = MiniDeps.add, MiniDeps.later
+local minideps = require('mini.deps')
+local add, later = minideps.add, minideps.later
 
 later(function()
   add({ source = 'folke/trouble.nvim' })

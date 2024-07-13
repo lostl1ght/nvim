@@ -1,5 +1,5 @@
-local MiniDeps = require('mini.deps')
-local add, later = MiniDeps.add, MiniDeps.later
+local minideps = require('mini.deps')
+local add, later = minideps.add, minideps.later
 
 later(function()
   add({ source = 'echasnovski/mini.hipatterns' })
@@ -20,15 +20,15 @@ later(function()
     complete = function(_, line) return require('util').complete(line, cmd, commands) end,
   })
 
-  local MiniHipatterns = require('mini.hipatterns')
-  MiniHipatterns.setup({
+  local minihipatterns = require('mini.hipatterns')
+  minihipatterns.setup({
     highlighters = {
       fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
       hack = { pattern = '%f[%w]()HACK()%f[%W]', group = 'MiniHipatternsHack' },
       todo = { pattern = '%f[%w]()TODO()%f[%W]', group = 'MiniHipatternsTodo' },
       note = { pattern = '%f[%w]()NOTE()%f[%W]', group = 'MiniHipatternsNote' },
 
-      hex_color = MiniHipatterns.gen_highlighter.hex_color({
+      hex_color = minihipatterns.gen_highlighter.hex_color({
         style = 'inline',
         inline_text = '⬤ ',
         priority = 2000,

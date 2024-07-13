@@ -50,23 +50,23 @@ local ui_select = function(items, opts, on_choice)
     or function(x) return vim.split(vim.inspect(x), '\n') end
   local preview = function(buf_id, item) H.set_buflines(buf_id, preview_item(item.item)) end
 
-  local mini_pick = require('mini.pick')
+  local minipick = require('mini.pick')
 
   local was_aborted = true
   local choose = function(item)
     was_aborted = false
     if item == nil then return end
-    local win_target = mini_pick.get_picker_state().windows.target
+    local win_target = minipick.get_picker_state().windows.target
     if not H.is_valid_win(win_target) then win_target = H.get_first_valid_normal_window() end
     vim.api.nvim_win_call(win_target, function()
       on_choice(items[item.index], item.index)
-      mini_pick.set_picker_target_window(vim.api.nvim_get_current_win())
+      minipick.set_picker_target_window(vim.api.nvim_get_current_win())
     end)
   end
 
   local show = function(buf_id, show_items, query)
     vim.api.nvim_buf_clear_namespace(buf_id, ns_id, 0, -1)
-    mini_pick.default_show(buf_id, show_items, query, { show_icons = false })
+    minipick.default_show(buf_id, show_items, query, { show_icons = false })
     for idx, item in ipairs(show_items) do
       vim.api.nvim_buf_set_extmark(buf_id, ns_id, idx - 1, 0, {
         hl_group = 'DiagnosticWarn',
@@ -100,7 +100,7 @@ local ui_select = function(items, opts, on_choice)
     },
   }
 
-  if mini_pick.start(pick_opts) == nil and was_aborted then on_choice(nil) end
+  if minipick.start(pick_opts) == nil and was_aborted then on_choice(nil) end
 end
 
 return { ui_select = ui_select }

@@ -1,5 +1,5 @@
-local MiniDeps = require('mini.deps')
-local add, later = MiniDeps.add, MiniDeps.later
+local minideps = require('mini.deps')
+local add, later = minideps.add, minideps.later
 
 later(function()
   add({ source = 'echasnovski/mini.trailspace' })
@@ -27,8 +27,9 @@ later(function()
       local buf = data.buf
       local enabled = not vim.b[buf].minitrailspace_disable
       if enabled then
-        MiniTrailspace.trim()
-        MiniTrailspace.trim_last_lines()
+        local minitrailspace = require('mini.trailspace')
+        minitrailspace.trim()
+        minitrailspace.trim_last_lines()
       end
     end,
     group = vim.api.nvim_create_augroup('TrimWhiteSpace', {}),

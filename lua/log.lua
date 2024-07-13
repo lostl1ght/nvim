@@ -1,14 +1,13 @@
 local lvls = vim.log.levels
 
----@class util.Logger
-local logger = {}
+local LOG = {}
 
 local normalize = function(msg) return type(msg) == 'string' and msg or vim.inspect(msg) end
 
 ---@param msg any
----@param lvl integer
+---@param lvl integer?
 ---@return any
-logger.log = function(msg, lvl)
+LOG.log = function(msg, lvl)
   local config = vim.g.logcfg or {}
 
   if not config.enabled then return msg end
@@ -25,18 +24,18 @@ end
 
 ---@param msg any
 ---@return any
-logger.info = function(msg) return logger.log(msg, lvls.INFO) end
+LOG.info = function(msg) return LOG.log(msg) end
 
 ---@param msg any
 ---@return any
-logger.warn = function(msg) return logger.log(msg, lvls.WARN) end
+LOG.warn = function(msg) return LOG.log(msg, lvls.WARN) end
 
 ---@param msg any
 ---@return any
-logger.error = function(msg) return logger.log(msg, lvls.ERROR) end
+LOG.error = function(msg) return LOG.log(msg, lvls.ERROR) end
 
 ---@param msg any
 ---@return any
-logger.debug = function(msg) return logger.log(msg, lvls.DEBUG) end
+LOG.debug = function(msg) return LOG.log(msg, lvls.DEBUG) end
 
-return logger
+return LOG

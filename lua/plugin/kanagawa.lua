@@ -1,5 +1,5 @@
-local MiniDeps = require('mini.deps')
-local add, now = MiniDeps.add, MiniDeps.now
+local minideps = require('mini.deps')
+local add, now = minideps.add, minideps.now
 
 now(function()
   add({ source = 'rebelot/kanagawa.nvim', depends = { 'echasnovski/mini.icons' } })
@@ -100,8 +100,9 @@ now(function()
         'Variable',
       }
       local cmp_fg = palette.sumiInk0
+      local miniicons = require('mini.icons')
       local function cmp_bg(kind)
-        local cmp_hl = select(2, require('mini.icons').get('lsp', kind))
+        local cmp_hl = select(2, miniicons.get('lsp', kind))
         return vim.api.nvim_get_hl(0, { name = cmp_hl }).fg
       end
       for _, kind in ipairs(kinds) do

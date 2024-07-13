@@ -1,34 +1,34 @@
-local MiniDeps = require('mini.deps')
-local add, now = MiniDeps.add, MiniDeps.now
+local minideps = require('mini.deps')
+local add, now = minideps.add, minideps.now
 
 now(function()
   add({ source = 'echasnovski/mini.files' })
   require('mini.files').setup({ windows = { preview = true } })
 
   vim.keymap.set('n', 'gft', function()
-    local MiniFiles = MiniFiles or require('mini.files')
-    MiniFiles.open(MiniFiles.get_latest_path())
+    local minifiles = require('mini.files')
+    minifiles.open(minifiles.get_latest_path())
   end, {
     desc = 'Manager',
   })
 
   local function map_split(buf_id, lhs, direction)
     local function rhs()
-      local MiniFiles = MiniFiles or require('mini.files')
-      local entry = MiniFiles.get_fs_entry(buf_id)
+      local minifiles = require('mini.files')
+      local entry = minifiles.get_fs_entry(buf_id)
       if entry == nil then return end
       if entry.fs_type == 'file' then
         local new_target_window
-        local current_target_window = MiniFiles.get_target_window()
+        local current_target_window = minifiles.get_target_window()
         if current_target_window == nil then return end
         vim.api.nvim_win_call(current_target_window, function()
           vim.cmd(direction .. ' split')
           new_target_window = vim.api.nvim_get_current_win()
         end)
 
-        MiniFiles.set_target_window(new_target_window)
+        minifiles.set_target_window(new_target_window)
       end
-      MiniFiles.go_in({})
+      minifiles.go_in({})
     end
 
     local desc = 'Open ' .. direction .. ' split'
@@ -40,7 +40,7 @@ now(function()
     group = group,
     pattern = 'MiniFilesBufferCreate',
     callback = function(data)
-      local MiniFiles = MiniFiles or require('mini.files')
+      local minifiles = require('mini.files')
       local buf_id = data.data.buf_id
       ---@param mode string|string[]
       ---@param l string
@@ -58,9 +58,9 @@ now(function()
         function() vim.cmd('Pick folders hidden=true no_ignore=true') end,
         { desc = 'Ignored folders' }
       )
-      map('n', 'gh', function() MiniFiles.open(nil, false) end, { desc = 'Open cwd' })
-      map('n', '<esc>', MiniFiles.close, { desc = 'Close' })
-      map('n', '<c-c>', MiniFiles.close, { desc = 'Close' })
+      map('n', 'gh', function() minifiles.open(nil, false) end, { desc = 'Open cwd' })
+      map('n', '<esc>', minifiles.close, { desc = 'Close' })
+      map('n', '<c-c>', minifiles.close, { desc = 'Close' })
       map_split(buf_id, 'gs', 'horizontal')
       map_split(buf_id, 'gv', 'vertical')
     end,

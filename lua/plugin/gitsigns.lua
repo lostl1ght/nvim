@@ -1,5 +1,5 @@
-local MiniDeps = require('mini.deps')
-local add, later = MiniDeps.add, MiniDeps.later
+local minideps = require('mini.deps')
+local add, later = minideps.add, minideps.later
 
 later(function()
   add({ source = 'lewis6991/gitsigns.nvim' })
@@ -67,11 +67,14 @@ later(function()
       -- Text object
       map({ 'o', 'x' }, 'ih', ':<c-u>Gitsigns select_hunk<cr>', { desc = 'Hunk' })
 
-      local cfg = vim.b[bufnr].miniclue_config or { clues = {} }
-      local clue = { mode = 'n', keys = 'gz', desc = '+gitsigns' }
-      table.insert(cfg.clues, clue)
-      vim.b[bufnr].miniclue_config = cfg
-      vim.schedule(function() MiniClue.ensure_buf_triggers(bufnr) end)
+      local ok, miniclue = pcall(require, 'mini.clue')
+      if ok then
+        local cfg = vim.b[bufnr].miniclue_config or { clues = {} }
+        local clue = { mode = 'n', keys = 'gz', desc = '+gitsigns' }
+        table.insert(cfg.clues, clue)
+        vim.b[bufnr].miniclue_config = cfg
+        vim.schedule(function() miniclue.ensure_buf_triggers(bufnr) end)
+      end
     end,
   })
 end)

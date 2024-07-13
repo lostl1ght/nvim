@@ -26,7 +26,7 @@ if not vim.uv.fs_stat(deps_path) then
   vim.api.nvim_echo({ { 'Installing `mini.deps`', 'WarningMsg' } }, true, {})
   -- stylua: ignore
   vim.system({
-    'git', 'clone', '--filter=blob:none', '--single-branch',
+    'git',   'clone',   '--filter=blob:none',  '--single-branch',
     'https://github.com/echasnovski/mini.deps', deps_path,
   }):wait()
   vim.cmd('packadd mini.deps')
@@ -34,7 +34,7 @@ if not vim.uv.fs_stat(deps_path) then
   vim.api.nvim_echo({ { 'Installed `mini.deps`', 'MoreMsg' } }, true, {})
 end
 
-local ok, MiniDeps = pcall(require, 'mini.deps')
+local ok, minideps = pcall(require, 'mini.deps')
 
 if not ok then
   vim.api.nvim_echo({
@@ -45,10 +45,10 @@ if not ok then
   vim.cmd('quit')
 end
 
-MiniDeps.setup({ path = { package = path_package } })
+minideps.setup({ path = { package = path_package } })
 vim.g.border = 'single'
 
-local now = MiniDeps.now
+local now = minideps.now
 for f in vim.fs.dir(vim.fn.stdpath('config') .. '/lua/config') do
   now(function() require('config.' .. vim.fn.fnamemodify(f, ':r')) end)
 end

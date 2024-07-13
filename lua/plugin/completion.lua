@@ -1,5 +1,5 @@
-local MiniDeps = require('mini.deps')
-local add, later = MiniDeps.add, MiniDeps.later
+local minideps = require('mini.deps')
+local add, later = minideps.add, minideps.later
 
 later(function()
   add({ source = 'windwp/nvim-autopairs' })
@@ -46,16 +46,13 @@ later(function()
     source = 'L3MON4D3/LuaSnip',
     hooks = {
       post_install = function(spec)
-        later(
-          function()
-            require('util').build_package({
-              'make',
-              '-C',
-              spec.path,
-              'install_jsregexp',
-            }, spec)
-          end
-        )
+        later(function()
+          -- stylua: ignore
+          require('util').build_package({
+            'make',    '-C',
+            spec.path, 'install_jsregexp',
+          }, spec)
+        end)
       end,
     },
   })
@@ -147,14 +144,14 @@ later(function()
     formatting = {
       fields = { 'kind', 'abbr', 'menu' },
       format = function(entry, item)
-        local mini_icons = require('mini.icons')
+        local miniicons = require('mini.icons')
         if entry.source.name ~= 'cmdline' then
           ---@type string
           local kind = item.kind or 'default'
-          item.kind = (' %s '):format(mini_icons.get('lsp', kind))
+          item.kind = (' %s '):format(miniicons.get('lsp', kind))
           item.menu = ('(%s)'):format(kind:gsub('(%a)(%u)', '%1 %2'):lower())
         else
-          item.kind = (' %s '):format(mini_icons.get('file', 'init.lua'))
+          item.kind = (' %s '):format(miniicons.get('file', 'init.lua'))
         end
         return item
       end,

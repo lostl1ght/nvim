@@ -1,5 +1,5 @@
-local MiniDeps = require('mini.deps')
-local add, later = MiniDeps.add, MiniDeps.later
+local minideps = require('mini.deps')
+local add, later = minideps.add, minideps.later
 
 later(function()
   add({ source = 'echasnovski/mini.pick' })
@@ -20,22 +20,22 @@ later(function()
   local set = vim.keymap.set
   set('n', 'gfg', '<cmd>Pick grep<cr>', { desc = 'Grep' })
   set('n', 'gbb', function()
-    local MiniPick = MiniPick or require('mini.pick')
-    MiniPick.builtin.buffers({}, {
+    local minipick = require('mini.pick')
+    minipick.builtin.buffers({}, {
       mappings = {
         delete = {
           char = '<c-d>',
           func = function()
-            local buf_id = MiniPick.get_picker_matches().current.bufnr
+            local buf_id = minipick.get_picker_matches().current.bufnr
             if require('mini.bufremove').delete(buf_id) then
-              local items = MiniPick.get_picker_items() or {}
+              local items = minipick.get_picker_items() or {}
               for idx, item in ipairs(items) do
                 if item.bufnr == buf_id then
                   table.remove(items, idx)
                   break
                 end
               end
-              MiniPick.set_picker_items(items)
+              minipick.set_picker_items(items)
             end
           end,
         },
@@ -44,7 +44,8 @@ later(function()
   end, { desc = 'Buffers' })
   set('n', 'gff', '<cmd>Pick files<cr>', { desc = 'Files' })
 
-  require('mini.pick').setup({
+  local minipick = require('mini.pick')
+  minipick.setup({
     window = {
       config = function()
         local height = math.floor(0.35 * vim.opt.lines:get())
@@ -52,8 +53,7 @@ later(function()
       end,
     },
   })
-  require('mini.pick').registry.folders = function(local_opts)
-    local MiniPick = MiniPick or require('mini.pick')
+  minipick.registry.folders = function(local_opts)
     local fd
     if vim.fn.executable('fd') == 1 then
       fd = 'fd'
@@ -67,10 +67,10 @@ later(function()
       local command = { fd, '--type', 'd', '--color', 'never' }
       if local_opts.hidden then table.insert(command, '--hidden') end
       if local_opts.no_ignore then table.insert(command, '--no-ignore') end
-      items_func = vim.schedule_wrap(function() MiniPick.set_picker_items_from_cli(command) end)
+      items_func = vim.schedule_wrap(function() minipick.set_picker_items_from_cli(command) end)
     else
       items_func = vim.schedule_wrap(function()
-        MiniPick.set_picker_items(
+        minipick.set_picker_items(
           vim
             .iter(vim.fs.dir(vim.uv.cwd() or '.', { depth = math.huge }))
             :filter(function(_, type) return type == 'directory' end)
@@ -80,19 +80,19 @@ later(function()
       end)
     end
 
-    local MiniFiles = MiniFiles or require('mini.files')
-    MiniFiles.close()
+    local minifiles = require('mini.files')
+    minifiles.close()
     local opts = {
       source = {
         items = items_func,
         show = function(buf_id, items, query)
-          MiniPick.default_show(buf_id, items, query, { show_icons = true })
+          minipick.default_show(buf_id, items, query, { show_icons = true })
         end,
         name = 'Folders',
         choose = function(item)
           vim.schedule(function()
-            MiniFiles.open(item, false)
-            MiniFiles.reveal_cwd()
+            minifiles.open(item, false)
+            minifiles.reveal_cwd()
           end)
         end,
       },
@@ -101,12 +101,12 @@ later(function()
         back = {
           char = '<esc>',
           func = function()
-            MiniPick.stop()
-            vim.defer_fn(function() MiniFiles.open(MiniFiles.get_latest_path(), true) end, 20)
+            minipick.stop()
+            vim.defer_fn(function() minifiles.open(minifiles.get_latest_path(), true) end, 20)
           end,
         },
       },
     }
-    MiniPick.start(opts)
+    minipick.start(opts)
   end
 end)

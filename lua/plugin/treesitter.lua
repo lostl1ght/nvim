@@ -1,5 +1,5 @@
-local MiniDeps = require('mini.deps')
-local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+local minideps = require('mini.deps')
+local add, now, later = minideps.add, minideps.now, minideps.later
 
 now(function()
   add({
