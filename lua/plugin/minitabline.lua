@@ -16,20 +16,20 @@ now(function()
   minitabline.setup({
     format = function(buf_id, label)
       local git = ''
-      local gs = vim.b[buf_id].gitsigns_status_dict
-      if gs then
-        if gs.added and gs.added > 0 then git = git .. '+' end
-        if gs.changed and gs.changed > 0 then git = git .. '~' end
-        if gs.removed and gs.removed > 0 then git = git .. '-' end
+      local gsd = vim.b[buf_id].gitsigns_status_dict
+      if gsd then
+        if gsd.added and gsd.added > 0 then git = git .. '+' end
+        if gsd.changed and gsd.changed > 0 then git = git .. '~' end
+        if gsd.removed and gsd.removed > 0 then git = git .. '-' end
       end
-      local get = function(severity) return #vim.diagnostic.get(buf_id, { severity = severity }) end
+      local has = function(severity) return #vim.diagnostic.get(buf_id, { severity = severity }) > 0 end
 
       local diagnostics = ''
       local severity = vim.diagnostic.severity
-      if get(severity.ERROR) > 0 then diagnostics = diagnostics .. 'E' end
-      if get(severity.WARN) > 0 then diagnostics = diagnostics .. 'W' end
-      if get(severity.INFO) > 0 then diagnostics = diagnostics .. 'I' end
-      if get(severity.HINT) > 0 then diagnostics = diagnostics .. 'H' end
+      if has(severity.ERROR) then diagnostics = diagnostics .. 'E' end
+      if has(severity.WARN) then diagnostics = diagnostics .. 'W' end
+      if has(severity.INFO) then diagnostics = diagnostics .. 'I' end
+      if has(severity.HINT) then diagnostics = diagnostics .. 'H' end
 
       local suffix = ''
       if git ~= '' then suffix = suffix .. git .. ' ' end
