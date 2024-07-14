@@ -56,7 +56,7 @@ now(function()
           return '[' .. vim.fn.reg_recording() .. ']'
         end)()
 
-        return MiniStatusline.combine_groups({
+        return ministatusline.combine_groups({
           { hl = mode_hl, strings = { mode } },
           { hl = 'MiniStatuslineDevinfo', strings = { git, diff, diagnostics, lsp } },
           '%<',
