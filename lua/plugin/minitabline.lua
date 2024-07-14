@@ -25,10 +25,11 @@ now(function()
       local get = function(severity) return #vim.diagnostic.get(buf_id, { severity = severity }) end
 
       local diagnostics = ''
-      if get(vim.diagnostic.severity.ERROR) > 0 then diagnostics = diagnostics .. 'E' end
-      if get(vim.diagnostic.severity.WARN) > 0 then diagnostics = diagnostics .. 'W' end
-      if get(vim.diagnostic.severity.INFO) > 0 then diagnostics = diagnostics .. 'I' end
-      if get(vim.diagnostic.severity.HINT) > 0 then diagnostics = diagnostics .. 'H' end
+      local severity = vim.diagnostic.severity
+      if get(severity.ERROR) > 0 then diagnostics = diagnostics .. 'E' end
+      if get(severity.WARN) > 0 then diagnostics = diagnostics .. 'W' end
+      if get(severity.INFO) > 0 then diagnostics = diagnostics .. 'I' end
+      if get(severity.HINT) > 0 then diagnostics = diagnostics .. 'H' end
 
       local suffix = ''
       if git ~= '' then suffix = suffix .. git .. ' ' end
