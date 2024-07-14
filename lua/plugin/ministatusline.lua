@@ -31,9 +31,9 @@ now(function()
       return ('%%#%s#%s'):format(args.file_hl, '%t')
     end
 
-    local path = vim.fn.fnamemodify(vim.fn.expand('%'), ':~:.:h')
+    local path = vim.fn.fnamemodify(vim.fn.expand('%:p:h'), ':~:.')
     local sep = package.config:sub(1, 1)
-    local file = vim.fn.fnamemodify(vim.fn.expand('%'), ':t')
+    local file = vim.fn.expand('%:t')
 
     if path == '.' or file == '' then
       path = ''
@@ -41,7 +41,11 @@ now(function()
       path = path .. sep
     end
 
-    if ministatusline.is_truncated(args.trunc_width) then path = vim.fn.pathshorten(path, 2) end
+    if ministatusline.is_truncated(args.trunc_width) then
+      path = ''
+    elseif ministatusline.is_truncated(math.floor(vim.fn.strdisplaywidth(path) * 5 / 2)) then
+      path = vim.fn.pathshorten(path, 2)
+    end
 
     local prefix = ''
     if path ~= '' then prefix = prefix .. ('%%#%s#%s'):format(args.path_hl, path) end
@@ -64,7 +68,7 @@ now(function()
         local diagnostics = ministatusline.section_diagnostics({ trunc_width = 75 })
         local lsp = ministatusline.section_lsp({ icon = icons.lsp, trunc_width = 75 })
         local filename = section_filename({
-          trunc_width = 100,
+          trunc_width = 80,
           path_hl = 'MiniStatuslinePath',
           file_hl = 'MiniStatuslineFilename',
         })
@@ -93,7 +97,7 @@ now(function()
         local diff = ministatusline.section_diff({ trunc_width = 75 })
         local diagnostics = ministatusline.section_diagnostics({ trunc_width = 75 })
         local filename = section_filename({
-          trunc_width = 100,
+          trunc_width = 80,
           path_hl = 'MiniStatuslineInactive',
           file_hl = 'MiniStatuslineInactive',
         })
