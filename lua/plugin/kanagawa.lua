@@ -71,6 +71,7 @@ now(function()
 
         MiniTablineHidden = { fg = theme.ui.special, bg = theme.ui.bg_m3, italic = true },
         MiniTablineModifiedHidden = { fg = theme.ui.bg_m3, bg = theme.ui.special, italic = true },
+        MiniStatuslinePath = { fg = theme.syn.comment, bg = theme.ui.bg_dim },
       }
       local kinds = {
         'Class',

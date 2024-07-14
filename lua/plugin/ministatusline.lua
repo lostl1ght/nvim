@@ -26,16 +26,32 @@ now(function()
   })
   local section_filename = function(args)
     local ministatusline = require('mini.statusline')
+
+    if vim.bo.buftype == 'terminal' or vim.tbl_contains({ 'help', 'qf' }, vim.bo.filetype) then
+      return ('%%#%s#%s'):format(args.file_hl, '%t')
+    end
+
+    local path = vim.fn.fnamemodify(vim.fn.expand('%'), ':~:.:h')
+    local sep = package.config:sub(1, 1)
+    local file = vim.fn.fnamemodify(vim.fn.expand('%'), ':t')
+
+    if path == '.' or file == '' then
+      path = ''
+    else
+      path = path .. sep
+    end
+
+    if ministatusline.is_truncated(args.trunc_width) then path = vim.fn.pathshorten(path, 2) end
+
+    local prefix = ''
+    if path ~= '' then prefix = prefix .. ('%%#%s#%s'):format(args.path_hl, path) end
+    if file ~= '' then prefix = prefix .. ('%%#%s#%s'):format(args.file_hl, file) end
+
     local ro = vim.bo.readonly
     local mod = vim.bo.modified
     local suffix = ro and (' ' .. icons.ro) or mod and (' ' .. icons.mod) or ''
-    if vim.bo.buftype == 'terminal' then
-      return '%t'
-    elseif ministatusline.is_truncated(args.trunc_width) then
-      return '%t' .. suffix
-    else
-      return '%f' .. suffix
-    end
+
+    return prefix .. suffix
   end
   require('mini.statusline').setup({
     use_icons = use_icons,
@@ -47,7 +63,11 @@ now(function()
         local diff = ministatusline.section_diff({ trunc_width = 75 })
         local diagnostics = ministatusline.section_diagnostics({ trunc_width = 75 })
         local lsp = ministatusline.section_lsp({ icon = icons.lsp, trunc_width = 75 })
-        local filename = section_filename({ trunc_width = 100 })
+        local filename = section_filename({
+          trunc_width = 100,
+          path_hl = 'MiniStatuslinePath',
+          file_hl = 'MiniStatuslineFilename',
+        })
         local fileinfo = ministatusline.section_fileinfo({ trunc_width = 120 })
         local location = ministatusline.section_location({ trunc_width = 75 })
         local search = ministatusline.section_searchcount({ trunc_width = 75 })
@@ -72,7 +92,11 @@ now(function()
         local ministatusline = require('mini.statusline')
         local diff = ministatusline.section_diff({ trunc_width = 75 })
         local diagnostics = ministatusline.section_diagnostics({ trunc_width = 75 })
-        local filename = section_filename({ trunc_width = 100 })
+        local filename = section_filename({
+          trunc_width = 100,
+          path_hl = 'MiniStatuslineInactive',
+          file_hl = 'MiniStatuslineInactive',
+        })
 
         return ministatusline.combine_groups({
           { hl = 'MiniStatuslineInactive', strings = { diff, diagnostics } },
