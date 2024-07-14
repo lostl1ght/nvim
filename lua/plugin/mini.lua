@@ -3,7 +3,7 @@ local add, now, later = minideps.add, minideps.now, minideps.later
 
 now(function()
   add({ source = 'echasnovski/mini.icons' })
-  require('mini.icons').setup({ filetype = { lazygit = { glyph = '󰊢' } } })
+  require('mini.icons').setup()
 end)
 
 later(function()
