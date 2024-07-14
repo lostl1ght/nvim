@@ -12,12 +12,12 @@ local get_signs = function(buf, lnum)
     { details = true, type = 'sign' }
   )
   for _, extmark in pairs(extmarks) do
-    signs[#signs + 1] = {
-      name = extmark[4].sign_hl_group or extmark[4].sign_name or '',
+    table.insert(signs, {
+      name = extmark[4].sign_name or extmark[4].sign_hl_group or '',
       text = extmark[4].sign_text,
       texthl = extmark[4].sign_hl_group,
       priority = extmark[4].priority,
-    }
+    })
   end
 
   -- Sort by priority
@@ -39,16 +39,18 @@ M.get = function()
   local buf = vim.api.nvim_win_get_buf(win)
   local show_signs = vim.wo.signcolumn ~= 'no'
 
-  -- fold, git, other, numbers, padding
-  local components = { '%C', '', '', '', ' ' }
+  -- fold, git, other, numbers, dap
+  local components = { '%C', '', '', '', '' }
 
   if show_signs then
     local signs = get_signs(buf, vim.v.lnum)
 
-    local git, other
+    local git, other, dap
     for _, s in ipairs(signs) do
-      if s.name and (s.name:find('GitSign') or s.name:find('MiniDiffSign')) then
+      if s.name and (s.name:find('GitSign', 1, true) or s.name:find('MiniDiffSign', 1, true)) then
         git = s
+      elseif s.name and s.name:find('Dap', 1, true) then
+        dap = s
       else
         other = s
       end
@@ -56,6 +58,7 @@ M.get = function()
 
     components[2] = icon(git)
     components[3] = icon(other)
+    components[5] = icon(dap)
   end
 
   local is_num = vim.wo[win].number
