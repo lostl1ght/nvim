@@ -49,7 +49,15 @@ later(function()
     window = {
       config = function()
         local height = math.floor(0.35 * vim.opt.lines:get())
-        return { height = height, row = 0, col = 0, border = vim.g.border }
+        local has_tabline = vim.o.showtabline == 2
+          or (vim.o.showtabline == 1 and #vim.api.nvim_list_tabpages() > 1)
+        return {
+          height = height,
+          anchor = 'NW',
+          row = has_tabline and 1 or 0,
+          col = 0,
+          border = vim.g.border,
+        }
       end,
     },
   })
