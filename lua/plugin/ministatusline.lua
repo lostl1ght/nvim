@@ -8,6 +8,8 @@ now(function()
   local icons = {
     [1] = {
       lsp = { ascii = 'LSP', glyph = '' },
+      ro = { ascii = '[ro]', glyph = '' },
+      mod = { ascii = '[+]', glyph = '' },
     },
   }
   setmetatable(icons, {
@@ -26,13 +28,13 @@ now(function()
     local ministatusline = require('mini.statusline')
     local ro = vim.bo.readonly
     local mod = vim.bo.modified
-    local suffix = ro and '[ro]' or mod and '[+]' or ''
+    local suffix = ro and (' ' .. icons.ro) or mod and (' ' .. icons.mod) or ''
     if vim.bo.buftype == 'terminal' then
       return '%t'
     elseif ministatusline.is_truncated(args.trunc_width) then
-      return '%t ' .. suffix
+      return '%t' .. suffix
     else
-      return '%f ' .. suffix
+      return '%f' .. suffix
     end
   end
   require('mini.statusline').setup({
