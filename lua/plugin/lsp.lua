@@ -164,5 +164,4 @@ end)
 
 later(function()
   add({ source = 'lostl1ght/lightbulb.nvim' })
-  require('lightbulb').setup({ virtual_text = { text = '', spacing = 1 } })
 end)
