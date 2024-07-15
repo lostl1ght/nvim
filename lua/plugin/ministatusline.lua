@@ -58,6 +58,16 @@ now(function()
 
     return prefix .. (prefix ~= '' and ' ' or '') .. suffix
   end
+  local section_keymap = function()
+    local show = vim.b.keymap_name
+      and (
+        vim.o.imsearch ~= -1 and vim.fn.mode() == 'c' and vim.o.imsearch == 1
+        or vim.o.iminsert == 1
+      )
+    if not show then return '' end
+
+    return string.upper(show and vim.b.keymap_name or 'en')
+  end
   local section_macro = function()
     if vim.fn.reg_recording() == '' then return '' end
     return '[' .. vim.fn.reg_recording() .. ']'
@@ -81,6 +91,7 @@ now(function()
         local location = ministatusline.section_location({ trunc_width = 75 })
         local search = ministatusline.section_searchcount({ trunc_width = 75 })
         local macro = section_macro()
+        local keymap = section_keymap()
 
         return ministatusline.combine_groups({
           { hl = mode_hl, strings = { mode } },
@@ -88,7 +99,7 @@ now(function()
           '%<',
           { hl = 'MiniStatuslineFilename', strings = { filename } },
           '%=',
-          { hl = 'MiniStatuslineFilename', strings = { macro } },
+          { hl = 'MiniStatuslineFilename', strings = { macro, keymap } },
           { hl = 'MiniStatuslineFileinfo', strings = { fileinfo } },
           { hl = mode_hl, strings = { search, location } },
         })
