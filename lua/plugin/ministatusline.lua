@@ -58,6 +58,10 @@ now(function()
 
     return prefix .. (prefix ~= '' and ' ' or '') .. suffix
   end
+  local section_macro = function()
+    if vim.fn.reg_recording() == '' then return '' end
+    return '[' .. vim.fn.reg_recording() .. ']'
+  end
   require('mini.statusline').setup({
     use_icons = use_icons,
     content = {
@@ -76,10 +80,7 @@ now(function()
         local fileinfo = ministatusline.section_fileinfo({ trunc_width = 120 })
         local location = ministatusline.section_location({ trunc_width = 75 })
         local search = ministatusline.section_searchcount({ trunc_width = 75 })
-        local macro = (function()
-          if vim.fn.reg_recording() == '' then return '' end
-          return '[' .. vim.fn.reg_recording() .. ']'
-        end)()
+        local macro = section_macro()
 
         return ministatusline.combine_groups({
           { hl = mode_hl, strings = { mode } },
