@@ -42,6 +42,7 @@ now(function()
       cmdline_popup = { position = { row = '10%', col = '50%' } },
       confirm = { zindex = 300, relative = 'cursor', position = { row = 2, col = 2 } },
       split = { enter = true },
+      mini = { reverse = false, position = { row = 1, col = '100%' } },
     },
     routes = {
       -- Hide search count
