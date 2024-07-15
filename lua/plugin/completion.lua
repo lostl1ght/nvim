@@ -89,7 +89,7 @@ later(function()
   })
 
   cmp.setup({
-    -- preselect = cmp.PreselectMode.None,
+    preselect = cmp.PreselectMode.None,
     window = {
       completion = win_opts,
       documentation = win_opts,
