@@ -34,13 +34,8 @@ later(function()
           func = function()
             local buf_id = minipick.get_picker_matches().current.bufnr
             if require('mini.bufremove').delete(buf_id) then
-              local items = minipick.get_picker_items() or {}
-              for idx, item in ipairs(items) do
-                if item.bufnr == buf_id then
-                  table.remove(items, idx)
-                  break
-                end
-              end
+              local f = function(i) return i.bufnr ~= buf_id end
+              local items = vim.tbl_filter(f, minipick.get_picker_items() or {})
               minipick.set_picker_items(items)
             end
           end,
