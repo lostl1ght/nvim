@@ -31,7 +31,7 @@ now(function()
       return ('%%#%s#%s'):format(args.file_hl, '%t')
     end
 
-    local path = vim.fn.fnamemodify(vim.fn.expand('%:p:h'), ':~:.')
+    local path = vim.fn.fnamemodify(vim.fn.expand('%'), ':~:.:h')
     local sep = package.config:sub(1, 1)
     local file = vim.fn.expand('%:t')
 
@@ -49,13 +49,14 @@ now(function()
 
     local prefix = ''
     if path ~= '' then prefix = prefix .. ('%%#%s#%s'):format(args.path_hl, path) end
-    if file ~= '' then prefix = prefix .. ('%%#%s#%s'):format(args.file_hl, file) end
+    if file == '' then file = '[No Name]' end
+    prefix = prefix .. ('%%#%s#%s'):format(args.file_hl, file)
 
     local ro = vim.bo.readonly
     local mod = vim.bo.modified
-    local suffix = ro and (' ' .. icons.ro) or mod and (' ' .. icons.mod) or ''
+    local suffix = ro and icons.ro or mod and icons.mod or ''
 
-    return prefix .. suffix
+    return prefix .. (prefix ~= '' and ' ' or '') .. suffix
   end
   require('mini.statusline').setup({
     use_icons = use_icons,
