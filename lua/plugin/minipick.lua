@@ -22,6 +22,12 @@ later(function()
   set('n', 'gbb', function()
     local minipick = require('mini.pick')
     minipick.builtin.buffers({}, {
+      source = {
+        show = function(buf_id, items, query)
+          vim.tbl_map(function(i) i.text = vim.fn.fnamemodify(i.text, ':~:.') end, items)
+          minipick.default_show(buf_id, items, query, { show_icons = true })
+        end,
+      },
       mappings = {
         delete = {
           char = '<c-d>',
