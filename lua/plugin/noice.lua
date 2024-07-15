@@ -52,6 +52,8 @@ now(function()
       { filter = { event = 'msg_show', kind = '', find = '^%?.+' }, opts = { skip = true } },
       -- Long messages to split
       { filter = { event = 'msg_show', min_height = 20 }, view = 'cmdline_output' },
+      -- Hide 'written' messages
+      { filter = { event = 'msg_show', kind = '', find = 'written$' }, opts = { skip = true } },
     },
   })
   local set = vim.keymap.set

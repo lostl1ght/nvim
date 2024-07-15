@@ -40,7 +40,7 @@ vim.opt.shiftround = true
 vim.opt.shiftwidth = 4
 vim.opt.showtabline = 2
 vim.opt.sidescrolloff = 5
-vim.opt.shortmess:append({ W = true, I = true, c = true, C = true, a = true })
+vim.opt.shortmess:append({ I = true, c = true, C = true })
 vim.opt.showmode = false
 vim.opt.splitkeep = 'screen'
 vim.opt.shiftround = true
