@@ -18,13 +18,13 @@ later(function()
       diagnostics = {
         mode = 'diagnostics',
         focus = true,
-        win = { position = 'top' },
+        win = { position = 'bottom' },
       },
       lsp = {
         mode = 'lsp',
         focus = true,
         auto_refresh = false,
-        win = { position = 'top' },
+        win = { position = 'bottom' },
         params = { include_current = true },
       },
       symbols = {
