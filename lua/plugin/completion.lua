@@ -83,16 +83,17 @@ later(function()
   local cmp = require('cmp')
   local compare = cmp.config.compare
 
-  local win_opts = cmp.config.window.bordered({
-    border = 'none',
-    winhighlight = 'Normal:NormalFloat,CursorLine:Visual,Search:None',
-  })
-
   cmp.setup({
     -- preselect = cmp.PreselectMode.None,
     window = {
-      completion = win_opts,
-      documentation = win_opts,
+      completion = cmp.config.window.bordered({
+        border = 'none',
+        winhighlight = 'Normal:NormalFloat,CursorLine:Visual,Search:None',
+      }),
+      documentation = cmp.config.window.bordered({
+        border = vim.g.border,
+        winhighlight = 'Normal:NormalFloat,CursorLine:Visual,Search:None',
+      }),
     },
     mapping = {
       ['<c-u>'] = cmp.mapping.scroll_docs(-4),
