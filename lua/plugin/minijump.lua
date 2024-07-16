@@ -7,9 +7,6 @@ later(function()
     view = {
       dim = true,
     },
-    mappings = {
-      start_jumping = 'm',
-    },
   })
 end)
 
