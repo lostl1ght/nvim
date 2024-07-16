@@ -32,8 +32,8 @@ now(function()
       -- Toggle
       { mode = 'n', keys = '\\' },
       -- Surround
-      { mode = 'n', keys = 'm' },
-      { mode = 'x', keys = 'm' },
+      { mode = 'n', keys = 's' },
+      { mode = 'x', keys = 's' },
     },
 
     clues = {

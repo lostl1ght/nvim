@@ -8,7 +8,7 @@ later(function()
       dim = true,
     },
     mappings = {
-      start_jumping = 's',
+      start_jumping = 'm',
     },
     silent = true,
   })

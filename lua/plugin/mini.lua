@@ -52,15 +52,16 @@ end)
 
 later(function()
   add({ source = 'echasnovski/mini.surround' })
+  local prefix = 's'
   require('mini.surround').setup({
     mappings = {
-      add = 'ma',
-      delete = 'md',
-      find = 'mf',
-      find_left = 'mF',
-      highlight = 'mh',
-      replace = 'mr',
-      update_n_lines = 'mn',
+      add = prefix .. 'a',
+      delete = prefix .. 'd',
+      find = prefix .. 'f',
+      find_left = prefix .. 'F',
+      highlight = prefix .. 'h',
+      replace = prefix .. 'r',
+      update_n_lines = prefix .. 'n',
 
       suffix_last = 'l',
       suffix_next = 'n',
