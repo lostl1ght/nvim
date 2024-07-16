@@ -10,7 +10,6 @@ later(function()
     mappings = {
       start_jumping = 'm',
     },
-    silent = true,
   })
 end)
 
