@@ -28,8 +28,7 @@ now(function()
   })
   local clangd_cap = vim.lsp.protocol.make_client_capabilities()
   clangd_cap.offsetEncoding = { 'utf-16' }
-  local preview = { executable = 'firefox', args = { '%p' } }
-  if vim.fn.has('wsl') == 1 then preview.executable = 'firefox.exe' end
+  local preview = { executable = 'xdg-open', args = { '%p' } }
   local auxdir = 'build'
   local servers = {
     clangd = {
