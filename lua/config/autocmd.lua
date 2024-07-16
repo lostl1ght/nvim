@@ -65,13 +65,13 @@ au('LspAttach', {
   callback = function(data)
     local client = vim.lsp.get_client_by_id(data.data.client_id)
     if not client then return end
-    local bufnr = data.buf
+    local buf_id = data.buf
     if client.server_capabilities.inlayHintProvider then
       local group = vim.api.nvim_create_augroup('ToggleInlayHints', { clear = false })
 
       vim.api.nvim_create_autocmd('InsertEnter', {
-        callback = function() vim.lsp.inlay_hint.enable(false, { bufnr = bufnr }) end,
-        buffer = bufnr,
+        callback = function() vim.lsp.inlay_hint.enable(false, { bufnr = buf_id }) end,
+        buffer = buf_id,
         group = group,
         desc = 'Disable inlay hints on insert enter',
       })
@@ -79,14 +79,14 @@ au('LspAttach', {
       --[[
       vim.defer_fn(function()
         local mode = vim.api.nvim_get_mode().mode
-        vim.lsp.inlay_hint.enable(mode == 'n' or mode == 'v', { bufnr = bufnr })
+        vim.lsp.inlay_hint.enable(mode == 'n' or mode == 'v', { bufnr = buf_id })
       end, 500)
 
       vim.api.nvim_create_autocmd('InsertLeave', {
         callback = function()
-          vim.lsp.inlay_hint.enable(vim.b.inlay_hint_enabled, { bufnr = bufnr })
+          vim.lsp.inlay_hint.enable(vim.b.inlay_hint_enabled, { bufnr = buf_id })
         end,
-        buffer = bufnr,
+        buffer = buf_id,
         group = group,
         desc = 'Enable inlay hints on insert leave',
       })
@@ -96,12 +96,12 @@ au('LspAttach', {
       local group = vim.api.nvim_create_augroup('LspCursor', { clear = false })
       vim.api.nvim_create_autocmd({ 'CursorHold', 'InsertLeave', 'BufEnter' }, {
         group = group,
-        buffer = bufnr,
+        buffer = buf_id,
         callback = vim.lsp.buf.document_highlight,
       })
       vim.api.nvim_create_autocmd({ 'CursorMoved', 'InsertEnter', 'BufLeave' }, {
         group = group,
-        buffer = bufnr,
+        buffer = buf_id,
         callback = vim.lsp.buf.clear_references,
       })
     end

@@ -6,7 +6,7 @@ later(function()
   require('gitsigns').setup({
     attach_to_untracked = true,
     current_line_blame = true,
-    on_attach = function(bufnr)
+    on_attach = function(buf_id)
       local gs = require('gitsigns')
       ---@param mode string|string[]
       ---@param l string
@@ -14,7 +14,7 @@ later(function()
       ---@param opts table?
       local map = function(mode, l, r, opts)
         opts = opts or {}
-        opts.buffer = bufnr
+        opts.buffer = buf_id
         vim.keymap.set(mode, l, r, opts)
       end
       -- Navigation
@@ -69,11 +69,11 @@ later(function()
 
       local ok, miniclue = pcall(require, 'mini.clue')
       if ok then
-        local cfg = vim.b[bufnr].miniclue_config or { clues = {} }
+        local cfg = vim.b[buf_id].miniclue_config or { clues = {} }
         local clue = { mode = 'n', keys = 'gz', desc = '+gitsigns' }
         table.insert(cfg.clues, clue)
-        vim.b[bufnr].miniclue_config = cfg
-        vim.schedule(function() miniclue.ensure_buf_triggers(bufnr) end)
+        vim.b[buf_id].miniclue_config = cfg
+        vim.schedule(function() miniclue.ensure_buf_triggers(buf_id) end)
       end
     end,
   })
