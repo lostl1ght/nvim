@@ -22,6 +22,8 @@ au({ 'git', 'gitsigns.blame', 'help', 'qf' }, function(data)
   )
 end)
 
+au('qf', function() vim.bo.buflisted = false end)
+
 au('go', function() vim.bo.expandtab = false end)
 
 au({ 'help', 'man' }, function(data)
