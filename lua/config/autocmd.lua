@@ -69,25 +69,28 @@ au('LspAttach', {
     if client.server_capabilities.inlayHintProvider then
       local group = vim.api.nvim_create_augroup('ToggleInlayHints', { clear = false })
 
+      vim.api.nvim_create_autocmd('InsertEnter', {
+        callback = function() vim.lsp.inlay_hint.enable(false, { bufnr = bufnr }) end,
+        buffer = bufnr,
+        group = group,
+        desc = 'Disable inlay hints on insert enter',
+      })
+
+      --[[
       vim.defer_fn(function()
         local mode = vim.api.nvim_get_mode().mode
         vim.lsp.inlay_hint.enable(mode == 'n' or mode == 'v', { bufnr = bufnr })
       end, 500)
 
-      vim.api.nvim_create_autocmd('InsertEnter', {
-        callback = function() vim.lsp.inlay_hint.enable(false, { bufnr = bufnr }) end,
-        buffer = bufnr,
-        group = group,
-        desc = 'Enable inlay hints',
-      })
       vim.api.nvim_create_autocmd('InsertLeave', {
         callback = function()
           vim.lsp.inlay_hint.enable(vim.b.inlay_hint_enabled, { bufnr = bufnr })
         end,
         buffer = bufnr,
         group = group,
-        desc = 'Disable inlay hints',
+        desc = 'Enable inlay hints on insert leave',
       })
+      ]]
     end
     if client.server_capabilities.documentHighlightProvider then
       local group = vim.api.nvim_create_augroup('LspCursor', { clear = false })
