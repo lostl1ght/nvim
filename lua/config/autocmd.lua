@@ -41,7 +41,7 @@ au('FileType', {
 au('FileType', {
   callback = function()
     if vim.bo.buftype ~= '' then return end
-    if vim.treesitter.query.get(vim.bo.filetype, 'folds') then
+    if pcall(vim.treesitter.query.get, vim.bo.filetype, 'folds') then
       vim.wo.foldmethod = 'expr'
       vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     end
@@ -53,7 +53,7 @@ au('FileType', {
 au('FileType', {
   callback = function()
     if vim.bo.buftype ~= '' then return end
-    if vim.treesitter.query.get(vim.bo.filetype, 'indents') then
+    if pcall(vim.treesitter.query.get, vim.bo.filetype, 'indents') then
       vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
     end
   end,
