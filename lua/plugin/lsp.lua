@@ -93,9 +93,7 @@ now(function()
           latexFormatter = 'latexindent',
           latexindent = {
             modifyLineBreaks = true,
-            ['local'] = vim.fs.normalize(
-              vim.fn.stdpath('config') .. '/indentconfig.yaml'
-            ),
+            ['local'] = vim.fs.normalize(vim.fn.stdpath('config') .. '/indentconfig.yaml'),
           },
         },
       },
@@ -161,6 +159,4 @@ now(function()
   })
 end)
 
-later(function()
-  add({ source = 'lostl1ght/lightbulb.nvim' })
-end)
+later(function() add({ source = 'lostl1ght/lightbulb.nvim' }) end)
