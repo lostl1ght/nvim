@@ -8,11 +8,10 @@ local function au(ft, cb)
   vim.api.nvim_create_autocmd('FileType', opts)
 end
 
-au({ 'git', 'gitsigns.blame', 'help', 'qf' }, function(data)
+au({ 'gitsigns.blame', 'help', 'qf' }, function(data)
   local buf = data.buf
-  vim.keymap.set(
-    'n',
-    'q',
+  -- stylua: ignore
+  vim.keymap.set('n', 'q',
     vim.schedule_wrap(function()
       if vim.api.nvim_buf_is_valid(buf) then
         vim.api.nvim_cmd({ cmd = 'bwipeout', args = { buf } }, {})
