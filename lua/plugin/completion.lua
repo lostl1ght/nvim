@@ -71,13 +71,13 @@ later(function()
     source = 'hrsh7th/nvim-cmp',
     depends = {
       'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
       'hrsh7th/cmp-buffer',
       'lukas-reineke/cmp-under-comparator',
       'saadparwaiz1/cmp_luasnip',
       'L3MON4D3/LuaSnip',
       'windwp/nvim-autopairs',
+      'https://codeberg.org/FelipeLema/cmp-async-path',
     },
   })
   local cmp = require('cmp')
@@ -110,7 +110,7 @@ later(function()
     sources = {
       { name = 'luasnip' },
       { name = 'nvim_lsp' },
-      { name = 'path' },
+      { name = 'async_path' },
       {
         name = 'buffer',
         keyword_length = 4,
@@ -178,7 +178,7 @@ later(function()
       ['<s-tab>'] = { c = function() end },
     }),
     sources = cmp.config.sources({
-      { name = 'path' },
+      { name = 'async_path' },
     }, {
       {
         name = 'cmdline',
