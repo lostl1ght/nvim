@@ -38,12 +38,18 @@ au('FileType', {
   desc = 'Enable treesitter highlight',
 })
 
-au('FileType', {
+local check_query = function(ft, query)
+  return pcall(vim.treesitter.get_parser) and vim.treesitter.query.get(ft, query)
+end
+
+au('BufEnter', {
   callback = function()
     if vim.bo.buftype ~= '' then return end
-    if pcall(vim.treesitter.query.get, vim.bo.filetype, 'folds') then
+    if check_query(vim.bo.filetype, 'folds') then
       vim.wo.foldmethod = 'expr'
       vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+    else
+      vim.wo.foldmethod = 'manual'
     end
   end,
   group = aug('TreesitterFold'),
@@ -53,7 +59,7 @@ au('FileType', {
 au('FileType', {
   callback = function()
     if vim.bo.buftype ~= '' then return end
-    if pcall(vim.treesitter.query.get, vim.bo.filetype, 'indents') then
+    if check_query(vim.bo.filetype, 'indents') then
       vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
     end
   end,
