@@ -31,12 +31,16 @@ end)
 later(function()
   add({ source = 'echasnovski/mini.bufremove' })
   require('mini.bufremove').setup()
-  local set = vim.keymap.set
-  set('n', 'gbd', function() require('mini.bufremove').delete() end, { desc = 'Delete' })
-  set('n', 'gbD', function() require('mini.bufremove').delete(nil, true) end, {
-    desc = 'Force delete',
-  })
-  set('n', 'gbu', function() require('mini.bufremove').unshow() end, { desc = 'Unshow' })
+  vim.api.nvim_create_user_command('Bdelete', function(data)
+    local name = vim.fn.bufname(data.args)
+    local buf_id = vim.fn.bufnr(name)
+    require('mini.bufremove').delete(buf_id)
+  end, { nargs = '*', desc = 'Mini bufremove delete', bang = true, complete = 'buffer' })
+  vim.api.nvim_create_user_command(
+    'Bunshow',
+    function() require('mini.bufremove').unshow() end,
+    { nargs = '?', desc = 'Mini bufremove delete' }
+  )
 end)
 
 later(function()

@@ -19,7 +19,7 @@ later(function()
 
   local set = vim.keymap.set
   set('n', 'gfg', '<cmd>Pick grep<cr>', { desc = 'Grep' })
-  set('n', 'gbb', function()
+  set('n', 'gb', function()
     local minipick = require('mini.pick')
     minipick.builtin.buffers({}, {
       source = {
