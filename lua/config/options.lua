@@ -70,8 +70,6 @@ vim.opt.writebackup = false
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_python3_provider = 0
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' m'
 vim.g.markdown_recommended_style = 0
 vim.g.tex_flavor = 'latex'
 

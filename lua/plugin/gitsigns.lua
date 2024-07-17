@@ -38,26 +38,26 @@ later(function()
       map('n', '[C', function() gs.nav_hunk('first') end, { desc = 'Hunk first' })
 
       -- Actions
-      map('n', 'gzs', gs.stage_hunk, { desc = 'Stage hunk' })
-      map('n', 'gzr', gs.reset_hunk, { desc = 'Reset hunk' })
+      map('n', '<leader>us', gs.stage_hunk, { desc = 'Stage hunk' })
+      map('n', '<leader>ur', gs.reset_hunk, { desc = 'Reset hunk' })
       map(
         'v',
-        'gzs',
+        '<leader>us',
         function() gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end,
         { desc = 'Stage hunk' }
       )
       map(
         'v',
-        'gzr',
+        '<leader>ur',
         function() gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end,
         { desc = 'Reset hunk' }
       )
-      map('n', 'gzS', gs.stage_buffer, { desc = 'Stage buffer' })
-      map('n', 'gzu', gs.undo_stage_hunk, { desc = 'Undo stage hunk' })
-      map('n', 'gzR', gs.reset_buffer, { desc = 'Reset buffer' })
-      map('n', 'gzp', gs.preview_hunk, { desc = 'Preview hunk' })
-      map('n', 'gzb', gs.blame, { desc = 'Blame' })
-      map('n', 'gzB', function() gs.blame_line({ full = true }) end, { desc = 'Blame line' })
+      map('n', '<leader>uS', gs.stage_buffer, { desc = 'Stage buffer' })
+      map('n', '<leader>uu', gs.undo_stage_hunk, { desc = 'Undo stage hunk' })
+      map('n', '<leader>uR', gs.reset_buffer, { desc = 'Reset buffer' })
+      map('n', '<leader>up', gs.preview_hunk, { desc = 'Preview hunk' })
+      map('n', '<leader>ub', gs.blame, { desc = 'Blame' })
+      map('n', '<leader>uB', function() gs.blame_line({ full = true }) end, { desc = 'Blame line' })
       map('n', '\\e', function()
         local new_state = gs.toggle_deleted()
         local msg = new_state and 'diffdeleted' or 'nodiffdeleted'
@@ -70,7 +70,7 @@ later(function()
       local ok, miniclue = pcall(require, 'mini.clue')
       if ok then
         local cfg = vim.b[buf_id].miniclue_config or { clues = {} }
-        local clue = { mode = 'n', keys = 'gz', desc = '+gitsigns' }
+        local clue = { mode = 'n', keys = '<leader>u', desc = '+gitsigns' }
         table.insert(cfg.clues, clue)
         vim.b[buf_id].miniclue_config = cfg
         vim.schedule(function() miniclue.ensure_buf_triggers(buf_id) end)

@@ -18,8 +18,8 @@ later(function()
   })
 
   local set = vim.keymap.set
-  set('n', 'gfg', '<cmd>Pick grep<cr>', { desc = 'Grep' })
-  set('n', 'gb', function()
+  set('n', '<leader>fg', '<cmd>Pick grep<cr>', { desc = 'Grep' })
+  set('n', '<leader>b', function()
     local minipick = require('mini.pick')
     minipick.builtin.buffers({}, {
       source = {
@@ -43,7 +43,7 @@ later(function()
       },
     })
   end, { desc = 'Buffers' })
-  set('n', 'gff', '<cmd>Pick files<cr>', { desc = 'Files' })
+  set('n', '<leader>ff', '<cmd>Pick files<cr>', { desc = 'Files' })
 
   local minipick = require('mini.pick')
   minipick.setup({

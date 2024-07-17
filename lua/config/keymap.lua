@@ -1,3 +1,6 @@
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' m'
+
 local set = vim.keymap.set
 set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Escape terminal' })
 set('i', 'ii', '<esc>', { desc = 'Escape isert' })
@@ -73,10 +76,10 @@ map_toggle('s', function()
   end
 end, 'Sign column')
 
-set('n', 'grn', vim.lsp.buf.rename, {
+set('n', '<leader>cn', vim.lsp.buf.rename, {
   desc = 'Rename',
 })
-set({ 'n', 'x' }, 'gra', vim.lsp.buf.code_action, {
+set({ 'n', 'x' }, '<leader>ca', vim.lsp.buf.code_action, {
   desc = 'Code action',
 })
 set('i', '<c-s>', vim.lsp.buf.signature_help, {

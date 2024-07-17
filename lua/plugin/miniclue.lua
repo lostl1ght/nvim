@@ -6,6 +6,9 @@ now(function()
   local MiniClue = require('mini.clue')
   MiniClue.setup({
     triggers = {
+      -- Leader triggers
+      { mode = 'n', keys = '<leader>' },
+      { mode = 'x', keys = '<leader>' },
       -- Built-in completion
       { mode = 'i', keys = '<c-x>' },
       -- g key
@@ -44,10 +47,10 @@ now(function()
       MiniClue.gen_clues.windows({ submode_resize = true }),
       MiniClue.gen_clues.z(),
       {
-        { mode = 'n', keys = 'gb', desc = '+buffer' },
-        { mode = 'n', keys = 'gf', desc = '+file' },
-        { mode = 'n', keys = 'gs', desc = '+sessions' },
-        { mode = 'n', keys = 'gr', desc = '+code' },
+        { mode = 'n', keys = '<leader>b', desc = '+buffer' },
+        { mode = 'n', keys = '<leader>f', desc = '+file' },
+        { mode = 'n', keys = '<leader>s', desc = '+sessions' },
+        { mode = 'n', keys = '<leader>c', desc = '+code' },
       },
     },
     window = { delay = 500 },

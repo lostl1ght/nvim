@@ -5,7 +5,7 @@ now(function()
   add({ source = 'echasnovski/mini.files' })
   require('mini.files').setup({ windows = { preview = true } })
 
-  vim.keymap.set('n', 'gft', function()
+  vim.keymap.set('n', '<leader>fm', function()
     local minifiles = require('mini.files')
     minifiles.open(minifiles.get_latest_path())
   end, {
@@ -51,10 +51,10 @@ now(function()
         opts.buffer = buf_id
         vim.keymap.set(mode, l, r, opts)
       end
-      map('n', 'gt', function() vim.cmd('Pick folders hidden=true') end, { desc = 'Folders' })
+      map('n', 'gf', function() vim.cmd('Pick folders hidden=true') end, { desc = 'Folders' })
       map(
         'n',
-        'gT',
+        'gF',
         function() vim.cmd('Pick folders hidden=true no_ignore=true') end,
         { desc = 'Ignored folders' }
       )

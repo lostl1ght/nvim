@@ -3,7 +3,7 @@ local add, later = minideps.add, minideps.later
 
 later(function()
   add({ source = 'stevearc/conform.nvim' })
-  vim.keymap.set({ 'n', 'x' }, 'gfr', function()
+  vim.keymap.set({ 'n', 'x' }, '<leader>cf', function()
     require('conform').format({
       async = true,
       lsp_format = 'fallback',
