@@ -1,5 +1,16 @@
 local minideps = require('mini.deps')
-local add, later = minideps.add, minideps.later
+local add, now, later = minideps.add, minideps.now, minideps.later
+
+now(function()
+  add({ source = 'willothy/flatten.nvim' })
+  require('flatten').setup({
+    window = { open = 'smart' },
+    callbacks = {
+      pre_open = vim.schedule_wrap(function() require('lazygit').hide() end),
+      block_end = vim.schedule_wrap(function() require('lazygit').show() end),
+    },
+  })
+end)
 
 later(function()
   add({ source = 'lostl1ght/lazygit.nvim' })
