@@ -56,6 +56,7 @@ au('BufEnter', {
   desc = 'Set treesitter fold expr',
 })
 
+--[[
 au('FileType', {
   callback = function()
     if vim.bo.buftype ~= '' then return end
@@ -66,6 +67,7 @@ au('FileType', {
   group = aug('TreesitterIndent'),
   desc = 'Enable treesitter indent',
 })
+]]
 
 au('LspAttach', {
   callback = function(data)

@@ -4,33 +4,34 @@ local add, now, later = minideps.add, minideps.now, minideps.later
 now(function()
   add({
     source = 'nvim-treesitter/nvim-treesitter',
-    checkout = 'main',
-    monitor = 'main',
-    hooks = {
-      post_checkout = function() vim.cmd('TSUpdate') end,
+    -- checkout = 'main',
+    hooks = { post_checkout = function() vim.cmd('TSUpdate') end },
+  })
+  --[[
+  require('nvim-treesitter').setup({
+    -- stylua: ignore
+    ensure_install = {
+      'bash',  'c', 'lua', 'luadoc',
+      'luap',  'markdown', 'markdown_inline',
+      'query', 'regex',    'vim', 'vimdoc',
+
+      'gitattributes', -- 'gitcommit',
+      'gitignore',     'git_config',
+      'git_rebase',    'json', 'toml',
+      'yaml',
     },
   })
-  require('nvim-treesitter').setup({
-    ensure_install = {
-      'bash',
-      'c',
-      'lua',
-      'luadoc',
-      'luap',
-      'markdown',
-      'markdown_inline',
-      'query',
-      'regex',
-      'vim',
-      'vimdoc',
+  ]]
+  require('nvim-treesitter.configs').setup({
+    -- stylua: ignore
+    ensure_installed = {
+      'bash',  'c', 'lua', 'luadoc',
+      'luap',  'markdown', 'markdown_inline',
+      'query', 'regex',    'vim', 'vimdoc',
 
-      'gitattributes',
-      -- 'gitcommit',
-      'gitignore',
-      'git_config',
-      'git_rebase',
-      'json',
-      'toml',
+      'gitattributes', 'gitcommit',
+      'gitignore',     'git_config',
+      'git_rebase',    'json', 'toml',
       'yaml',
     },
   })
