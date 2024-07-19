@@ -42,84 +42,131 @@ now(function()
   })
 
   local Space = { provider = ' ' }
-  local CTRL_S = vim.api.nvim_replace_termcodes('<C-S>', true, true, true)
-  local CTRL_V = vim.api.nvim_replace_termcodes('<C-V>', true, true, true)
+
   local priority = {
-    mode = 25,
+    diff = 60,
+    diag = 60,
+    branch = 50,
+    path = 40,
+    fileinfo = 30,
     location = 20,
-    diff = 15,
-    diag = 15,
-    branch = 15,
-    path = 10,
-    lsp = 5,
-    fileinfo = 5,
+    mode = 20,
+    lsp = 10,
   }
 
+  local CTRL_S = vim.api.nvim_replace_termcodes('<C-S>', true, true, true)
+  local CTRL_V = vim.api.nvim_replace_termcodes('<C-V>', true, true, true)
+  local modes = setmetatable({
+    ['n'] = { long = 'Normal', short = 'N', hl = { fg = 'active_bg', bg = 'mode_normal' } },
+    ['v'] = { long = 'Visual', short = 'V', hl = { fg = 'active_bg', bg = 'mode_visual' } },
+    ['V'] = { long = 'V-Line', short = 'V-L', hl = { fg = 'active_bg', bg = 'mode_visual' } },
+    [CTRL_V] = { long = 'V-Block', short = 'V-B', hl = { fg = 'active_bg', bg = 'mode_visual' } },
+    ['s'] = { long = 'Select', short = 'S', hl = { fg = 'active_bg', bg = 'mode_visual' } },
+    ['S'] = { long = 'S-Line', short = 'S-L', hl = { fg = 'active_bg', bg = 'mode_visual' } },
+    [CTRL_S] = { long = 'S-Block', short = 'S-B', hl = { fg = 'active_bg', bg = 'mode_visual' } },
+    ['i'] = { long = 'Insert', short = 'I', hl = { fg = 'active_bg', bg = 'mode_insert' } },
+    ['R'] = { long = 'Replace', short = 'R', hl = { fg = 'active_bg', bg = 'mode_replace' } },
+    ['c'] = { long = 'Command', short = 'C', hl = { fg = 'active_bg', bg = 'mode_command' } },
+    ['r'] = { long = 'Prompt', short = 'P', hl = { fg = 'active_bg', bg = 'mode_other' } },
+    ['!'] = { long = 'Shell', short = 'Sh', hl = { fg = 'active_bg', bg = 'mode_other' } },
+    ['t'] = { long = 'Terminal', short = 'T', hl = { fg = 'active_bg', bg = 'mode_other' } },
+  }, {
+    __index = function()
+      return { long = 'Unknown', short = 'U', hl = { fg = 'active_bg', bg = 'mode_other' } }
+    end,
+  })
+
   local Mode = {
+    init = function(self) self.mode = vim.fn.mode(1) end,
     condition = is_active,
-    flexible = priority.mode,
     {
-      provider = function(self) return ' ' .. self.modes[vim.fn.mode()].long .. ' ' end,
-      hl = function(self) return self.modes[vim.fn.mode()].hl end,
+      flexible = priority.mode,
+      {
+        provider = function(self) return ' ' .. modes[self.mode].long .. ' ' end,
+        hl = function(self) return modes[self.mode].hl end,
+      },
+      {
+        provider = function(self) return ' ' .. modes[self.mode].short .. ' ' end,
+        hl = function(self) return modes[self.mode].hl end,
+      },
     },
-    {
-      provider = function(self) return ' ' .. self.modes[vim.fn.mode()].short .. ' ' end,
-      hl = function(self) return self.modes[vim.fn.mode()].hl end,
-    },
+  }
+
+  local Search = {
+    init = function(self) self.mode = vim.fn.mode(1) end,
+    condition = function() return is_active() and vim.v.hlsearch == 1 end,
+    hl = function(self) return modes[self.mode].hl end,
+    provider = function()
+      local ok, s_count = pcall(vim.fn.searchcount, { recompute = true })
+      if not ok or s_count.current == nil or s_count.total == 0 then return '' end
+
+      if s_count.incomplete == 1 then return ' ?/?' end
+
+      local too_many = '>' .. s_count.maxcount
+      local current = s_count.current > s_count.maxcount and too_many or s_count.current
+      local total = s_count.total > s_count.maxcount and too_many or s_count.total
+      return ' ' .. current .. '/' .. total
+    end,
   }
 
   local Location = {
+    init = function(self) self.mode = vim.fn.mode(1) end,
     condition = is_active,
-    flexible = priority.location,
-    { provider = ' %l|%L│%2v|%-2{virtcol("$") - 1} ' },
-    { provider = ' %l│%2v ' },
-    hl = function(self) return self.modes[vim.fn.mode()].hl end,
+    {
+      flexible = priority.location,
+      { provider = ' %l|%L│%2v|%-2{virtcol("$") - 1} ' },
+      { provider = ' %l│%2v ' },
+    },
+    hl = function(self) return modes[self.mode].hl end,
   }
 
   local Diff = {
     flexible = priority.diff,
     {
-      condition = function(self)
-        local status = vim.b.gitsigns_status_dict
-        if not status then return false end
-        self.added, self.changed, self.removed = status.added, status.changed, status.removed
-        return true
-      end,
       {
-        provider = function() return ' ' .. icons.diff end,
+        condition = function(self)
+          local status = vim.b.gitsigns_status_dict
+          if not status then return false end
+          self.added, self.changed, self.removed = status.added, status.changed, status.removed
+          return true
+        end,
         {
-          condition = function(self)
-            return not (self.added and self.changed and self.removed)
-              or (self.added == 0 and self.changed == 0 and self.removed == 0)
+          provider = function() return ' ' .. icons.diff end,
+          {
+            condition = function(self)
+              return not (self.added and self.changed and self.removed)
+                or (self.added == 0 and self.changed == 0 and self.removed == 0)
+            end,
+            provider = function() return ' ' .. icons.minus end,
+          },
+        },
+        {
+          condition = function(self) return self.removed and self.removed > 0 end,
+          hl = function()
+            if is_active() then return { fg = 'git_minus' } end
           end,
-          provider = function() return ' ' .. icons.minus end,
+          Space,
+          { provider = function(self) return icons.minus .. self.removed end },
+        },
+        {
+          condition = function(self) return self.changed and self.changed > 0 end,
+          hl = function()
+            if is_active() then return { fg = 'git_delta' } end
+          end,
+          Space,
+          { provider = function(self) return icons.delta .. self.changed end },
+        },
+        {
+          condition = function(self) return self.added and self.added > 0 end,
+          hl = function()
+            if is_active() then return { fg = 'git_plus' } end
+          end,
+          Space,
+          { provider = function(self) return icons.plus .. self.added end },
         },
       },
-      {
-        condition = function(self) return self.removed and self.removed > 0 end,
-        hl = function()
-          if is_active() then return { fg = 'git_minus' } end
-        end,
-        Space,
-        { provider = function(self) return icons.minus .. self.removed end },
-      },
-      {
-        condition = function(self) return self.changed and self.changed > 0 end,
-        hl = function()
-          if is_active() then return { fg = 'git_delta' } end
-        end,
-        Space,
-        { provider = function(self) return icons.delta .. self.changed end },
-      },
-      {
-        condition = function(self) return self.added and self.added > 0 end,
-        hl = function()
-          if is_active() then return { fg = 'git_plus' } end
-        end,
-        Space,
-        { provider = function(self) return icons.plus .. self.added end },
-      },
     },
+    { provider = '' },
   }
   local diagnostic_is_enabled = function() return vim.diagnostic.is_enabled({ bufnr = 0 }) end
   local diagnostic_get_count = function() return vim.diagnostic.count(0) end
@@ -186,22 +233,6 @@ now(function()
     { provider = '' },
   }
 
-  local Search = {
-    condition = function() return is_active() and vim.v.hlsearch == 1 end,
-    hl = function(self) return self.modes[vim.fn.mode()].hl end,
-    provider = function()
-      local ok, s_count = pcall(vim.fn.searchcount, { recompute = true })
-      if not ok or s_count.current == nil or s_count.total == 0 then return '' end
-
-      if s_count.incomplete == 1 then return ' ?/?' end
-
-      local too_many = '>' .. s_count.maxcount
-      local current = s_count.current > s_count.maxcount and too_many or s_count.current
-      local total = s_count.total > s_count.maxcount and too_many or s_count.total
-      return ' ' .. current .. '/' .. total
-    end,
-  }
-
   local attached_lsp = {}
   local get_buf_lsp_clients = function(buf_id) return vim.lsp.get_clients({ bufnr = buf_id }) end
   local compute_attached_lsp = function(buf_id)
@@ -231,33 +262,43 @@ now(function()
   }
 
   local FileInfo = {
-    flexible = priority.fileinfo,
+    static = {
+      get_filesize = function()
+        local size = vim.fn.getfsize(vim.fn.getreg('%'))
+        if size < 1024 then
+          return string.format('%dB', size)
+        elseif size < 1048576 then
+          return string.format('%.2fKiB', size / 1024)
+        else
+          return string.format('%.2fMiB', size / 1048576)
+        end
+      end,
+    },
+    condition = function() return is_active() and vim.bo.filetype ~= '' end,
+    hl = { bg = 'devinfo_bg' },
     {
-      static = {
-        get_filesize = function()
-          local size = vim.fn.getfsize(vim.fn.getreg('%'))
-          if size < 1024 then
-            return string.format('%dB', size)
-          elseif size < 1048576 then
-            return string.format('%.2fKiB', size / 1024)
-          else
-            return string.format('%.2fMiB', size / 1048576)
-          end
+      flexible = priority.fileinfo,
+      {
+        provider = function(self)
+          local filetype = vim.bo.filetype
+          local icon = require('mini.icons').get('filetype', filetype)
+          local encoding = vim.bo.fileencoding or vim.bo.encoding
+          local format = vim.bo.fileformat
+          local size = self.get_filesize()
+
+          return (' %s %s %s[%s] %s '):format(icon, filetype, encoding, format, size)
         end,
       },
-      condition = function() return is_active() and vim.bo.filetype ~= '' end,
-      provider = function(self)
-        local filetype = vim.bo.filetype
-        local icon = require('mini.icons').get('filetype', filetype)
-        local encoding = vim.bo.fileencoding or vim.bo.encoding
-        local format = vim.bo.fileformat
-        local size = self.get_filesize()
+      {
+        provider = function()
+          local filetype = vim.bo.filetype
+          local icon = require('mini.icons').get('filetype', filetype)
 
-        return (' %s %s %s[%s] %s '):format(icon, filetype, encoding, format, size)
-      end,
-      hl = { bg = 'devinfo_bg' },
+          return (' %s %s '):format(icon, filetype)
+        end,
+      },
+      { provider = '' },
     },
-    { provider = '' },
   }
 
   local Filename = {
@@ -310,6 +351,7 @@ now(function()
           if is_active() then return { fg = 'diag_error' } end
         end,
       },
+      Space,
     },
   }
 
@@ -321,28 +363,6 @@ now(function()
   }
 
   local Statusline = {
-    static = {
-      -- stylua: ignore
-      modes = setmetatable({
-        ['n'] = { long = 'Normal', short = 'N', hl = { fg = 'active_bg', bg = 'mode_normal' } },
-        ['v'] = { long = 'Visual', short = 'V', hl = { fg = 'active_bg', bg = 'mode_visual' } },
-        ['V'] = { long = 'V-Line', short = 'V-L', hl = { fg = 'active_bg', bg = 'mode_visual' } },
-        [CTRL_V] = { long = 'V-Block', short = 'V-B', hl = { fg = 'active_bg', bg = 'mode_visual' } },
-        ['s'] = { long = 'Select', short = 'S', hl = { fg = 'active_bg', bg = 'mode_visual' } },
-        ['S'] = { long = 'S-Line', short = 'S-L', hl = { fg = 'active_bg', bg = 'mode_visual' } },
-        [CTRL_S] = { long = 'S-Block', short = 'S-B', hl = { fg = 'active_bg', bg = 'mode_visual' } },
-        ['i'] = { long = 'Insert', short = 'I', hl = { fg = 'active_bg', bg = 'mode_insert' } },
-        ['R'] = { long = 'Replace', short = 'R', hl = { fg = 'active_bg', bg = 'mode_replace' } },
-        ['c'] = { long = 'Command', short = 'C', hl = { fg = 'active_bg', bg = 'mode_command' } },
-        ['r'] = { long = 'Prompt', short = 'P', hl = { fg = 'active_bg', bg = 'mode_other' } },
-        ['!'] = { long = 'Shell', short = 'Sh', hl = { fg = 'active_bg', bg = 'mode_other' } },
-        ['t'] = { long = 'Terminal', short = 'T', hl = { fg = 'active_bg', bg = 'mode_other' } },
-      }, {
-        __index = function()
-          return { long = 'Unknown', short = 'U', hl = { fg = 'active_bg', bg = 'mode_other' } }
-        end,
-      }),
-    },
     {
       hl = function()
         if is_active() then
