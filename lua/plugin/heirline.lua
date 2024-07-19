@@ -271,6 +271,12 @@ now(function()
       else
         path = path .. self.sep
       end
+      if
+        vim.list_contains({ 'help' }, vim.bo.filetype)
+        or vim.list_contains({ 'terminal', 'nofile' }, vim.bo.buftype)
+      then
+        path = ''
+      end
       if file == '' then file = '[No Name]' end
       self.path = path
       self.file = file
