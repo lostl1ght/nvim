@@ -4,16 +4,16 @@ local add, later = minideps.add, minideps.later
 later(function()
   add({ source = 'echasnovski/mini.pick' })
   vim.ui.select = require('select').ui_select
-  local guicursor = vim.opt.guicursor:get()
+
   local group = vim.api.nvim_create_augroup('MiniPickCursor', {})
   vim.api.nvim_create_autocmd('User', {
     pattern = 'MiniPickStart',
-    callback = function() vim.opt.guicursor = { 'n:hor1' } end,
+    callback = function() require('noice.util.hacks').hide_cursor() end,
     group = group,
   })
   vim.api.nvim_create_autocmd('User', {
     pattern = 'MiniPickStop',
-    callback = function() vim.opt.guicursor = guicursor end,
+    callback = function() require('noice.util.hacks').show_cursor() end,
     group = group,
   })
 
