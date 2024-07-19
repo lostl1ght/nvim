@@ -69,8 +69,6 @@ now(function()
         TreesitterContext = { fg = theme.ui.special, bg = theme.ui.bg_m1 },
         TreesitterContextLineNumber = { fg = theme.ui.special, bg = theme.ui.bg_m1 },
 
-        MiniStatuslinePath = { fg = theme.syn.comment, bg = theme.ui.bg_dim },
-
         MiniJump = { sp = theme.diag.error, undercurl = true, bold = true },
       }
       local kinds = {
