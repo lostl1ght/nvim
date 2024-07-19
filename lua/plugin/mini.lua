@@ -32,15 +32,15 @@ later(function()
   add({ source = 'echasnovski/mini.bufremove' })
   require('mini.bufremove').setup()
   vim.api.nvim_create_user_command('Bdelete', function(data)
-    local name = vim.fn.bufname(data.args)
+    local name = vim.fn.bufname(vim.fn.expand(data.args))
     local buf_id = vim.fn.bufnr(name)
     require('mini.bufremove').delete(buf_id)
-  end, { nargs = '*', desc = 'Mini bufremove delete', bang = true, complete = 'buffer' })
-  vim.api.nvim_create_user_command(
-    'Bunshow',
-    function() require('mini.bufremove').unshow() end,
-    { nargs = '?', desc = 'Mini bufremove delete' }
-  )
+  end, { nargs = '?', desc = 'Mini bufremove delete', bang = true, complete = 'buffer' })
+  vim.api.nvim_create_user_command('Bunshow', function(data)
+    local name = vim.fn.bufname(vim.fn.expand(data.args))
+    local buf_id = vim.fn.bufnr(name)
+    require('mini.bufremove').unshow(buf_id)
+  end, { nargs = '?', desc = 'Mini bufremove delete', complete = 'buffer' })
 end)
 
 later(function()
