@@ -47,11 +47,11 @@ local prefix = '\\'
 ---@param rhs string|function
 ---@param desc string
 local map_toggle = function(lhs, rhs, desc) set('n', prefix .. lhs, rhs, { desc = desc }) end
-map_toggle(
-  'h',
-  '<cmd>let v:hlsearch = 1 - v:hlsearch | echo (v:hlsearch ? "  " : "no") . "hlsearch"<cr>',
-  'Search highlight'
-)
+map_toggle('h', function()
+  vim.cmd('let v:hlsearch=' .. bit.bxor(vim.v.hlsearch, 1))
+  print((vim.v.hlsearch == 1 and '' or 'no') .. 'hlsearch')
+  vim.schedule(function() vim.cmd('redrawstatus') end)
+end, 'Search highlight')
 map_toggle('l', '<cmd>setlocal cursorline! cursorline?<cr>', 'Cursor line')
 map_toggle('i', '<cmd>setlocal ignorecase! ignorecase?<cr>', 'Ignore case')
 map_toggle('r', '<cmd>setlocal relativenumber! relativenumber?<cr>', 'Relative numbers')

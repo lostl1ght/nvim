@@ -38,7 +38,7 @@ vim.opt.sessionoptions = { 'buffers', 'curdir', 'tabpages', 'winsize' }
 vim.opt.shada = "!,'300,<50,@100,s10,h"
 vim.opt.shiftround = true
 vim.opt.shiftwidth = 4
-vim.opt.showtabline = 2
+vim.opt.showtabline = 1
 vim.opt.sidescrolloff = 5
 vim.opt.shortmess:append({ I = true, c = true, C = true })
 vim.opt.showmode = false
