@@ -70,6 +70,7 @@ later(function()
   add({
     source = 'hrsh7th/nvim-cmp',
     depends = {
+      'echasnovski/mini.icons',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-cmdline',
       'hrsh7th/cmp-buffer',
@@ -145,15 +146,24 @@ later(function()
     formatting = {
       fields = { 'kind', 'abbr', 'menu' },
       format = function(entry, item)
-        local miniicons = require('mini.icons')
-        if entry.source.name ~= 'cmdline' then
-          ---@type string
-          local kind = item.kind or 'default'
-          item.kind = (' %s '):format(miniicons.get('lsp', kind))
-          item.menu = ('(%s)'):format(kind:gsub('(%a)(%u)', '%1 %2'):lower())
-        else
-          item.kind = (' %s '):format(miniicons.get('file', 'init.lua'))
-        end
+        local icons = setmetatable({
+          [1] = {
+            cmd = { ascii = 'C', glyph = '󱁤' },
+          },
+        }, {
+          __index = function(self, kind)
+            local miniicons = require('mini.icons')
+            if vim.list_contains(vim.tbl_keys(self[1]), kind) then
+              return self[1][kind][miniicons.config.style]
+            else
+              return miniicons.get('lsp', kind)
+            end
+          end,
+        })
+        local kind = item.kind or 'default'
+        if entry.source.name == 'cmdline' then kind = 'cmd' end
+        item.kind = (' %s '):format(icons[kind])
+        item.menu = ('(%s)'):format(kind:gsub('(%a)(%u)', '%1 %2'):lower())
         return item
       end,
     },
