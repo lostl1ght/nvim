@@ -34,6 +34,7 @@ now(function()
       minus = { ascii = '-', glyph = '-' },
       delta = { ascii = '~', glyph = '~' },
       plus = { ascii = '+', glyph = '+' },
+      branch = { ascii = 'Git', glyph = '' },
     },
   }
   setmetatable(icons, {
@@ -48,6 +49,7 @@ now(function()
     location = 20,
     diff = 15,
     diag = 15,
+    branch = 15,
     path = 10,
     lsp = 5,
     fileinfo = 5,
@@ -311,6 +313,13 @@ now(function()
     },
   }
 
+  local Branch = {
+    condition = function() return vim.b.gitsigns_head end,
+    flexible = priority.branch,
+    { provider = function() return ' ' .. icons.branch .. ' ' .. vim.b.gitsigns_head end },
+    { provider = function() return ' ' .. icons.branch end },
+  }
+
   local Statusline = {
     static = {
       -- stylua: ignore
@@ -351,6 +360,7 @@ now(function()
             return { fg = 'inactive_fg', bg = 'inactive_bg' }
           end
         end,
+        Branch,
         Diff,
         Diagnostic,
         Lsp,
@@ -359,11 +369,9 @@ now(function()
             return get_attached_lsp() ~= ''
               or diagnostic_is_enabled() and #diagnostic_get_count() > 0
               or vim.b.gitsigns_status_dict
+              or vim.b.gitsigns_head
           end,
           Space,
-          hl = function()
-            if not is_active() then return { fg = 'inactive_fg', bg = 'inactive_bg' } end
-          end,
         },
       },
       { provider = '%<' },
