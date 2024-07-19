@@ -2,7 +2,7 @@ local minideps = require('mini.deps')
 local add, now = minideps.add, minideps.now
 
 now(function()
-  add({ source = 'rebelot/heirline.nvim' })
+  add({ source = 'rebelot/heirline.nvim', depends = { 'echasnovski/mini.icons' } })
   vim.api.nvim_create_autocmd('User', {
     pattern = { 'GitSignsUpdate', 'GitSignsChanged' },
     callback = vim.schedule_wrap(function() vim.cmd('redrawstatus') end),
@@ -27,6 +27,13 @@ now(function()
       x = { ascii = 'X', glyph = '' },
       diff = { ascii = 'Diff', glyph = '' },
       diag = { ascii = 'Diag', glyph = '' },
+      error = { ascii = 'E', glyph = 'E' },
+      warn = { ascii = 'W', glyph = 'W' },
+      info = { ascii = 'I', glyph = 'I' },
+      hint = { ascii = 'H', glyph = 'H' },
+      minus = { ascii = '-', glyph = '-' },
+      delta = { ascii = '~', glyph = '~' },
+      plus = { ascii = '+', glyph = '+' },
     },
   }
   setmetatable(icons, {
@@ -83,51 +90,32 @@ now(function()
             return not (self.added and self.changed and self.removed)
               or (self.added == 0 and self.changed == 0 and self.removed == 0)
           end,
-          provider = ' -',
+          provider = function() return ' ' .. icons.minus end,
         },
-        hl = function()
-          if is_active() then
-            return 'MiniStatuslineDevinfo'
-          else
-            return 'MiniStatuslineInactive'
-          end
-        end,
       },
       {
         condition = function(self) return self.removed and self.removed > 0 end,
         hl = function()
-          if is_active() then
-            return '@diff.minus'
-          else
-            return 'MiniStatuslineInactive'
-          end
+          if is_active() then return { fg = 'git_minus' } end
         end,
         Space,
-        { provider = function(self) return '-' .. self.removed end },
+        { provider = function(self) return icons.minus .. self.removed end },
       },
       {
         condition = function(self) return self.changed and self.changed > 0 end,
         hl = function()
-          if is_active() then
-            return '@diff.delta'
-          else
-            return 'MiniStatuslineInactive'
-          end
+          if is_active() then return { fg = 'git_delta' } end
         end,
         Space,
-        { provider = function(self) return '~' .. self.changed end },
+        { provider = function(self) return icons.delta .. self.changed end },
       },
       {
         condition = function(self) return self.added and self.added > 0 end,
         hl = function()
-          if is_active() then
-            return '@diff.plus'
-          else
-            return 'MiniStatuslineInactive'
-          end
+          if is_active() then return { fg = 'git_plus' } end
         end,
         Space,
-        { provider = function(self) return '+' .. self.added end },
+        { provider = function(self) return icons.plus .. self.added end },
       },
     },
   }
@@ -147,30 +135,17 @@ now(function()
         severity = vim.diagnostic.severity,
       },
       condition = function() return diagnostic_is_enabled() and #diagnostic_get_count() > 0 end,
-      {
-        provider = function() return ' ' .. icons.diag end,
-        hl = function()
-          if is_active() then
-            return 'MiniStatuslineDevinfo'
-          else
-            return 'MiniStatuslineInactive'
-          end
-        end,
-      },
+      { provider = function() return ' ' .. icons.diag end },
       {
         condition = function(self)
           self.errors = diagnostic_get_count()[self.severity['ERROR']]
           return self.errors and self.errors > 0
         end,
         hl = function()
-          if is_active() then
-            return 'DiagnosticError'
-          else
-            return 'MiniStatuslineInactive'
-          end
+          if is_active() then return { fg = 'diag_error' } end
         end,
         Space,
-        { provider = function(self) return self.sings.ERROR .. tostring(self.errors) end },
+        { provider = function(self) return icons.error .. tostring(self.errors) end },
       },
       {
         condition = function(self)
@@ -178,14 +153,10 @@ now(function()
           return self.warn and self.warn > 0
         end,
         hl = function()
-          if is_active() then
-            return 'DiagnosticWarn'
-          else
-            return 'MiniStatuslineInactive'
-          end
+          if is_active() then return { fg = 'diag_warn' } end
         end,
         Space,
-        { provider = function(self) return self.sings.WARN .. tostring(self.warn) end },
+        { provider = function(self) return icons.warn .. tostring(self.warn) end },
       },
       {
         condition = function(self)
@@ -193,14 +164,10 @@ now(function()
           return self.info and self.info > 0
         end,
         hl = function()
-          if is_active() then
-            return 'DiagnosticInfo'
-          else
-            return 'MiniStatuslineInactive'
-          end
+          if is_active() then return { fg = 'diag_info' } end
         end,
         Space,
-        { provider = function(self) return self.sings.INFO .. tostring(self.info) end },
+        { provider = function(self) return icons.info .. tostring(self.info) end },
       },
       {
         condition = function(self)
@@ -208,14 +175,10 @@ now(function()
           return self.hint and self.hint > 0
         end,
         hl = function()
-          if is_active() then
-            return 'DiagnosticHint'
-          else
-            return 'MiniStatuslineInactive'
-          end
+          if is_active() then return { fg = 'diag_hint' } end
         end,
         Space,
-        { provider = function(self) return self.sings.HINT .. tostring(self.hint) end },
+        { provider = function(self) return icons.hint .. tostring(self.hint) end },
       },
     },
     { provider = '' },
@@ -290,7 +253,7 @@ now(function()
 
         return (' %s %s %s[%s] %s '):format(icon, filetype, encoding, format, size)
       end,
-      hl = 'MiniStatuslineDevinfo',
+      hl = { bg = 'devinfo_bg' },
     },
     { provider = '' },
   }
@@ -316,48 +279,27 @@ now(function()
     end,
     condition = function(self) return self.path ~= '' or self.file ~= '' or self.suffix ~= '' end,
     {
-      {
-        Space,
-        hl = function()
-          if is_active() then
-            return 'MiniStatuslinePath'
-          else
-            return 'MiniStatuslineInactive'
-          end
-        end,
-      },
+      { Space },
       {
         flexible = priority.path,
         { provider = function(self) return self.path end },
         { provider = function(self) return vim.fn.pathshorten(self.path, 2) end },
         { provider = '' },
         hl = function()
-          if is_active() then
-            return 'MiniStatuslinePath'
-          else
-            return 'MiniStatuslineInactive'
-          end
+          if is_active() then return { fg = 'path_fg' } end
         end,
       },
       {
         provider = function(self) return self.file end,
         hl = function()
-          if is_active() then
-            return 'MiniStatuslineFilename'
-          else
-            return 'MiniStatuslineInactive'
-          end
+          if is_active() then return { fg = 'active_fg' } end
         end,
       },
       {
         condition = function(self) return self.suffix ~= '' end,
         provider = function(self) return ' ' .. self.suffix end,
         hl = function()
-          if is_active() then
-            return 'DiagnosticError'
-          else
-            return 'MiniStatuslineInactive'
-          end
+          if is_active() then return { fg = 'diag_error' } end
         end,
       },
     },
@@ -365,53 +307,66 @@ now(function()
 
   local Statusline = {
     static = {
+      -- stylua: ignore
       modes = setmetatable({
-        ['n'] = { long = 'Normal', short = 'N', hl = 'MiniStatuslineModeNormal' },
-        ['v'] = { long = 'Visual', short = 'V', hl = 'MiniStatuslineModeVisual' },
-        ['V'] = { long = 'V-Line', short = 'V-L', hl = 'MiniStatuslineModeVisual' },
-        [CTRL_V] = { long = 'V-Block', short = 'V-B', hl = 'MiniStatuslineModeVisual' },
-        ['s'] = { long = 'Select', short = 'S', hl = 'MiniStatuslineModeVisual' },
-        ['S'] = { long = 'S-Line', short = 'S-L', hl = 'MiniStatuslineModeVisual' },
-        [CTRL_S] = { long = 'S-Block', short = 'S-B', hl = 'MiniStatuslineModeVisual' },
-        ['i'] = { long = 'Insert', short = 'I', hl = 'MiniStatuslineModeInsert' },
-        ['R'] = { long = 'Replace', short = 'R', hl = 'MiniStatuslineModeReplace' },
-        ['c'] = { long = 'Command', short = 'C', hl = 'MiniStatuslineModeCommand' },
-        ['r'] = { long = 'Prompt', short = 'P', hl = 'MiniStatuslineModeOther' },
-        ['!'] = { long = 'Shell', short = 'Sh', hl = 'MiniStatuslineModeOther' },
-        ['t'] = { long = 'Terminal', short = 'T', hl = 'MiniStatuslineModeOther' },
+        ['n'] = { long = 'Normal', short = 'N', hl = { fg = 'active_bg', bg = 'mode_normal' } },
+        ['v'] = { long = 'Visual', short = 'V', hl = { fg = 'active_bg', bg = 'mode_visual' } },
+        ['V'] = { long = 'V-Line', short = 'V-L', hl = { fg = 'active_bg', bg = 'mode_visual' } },
+        [CTRL_V] = { long = 'V-Block', short = 'V-B', hl = { fg = 'active_bg', bg = 'mode_visual' } },
+        ['s'] = { long = 'Select', short = 'S', hl = { fg = 'active_bg', bg = 'mode_visual' } },
+        ['S'] = { long = 'S-Line', short = 'S-L', hl = { fg = 'active_bg', bg = 'mode_visual' } },
+        [CTRL_S] = { long = 'S-Block', short = 'S-B', hl = { fg = 'active_bg', bg = 'mode_visual' } },
+        ['i'] = { long = 'Insert', short = 'I', hl = { fg = 'active_bg', bg = 'mode_insert' } },
+        ['R'] = { long = 'Replace', short = 'R', hl = { fg = 'active_bg', bg = 'mode_replace' } },
+        ['c'] = { long = 'Command', short = 'C', hl = { fg = 'active_bg', bg = 'mode_command' } },
+        ['r'] = { long = 'Prompt', short = 'P', hl = { fg = 'active_bg', bg = 'mode_other' } },
+        ['!'] = { long = 'Shell', short = 'Sh', hl = { fg = 'active_bg', bg = 'mode_other' } },
+        ['t'] = { long = 'Terminal', short = 'T', hl = { fg = 'active_bg', bg = 'mode_other' } },
       }, {
         __index = function()
-          return { long = 'Unknown', short = 'U', hl = 'MiniStatuslineModeOther' }
+          return { long = 'Unknown', short = 'U', hl = { fg = 'active_bg', bg = 'mode_other' } }
         end,
       }),
     },
-    Mode,
     {
-      hl = 'MiniStatuslineDevinfo',
-      Diff,
-      Diagnostic,
-      Lsp,
+      hl = function()
+        if is_active() then
+          return { fg = 'active_fg', bg = 'active_bg' }
+        else
+          return { fg = 'inactive_fg', bg = 'inactive_bg' }
+        end
+      end,
+      Mode,
       {
-        condition = function()
-          return get_attached_lsp() ~= ''
-            or diagnostic_is_enabled() and #diagnostic_get_count() > 0
-            or vim.b.gitsigns_status_dict
-        end,
-        Space,
         hl = function()
-          if not is_active() then return 'MiniStatuslineInactive' end
+          if is_active() then
+            return { fg = 'active_fg', bg = 'devinfo_bg' }
+          else
+            return { fg = 'inactive_fg', bg = 'inactive_bg' }
+          end
         end,
+        Diff,
+        Diagnostic,
+        Lsp,
+        {
+          condition = function()
+            return get_attached_lsp() ~= ''
+              or diagnostic_is_enabled() and #diagnostic_get_count() > 0
+              or vim.b.gitsigns_status_dict
+          end,
+          Space,
+          hl = function()
+            if not is_active() then return { fg = 'inactive_fg', bg = 'inactive_bg' } end
+          end,
+        },
       },
-    },
-    { provider = '%<' },
-    {
-      hl = 'StatusLine',
+      { provider = '%<' },
       Filename,
+      { provider = '%=' },
+      FileInfo,
+      Search,
+      Location,
     },
-    { provider = '%=' },
-    FileInfo,
-    Search,
-    Location,
   }
 
   local Tabline = {
@@ -422,14 +377,59 @@ now(function()
         local tabpage_section = (' Tab %s/%s '):format(cur_tabpagenr, n_tabpages)
         return tabpage_section
       end,
-      hl = 'MiniTablineTabpagesection',
+      hl = { fg = 'tabpage_fg', bg = 'tabpage_bg' },
     },
-    { provider = '%=', hl = 'TabLineFill' },
-    { provider = function() return '%999X' .. icons.x end, hl = 'TabLineFill' },
+    { provider = '%=', hl = { bg = 'tabpage_fill' } },
+    {
+      provider = function() return '%999X' .. icons.x end,
+      hl = { fg = 'tabpage_fg', bg = 'tabpage_fill' },
+    },
   }
+  local colors = function()
+    local get_hl = function(name) return vim.api.nvim_get_hl(0, { name = name, link = false }) end
+    local colors = {
+      active_bg = get_hl('StatusLine').bg or 'NONE',
+      active_fg = get_hl('StatusLine').fg,
+
+      devinfo_bg = get_hl('TabLineSel').bg or 'NONE',
+
+      inactive_bg = get_hl('StatusLineNC').bg or 'NONE',
+      inactive_fg = get_hl('StatusLineNC').fg,
+
+      path_fg = get_hl('Comment').fg,
+
+      diag_hint = get_hl('DiagnosticHint').fg,
+      diag_info = get_hl('DiagnosticInfo').fg,
+      diag_warn = get_hl('DiagnosticWarn').fg,
+      diag_error = get_hl('DiagnosticError').fg,
+
+      git_plus = get_hl('diffAdded').fg,
+      git_delta = get_hl('diffChanged').fg,
+      git_minus = get_hl('diffDeleted').fg,
+
+      mode_normal = get_hl('Function').fg,
+      mode_insert = get_hl('String').fg,
+      mode_visual = get_hl('Keyword').fg,
+      mode_command = get_hl('Operator').fg,
+      mode_replace = get_hl('Constant').fg,
+      mode_other = get_hl('Type').fg,
+
+      tabpage_bg = get_hl('Search').bg or 'NONE',
+      tabpage_fg = get_hl('Search').fg,
+      tabpage_fill = get_hl('TabLineFill').bg or 'NONE',
+    }
+    return colors
+  end
 
   require('heirline').setup({
     statusline = Statusline,
     tabline = Tabline,
+    opts = {
+      colors = colors,
+    },
+  })
+  vim.api.nvim_create_autocmd('ColorScheme', {
+    callback = function() require('heirline.utils').on_colorscheme(colors) end,
+    group = vim.api.nvim_create_augroup('HeirlineColors', {}),
   })
 end)
