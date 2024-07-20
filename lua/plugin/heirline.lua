@@ -263,6 +263,14 @@ now(function()
     end
   end
 
+  local Macro = {
+    condition = is_active,
+    provider = function()
+      if vim.fn.reg_recording() == '' then return '' end
+      return '[' .. vim.fn.reg_recording() .. '] '
+    end,
+  }
+
   local FileInfo = {
     condition = function() return is_active() and vim.bo.filetype ~= '' end,
     hl = { bg = 'devinfo_bg' },
@@ -392,6 +400,7 @@ now(function()
     Trunc,
     Filename,
     Align,
+    Macro,
     FileInfo,
     Search,
     Location,
