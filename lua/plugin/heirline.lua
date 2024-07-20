@@ -66,7 +66,7 @@ now(function()
   })
 
   local Mode = {
-    init = function(self) self.mode = vim.fn.mode(1) end,
+    init = function(self) self.mode = vim.fn.mode() end,
     condition = is_active,
     hl = function(self)
       local bg = modes[self.mode].hl.bg
@@ -80,7 +80,7 @@ now(function()
   }
 
   local Search = {
-    init = function(self) self.mode = vim.fn.mode(1) end,
+    init = function(self) self.mode = vim.fn.mode() end,
     condition = function() return is_active() and vim.v.hlsearch == 1 end,
     hl = function(self)
       local bg = modes[self.mode].hl.bg
@@ -100,7 +100,7 @@ now(function()
   }
 
   local Location = {
-    init = function(self) self.mode = vim.fn.mode(1) end,
+    init = function(self) self.mode = vim.fn.mode() end,
     condition = is_active,
     hl = function(self)
       local bg = modes[self.mode].hl.bg
