@@ -2,7 +2,8 @@ local minideps = require('mini.deps')
 local add, now, later = minideps.add, minideps.now, minideps.later
 
 now(function()
-  add({ source = 'willothy/flatten.nvim' })
+  -- add({ source = 'willothy/flatten.nvim' })
+  add({ source = 'lostl1ght/flatten.nvim', checkout = 'develop' })
   require('flatten').setup({
     window = { open = 'smart' },
     callbacks = {
