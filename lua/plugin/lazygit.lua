@@ -7,6 +7,15 @@ now(function()
     window = { open = 'smart' },
     callbacks = {
       pre_open = vim.schedule_wrap(function() require('lazygit').hide() end),
+      post_open = function(buf_id)
+        if vim.list_contains({ 'gitcommit', 'gitrebase' }, vim.bo[buf_id].filetype) then
+          vim.api.nvim_create_autocmd('BufWritePost', {
+            buffer = buf_id,
+            once = true,
+            callback = vim.schedule_wrap(function() require('mini.bufremove').delete(buf_id) end),
+          })
+        end
+      end,
       block_end = vim.schedule_wrap(function() require('lazygit').show() end),
     },
   })
