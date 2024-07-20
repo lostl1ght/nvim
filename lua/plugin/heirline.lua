@@ -81,37 +81,12 @@ now(function()
     },
   }
 
-  local Search = {
-    init = function(self) self.mode = vim.fn.mode() end,
-    condition = function() return is_active() and vim.v.hlsearch == 1 end,
-    hl = function(self)
-      local bg = modes[self.mode].hl.bg
-      return { fg = 'active_bg', bg = bg }
-    end,
-    provider = function()
-      local ok, s_count = pcall(vim.fn.searchcount, { recompute = true })
-      if not ok or s_count.current == nil or s_count.total == 0 then return '' end
-
-      if s_count.incomplete == 1 then return ' ?/?' end
-
-      local too_many = '>' .. s_count.maxcount
-      local current = s_count.current > s_count.maxcount and too_many or s_count.current
-      local total = s_count.total > s_count.maxcount and too_many or s_count.total
-      return ' ' .. current .. '/' .. total
-    end,
-  }
-
-  local Location = {
-    init = function(self) self.mode = vim.fn.mode() end,
-    condition = is_active,
-    hl = function(self)
-      local bg = modes[self.mode].hl.bg
-      return { fg = 'active_bg', bg = bg }
-    end,
+  local Branch = {
+    condition = function() return vim.b.gitsigns_head end,
     {
-      flexible = priority.location,
-      { provider = ' %l|%L│%2v|%-2{virtcol("$") - 1} ' },
-      { provider = ' %l│%2v ' },
+      flexible = priority.branch,
+      { provider = function() return ' ' .. icons.branch .. ' ' .. vim.b.gitsigns_head end },
+      { provider = function() return ' ' .. icons.branch end },
     },
   }
 
@@ -252,53 +227,6 @@ now(function()
     },
   }
 
-  local get_filesize = function()
-    local size = vim.fn.getfsize(vim.fn.getreg('%'))
-    if size < 1024 then
-      return string.format('%dB', size)
-    elseif size < 1048576 then
-      return string.format('%.2fKiB', size / 1024)
-    else
-      return string.format('%.2fMiB', size / 1048576)
-    end
-  end
-
-  local Macro = {
-    condition = is_active,
-    provider = function()
-      if vim.fn.reg_recording() == '' then return '' end
-      return '[' .. vim.fn.reg_recording() .. '] '
-    end,
-  }
-
-  local FileInfo = {
-    condition = function() return is_active() and vim.bo.filetype ~= '' end,
-    hl = { bg = 'devinfo_bg' },
-    {
-      flexible = priority.fileinfo,
-      {
-        provider = function()
-          local filetype = vim.bo.filetype
-          local icon = require('mini.icons').get('filetype', filetype)
-          local encoding = vim.bo.fileencoding or vim.bo.encoding
-          local format = vim.bo.fileformat
-          local size = get_filesize()
-
-          return (' %s %s %s[%s] %s '):format(icon, filetype, encoding, format, size)
-        end,
-      },
-      {
-        provider = function()
-          local filetype = vim.bo.filetype
-          local icon = require('mini.icons').get('filetype', filetype)
-
-          return (' %s %s '):format(icon, filetype)
-        end,
-      },
-      { provider = '' },
-    },
-  }
-
   local sep = package.config:sub(1, 1)
 
   local Filename = {
@@ -352,12 +280,84 @@ now(function()
     },
   }
 
-  local Branch = {
-    condition = function() return vim.b.gitsigns_head end,
+  local Macro = {
+    condition = is_active,
+    provider = function()
+      if vim.fn.reg_recording() == '' then return '' end
+      return '[' .. vim.fn.reg_recording() .. '] '
+    end,
+  }
+
+  local get_filesize = function()
+    local size = vim.fn.getfsize(vim.fn.getreg('%'))
+    if size < 1024 then
+      return string.format('%dB', size)
+    elseif size < 1048576 then
+      return string.format('%.2fKiB', size / 1024)
+    else
+      return string.format('%.2fMiB', size / 1048576)
+    end
+  end
+
+  local FileInfo = {
+    condition = function() return is_active() and vim.bo.filetype ~= '' end,
+    hl = { bg = 'devinfo_bg' },
     {
-      flexible = priority.branch,
-      { provider = function() return ' ' .. icons.branch .. ' ' .. vim.b.gitsigns_head end },
-      { provider = function() return ' ' .. icons.branch end },
+      flexible = priority.fileinfo,
+      {
+        provider = function()
+          local filetype = vim.bo.filetype
+          local icon = require('mini.icons').get('filetype', filetype)
+          local encoding = vim.bo.fileencoding or vim.bo.encoding
+          local format = vim.bo.fileformat
+          local size = get_filesize()
+
+          return (' %s %s %s[%s] %s '):format(icon, filetype, encoding, format, size)
+        end,
+      },
+      {
+        provider = function()
+          local filetype = vim.bo.filetype
+          local icon = require('mini.icons').get('filetype', filetype)
+
+          return (' %s %s '):format(icon, filetype)
+        end,
+      },
+      { provider = '' },
+    },
+  }
+
+  local Search = {
+    init = function(self) self.mode = vim.fn.mode() end,
+    condition = function() return is_active() and vim.v.hlsearch == 1 end,
+    hl = function(self)
+      local bg = modes[self.mode].hl.bg
+      return { fg = 'active_bg', bg = bg }
+    end,
+    provider = function()
+      local ok, s_count = pcall(vim.fn.searchcount, { recompute = true })
+      if not ok or s_count.current == nil or s_count.total == 0 then return '' end
+
+      if s_count.incomplete == 1 then return ' ?/?' end
+
+      local too_many = '>' .. s_count.maxcount
+      local current = s_count.current > s_count.maxcount and too_many or s_count.current
+      local total = s_count.total > s_count.maxcount and too_many or s_count.total
+      return ' ' .. current .. '/' .. total
+    end,
+  }
+
+  local Location = {
+    init = function(self) self.mode = vim.fn.mode() end,
+    condition = is_active,
+    hl = function(self)
+      local bg = modes[self.mode].hl.bg
+      return { fg = 'active_bg', bg = bg }
+    end,
+    {
+      flexible = priority.location,
+      { provider = ' %l|%L│%2v|%-2{virtcol("$") - 1} ' },
+      { provider = ' %l│%2v ' },
     },
   }
 
@@ -424,12 +424,6 @@ now(function()
     provider = function() return (' %%@TabPrev@%s%%X'):format(icons.tabprevious) end,
   }
 
-  local TabNext = {
-    condition = enough_tabs,
-    hl = { bg = 'tabpage_bg' },
-    provider = function() return ('%%@TabNext@%s%%X '):format(icons.tabnext) end,
-  }
-
   local TabCount = {
     hl = { bg = 'tabpage_bg' },
     provider = function()
@@ -438,6 +432,12 @@ now(function()
       local tabpage_section = (' Tab %s/%s '):format(cur_tabpagenr, n_tabpages)
       return tabpage_section
     end,
+  }
+
+  local TabNext = {
+    condition = enough_tabs,
+    hl = { bg = 'tabpage_bg' },
+    provider = function() return ('%%@TabNext@%s%%X '):format(icons.tabnext) end,
   }
 
   local Close = {
@@ -453,6 +453,7 @@ now(function()
     Align,
     Close,
   }
+
   local colors = function()
     local get_hl = function(name) return vim.api.nvim_get_hl(0, { name = name, link = false }) end
     local colors = {
