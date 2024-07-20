@@ -35,7 +35,9 @@ later(function()
         delete = {
           char = '<c-d>',
           func = function()
-            local buf_id = minipick.get_picker_matches().current.bufnr
+            local matches = minipick.get_picker_matches()
+            if not matches then return end
+            local buf_id = matches.current.bufnr
             if require('mini.bufremove').delete(buf_id) then
               local f = function(i) return i.bufnr ~= buf_id end
               local items = vim.tbl_filter(f, minipick.get_picker_items() or {})
