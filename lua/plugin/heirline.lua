@@ -26,6 +26,8 @@ now(function()
       delta = { ascii = '~', glyph = '~' },
       plus = { ascii = '+', glyph = '+' },
       branch = { ascii = 'Git', glyph = '' },
+      tabprevious = { ascii = '<', glyph = '' },
+      tabnext = { ascii = '>', glyph = '' },
     },
   }
   setmetatable(icons, {
@@ -395,6 +397,30 @@ now(function()
     Location,
   }
 
+  vim.cmd([[
+    function TabPrev(...)
+      tabprevious
+    endfunction
+
+    function TabNext(...)
+      tabnext
+    endfunction
+  ]])
+
+  local enough_tabs = function() return vim.fn.tabpagenr('$') > 1 end
+
+  local TabPrev = {
+    condition = enough_tabs,
+    hl = { bg = 'tabpage_bg' },
+    provider = function() return (' %%@TabPrev@%s%%X'):format(icons.tabprevious) end,
+  }
+
+  local TabNext = {
+    condition = enough_tabs,
+    hl = { bg = 'tabpage_bg' },
+    provider = function() return ('%%@TabNext@%s%%X '):format(icons.tabnext) end,
+  }
+
   local TabCount = {
     hl = { bg = 'tabpage_bg' },
     provider = function()
@@ -405,11 +431,16 @@ now(function()
     end,
   }
 
-  local Close = { provider = function() return '%999X' .. icons.x end }
+  local Close = {
+    condition = enough_tabs,
+    provider = function() return '%999X' .. icons.x end,
+  }
 
   local Tabline = {
     hl = { fg = 'tabpage_fg', bg = 'tabpage_fill' },
+    TabPrev,
     TabCount,
+    TabNext,
     Align,
     Close,
   }
