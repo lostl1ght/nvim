@@ -472,9 +472,9 @@ now(function()
       diag_warn = get_hl('DiagnosticWarn').fg,
       diag_error = get_hl('DiagnosticError').fg,
 
-      git_plus = get_hl('diffAdded').fg,
-      git_delta = get_hl('diffChanged').fg,
-      git_minus = get_hl('diffDeleted').fg,
+      git_plus = get_hl('DiagnosticOk').fg,
+      git_delta = get_hl('DiagnosticWarn').fg,
+      git_minus = get_hl('DiagnosticError').fg,
 
       mode_normal = get_hl('Function').fg,
       mode_insert = get_hl('String').fg,
