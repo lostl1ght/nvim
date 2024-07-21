@@ -40,7 +40,9 @@ M.get = function()
   local show_signs = vim.wo.signcolumn ~= 'no'
 
   -- fold, git, other, numbers, dap
-  local components = { '%C', '', '', '', '' }
+  local components = { '%C', '', '', '%=', ' ' }
+
+  if vim.v.virtnum ~= 0 then return table.concat(components, '') end
 
   if show_signs then
     local signs = get_signs(buf, vim.v.lnum)
@@ -64,17 +66,15 @@ M.get = function()
   local is_num = vim.wo[win].number
   local is_relnum = vim.wo[win].relativenumber
 
-  if (is_num or is_relnum) and vim.v.virtnum == 0 then
+  if is_num or is_relnum then
+    local num
     if vim.v.relnum == 0 then
-      components[4] = (is_num and vim.v.lnum or vim.v.relnum)
-        .. (is_num and is_relnum and ' ' or '') -- the current line
+      num = (is_num and vim.v.lnum or vim.v.relnum) .. (is_num and is_relnum and ' ' or '') -- the current line
     else
-      components[4] = tostring(is_relnum and vim.v.relnum or vim.v.lnum) -- other lines
+      num = is_relnum and vim.v.relnum or vim.v.lnum -- other lines
     end
-    components[4] = '%=' .. components[4] -- right align
+    components[4] = components[4] .. num
   end
-
-  if vim.v.virtnum ~= 0 then components[4] = '%=' end
 
   return table.concat(components, '')
 end
