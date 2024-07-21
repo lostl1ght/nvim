@@ -10,7 +10,7 @@ now(function()
     return winid == curwin
   end
 
-  local icons = {
+  local icons = setmetatable({
     [1] = {
       lsp = { ascii = 'LSP', glyph = '' },
       ro = { ascii = '[ro]', glyph = '' },
@@ -29,9 +29,8 @@ now(function()
       tabprevious = { ascii = '<', glyph = '' },
       tabnext = { ascii = '>', glyph = '' },
     },
-  }
-  setmetatable(icons, {
-    __index = function(t, k) return t[1][k][require('mini.icons').config.style] end,
+  }, {
+    __index = function(self, key) return self[1][key][require('mini.icons').config.style] end,
   })
 
   local Space = { provider = ' ' }

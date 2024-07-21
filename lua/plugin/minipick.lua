@@ -2,7 +2,7 @@ local minideps = require('mini.deps')
 local add, later = minideps.add, minideps.later
 
 later(function()
-  add({ source = 'echasnovski/mini.pick' })
+  add({ source = 'echasnovski/mini.pick', depends = { 'echasnovski/mini.icons' } })
   vim.ui.select = require('select').ui_select
 
   local group = vim.api.nvim_create_augroup('MiniPickCursor', {})
@@ -21,6 +21,13 @@ later(function()
   set('n', '<leader>fg', '<cmd>Pick grep<cr>', { desc = 'Grep' })
   set('n', '<leader>b', function()
     local minipick = require('mini.pick')
+    local icons = setmetatable({
+      [1] = {
+        none = { ascii = '0 ', glyph = '󰞋 ' },
+      },
+    }, {
+      __index = function(self, key) return self[1][key][require('mini.icons').config.style] end,
+    })
     minipick.builtin.buffers({}, {
       source = {
         show = function(buf_id, items, query)
@@ -28,7 +35,10 @@ later(function()
             local path = vim.uv.fs_realpath(vim.fn.fnamemodify(i.text, ':p'))
             if path then i.text = vim.fn.fnamemodify(path, ':~:.') end
           end, items)
-          minipick.default_show(buf_id, items, query, { show_icons = true })
+          minipick.default_show(buf_id, items, query, {
+            show_icons = true,
+            icons = { none = icons.none },
+          })
         end,
       },
       mappings = {
