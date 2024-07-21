@@ -1,8 +1,9 @@
 local au = vim.api.nvim_create_autocmd
 
 ---@param name string
+---@param clear boolean?
 ---@return integer
-local aug = function(name) return vim.api.nvim_create_augroup(name, {}) end
+local aug = function(name, clear) return vim.api.nvim_create_augroup(name, { clear = clear }) end
 
 au('TextYankPost', {
   callback = function() vim.highlight.on_yank({ higroup = 'YankHighlight', timeout = 350 }) end,
@@ -38,8 +39,11 @@ au('FileType', {
   desc = 'Enable treesitter highlight',
 })
 
+---@param ft string
+---@param query string
+---@return boolean
 local check_query = function(ft, query)
-  return pcall(vim.treesitter.get_parser) and vim.treesitter.query.get(ft, query)
+  return pcall(vim.treesitter.get_parser) and vim.treesitter.query.get(ft, query) ~= nil
 end
 
 au('BufEnter', {
@@ -58,13 +62,13 @@ au('BufEnter', {
 
 --[[
 au('FileType', {
+  group = aug('TreesitterIndent'),
   callback = function()
     if vim.bo.buftype ~= '' then return end
     if check_query(vim.bo.filetype, 'indents') then
       vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
     end
   end,
-  group = aug('TreesitterIndent'),
   desc = 'Enable treesitter indent',
 })
 ]]
@@ -75,9 +79,9 @@ au('LspAttach', {
     if not client then return end
     local buf_id = data.buf
     if client.server_capabilities.inlayHintProvider then
-      local group = vim.api.nvim_create_augroup('ToggleInlayHints', { clear = false })
+      local group = aug('LspInlayHints', false)
 
-      vim.api.nvim_create_autocmd('InsertEnter', {
+      au('InsertEnter', {
         callback = function() vim.lsp.inlay_hint.enable(false, { bufnr = buf_id }) end,
         buffer = buf_id,
         group = group,
@@ -90,7 +94,7 @@ au('LspAttach', {
         vim.lsp.inlay_hint.enable(mode == 'n' or mode == 'v', { bufnr = buf_id })
       end, 500)
 
-      vim.api.nvim_create_autocmd('InsertLeave', {
+      au('InsertLeave', {
         callback = function()
           vim.lsp.inlay_hint.enable(vim.b.inlay_hint_enabled, { bufnr = buf_id })
         end,
@@ -100,17 +104,30 @@ au('LspAttach', {
       })
       ]]
     end
+
     if client.server_capabilities.documentHighlightProvider then
-      local group = vim.api.nvim_create_augroup('LspCursor', { clear = false })
-      vim.api.nvim_create_autocmd({ 'CursorHold', 'InsertLeave', 'BufEnter' }, {
-        group = group,
-        buffer = buf_id,
+      local group = aug('LspCursor', false)
+      au({ 'CursorHold', 'InsertLeave', 'BufEnter' }, {
         callback = vim.lsp.buf.document_highlight,
-      })
-      vim.api.nvim_create_autocmd({ 'CursorMoved', 'InsertEnter', 'BufLeave' }, {
-        group = group,
         buffer = buf_id,
+        group = group,
+        desc = 'Enable references highlighting'
+      })
+      au({ 'CursorMoved', 'InsertEnter', 'BufLeave' }, {
         callback = vim.lsp.buf.clear_references,
+        buffer = buf_id,
+        group = group,
+        desc = 'Clear references'
+      })
+    end
+
+    if client.server_capabilities.codeLensProvider then
+      local group = aug('LspCodeLens', false)
+      au({ 'InsertLeave', 'BufEnter' }, {
+        callback = function(d) vim.lsp.codelens.refresh({ bufnr = d.buf }) end,
+        buffer = buf_id,
+        group = group,
+        desc = 'Refresh code lens'
       })
     end
   end,
