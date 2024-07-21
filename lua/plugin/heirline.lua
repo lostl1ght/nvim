@@ -141,9 +141,10 @@ now(function()
 
   local diagnostic_is_enabled = function() return vim.diagnostic.is_enabled({ bufnr = 0 }) end
   local diagnostic_get_count = function() return vim.diagnostic.count(0) end
+  local has_diagnostics = function() return diagnostic_is_enabled() and #diagnostic_get_count() > 0 end
 
   local Diagnostic = {
-    condition = function() return diagnostic_is_enabled() and #diagnostic_get_count() > 0 end,
+    condition = has_diagnostics,
     {
       flexible = priority.diag,
       {
@@ -376,7 +377,7 @@ now(function()
     {
       condition = function()
         return get_attached_lsp() ~= ''
-          or diagnostic_is_enabled() and #diagnostic_get_count() > 0
+          or has_diagnostics()
           or vim.b.gitsigns_status_dict
           or vim.b.gitsigns_head
       end,
