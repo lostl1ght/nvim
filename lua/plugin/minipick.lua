@@ -40,6 +40,10 @@ later(function()
             icons = { none = icons.none },
           })
         end,
+        match = function(stritems, inds, query, do_sync)
+          stritems = vim.tbl_map(function(str) return vim.fn.fnamemodify(str, ':~:.') end, stritems)
+          minipick.default_match(stritems, inds, query, do_sync)
+        end,
       },
       mappings = {
         delete = {
