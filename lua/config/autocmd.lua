@@ -121,6 +121,8 @@ au('LspAttach', {
       })
     end
 
+    --[[
+    -- FIXME: breaks neovim
     if client.server_capabilities.codeLensProvider then
       local group = aug('LspCodeLens', false)
       au({ 'InsertLeave', 'BufEnter' }, {
@@ -130,6 +132,7 @@ au('LspAttach', {
         desc = 'Refresh code lens'
       })
     end
+    ]]
   end,
   group = aug('LspOptions'),
   desc = 'Setup LSP highlight & inlay hints',
