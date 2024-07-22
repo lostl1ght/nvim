@@ -3,6 +3,7 @@ local add, now = minideps.add, minideps.now
 
 now(function()
   add({ source = 'folke/noice.nvim', depends = { 'MunifTanjim/nui.nvim' } })
+  vim.opt.cmdheight = 0
   require('noice').setup({
     -- NOTE: bottom search & cmdline
     cmdline = {
