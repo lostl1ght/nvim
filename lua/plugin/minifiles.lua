@@ -12,29 +12,6 @@ now(function()
     desc = 'Manager',
   })
 
-  local function map_split(buf_id, lhs, direction)
-    local function rhs()
-      local minifiles = require('mini.files')
-      local entry = minifiles.get_fs_entry(buf_id)
-      if entry == nil then return end
-      if entry.fs_type == 'file' then
-        local new_target_window
-        local current_target_window = minifiles.get_target_window()
-        if current_target_window == nil then return end
-        vim.api.nvim_win_call(current_target_window, function()
-          vim.cmd(direction .. ' split')
-          new_target_window = vim.api.nvim_get_current_win()
-        end)
-
-        minifiles.set_target_window(new_target_window)
-      end
-      minifiles.go_in({})
-    end
-
-    local desc = 'Open ' .. direction .. ' split'
-    vim.keymap.set('n', lhs, rhs, { buffer = buf_id, desc = desc })
-  end
-
   local group = vim.api.nvim_create_augroup('MiniFilesKeymaps', {})
   vim.api.nvim_create_autocmd('User', {
     group = group,
@@ -42,6 +19,7 @@ now(function()
     callback = function(data)
       local minifiles = require('mini.files')
       local buf_id = data.data.buf_id
+
       ---@param mode string|string[]
       ---@param l string
       ---@param r string|function
@@ -51,37 +29,56 @@ now(function()
         opts.buffer = buf_id
         vim.keymap.set(mode, l, r, opts)
       end
-      local mappings = {
-        stop = '',
-        back = {
-          char = '<esc>',
-          func = function()
-            require('mini.pick').stop()
-            vim.defer_fn(function() minifiles.open(minifiles.get_latest_path(), true) end, 20)
-          end,
-        },
-      }
-      -- stylua: ignore
-      map('n', 'gf',
-        function()
-          require('mini.pick').registry.folders({ hidden = true }, { mappings = mappings })
-        end,
-        { desc = 'Folders' }
-      )
-      -- stylua: ignore
-      map('n','gF',
-        function()
-          require('mini.pick').registry.folders({
-            hidden = true, no_ignore = true,
-          }, { mappings = mappings })
-        end,
-        { desc = 'Ignored folders' }
-      )
+
+      ---@param lhs string
+      ---@param direction string
+      local map_split = function(lhs, direction)
+        local rhs = function()
+          local entry = minifiles.get_fs_entry(buf_id)
+          if entry == nil then return end
+          if entry.fs_type == 'file' then
+            local new_target_window
+            local current_target_window = minifiles.get_target_window()
+            if current_target_window == nil then return end
+            vim.api.nvim_win_call(current_target_window, function()
+              vim.cmd(direction .. ' split')
+              new_target_window = vim.api.nvim_get_current_win()
+            end)
+
+            minifiles.set_target_window(new_target_window)
+          end
+          minifiles.go_in({})
+        end
+
+        local desc = 'Open ' .. direction .. ' split'
+        map('n', lhs, rhs, { desc = desc })
+      end
+
+      local folders = function(local_opts)
+        local minipick = require('mini.pick')
+        return function()
+          minipick.registry.folders(local_opts, {
+            mappings = {
+              stop = '',
+              back = {
+                char = '<esc>',
+                func = function()
+                  minipick.stop()
+                  vim.defer_fn(function() minifiles.open(minifiles.get_latest_path(), true) end, 20)
+                end,
+              },
+            },
+          })
+        end
+      end
+
+      map('n', 'gf', folders({ hidden = true }), { desc = 'Folders' })
+      map('n', 'gF', folders({ hidden = true, no_ignore = true }), { desc = 'Ignored folders' })
       map('n', 'gh', function() minifiles.open(nil, false) end, { desc = 'Open cwd' })
       map('n', '<esc>', minifiles.close, { desc = 'Close' })
       map('n', '<c-c>', minifiles.close, { desc = 'Close' })
-      map_split(buf_id, 'gs', 'horizontal')
-      map_split(buf_id, 'gv', 'vertical')
+      map_split('gs', 'horizontal')
+      map_split('gv', 'vertical')
     end,
   })
   vim.api.nvim_create_autocmd('User', {
