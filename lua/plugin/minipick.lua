@@ -124,16 +124,6 @@ later(function()
           end)
         end,
       },
-      mappings = {
-        stop = '',
-        back = {
-          char = '<esc>',
-          func = function()
-            minipick.stop()
-            vim.defer_fn(function() minifiles.open(minifiles.get_latest_path(), true) end, 20)
-          end,
-        },
-      },
     }
     minipick.start(vim.tbl_deep_extend('force', default_opts, opts or {}, {
       source = { items = items_func },

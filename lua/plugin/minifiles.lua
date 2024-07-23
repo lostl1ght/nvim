@@ -51,11 +51,30 @@ now(function()
         opts.buffer = buf_id
         vim.keymap.set(mode, l, r, opts)
       end
-      map('n', 'gf', function() vim.cmd('Pick folders hidden=true') end, { desc = 'Folders' })
-      map(
-        'n',
-        'gF',
-        function() vim.cmd('Pick folders hidden=true no_ignore=true') end,
+      local mappings = {
+        stop = '',
+        back = {
+          char = '<esc>',
+          func = function()
+            require('mini.pick').stop()
+            vim.defer_fn(function() minifiles.open(minifiles.get_latest_path(), true) end, 20)
+          end,
+        },
+      }
+      -- stylua: ignore
+      map('n', 'gf',
+        function()
+          require('mini.pick').registry.folders({ hidden = true }, { mappings = mappings })
+        end,
+        { desc = 'Folders' }
+      )
+      -- stylua: ignore
+      map('n','gF',
+        function()
+          require('mini.pick').registry.folders({
+            hidden = true, no_ignore = true,
+          }, { mappings = mappings })
+        end,
         { desc = 'Ignored folders' }
       )
       map('n', 'gh', function() minifiles.open(nil, false) end, { desc = 'Open cwd' })
