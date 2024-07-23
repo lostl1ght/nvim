@@ -17,10 +17,6 @@ later(function()
     vim.fs.normalize(vim.fn.stdpath('config') .. '/indentconfig.yaml'),
     '-',
   }
-  require('conform.formatters.rustfmt').args = {
-    '--emit=stdout',
-    '--edition=2021',
-  }
   require('conform').setup({
     formatters_by_ft = {
       bib = { 'latexindent' },
