@@ -108,15 +108,25 @@ later(function()
       end)
     end
 
+    local prefix
+    if local_opts.hidden and local_opts.no_ignore then
+      prefix = 'Hidden and ignored f'
+    elseif local_opts.hidden then
+      prefix = 'Hidden f'
+    elseif local_opts.no_ignore then
+      prefix = 'Ignored f'
+    else
+      prefix = 'F'
+    end
+
     local minifiles = require('mini.files')
     minifiles.close()
     local default_opts = {
       source = {
-        items = items_func,
+        name = prefix .. 'olders',
         show = function(buf_id, items, query)
           minipick.default_show(buf_id, items, query, { show_icons = true })
         end,
-        name = 'Folders',
         choose = function(item)
           vim.schedule(function()
             minifiles.open(item, false)
