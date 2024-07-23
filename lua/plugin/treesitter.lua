@@ -8,9 +8,10 @@ now(function()
     hooks = { post_checkout = function() vim.cmd('TSUpdate') end },
   })
   --[[
+  local has_cli = vim.fn.executable('tree-sitter') == 1
   require('nvim-treesitter').setup({
     -- stylua: ignore
-    ensure_install = {
+    ensure_install = has_cli and {
       'bash',  'c', 'lua', 'luadoc',
       'luap',  'markdown', 'markdown_inline',
       'query', 'regex',    'vim', 'vimdoc',
