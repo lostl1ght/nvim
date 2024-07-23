@@ -81,7 +81,7 @@ later(function()
       end,
     },
   })
-  minipick.registry.folders = function(local_opts)
+  minipick.registry.folders = function(local_opts, opts)
     local fd
     if vim.fn.executable('fd') == 1 then
       fd = 'fd'
@@ -110,7 +110,7 @@ later(function()
 
     local minifiles = require('mini.files')
     minifiles.close()
-    local opts = {
+    local default_opts = {
       source = {
         items = items_func,
         show = function(buf_id, items, query)
@@ -135,6 +135,8 @@ later(function()
         },
       },
     }
-    minipick.start(opts)
+    minipick.start(vim.tbl_deep_extend('force', default_opts, opts or {}, {
+      source = { items = items_func },
+    }))
   end
 end)
