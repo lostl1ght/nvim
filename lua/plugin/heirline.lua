@@ -288,6 +288,18 @@ now(function()
     end,
   }
 
+  local Keymap = {
+    condition = function()
+      local show = vim.b.keymap_name
+        and (
+          vim.o.imsearch ~= -1 and vim.fn.mode() == 'c' and vim.o.imsearch == 1
+          or vim.o.iminsert == 1
+        )
+      return is_active() and show
+    end,
+    provider = function() return string.upper(vim.b.keymap_name) .. ' ' end,
+  }
+
   local get_filesize = function()
     local size = vim.fn.getfsize(vim.fn.getreg('%'))
     if size < 1024 then
@@ -401,6 +413,7 @@ now(function()
     Filename,
     Align,
     Macro,
+    Keymap,
     FileInfo,
     Search,
     Location,
