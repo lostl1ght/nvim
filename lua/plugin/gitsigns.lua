@@ -61,7 +61,7 @@ later(function()
       map('n', '\\e', function()
         local new_state = gs.toggle_deleted()
         local msg = new_state and 'diffdeleted' or 'nodiffdeleted'
-        print(msg)
+        vim.notify(msg)
       end, { desc = 'Diff deleted' })
 
       -- Text object

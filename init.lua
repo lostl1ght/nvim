@@ -47,6 +47,7 @@ end
 
 minideps.setup({ path = { package = path_package } })
 vim.g.border = 'single'
+vim.g.notify_toggle = true
 
 local now = minideps.now
 for f in vim.fs.dir(vim.fn.stdpath('config') .. '/lua/config') do

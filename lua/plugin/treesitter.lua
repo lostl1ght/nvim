@@ -87,7 +87,7 @@ later(function()
   vim.keymap.set('n', '\\c', function()
     local tsc = require('treesitter-context')
     tsc.toggle()
-    print((tsc.enabled() and '' or 'no') .. 'context')
+    vim.notify((tsc.enabled() and '' or 'no') .. 'context')
   end, { desc = 'Context' })
   local cmd = 'Context'
   local commands = {

@@ -49,33 +49,66 @@ local prefix = '\\'
 local map_toggle = function(lhs, rhs, desc) set('n', prefix .. lhs, rhs, { desc = desc }) end
 map_toggle('h', function()
   vim.cmd('let v:hlsearch=' .. bit.bxor(vim.v.hlsearch, 1))
-  print((vim.v.hlsearch == 1 and '' or 'no') .. 'hlsearch')
+  if vim.g.notify_toggle then vim.notify((vim.v.hlsearch == 1 and '' or 'no') .. 'hlsearch') end
   vim.schedule(function() vim.cmd('redrawstatus') end)
 end, 'Search highlight')
-map_toggle('l', '<cmd>setlocal cursorline! cursorline?<cr>', 'Cursor line')
-map_toggle('i', '<cmd>setlocal ignorecase! ignorecase?<cr>', 'Ignore case')
-map_toggle('r', '<cmd>setlocal relativenumber! relativenumber?<cr>', 'Relative numbers')
-map_toggle('w', '<cmd>setlocal wrap! wrap?<cr>', 'Wrap')
+map_toggle('i', function()
+  vim.go.ignorecase = not vim.go.ignorecase
+  if vim.g.notify_toggle then vim.notify(vim.go.ignorecase and 'ignorecase' or 'noignorecase') end
+end, 'Ignore case')
+map_toggle('r', function()
+  vim.wo.relativenumber = not vim.wo.relativenumber
+  if vim.g.notify_toggle then
+    vim.notify(vim.wo.relativenumber and 'relativenumber' or 'norelativenumber')
+  end
+end, 'Relative numbers')
+map_toggle('w', function()
+  vim.wo.wrap = not vim.wo.wrap
+  if vim.g.notify_toggle then vim.notify(vim.wo.wrap and 'wrap' or 'nowrap') end
+end, 'Wrap')
 map_toggle('f', function()
+  local no = ''
   if vim.wo.foldcolumn == 'auto' then
     vim.wo.foldcolumn = '0'
-    print('nofoldcolumn')
+    no = 'no'
   else
     vim.wo.foldcolumn = 'auto'
-    print('foldcolumn')
   end
+  if vim.g.notify_toggle then vim.notify(no .. 'foldcolumn') end
 end, 'Fold column')
-map_toggle('u', '<cmd>setlocal number! number?<cr>', 'Numbers')
+map_toggle('u', function()
+  vim.wo.number = not vim.wo.number
+  if vim.g.notify_toggle then vim.notify(vim.wo.number and 'number' or 'nonumber') end
+end, 'Numbers')
 map_toggle('s', function()
+  local no = ''
   if vim.wo.signcolumn == 'yes' then
     vim.wo.signcolumn = 'no'
-    print('nosigncolumn')
+    no = 'no'
   else
     vim.wo.signcolumn = 'yes'
-    print('signcolumn')
   end
+  if vim.g.notify_toggle then vim.notify(no .. 'signcolumn') end
 end, 'Sign column')
 
+map_toggle('n', function()
+  local new_state = not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 })
+  vim.b.inlay_hint_enabled = new_state
+  vim.lsp.inlay_hint.enable(new_state, { bufnr = 0 })
+  if vim.g.notify_toggle then
+    local msg = new_state and 'inlayhint' or 'noinlayhint'
+    vim.notify(msg)
+  end
+end, 'Inlay hints')
+map_toggle('d', function()
+  local buf_id = vim.api.nvim_get_current_buf()
+  local new_state = not vim.diagnostic.is_enabled({ bufnr = buf_id })
+  vim.diagnostic.enable(new_state, { bufnr = buf_id })
+  if vim.g.notify_toggle then
+    local msg = new_state and 'diagnostic' or 'nodiagnostic'
+    vim.notify(msg)
+  end
+end, 'Diagnostics')
 set('n', '<leader>cn', vim.lsp.buf.rename, {
   desc = 'Rename',
 })
@@ -85,20 +118,6 @@ set({ 'n', 'x' }, '<leader>ca', vim.lsp.buf.code_action, {
 set('i', '<c-s>', vim.lsp.buf.signature_help, {
   desc = 'Signature help',
 })
-map_toggle('n', function()
-  local new_state = not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 })
-  vim.b.inlay_hint_enabled = new_state
-  vim.lsp.inlay_hint.enable(new_state, { bufnr = 0 })
-  local msg = new_state and 'inlayhint' or 'noinlayhint'
-  print(msg)
-end, 'Inlay hints')
-map_toggle('d', function()
-  local buf_id = vim.api.nvim_get_current_buf()
-  local new_state = not vim.diagnostic.is_enabled({ bufnr = buf_id })
-  vim.diagnostic.enable(new_state, { bufnr = buf_id })
-  local msg = new_state and 'diagnostic' or 'nodiagnostic'
-  print(msg)
-end, 'Diagnostics')
 set('n', ']e', function() require('goto').next(vim.v.count) end, {
   desc = 'Reference forward',
 })
