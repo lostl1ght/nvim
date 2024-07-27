@@ -163,6 +163,7 @@ later(function()
         local icons = setmetatable({
           [1] = {
             cmd = { ascii = 'C', glyph = '󱁤' },
+            none = { ascii = '0', glyph = '󰞋' },
           },
         }, {
           __index = function(self, kind)
@@ -171,7 +172,7 @@ later(function()
               or miniicons.get('lsp', kind)
           end,
         })
-        local kind = item.kind or 'default'
+        local kind = item.kind or 'none'
         if entry.source.name == 'cmdline' then kind = 'cmd' end
         item.kind = (' %s '):format(icons[kind])
         item.menu = ('(%s)'):format(kind:gsub('(%a)(%u)', '%1 %2'):lower())
