@@ -2,7 +2,7 @@ local minideps = require('mini.deps')
 local add, now = minideps.add, minideps.now
 
 now(function()
-  add({ source = 'folke/noice.nvim', depends = { 'MunifTanjim/nui.nvim' } })
+  add({ source = 'folke/noice.nvim', depends = { 'MunifTanjim/nui.nvim' }, checkout = 'v4.4.7' })
   vim.opt.cmdheight = 0
   require('noice').setup({
     -- NOTE: bottom search & cmdline
