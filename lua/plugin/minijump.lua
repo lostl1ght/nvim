@@ -6,10 +6,11 @@ later(function()
   require('mini.jump2d').setup({
     view = { dim = true },
     mappings = { start_jumping = 'm' },
+    silent = true,
   })
 end)
 
 later(function()
   add({ source = 'echasnovski/mini.jump' })
-  require('mini.jump').setup()
+  require('mini.jump').setup({ silent = true })
 end)
