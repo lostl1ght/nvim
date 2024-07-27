@@ -167,11 +167,8 @@ later(function()
         }, {
           __index = function(self, kind)
             local miniicons = require('mini.icons')
-            if vim.list_contains(vim.tbl_keys(self[1]), kind) then
-              return self[1][kind][miniicons.config.style]
-            else
-              return miniicons.get('lsp', kind)
-            end
+            return self[1][kind] and self[1][kind][miniicons.config.style]
+              or miniicons.get('lsp', kind)
           end,
         })
         local kind = item.kind or 'default'
