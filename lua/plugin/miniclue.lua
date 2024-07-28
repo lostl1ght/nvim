@@ -53,6 +53,6 @@ now(function()
         { mode = 'n', keys = '<leader>c', desc = '+code' },
       },
     },
-    window = { delay = 500 },
+    window = { delay = 500, config = { border = vim.g.border } },
   })
 end)
