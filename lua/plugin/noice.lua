@@ -34,14 +34,20 @@ now(function()
       message = { view = 'mini' },
       documentation = {
         opts = {
-          border = { style = 'single', padding = { 0, 0 } },
+          border = { style = vim.g.border, padding = { 0, 0 } },
           win_options = { concealcursor = '' },
         },
       },
     },
     views = {
-      cmdline_popup = { position = { row = '10%', col = '50%' } },
-      confirm = { zindex = 300, relative = 'cursor', position = { row = 2, col = 2 } },
+      cmdline_popup = { border = { style = vim.g.border }, position = { row = '10%', col = '50%' } },
+      cmdline_input = { border = { style = vim.g.border } },
+      confirm = {
+        border = { style = vim.g.border },
+        zindex = 300,
+        relative = 'cursor',
+        position = { row = 2, col = 2 },
+      },
       split = { enter = true },
       mini = { reverse = false, position = { row = 1, col = '100%' } },
     },
