@@ -34,7 +34,6 @@ now(function()
         Substitude = { bg = theme.vcs.removed, bold = true },
 
         -- NOTE: blend float with normal
-        FlashPrompt = { fg = theme.ui.special, bg = theme.ui.bg, bold = true },
         FloatTitle = { fg = theme.ui.special, bg = theme.ui.bg, bold = true },
         FloatBorder = { fg = theme.ui.float.fg_border, bg = theme.ui.bg },
         MsgArea = { link = 'Normal' },
@@ -69,7 +68,10 @@ now(function()
         TreesitterContext = { fg = theme.ui.special, bg = theme.ui.bg_m1 },
         TreesitterContextLineNumber = { fg = theme.ui.special, bg = theme.ui.bg_m1 },
 
-        MiniJump = { sp = theme.diag.error, undercurl = true, bold = true },
+        FlashPrompt = { fg = theme.ui.special, bg = theme.ui.bg_m3 },
+        FlashLabel = { fg = theme.syn.constant, bold = true, nocombine = true },
+        FlashMatch = { fg = theme.diag.hint, nocombine = true },
+        FlashCurrent = { fg = theme.syn.special1, nocombine = true },
       }
       local kinds = {
         'Class',
