@@ -69,9 +69,9 @@ now(function()
         TreesitterContextLineNumber = { fg = theme.ui.special, bg = theme.ui.bg_m1 },
 
         FlashPrompt = { fg = theme.ui.special, bg = theme.ui.bg_m3 },
-        FlashLabel = { fg = theme.syn.constant, bold = true, nocombine = true },
+        FlashLabel = { fg = theme.diag.warning, bold = true, nocombine = true },
         FlashMatch = { fg = theme.diag.hint, nocombine = true },
-        FlashCurrent = { fg = theme.syn.special1, nocombine = true },
+        FlashCurrent = { fg = theme.diag.ok, nocombine = true },
       }
       local kinds = {
         'Class',

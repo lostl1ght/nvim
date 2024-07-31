@@ -25,5 +25,8 @@ later(function()
   })
 
   local set = vim.keymap.set
-  set({ 'n', 'x', 'o' }, 'm', function() require('flash').jump() end, { desc = 'Flash jump' })
+  set({ 'n', 'x', 'o' }, 'm', function()
+    vim.lsp.buf.clear_references()
+    require('flash').jump()
+  end, { desc = 'Flash jump' })
 end)
