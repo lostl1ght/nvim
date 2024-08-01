@@ -86,8 +86,8 @@ local ui_select = function(items, opts, on_choice)
     },
     window = {
       config = function()
-        local height = math.floor(vim.opt.lines:get() * 0.25)
-        local width = math.floor(vim.opt.columns:get() * 0.4)
+        local height = math.floor(vim.o.lines * 0.25)
+        local width = math.floor(vim.o.columns * 0.4)
         return {
           height = height,
           width = width,

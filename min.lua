@@ -25,6 +25,6 @@ local add, now = minideps.add, minideps.now
 now(function()
   add({ source = 'rebelot/kanagawa.nvim' })
   require('kanagawa').setup()
-  vim.opt.termguicolors = true
+  vim.o.termguicolors = true
   vim.cmd('colorscheme kanagawa')
 end)

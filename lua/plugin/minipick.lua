@@ -68,7 +68,7 @@ later(function()
   minipick.setup({
     window = {
       config = function()
-        local height = math.floor(0.35 * vim.opt.lines:get())
+        local height = math.floor(0.35 * vim.o.lines)
         local has_tabline = vim.o.showtabline == 2
           or (vim.o.showtabline == 1 and #vim.api.nvim_list_tabpages() > 1)
         return {
