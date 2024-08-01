@@ -25,8 +25,10 @@ later(function()
   })
 
   local set = vim.keymap.set
-  set({ 'n', 'x', 'o' }, 'm', function()
-    vim.lsp.buf.clear_references()
-    require('flash').jump()
-  end, { desc = 'Flash jump' })
+  for key, name in pairs({ m = 'jump', M = 'treesitter' }) do
+    set({ 'n', 'x', 'o' }, key, function()
+      vim.lsp.buf.clear_references()
+      require('flash')[name]()
+    end, { desc = 'Flash ' .. name })
+  end
 end)
