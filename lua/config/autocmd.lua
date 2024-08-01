@@ -88,12 +88,6 @@ au('LspAttach', {
         desc = 'Disable inlay hints on insert enter',
       })
 
-      --[[
-      vim.defer_fn(function()
-        local mode = vim.api.nvim_get_mode().mode
-        vim.lsp.inlay_hint.enable(mode == 'n' or mode == 'v', { bufnr = buf_id })
-      end, 500)
-
       au('InsertLeave', {
         callback = function()
           vim.lsp.inlay_hint.enable(vim.b.inlay_hint_enabled, { bufnr = buf_id })
@@ -102,6 +96,12 @@ au('LspAttach', {
         group = group,
         desc = 'Enable inlay hints on insert leave',
       })
+
+      --[[
+      vim.defer_fn(function()
+        local mode = vim.api.nvim_get_mode().mode
+        vim.lsp.inlay_hint.enable(mode == 'n' or mode == 'v', { bufnr = buf_id })
+      end, 500)
       ]]
     end
 
