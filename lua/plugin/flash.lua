@@ -17,9 +17,10 @@ later(function()
     },
     modes = {
       search = { enabled = false },
-      char = { jump_labels = true },
-      treesitter = { label = { rainbow = { enabled = true, shade = 4 } } },
-      treesitter_search = { label = { rainbow = { enabled = true, shade = 4 } } },
+      treesitter = {
+        label = { rainbow = { enabled = false, shade = 4 } },
+        highlight = { backdrop = true },
+      },
     },
     prompt = { prefix = { { ' 󱐋 ', 'FlashPromptIcon' } } },
   })
