@@ -8,7 +8,7 @@ local function au(ft, cb)
   vim.api.nvim_create_autocmd('FileType', opts)
 end
 
-au({ 'gitsigns.blame', 'help', 'qf' }, function(data)
+au({ 'gitsigns-blame', 'help', 'qf' }, function(data)
   local buf = data.buf
   -- stylua: ignore
   vim.keymap.set('n', 'q',
