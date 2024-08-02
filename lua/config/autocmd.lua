@@ -96,7 +96,7 @@ au('LspAttach', {
 
       au('InsertLeave', {
         callback = function()
-          vim.lsp.inlay_hint.enable(vim.b.inlay_hint_enabled, { bufnr = buf_id })
+          vim.lsp.inlay_hint.enable(vim.b.inlay_hint_enabled or false, { bufnr = buf_id })
         end,
         buffer = buf_id,
         group = group,
