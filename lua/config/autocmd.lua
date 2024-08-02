@@ -5,6 +5,12 @@ local au = vim.api.nvim_create_autocmd
 ---@return integer
 local aug = function(name, clear) return vim.api.nvim_create_augroup(name, { clear = clear }) end
 
+au('FileType', {
+  command = 'setlocal formatoptions-=cro',
+  group = aug('FormatOptions'),
+  desc = "Set 'formatoptions'",
+})
+
 au('TextYankPost', {
   callback = function() vim.highlight.on_yank({ higroup = 'YankHighlight', timeout = 350 }) end,
   group = aug('YankHighlight'),
@@ -111,13 +117,13 @@ au('LspAttach', {
         callback = vim.lsp.buf.document_highlight,
         buffer = buf_id,
         group = group,
-        desc = 'Enable references highlighting'
+        desc = 'Enable references highlighting',
       })
       au({ 'CursorMoved', 'InsertEnter', 'BufLeave' }, {
         callback = vim.lsp.buf.clear_references,
         buffer = buf_id,
         group = group,
-        desc = 'Clear references'
+        desc = 'Clear references',
       })
     end
 

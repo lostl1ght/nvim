@@ -1,6 +1,6 @@
 local cache_dir = vim.fn.stdpath('cache')
-local o = vim.o
 
+local o = vim.o
 o.background = 'dark'
 o.backup = false
 o.backupdir = cache_dir .. '/backup'
@@ -49,8 +49,6 @@ o.signcolumn = 'yes'
 o.statuscolumn = "%!v:lua.require'statuscolumn'.get()"
 o.smartcase = true
 o.smartindent = true
--- o.splitbelow = true
--- o.splitright = true
 o.swapfile = false
 o.tabstop = 4
 o.termguicolors = true
@@ -75,15 +73,3 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.markdown_recommended_style = 0
 g.tex_flavor = 'latex'
-
-vim.api.nvim_create_autocmd('FileType', {
-  group = vim.api.nvim_create_augroup('FormatOptions', {}),
-  callback = function() vim.cmd('setlocal formatoptions-=cro') end,
-})
-
---[[
--- NOTE: maybe uncomment on 0.11
-pcall(vim.keymap.del, 'n', 'grr')
-pcall(vim.keymap.del, { 'n', 'x' }, 'gra')
-pcall(vim.keymap.del, 'n', 'grn')
-]]
