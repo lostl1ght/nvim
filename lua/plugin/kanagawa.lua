@@ -43,6 +43,8 @@ now(function()
         MiniPickPrompt = { link = 'FloatTitle' },
         -- NOTE: end
 
+        NoiceCmdLine = { link = 'StatusLine' },
+
         LightBulbVirtualText = { link = 'Comment' },
 
         MiniTrailspace = { fg = theme.diag.error, bg = 'none' },
