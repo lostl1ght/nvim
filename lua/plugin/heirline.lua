@@ -139,8 +139,12 @@ now(function()
   }
 
   local diagnostic_is_enabled = function() return vim.diagnostic.is_enabled({ bufnr = 0 }) end
-  local diagnostic_get_count = function() return vim.diagnostic.count(0) end
-  local has_diagnostics = function() return diagnostic_is_enabled() and #diagnostic_get_count() > 0 end
+  local diagnostic_get_count = function(severity)
+    return vim.diagnostic.count(0, { severity = severity })[severity]
+  end
+  local has_diagnostics = function()
+    return diagnostic_is_enabled() and vim.tbl_count(vim.diagnostic.count(0)) > 0
+  end
 
   local Diagnostic = {
     condition = has_diagnostics,
@@ -150,7 +154,7 @@ now(function()
         { provider = function() return ' ' .. icons.diag end },
         {
           condition = function(self)
-            self.errors = diagnostic_get_count()[vim.diagnostic.severity['ERROR']]
+            self.errors = diagnostic_get_count(vim.diagnostic.severity.ERROR)
             return self.errors and self.errors > 0
           end,
           hl = function()
@@ -161,7 +165,7 @@ now(function()
         },
         {
           condition = function(self)
-            self.warn = diagnostic_get_count()[vim.diagnostic.severity['WARN']]
+            self.warn = diagnostic_get_count(vim.diagnostic.severity.WARN)
             return self.warn and self.warn > 0
           end,
           hl = function()
@@ -172,7 +176,7 @@ now(function()
         },
         {
           condition = function(self)
-            self.info = diagnostic_get_count()[vim.diagnostic.severity['INFO']]
+            self.info = diagnostic_get_count(vim.diagnostic.severity.INFO)
             return self.info and self.info > 0
           end,
           hl = function()
@@ -183,7 +187,7 @@ now(function()
         },
         {
           condition = function(self)
-            self.hint = diagnostic_get_count()[vim.diagnostic.severity['HINT']]
+            self.hint = diagnostic_get_count(vim.diagnostic.severity.HINT)
             return self.hint and self.hint > 0
           end,
           hl = function()
