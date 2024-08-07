@@ -80,18 +80,22 @@ now(function()
     },
   }
 
+  local get_branch = function() return vim.b.gitsigns_head end
+
   local Branch = {
-    condition = function() return vim.b.gitsigns_head end,
+    condition = get_branch,
     {
       flexible = priority.branch,
-      { provider = function() return ' ' .. icons.branch .. ' ' .. vim.b.gitsigns_head end },
+      { provider = function() return ' ' .. icons.branch .. ' ' .. get_branch() end },
       { provider = function() return ' ' .. icons.branch end },
     },
   }
 
+  local get_diff = function() return vim.b.gitsigns_status_dict end
+
   local Diff = {
     condition = function(self)
-      local status = vim.b.gitsigns_status_dict
+      local status = get_diff()
       if not status then return false end
       self.added, self.changed, self.removed = status.added, status.changed, status.removed
       return true
@@ -391,10 +395,7 @@ now(function()
     Lsp,
     {
       condition = function()
-        return get_attached_lsp() ~= ''
-          or has_diagnostics()
-          or vim.b.gitsigns_status_dict
-          or vim.b.gitsigns_head
+        return get_branch() or get_diff() or has_diagnostics() or get_attached_lsp() ~= ''
       end,
       Space,
     },
