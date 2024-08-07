@@ -86,7 +86,12 @@ now(function()
     condition = get_branch,
     {
       flexible = priority.branch,
-      { provider = function() return ' ' .. icons.branch .. ' ' .. get_branch() end },
+      {
+        provider = function()
+          local branch = get_branch()
+          return ' ' .. icons.branch .. (branch ~= '' and ' ' .. branch or '')
+        end,
+      },
       { provider = function() return ' ' .. icons.branch end },
     },
   }
