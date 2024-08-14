@@ -3,6 +3,14 @@ local add, later = minideps.add, minideps.later
 
 later(function()
   add({ source = 'stevearc/conform.nvim' })
+  --[[
+  vim.keymap.set({ 'n', 'x' }, '<leader>cf', function()
+    require('conform').format({
+      async = true,
+      lsp_format = 'fallback',
+    }, function() vim.cmd('silent update') end)
+  end, { desc = 'Format' })
+  ]]
   -- stylua: ignore
   require('conform.formatters.latexindent').args = {
     '-g', '/dev/null',
