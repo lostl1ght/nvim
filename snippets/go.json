@@ -130,7 +130,7 @@
     "for range statement": {
         "prefix": "foreach",
         "body": [
-            "for ${1:_, }${2:v} := range ${3:v} {",
+            "for ${1:_}, ${2:v} := range ${3:v} {",
             "\t$0",
             "}"
         ],
@@ -145,7 +145,7 @@
         "prefix": "if",
         "body": [
             "if ${1:condition} {",
-            "\t$0}",
+            "\t$0",
             "}"
         ],
         "description": "Snippet for if statement"
