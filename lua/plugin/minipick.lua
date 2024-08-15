@@ -40,9 +40,9 @@ later(function()
             icons = { none = icons.none },
           })
         end,
-        match = function(stritems, inds, query, do_sync)
+        match = function(stritems, inds, query)
           stritems = vim.tbl_map(function(str) return vim.fn.fnamemodify(str, ':~:.') end, stritems)
-          minipick.default_match(stritems, inds, query, do_sync)
+          minipick.default_match(stritems, inds, query)
         end,
       },
       mappings = {
