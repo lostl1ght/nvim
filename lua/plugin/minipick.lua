@@ -5,18 +5,6 @@ later(function()
   add({ source = 'echasnovski/mini.pick', depends = { 'echasnovski/mini.icons' } })
   vim.ui.select = require('select').ui_select
 
-  local group = vim.api.nvim_create_augroup('MiniPickCursor', {})
-  vim.api.nvim_create_autocmd('User', {
-    pattern = 'MiniPickStart',
-    callback = function() require('noice.util.hacks').hide_cursor() end,
-    group = group,
-  })
-  vim.api.nvim_create_autocmd('User', {
-    pattern = 'MiniPickStop',
-    callback = function() require('noice.util.hacks').show_cursor() end,
-    group = group,
-  })
-
   local set = vim.keymap.set
   set('n', '<leader>fg', '<cmd>Pick grep<cr>', { desc = 'Grep' })
   set('n', '<leader>b', function()
