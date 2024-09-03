@@ -37,8 +37,10 @@ now(function()
           local entry = minifiles.get_fs_entry(buf_id)
           if entry == nil then return end
           if entry.fs_type == 'file' then
+            local state = minifiles.get_explorer_state()
+            if state == nil then return end
             local new_target_window
-            local current_target_window = minifiles.get_target_window()
+            local current_target_window = state.target_window
             if current_target_window == nil then return end
             vim.api.nvim_win_call(current_target_window, function()
               vim.cmd(direction .. ' split')
