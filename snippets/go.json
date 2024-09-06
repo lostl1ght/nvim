@@ -64,7 +64,7 @@
     "function declaration": {
         "prefix": "func",
         "body": [
-            "func $1($2) $3 {",
+            "func $1($2) {",
             "\t$0",
             "}"
         ],
@@ -200,7 +200,7 @@
         "description": "Snippet for new statement"
     },
     "method declaration": {
-        "prefix": ["meth", "fum"],
+        "prefix": ["met", "fum"],
         "body": "func (${1:receiver} ${2:type}) ${3:method}($4) $5 {\n\t$0\n}",
         "description": "Snippet for method declaration"
     }
