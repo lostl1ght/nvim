@@ -111,6 +111,7 @@ now(function()
       for _, kind in ipairs(kinds) do
         hl['CmpItemKind' .. kind] = { fg = cmp_fg, bg = cmp_bg(kind) }
       end
+      hl.CmpItemKind = { fg = cmp_fg, bg = cmp_bg('none') }
       return hl
     end,
   })
