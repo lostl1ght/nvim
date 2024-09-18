@@ -57,8 +57,8 @@ now(function()
       end
 
       local folders = function(local_opts)
-        local minipick = require('mini.pick')
         return function()
+          local minipick = require('mini.pick')
           minipick.registry.folders(local_opts, {
             mappings = {
               stop = '',
