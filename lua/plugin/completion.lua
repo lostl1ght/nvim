@@ -36,7 +36,7 @@ later(function()
   for _, bracket in pairs(brackets) do
     apairs.add_rules({
       Rule(bracket[1] .. ' ', ' ' .. bracket[2])
-        :with_pair(function() return false end)
+        :with_pair(cond.none())
         :with_move(function(opts) return opts.prev_char:match('.%' .. bracket[2]) ~= nil end)
         :use_key(bracket[2]),
     })
@@ -47,9 +47,9 @@ later(function()
     apairs.add_rules({
       Rule('', punct)
         :with_move(function(opts) return opts.char == punct end)
-        :with_pair(function() return false end)
-        :with_del(function() return false end)
-        :with_cr(function() return false end)
+        :with_pair(cond.none())
+        :with_del(cond.none())
+        :with_cr(cond.none())
         :use_key(punct),
     })
   end
