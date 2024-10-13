@@ -23,7 +23,7 @@ later(function()
       bib = { 'latexindent' },
       c = { 'clang_format' },
       cpp = { 'clang_format' },
-      go = { 'gofmt' },
+      go = { 'gofumpt' },
       lua = { 'stylua' },
       rust = { 'rustfmt' },
       tex = { 'latexindent' },
