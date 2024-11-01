@@ -60,13 +60,7 @@ later(function()
     source = 'L3MON4D3/LuaSnip',
     hooks = {
       post_install = function(spec)
-        later(function()
-          -- stylua: ignore
-          require('util').build_package({
-            'make',    '-C',
-            spec.path, 'install_jsregexp',
-          }, spec)
-        end)
+        later(function() require('util').build_package({ 'make', 'install_jsregexp' }, spec) end)
       end,
     },
   })

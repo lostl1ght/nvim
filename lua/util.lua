@@ -47,7 +47,7 @@ end
 M.build_package = function(cmd, spec)
   local levels = vim.log.levels
   vim.notify(('(mini.deps) Building `%s`'):format(spec.name), levels.INFO)
-  vim.system(cmd, { text = true }, function(obj)
+  vim.system(cmd, { cwd = spec.path, text = true }, function(obj)
     local msg = ''
     local lvl = levels.INFO
     if obj.code ~= 0 then

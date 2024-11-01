@@ -7,13 +7,11 @@ if vim.fn.executable('deno') == 1 then
       source = 'toppair/peek.nvim',
       hooks = {
         post_install = function(spec)
-          later(function()
-            -- stylua: ignore
-            require('util').build_package({
-              'deno',    'task',    '--cwd',
-              spec.path, '--quiet', 'build:fast',
-            }, spec)
-          end)
+          later(
+            function()
+              require('util').build_package({ 'deno', 'task', '--quiet', 'build:fast' }, spec)
+            end
+          )
         end,
       },
     })
