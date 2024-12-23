@@ -49,9 +49,8 @@ now(function()
 
         MiniTrailspace = { fg = theme.diag.error, bg = 'none' },
 
-        IblIndent = { fg = theme.ui.bg_p2 },
-        IblWhitespace = { fg = theme.ui.bg_p2 },
-        IblScope = { fg = theme.ui.whitespace },
+        SnacksIndent = { fg = theme.ui.bg_p2 },
+        SnacksIndentScope = { fg = theme.ui.whitespace },
 
         Hlargs = { link = '@variable.parameter' },
 
