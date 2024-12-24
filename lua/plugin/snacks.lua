@@ -13,7 +13,9 @@ later(function()
     },
     scroll = {},
     styles = {
+      float = { backdrop = 80 },
       input = {
+        backdrop = 90,
         border = vim.g.border,
         title_pos = 'left',
         relative = 'cursor',
