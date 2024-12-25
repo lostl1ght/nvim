@@ -39,4 +39,9 @@ now(function()
   set('n', '<leader>sa', '<cmd>Persistence save<cr>', { desc = 'Save' })
   set('n', '<leader>st', '<cmd>Persistence stop<cr>', { desc = 'Stop' })
   set('n', '<leader>so', '<cmd>Persistence stop<cr>', { desc = 'Start' })
+
+  vim.api.nvim_create_autocmd('User', {
+    pattern = 'PersistenceLoadPre',
+    command = '%bdelete',
+  })
 end)
