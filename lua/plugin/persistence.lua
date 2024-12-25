@@ -10,16 +10,16 @@ later(function()
     load = function() require('persistence').load() end,
     stop = function()
       require('persistence').stop()
-      vim.notify('stopped', vim.log.levels.INFO, { title = 'Persistence' })
+      vim.notify('Persistence stopped', vim.log.levels.INFO)
     end,
     start = function()
       require('persistence').start()
-      vim.notify('started', vim.log.levels.INFO, { title = 'Persistence' })
+      vim.notify('Persistence started', vim.log.levels.INFO)
     end,
     select = function() require('persistence').select() end,
     save = function()
       require('persistence').save()
-      vim.notify('saved', vim.log.levels.INFO, { title = 'Persistence' })
+      vim.notify('Session saved', vim.log.levels.INFO)
     end,
   }
   vim.api.nvim_create_user_command(cmd, function(data)

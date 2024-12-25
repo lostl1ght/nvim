@@ -7,8 +7,8 @@ later(function()
   require('mini.trailspace').setup({})
   local function toggle(buf)
     vim.b[buf][option_name] = not vim.b[buf][option_name]
-    local state = vim.b[buf][option_name] and 'disabled' or 'enabled'
-    vim.notify(state, vim.log.levels.INFO, { title = 'Trailspace' })
+    local state = vim.b[buf][option_name] and 'notrailspace' or 'trailspace'
+    vim.notify(state, vim.log.levels.INFO)
   end
   local cmd = 'Trim'
   local commands = {
@@ -35,5 +35,5 @@ later(function()
     group = vim.api.nvim_create_augroup('TrimWhiteSpace', {}),
     desc = 'Trim trailing whitespace',
   })
-  vim.keymap.set('n', '\\t', function() toggle(0) end, { desc = 'Trim whitespace' })
+  vim.keymap.set('n', '\\m', function() toggle(0) end, { desc = 'Trim whitespace' })
 end)

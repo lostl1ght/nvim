@@ -144,7 +144,6 @@ now(function()
   end
 
   mlsp.setup({ handlers = { setup } })
-  require('lspconfig.ui.windows').default_options.border = vim.g.border
 
   require('typescript-tools').setup({})
 end)
