@@ -34,14 +34,16 @@ now(function()
         Substitude = { bg = theme.vcs.removed, bold = true },
 
         -- NOTE: blend float with normal
+        --[[
         FloatTitle = { fg = theme.ui.special, bg = theme.ui.bg, bold = true },
         FloatBorder = { fg = theme.ui.float.fg_border, bg = theme.ui.bg },
         MsgArea = { link = 'Normal' },
         NormalFloat = { link = 'Normal' },
+        MiniPickPrompt = { link = 'FloatTitle' },
+        ]]
+        -- NOTE: end
         MiniFilesTitle = { link = 'FloatTitle' },
         MiniFilesTitleFocused = { fg = palette.oniViolet2, bg = theme.ui.bg, bold = true },
-        MiniPickPrompt = { link = 'FloatTitle' },
-        -- NOTE: end
 
         NoiceCmdLine = { link = 'StatusLine' },
 
@@ -70,9 +72,15 @@ now(function()
         TreesitterContextLineNumber = { fg = theme.ui.special, bg = theme.ui.bg_m1 },
 
         FlashPrompt = { fg = theme.ui.special, bg = theme.ui.bg_m3 },
-        FlashLabel = { fg = theme.diag.warning, bold = true, nocombine = true },
-        FlashMatch = { fg = theme.diag.hint, nocombine = true },
-        FlashCurrent = { fg = theme.diag.ok, nocombine = true },
+        FlashLabel = {
+          fg = palette.sumiInk0,
+          bg = palette.lotusGray3,
+          bold = true,
+          nocombine = true,
+        },
+        FlashMatch = { fg = palette.lotusGreen, nocombine = true },
+        FlashCurrent = { fg = palette.waveAqua1, nocombine = true },
+        FlashBackdrop = { fg = palette.boatYellow1 },
       }
       local kinds = {
         'Class',
