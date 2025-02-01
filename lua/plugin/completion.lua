@@ -51,11 +51,7 @@ end)
 later(function()
   add({
     source = 'L3MON4D3/LuaSnip',
-    hooks = {
-      post_install = function(spec)
-        later(function() require('util').build_package({ 'make', 'install_jsregexp' }, spec) end)
-      end,
-    },
+    hooks = { post_install = require('util').build_package({ 'make', 'install_jsregexp' }) },
   })
   require('luasnip.loaders.from_vscode').lazy_load()
   local set = vim.keymap.set

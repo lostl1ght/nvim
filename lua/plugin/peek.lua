@@ -6,13 +6,7 @@ if vim.fn.executable('deno') == 1 then
     add({
       source = 'toppair/peek.nvim',
       hooks = {
-        post_install = function(spec)
-          later(
-            function()
-              require('util').build_package({ 'deno', 'task', '--quiet', 'build:fast' }, spec)
-            end
-          )
-        end,
+        post_install = require('util').build_package({ 'deno', 'task', '--quiet', 'build:fast' }),
       },
     })
     require('peek').setup({
