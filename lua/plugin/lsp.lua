@@ -21,12 +21,12 @@ now(function()
     depends = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-      'hrsh7th/cmp-nvim-lsp',
       'pmizio/typescript-tools.nvim',
       'nvim-lua/plenary.nvim',
+      'saghen/blink.cmp',
     },
   })
-  local clangd_cap = vim.lsp.protocol.make_client_capabilities()
+  local clangd_cap = require('blink.cmp').get_lsp_capabilities()
   clangd_cap.offsetEncoding = { 'utf-16' }
   local preview = { executable = 'xdg-open', args = { '%p' } }
   local auxdir = 'build'
@@ -126,8 +126,7 @@ now(function()
       },
     },
   }
-  local capabilities =
-    require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local capabilities = require('blink.cmp').get_lsp_capabilities()
   local function setup(server)
     local server_opts = vim.tbl_deep_extend('force', {
       capabilities = vim.deepcopy(capabilities),

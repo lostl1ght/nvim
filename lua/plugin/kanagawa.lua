@@ -81,44 +81,10 @@ now(function()
         FlashMatch = { fg = palette.lotusGreen, nocombine = true },
         FlashCurrent = { fg = palette.waveAqua1, nocombine = true },
         FlashBackdrop = { fg = palette.boatYellow1 },
+
+        BlinkCmpMenu = { link = 'NormalFloat' },
+        BlinkCmpMenuSelection = { link = 'Visual' },
       }
-      local kinds = {
-        'Class',
-        'Color',
-        'Constant',
-        'Constructor',
-        'Enum',
-        'EnumMember',
-        'Event',
-        'Field',
-        'File',
-        'Folder',
-        'Function',
-        'Interface',
-        'Keyword',
-        'Method',
-        'Module',
-        'Operator',
-        'Property',
-        'Reference',
-        'Snippet',
-        'Struct',
-        'Text',
-        'TypeParameter',
-        'Unit',
-        'Value',
-        'Variable',
-      }
-      local cmp_fg = palette.sumiInk0
-      local miniicons = require('mini.icons')
-      local function cmp_bg(kind)
-        local cmp_hl = select(2, miniicons.get('lsp', kind))
-        return vim.api.nvim_get_hl(0, { name = cmp_hl }).fg
-      end
-      for _, kind in ipairs(kinds) do
-        hl['CmpItemKind' .. kind] = { fg = cmp_fg, bg = cmp_bg(kind) }
-      end
-      hl.CmpItemKind = { fg = cmp_fg, bg = cmp_bg('none') }
       return hl
     end,
   })

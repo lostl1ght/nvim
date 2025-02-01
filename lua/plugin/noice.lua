@@ -12,7 +12,8 @@ now(function()
     },
     -- NOTE: end
     messages = { view = 'mini', view_error = 'mini', view_warn = 'mini' },
-    popupmenu = { backend = 'cmp' },
+    popupmenu = { backend = 'nui' },
+    -- popupmenu = { backend = 'cmp' },
     notify = { view = 'mini' },
     redirect = { view = 'split', filter = { event = 'msg_show' } },
     lsp = {
@@ -30,7 +31,7 @@ now(function()
         ['cmp.entry.get_documentation'] = true,
       },
       hover = { opts = { position = { row = 2, col = 2 } } },
-      signature = { opts = { position = { row = 2, col = 2 } } },
+      signature = { enabled = false, opts = { position = { row = 2, col = 2 } } },
       message = { view = 'mini' },
       documentation = {
         opts = {
