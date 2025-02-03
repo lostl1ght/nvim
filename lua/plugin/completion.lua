@@ -48,32 +48,19 @@ later(function()
   end
 end)
 
-later(function()
-  add({
-    source = 'L3MON4D3/LuaSnip',
-    hooks = { post_install = require('util').build_package({ 'make', 'install_jsregexp' }) },
-  })
-  require('luasnip.loaders.from_vscode').lazy_load()
-  local set = vim.keymap.set
-  set({ 'i', 's' }, '<c-f>', function()
-    if require('luasnip').jumpable() then require('luasnip').jump(1) end
-  end)
-  set({ 'i', 's' }, '<c-b>', function()
-    if require('luasnip').jumpable(-1) then require('luasnip').jump(-1) end
-  end)
-end)
-
 now(function()
   add({ source = 'saghen/blink.cmp' })
 
   require('blink-cmp').setup({
     signature = { enabled = true },
     fuzzy = { prebuilt_binaries = { force_version = 'v0.11.0' } },
-    snippets = { preset = 'luasnip' },
     completion = { accept = { auto_brackets = { enabled = true } } },
     sources = {
-      default = { 'snippets', 'lsp', 'path', 'buffer' },
-      providers = { buffer = { min_keyword_length = 4 } },
+      default = { 'lsp', 'path', 'snippets', 'buffer' },
+      providers = {
+        buffer = { min_keyword_length = 4 },
+        snippets = { opts = { friendly_snippets = false } },
+      },
     },
     keymap = {
       preset = 'default',
