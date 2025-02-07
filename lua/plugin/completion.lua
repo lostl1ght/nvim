@@ -49,11 +49,17 @@ later(function()
 end)
 
 now(function()
-  add({ source = 'saghen/blink.cmp' })
+  add({
+    source = 'saghen/blink.cmp',
+    hooks = {
+      post_checkout = require('util').build_package({ 'cargo', 'build', '--release' }),
+      post_install = require('util').build_package({ 'cargo', 'build', '--release' }),
+    },
+  })
 
   require('blink-cmp').setup({
     signature = { enabled = true },
-    fuzzy = { prebuilt_binaries = { force_version = 'v0.11.0' } },
+    fuzzy = { prebuilt_binaries = { download = false } },
     completion = { accept = { auto_brackets = { enabled = true } } },
     sources = {
       default = { 'lsp', 'path', 'snippets', 'buffer' },
