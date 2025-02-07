@@ -26,14 +26,8 @@ now(function()
       'saghen/blink.cmp',
     },
   })
-  local clangd_cap = require('blink.cmp').get_lsp_capabilities()
-  clangd_cap.offsetEncoding = { 'utf-16' }
-  local preview = { executable = 'xdg-open', args = { '%p' } }
   local auxdir = 'build'
   local servers = {
-    clangd = {
-      capabilities = clangd_cap,
-    },
     lua_ls = {
       settings = {
         Lua = {
@@ -89,7 +83,7 @@ now(function()
           diagnosticsDelay = 300,
           diagnostics = { ignoredPatterns = { 'Undefined reference' } },
           formatterLineLength = 80,
-          forwardSearch = preview,
+          forwardSearch = { executable = 'xdg-open', args = { '%p' } },
           latexFormatter = 'latexindent',
           latexindent = {
             modifyLineBreaks = true,
@@ -126,11 +120,13 @@ now(function()
       },
     },
   }
-  local capabilities = require('blink.cmp').get_lsp_capabilities()
+  local capabilities = require('blink-cmp').get_lsp_capabilities(nil, true)
   local function setup(server)
     local server_opts = vim.tbl_deep_extend('force', {
       capabilities = vim.deepcopy(capabilities),
     }, servers[server] or {})
+    ---@diagnostic disable-next-line: inject-field
+    if server == 'clangd' then server_opts.capabilities.offsetEncoding = { 'utf-8' } end
 
     require('lspconfig')[server].setup(server_opts)
   end
