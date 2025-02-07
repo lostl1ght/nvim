@@ -97,7 +97,7 @@
             "\\item ${1}",
             "${0}"
         ],
-        "description": "\item"
+        "description": "\\item"
     },
     "cases": {
         "prefix": "cas",
