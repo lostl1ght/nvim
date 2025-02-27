@@ -90,7 +90,7 @@ now(function()
       ['<c-d>'] = { 'scroll_documentation_down', 'fallback' },
       ['<tab>'] = { 'fallback' },
       ['<s-tab>'] = { 'fallback' },
-      cmdline = { preset = 'default', ['<cr>'] = { 'fallback' } },
     },
+    cmdline = { keymap = { preset = 'default', ['<cr>'] = { 'fallback' } } },
   })
 end)
