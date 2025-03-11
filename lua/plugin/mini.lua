@@ -19,7 +19,7 @@ end)
 later(function()
   add({ source = 'echasnovski/mini.bracketed' })
   require('mini.bracketed').setup({
-    diagnostic = { suffix = 'd', options = { float = false } },
+    diagnostic = { suffix = 'd' },
     comment = { suffix = '' },
     file = { suffix = '' },
     treesitter = { suffix = '' },
