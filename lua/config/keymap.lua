@@ -109,6 +109,16 @@ map_toggle('d', function()
     vim.notify(msg)
   end
 end, 'Diagnostics')
+if vim.fn.has('nvim-0.11') then
+  map_toggle('l', function()
+    local new_state = not vim.diagnostic.config().virtual_lines
+    vim.diagnostic.config({ virtual_lines = new_state })
+    if vim.g.notify_toggle then
+      local msg = new_state and 'virtlines' or 'novirtlines'
+      vim.notify(msg)
+    end
+  end, 'Virtual lines')
+end
 set('n', '<leader>cn', vim.lsp.buf.rename, {
   desc = 'Rename',
 })
