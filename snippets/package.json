@@ -1,33 +1,30 @@
 {
     "name": "snippets",
-    "engines": {
-        "vscode": "^1.11.0"
-    },
     "contributes": {
         "snippets": [
             {
                 "language": "lua",
-                "path": "./snippets/lua.json"
+                "path": "./lua.json"
             },
             {
                 "language": "rust",
-                "path": "./snippets/rust.json"
+                "path": "./rust.json"
             },
             {
                 "language": ["c", "cpp"],
-                "path": "./snippets/c.json"
+                "path": "./c.json"
             },
             {
                 "language": ["cpp"],
-                "path": "./snippets/cpp.json"
+                "path": "./cpp.json"
             },
             {
                 "language": ["tex"],
-                "path": "./snippets/tex.json"
+                "path": "./tex.json"
             },
             {
                 "language": ["go"],
-                "path": "./snippets/go.json"
+                "path": "./go.json"
             }
         ]
     }
