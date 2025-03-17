@@ -1,5 +1,5 @@
-- git (lazy)
+- git (mini.deps)
 - ripgrep (mini.pick)
 - fd (mini.pick)
-- c compiler (tree-sitter, luasnip)
+- c compiler (tree-sitter)
 - tree-sitter-cli (tree-sitter)
