@@ -138,4 +138,4 @@ set('n', ']E', function() require('goto').last() end, {
 set('n', '[E', function() require('goto').first() end, {
   desc = 'Reference first',
 })
-vim.keymap.del({ 'i', 's' }, '<tab>')
+pcall(vim.keymap.del, { 'i', 's' }, '<tab>')
