@@ -6,8 +6,8 @@ later(function()
   vim.ui.select = require('select').ui_select
 
   local set = vim.keymap.set
-  set('n', '<leader>fg', '<cmd>Pick grep<cr>', { desc = 'Grep' })
-  set('n', '<leader>b', function()
+  set('n', 'gfg', '<cmd>Pick grep<cr>', { desc = 'Grep' })
+  set('n', 'gb', function()
     local minipick = require('mini.pick')
     local icons = setmetatable({
       [1] = {
@@ -50,7 +50,7 @@ later(function()
       },
     })
   end, { desc = 'Buffers' })
-  set('n', '<leader>ff', '<cmd>Pick files<cr>', { desc = 'Files' })
+  set('n', 'gff', '<cmd>Pick files<cr>', { desc = 'Files' })
 
   local minipick = require('mini.pick')
   minipick.setup({

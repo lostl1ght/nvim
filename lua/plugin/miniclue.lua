@@ -47,10 +47,9 @@ now(function()
       MiniClue.gen_clues.windows({ submode_resize = true }),
       MiniClue.gen_clues.z(),
       {
-        { mode = 'n', keys = '<leader>b', desc = '+buffer' },
-        { mode = 'n', keys = '<leader>f', desc = '+file' },
-        { mode = 'n', keys = '<leader>s', desc = '+sessions' },
-        { mode = 'n', keys = '<leader>c', desc = '+code' },
+        { mode = 'n', keys = 'gf', desc = '+file' },
+        { mode = 'n', keys = 'gs', desc = '+sessions' },
+        { mode = 'n', keys = 'gr', desc = '+code' },
       },
     },
     window = { delay = 500, config = { border = vim.g.border } },

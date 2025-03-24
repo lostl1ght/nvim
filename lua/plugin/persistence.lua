@@ -34,11 +34,7 @@ end)
 
 now(function()
   local set = vim.keymap.set
-  set('n', '<leader>ss', '<cmd>Persistence load<cr>', { desc = 'Last' })
-  set('n', '<leader>se', '<cmd>Persistence select<cr>', { desc = 'Select' })
-  set('n', '<leader>sa', '<cmd>Persistence save<cr>', { desc = 'Save' })
-  set('n', '<leader>st', '<cmd>Persistence stop<cr>', { desc = 'Stop' })
-  set('n', '<leader>so', '<cmd>Persistence stop<cr>', { desc = 'Start' })
+  set('n', 'gss', '<cmd>Persistence load<cr>', { desc = 'Last' })
 
   vim.api.nvim_create_autocmd('User', {
     pattern = 'PersistenceLoadPre',

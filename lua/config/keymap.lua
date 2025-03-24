@@ -117,10 +117,10 @@ map_toggle('l', function()
     vim.notify(msg)
   end
 end, 'Virtual lines')
-set('n', '<leader>cn', vim.lsp.buf.rename, {
+set('n', 'grn', vim.lsp.buf.rename, {
   desc = 'Rename',
 })
-set({ 'n', 'x' }, '<leader>ca', vim.lsp.buf.code_action, {
+set({ 'n', 'x' }, 'gra', vim.lsp.buf.code_action, {
   desc = 'Code action',
 })
 set('i', '<c-s>', vim.lsp.buf.signature_help, {
@@ -139,3 +139,5 @@ set('n', '[E', function() require('goto').first() end, {
   desc = 'Reference first',
 })
 pcall(vim.keymap.del, { 'i', 's' }, '<tab>')
+pcall(vim.keymap.del, 'n', 'grr')
+pcall(vim.keymap.del, 'n', 'gri')

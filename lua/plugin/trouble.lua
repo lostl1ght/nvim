@@ -7,10 +7,10 @@ later(function()
   set('n', 'gd', '<cmd>Trouble lsp<cr>', {
     desc = 'Definitions / references / ...',
   })
-  set('n', '<leader>cd', '<cmd>Trouble diagnostics toggle<cr>', {
+  set('n', 'grd', '<cmd>Trouble diagnostics toggle<cr>', {
     desc = 'Diagnostics',
   })
-  set('n', '<leader>cs', '<cmd>Trouble symbols toggle<cr>', {
+  set('n', 'grs', '<cmd>Trouble symbols toggle<cr>', {
     desc = 'Symbols',
   })
   require('trouble').setup({

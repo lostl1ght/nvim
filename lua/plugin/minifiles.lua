@@ -5,7 +5,7 @@ now(function()
   add({ source = 'echasnovski/mini.files' })
   require('mini.files').setup({ windows = { preview = true } })
 
-  vim.keymap.set('n', '<leader>ft', function()
+  vim.keymap.set('n', 'gft', function()
     local minifiles = require('mini.files')
     minifiles.open(minifiles.get_latest_path())
   end, {
