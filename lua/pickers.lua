@@ -1,6 +1,66 @@
 local M = {}
 local H = {}
 
+M.folders = function(local_opts, opts)
+  local fd
+  if vim.fn.executable('fd') == 1 then
+    fd = 'fd'
+  elseif vim.fn.executable('fdfind') == 1 then
+    fd = 'fdfind'
+  end
+
+  local minipick = require('mini.pick')
+  local items_func
+
+  if fd then
+    local command = { fd, '--type', 'd', '--color', 'never' }
+    if local_opts.hidden then table.insert(command, '--hidden') end
+    if local_opts.no_ignore then table.insert(command, '--no-ignore') end
+    items_func = vim.schedule_wrap(function() minipick.set_picker_items_from_cli(command) end)
+  else
+    items_func = vim.schedule_wrap(function()
+      minipick.set_picker_items(
+        vim
+          .iter(vim.fs.dir(vim.uv.cwd() or '.', { depth = math.huge }))
+          :filter(function(_, type) return type == 'directory' end)
+          :map(function(item) return item .. '/' end)
+          :totable()
+      )
+    end)
+  end
+
+  local prefix
+  if local_opts.hidden and local_opts.no_ignore then
+    prefix = 'Hidden and ignored f'
+  elseif local_opts.hidden then
+    prefix = 'Hidden f'
+  elseif local_opts.no_ignore then
+    prefix = 'Ignored f'
+  else
+    prefix = 'F'
+  end
+
+  local minifiles = require('mini.files')
+  minifiles.close()
+  local default_opts = {
+    source = {
+      name = prefix .. 'olders',
+      show = function(buf_id, items, query)
+        minipick.default_show(buf_id, items, query, { show_icons = true })
+      end,
+      choose = function(item)
+        vim.schedule(function()
+          minifiles.open(item, false)
+          minifiles.reveal_cwd()
+        end)
+      end,
+    },
+  }
+  minipick.start(vim.tbl_deep_extend('force', default_opts, opts or {}, {
+    source = { items = items_func },
+  }))
+end
+
 M.lsp = function(local_opts, opts)
   local_opts = vim.tbl_deep_extend('force', { scope = nil, symbol_query = '' }, local_opts or {})
   if local_opts.scope == nil then
