@@ -48,7 +48,6 @@ now(function()
       MiniClue.gen_clues.z(),
       {
         { mode = 'n', keys = 'gf', desc = '+file' },
-        { mode = 'n', keys = 'gs', desc = '+sessions' },
         { mode = 'n', keys = 'gr', desc = '+code' },
       },
     },

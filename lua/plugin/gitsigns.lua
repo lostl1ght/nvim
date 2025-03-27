@@ -6,7 +6,7 @@ later(function()
   require('gitsigns').setup({
     attach_to_untracked = true,
     current_line_blame = true,
-    on_attach = function(buf_id)
+    on_attach = function(bufnr)
       local gs = require('gitsigns')
       ---@param mode string|string[]
       ---@param l string
@@ -14,7 +14,7 @@ later(function()
       ---@param opts table?
       local map = function(mode, l, r, opts)
         opts = opts or {}
-        opts.buffer = buf_id
+        opts.buffer = bufnr
         vim.keymap.set(mode, l, r, opts)
       end
       -- Navigation
@@ -38,42 +38,36 @@ later(function()
       map('n', '[C', function() gs.nav_hunk('first') end, { desc = 'Hunk first' })
 
       -- Actions
-      map('n', '<leader>us', gs.stage_hunk, { desc = 'Stage hunk' })
-      map('n', '<leader>ur', gs.reset_hunk, { desc = 'Reset hunk' })
+      local prefix = 'gs'
+      map('n', prefix .. 's', gs.stage_hunk, { desc = 'Toggle stage hunk' })
+      map('n', prefix .. 'r', gs.reset_hunk, { desc = 'Reset hunk' })
       map(
         'v',
-        '<leader>us',
+        prefix .. 's',
         function() gs.stage_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end,
         { desc = 'Stage hunk' }
       )
       map(
         'v',
-        '<leader>ur',
+        prefix .. 'r',
         function() gs.reset_hunk({ vim.fn.line('.'), vim.fn.line('v') }) end,
         { desc = 'Reset hunk' }
       )
-      map('n', '<leader>uS', gs.stage_buffer, { desc = 'Stage buffer' })
-      map('n', '<leader>uu', gs.undo_stage_hunk, { desc = 'Undo stage hunk' })
-      map('n', '<leader>uR', gs.reset_buffer, { desc = 'Reset buffer' })
-      map('n', '<leader>up', gs.preview_hunk, { desc = 'Preview hunk' })
-      map('n', '<leader>ub', gs.blame, { desc = 'Blame' })
-      map('n', '<leader>uB', function() gs.blame_line({ full = true }) end, { desc = 'Blame line' })
-      map('n', '\\e', function()
-        local new_state = gs.toggle_deleted()
-        local msg = new_state and 'diffdeleted' or 'nodiffdeleted'
-        vim.notify(msg)
-      end, { desc = 'Diff deleted' })
+      map('n', prefix .. 'S', gs.stage_buffer, { desc = 'Stage buffer' })
+      map('n', prefix .. 'R', gs.reset_buffer, { desc = 'Reset buffer' })
+      map('n', prefix .. 'p', gs.preview_hunk_inline, { desc = 'Preview hunk' })
+      map('n', prefix .. 'b', gs.blame, { desc = 'Blame' })
 
       -- Text object
       map({ 'o', 'x' }, 'ih', ':<c-u>Gitsigns select_hunk<cr>', { desc = 'Hunk' })
 
       local ok, miniclue = pcall(require, 'mini.clue')
       if ok then
-        local cfg = vim.b[buf_id].miniclue_config or { clues = {} }
-        local clue = { mode = 'n', keys = '<leader>u', desc = '+gitsigns' }
-        table.insert(cfg.clues, clue)
-        vim.b[buf_id].miniclue_config = cfg
-        vim.schedule(function() miniclue.ensure_buf_triggers(buf_id) end)
+        local cfg = vim.b[bufnr].miniclue_config or { clues = {} }
+        table.insert(cfg.clues, { mode = 'n', keys = prefix, desc = '+gitsigns' })
+        table.insert(cfg.clues, { mode = 'x', keys = prefix, desc = '+gitsigns' })
+        vim.b[bufnr].miniclue_config = cfg
+        vim.schedule(function() miniclue.ensure_buf_triggers(bufnr) end)
       end
     end,
   })

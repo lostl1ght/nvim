@@ -34,7 +34,7 @@ end)
 
 now(function()
   local set = vim.keymap.set
-  set('n', 'gss', '<cmd>Persistence load<cr>', { desc = 'Last' })
+  set('n', 'gS', '<cmd>Persistence load<cr>', { desc = 'Load session' })
 
   vim.api.nvim_create_autocmd('User', {
     pattern = 'PersistenceLoadPre',
