@@ -7,6 +7,7 @@ later(function()
 
   local set = vim.keymap.set
   set('n', 'gfg', '<cmd>Pick grep<cr>', { desc = 'Grep' })
+  set('n', 'gfl', '<cmd>Pick grep_live<cr>', { desc = 'Grep live' })
   set('n', 'gb', function()
     local minipick = require('mini.pick')
     local icons = setmetatable({
