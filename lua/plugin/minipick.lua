@@ -128,4 +128,6 @@ later(function()
       source = { items = items_func },
     }))
   end
+  local pickers = require('pickers')
+  minipick.registry.lsp = pickers.lsp
 end)
