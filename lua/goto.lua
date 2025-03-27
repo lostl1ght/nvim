@@ -69,13 +69,13 @@ local goto_next = function(count)
     local ok
     ok, idx = check_wrap(idx, #refs + 1, 1)
     if not ok then
-      vim.api.nvim_err_writeln('E385: search hit BOTTOM of the references')
+      vim.api.nvim_echo({ { 'E385: search hit BOTTOM of the references' } }, true, { err = true })
       return
     end
     if pos_equal(cursor, refs[idx]) then
       ok, idx = inc_or_exit(idx, #refs)
       if not ok then
-        vim.api.nvim_err_writeln('E385: search hit BOTTOM of the references')
+        vim.api.nvim_echo({ { 'E385: search hit BOTTOM of the references' } }, true, { err = true })
         return
       end
     end
@@ -83,7 +83,11 @@ local goto_next = function(count)
       for _ = 1, count do
         ok, idx = inc_or_exit(idx, #refs)
         if not ok then
-          vim.api.nvim_err_writeln('E385: search hit BOTTOM of the references')
+          vim.api.nvim_echo(
+            { { 'E385: search hit BOTTOM of the references' } },
+            true,
+            { err = true }
+          )
           return
         end
       end
@@ -107,20 +111,20 @@ local goto_prev = function(count)
     if not pos_equal(cursor, refs[idx > #refs and #refs or idx]) then
       ok, idx = dec_or_exit(idx, #refs)
       if not ok then
-        vim.api.nvim_err_writeln('E384: search hit TOP of the references')
+        vim.api.nvim_echo({ { 'E384: search hit TOP of the references' } }, true, { err = true })
         return
       end
     end
     ok, idx = dec_or_exit(idx, #refs)
     if not ok then
-      vim.api.nvim_err_writeln('E384: search hit TOP of the references')
+      vim.api.nvim_echo({ { 'E384: search hit TOP of the references' } }, true, { err = true })
       return
     end
     if count > 0 then
       for _ = 1, count do
         ok, idx = dec_or_exit(idx, #refs)
         if not ok then
-          vim.api.nvim_err_writeln('E384: search hit TOP of the references')
+          vim.api.nvim_echo({ { 'E384: search hit TOP of the references' } }, true, { err = true })
           return
         end
       end
@@ -159,7 +163,7 @@ end
 local wrap_request = function(callback)
   return function(count)
     count = count or 0
-    local params = vim.lsp.util.make_position_params()
+    local params = vim.lsp.util.make_position_params(0, vim.lsp.util._get_offset_encoding(0))
     ---@diagnostic disable-next-line: inject-field
     params.context = { includeDeclaration = true }
     vim.lsp.buf_request(
