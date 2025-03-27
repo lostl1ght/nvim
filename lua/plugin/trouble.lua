@@ -30,7 +30,8 @@ later(function()
       symbols = {
         desc = 'document symbols',
         mode = 'lsp_document_symbols',
-        auto_preview = false,
+        focus = true,
+        auto_preview = true,
         win = { position = 'right', size = 0.25 },
       },
     },
