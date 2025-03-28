@@ -126,10 +126,10 @@ set({ 'n', 'x' }, 'gra', vim.lsp.buf.code_action, {
 set('i', '<c-s>', vim.lsp.buf.signature_help, {
   desc = 'Signature help',
 })
-set('n', ']e', function() require('goto').next(vim.v.count) end, {
+set('n', ']e', function() require('goto').next(vim.v.count1) end, {
   desc = 'Reference forward',
 })
-set('n', '[e', function() require('goto').prev(vim.v.count) end, {
+set('n', '[e', function() require('goto').prev(vim.v.count1) end, {
   desc = 'Reference backward',
 })
 set('n', ']E', function() require('goto').last() end, {
