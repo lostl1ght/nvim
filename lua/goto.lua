@@ -54,7 +54,7 @@ local goto_ref = function(result, count, dir)
   local idx = bisect_left(refs, cursor)
 
   if dir > 0 then
-    if pos_equal(cursor, refs[idx]) then
+    if not refs[idx] or pos_equal(cursor, refs[idx]) then
       idx = move_index(idx, len, 1)
       if idx == 0 then return err_bot() end
     end
