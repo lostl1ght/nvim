@@ -113,17 +113,22 @@ local goto_last = function()
   end
 end
 
+local method = vim.lsp.protocol.Methods.textDocument_documentHighlight
+
+local get_client = function(bufnr)
+  local clients = vim.lsp.get_clients({ bufnr = bufnr, method = method })
+  if #clients == 0 then return end
+  return clients[1]
+end
+
 local make_goto_func = function(callback)
   return function(count)
-    local params = vim.lsp.util.make_position_params(0, vim.lsp.util._get_offset_encoding(0))
+    local client = get_client()
+    if not client then return end
+    local params = vim.lsp.util.make_position_params(0, client.offset_encoding)
     ---@diagnostic disable-next-line: inject-field
     params.context = { includeDeclaration = true }
-    vim.lsp.buf_request(
-      0,
-      vim.lsp.protocol.Methods.textDocument_documentHighlight,
-      params,
-      callback(count - 1)
-    )
+    client:request(method, params, callback(count - 1), 0)
   end
 end
 
