@@ -72,8 +72,10 @@ now(function()
   set({ 'n', 'i', 's' }, '<c-u>', function()
     if not require('noice.lsp').scroll(-4) then return '<c-u>' end
   end, { expr = true, desc = 'Scroll up' })
+  --[[
   set('c', '<c-\\>', function()
     require('noice').redirect(vim.fn.getcmdline())
     vim.api.nvim_input('<c-c>')
   end, { desc = 'Redirect cmdline' })
+  ]]
 end)
