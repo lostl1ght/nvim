@@ -69,6 +69,8 @@ now(function()
       ['<c-f>'] = { 'snippet_forward', 'fallback' },
       ['<c-u>'] = { 'scroll_documentation_up', 'fallback' },
       ['<c-d>'] = { 'scroll_documentation_down', 'fallback' },
+      ['<c-s>'] = { 'show_signature', 'hide_signature', 'fallback' },
+      ['<c-k>'] = { 'fallback' },
       ['<tab>'] = { 'fallback' },
       ['<s-tab>'] = { 'fallback' },
     },
