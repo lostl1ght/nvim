@@ -12,7 +12,7 @@ au('FileType', {
 })
 
 au('TextYankPost', {
-  callback = function() vim.highlight.on_yank({ higroup = 'YankHighlight', timeout = 350 }) end,
+  callback = function() vim.hl.on_yank({ higroup = 'YankHighlight', timeout = 350 }) end,
   group = aug('YankHighlight'),
   desc = 'Setup yank highlight',
 })
