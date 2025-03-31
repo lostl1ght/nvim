@@ -262,9 +262,12 @@ now(function()
       self.path = path
       self.file = file
 
-      self.suffix = vim.bo.readonly and icons.ro or vim.bo.modified and icons.mod or ''
+      self.ro = vim.bo.readonly and icons.ro or ''
+      self.mod = vim.bo.modified and icons.mod or ''
     end,
-    condition = function(self) return self.path ~= '' or self.file ~= '' or self.suffix ~= '' end,
+    condition = function(self)
+      return self.path ~= '' or self.file ~= '' or self.ro ~= '' or self.mod ~= ''
+    end,
     {
       { Space },
       {
@@ -283,11 +286,18 @@ now(function()
         provider = function(self) return self.file end,
       },
       {
-        condition = function(self) return self.suffix ~= '' end,
+        condition = function(self) return self.ro ~= '' end,
+        hl = function()
+          if is_active() then return { fg = 'diag_error' } end
+        end,
+        provider = function(self) return ' ' .. self.ro end,
+      },
+      {
+        condition = function(self) return self.mod ~= '' end,
         hl = function()
           if is_active() then return { fg = 'diag_warn' } end
         end,
-        provider = function(self) return ' ' .. self.suffix end,
+        provider = function(self) return ' ' .. self.mod end,
       },
       Space,
     },
