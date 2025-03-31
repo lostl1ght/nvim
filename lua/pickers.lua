@@ -1,89 +1,4 @@
-local M = {}
-local H = {}
-
-M.folders = function(local_opts, opts)
-  local fd
-  if vim.fn.executable('fd') == 1 then
-    fd = 'fd'
-  elseif vim.fn.executable('fdfind') == 1 then
-    fd = 'fdfind'
-  end
-
-  local minipick = require('mini.pick')
-  local items_func
-
-  if fd then
-    local command = { fd, '--type', 'd', '--color', 'never' }
-    if local_opts.hidden then table.insert(command, '--hidden') end
-    if local_opts.no_ignore then table.insert(command, '--no-ignore') end
-    items_func = vim.schedule_wrap(function() minipick.set_picker_items_from_cli(command) end)
-  else
-    items_func = vim.schedule_wrap(function()
-      minipick.set_picker_items(
-        vim
-          .iter(vim.fs.dir(vim.uv.cwd() or '.', { depth = math.huge }))
-          :filter(function(_, type) return type == 'directory' end)
-          :map(function(item) return item .. '/' end)
-          :totable()
-      )
-    end)
-  end
-
-  local prefix
-  if local_opts.hidden and local_opts.no_ignore then
-    prefix = 'Hidden and ignored f'
-  elseif local_opts.hidden then
-    prefix = 'Hidden f'
-  elseif local_opts.no_ignore then
-    prefix = 'Ignored f'
-  else
-    prefix = 'F'
-  end
-
-  local minifiles = require('mini.files')
-  minifiles.close()
-  local default_opts = {
-    source = {
-      name = prefix .. 'olders',
-      show = function(buf_id, items, query)
-        minipick.default_show(buf_id, items, query, { show_icons = true })
-      end,
-      choose = function(item)
-        vim.schedule(function()
-          minifiles.open(item, false)
-          minifiles.reveal_cwd()
-        end)
-      end,
-    },
-  }
-  minipick.start(vim.tbl_deep_extend('force', default_opts, opts or {}, {
-    source = { items = items_func },
-  }))
-end
-
-M.lsp = function(local_opts, opts)
-  local_opts = vim.tbl_deep_extend('force', { scope = nil, symbol_query = '' }, local_opts or {})
-  if local_opts.scope == nil then
-    vim.ui.select(H.allowed_scopes, { prompt = 'Select scope: ' }, function(scope)
-      if scope == nil then return end
-      local_opts.scope = scope
-    end)
-  end
-  if local_opts.scope == nil then return end
-
-  local scope = H.pick_validate_scope(local_opts, H.allowed_scopes, 'lsp')
-
-  if scope == 'references' then
-    return vim.lsp.buf[scope](nil, { on_list = H.lsp_make_on_list(local_opts.scope, opts) })
-  end
-  if scope == 'workspace_symbol' then
-    local query = tostring(local_opts.symbol_query)
-    return vim.lsp.buf[scope](query, { on_list = H.lsp_make_on_list(local_opts.scope, opts) })
-  end
-  vim.lsp.buf[scope]({ on_list = H.lsp_make_on_list(local_opts.scope, opts) })
-end
-
-H.allowed_scopes = {
+local allowed_scopes = {
   'declaration',
   'definition',
   'document_symbol',
@@ -93,9 +8,54 @@ H.allowed_scopes = {
   'workspace_symbol',
 }
 
-H.ns_id = { pickers = vim.api.nvim_create_namespace('MiniPickLsp') }
+local ns_id = { pickers = vim.api.nvim_create_namespace('MiniPickLsp') }
 
-H.pick_start = function(items, default_opts, opts)
+local perror = function(msg) vim.notify(msg, vim.log.levels.ERROR) end
+
+local is_valid_buf = function(buf_id)
+  return type(buf_id) == 'number' and vim.api.nvim_buf_is_valid(buf_id)
+end
+
+local pick_validate_one_of = function(target, opts, values, picker_name)
+  if vim.tbl_contains(values, opts[target]) then return opts[target] end
+  local msg = string.format(
+    '`Picker %s` has wrong "%s" local option (%s). Should be one of %s.',
+    picker_name,
+    target,
+    vim.inspect(opts[target]),
+    table.concat(vim.tbl_map(vim.inspect, values), ', ')
+  )
+  perror(msg)
+end
+
+local get_symbol_kind_map = function()
+  -- Compute symbol kind map from "resolved" string kind to its "original" (as in
+  -- LSP protocol). Those can be different after `MiniIcons.tweak_lsp_kind()`.
+  local res = {}
+  local double_map = vim.lsp.protocol.SymbolKind
+  for k, v in pairs(double_map) do
+    if type(k) == 'string' and type(v) == 'number' then res[double_map[v]] = k end
+  end
+  return res
+end
+
+local lsp_items_compare = function(a, b)
+  local a_path, b_path = a.path or '', b.path or ''
+  if a_path < b_path then return true end
+  if a_path > b_path then return false end
+
+  local a_lnum, b_lnum = a.lnum or 1, b.lnum or 1
+  if a_lnum < b_lnum then return true end
+  if a_lnum > b_lnum then return false end
+
+  local a_col, b_col = a.col or 1, b.col or 1
+  if a_col < b_col then return true end
+  if a_col > b_col then return false end
+
+  return tostring(a) < tostring(b)
+end
+
+local pick_start = function(items, default_opts, opts)
   local pick = require('mini.pick')
   local fallback = {
     source = {
@@ -109,17 +69,17 @@ H.pick_start = function(items, default_opts, opts)
   return pick.start(opts_final)
 end
 
-H.pick_highlight_line = function(buf_id, line, hl_group, priority)
+local pick_highlight_line = function(buf_id, line, hl_group, priority)
   local opts =
     { end_row = line, end_col = 0, hl_mode = 'blend', hl_group = hl_group, priority = priority }
-  vim.api.nvim_buf_set_extmark(buf_id, H.ns_id.pickers, line - 1, 0, opts)
+  vim.api.nvim_buf_set_extmark(buf_id, ns_id.pickers, line - 1, 0, opts)
 end
 
-H.pick_prepend_position = function(item)
+local pick_prepend_position = function(item)
   local path
   if item.path ~= nil then
     path = item.path
-  elseif H.is_valid_buf(item.bufnr) then
+  elseif is_valid_buf(item.bufnr) then
     local name = vim.api.nvim_buf_get_name(item.bufnr)
     path = name == '' and ('Buffer_' .. item.bufnr) or name
   end
@@ -132,25 +92,13 @@ H.pick_prepend_position = function(item)
   return item
 end
 
-H.pick_clear_namespace = function(buf_id, ns_id)
-  pcall(vim.api.nvim_buf_clear_namespace, buf_id, ns_id, 0, -1)
+local pick_clear_namespace = function(buf_id, ns)
+  pcall(vim.api.nvim_buf_clear_namespace, buf_id, ns, 0, -1)
 end
 
-H.pick_validate_one_of = function(target, opts, values, picker_name)
-  if vim.tbl_contains(values, opts[target]) then return opts[target] end
-  local msg = string.format(
-    '`Picker %s` has wrong "%s" local option (%s). Should be one of %s.',
-    picker_name,
-    target,
-    vim.inspect(opts[target]),
-    table.concat(vim.tbl_map(vim.inspect, values), ', ')
-  )
-  H.error(msg)
-end
+local pick_validate_scope = function(...) return pick_validate_one_of('scope', ...) end
 
-H.pick_validate_scope = function(...) return H.pick_validate_one_of('scope', ...) end
-
-H.pick_get_config = function()
+local pick_get_config = function()
   return vim.tbl_deep_extend(
     'force',
     (require('mini.pick') or {}).config or {},
@@ -158,11 +106,11 @@ H.pick_get_config = function()
   )
 end
 
-H.show_with_icons = function(buf_id, items, query)
+local show_with_icons = function(buf_id, items, query)
   require('mini.pick').default_show(buf_id, items, query, { show_icons = true })
 end
 
-H.lsp_make_on_list = function(source, opts)
+local lsp_make_on_list = function(source, opts)
   local is_symbol = source == 'document_symbol' or source == 'workspace_symbol'
 
   local ok, miniicons = pcall(require, 'mini.icons')
@@ -186,35 +134,35 @@ H.lsp_make_on_list = function(source, opts)
   end
 
   local process = function(items)
-    if source ~= 'document_symbol' then items = vim.tbl_map(H.pick_prepend_position, items) end
+    if source ~= 'document_symbol' then items = vim.tbl_map(pick_prepend_position, items) end
     -- Input `item.kind` is a string (resolved before `on_list`). Account for
     -- possibly tweaked symbol map (like after `MiniIcons.tweak_lsp_kind`).
-    local kind_map = H.get_symbol_kind_map()
+    local kind_map = get_symbol_kind_map()
     for _, item in ipairs(items) do
       item.kind_orig, item.kind = item.kind, kind_map[item.kind]
       add_decor_data(item)
       item.kind_orig = nil
     end
-    table.sort(items, H.lsp_items_compare)
+    table.sort(items, lsp_items_compare)
     return items
   end
 
   local minipick = require('mini.pick')
-  local show_explicit = H.pick_get_config().source.show
+  local show_explicit = pick_get_config().source.show
   local show = function(buf_id, items_to_show, query)
     if show_explicit ~= nil then return show_explicit(buf_id, items_to_show, query) end
     if is_symbol then
       minipick.default_show(buf_id, items_to_show, query)
 
       -- Highlight whole lines with pre-computed symbol kind highlight groups
-      H.pick_clear_namespace(buf_id, H.ns_id.pickers)
+      pick_clear_namespace(buf_id, ns_id.pickers)
       for i, item in ipairs(items_to_show) do
-        H.pick_highlight_line(buf_id, i, item.hl, 199)
+        pick_highlight_line(buf_id, i, item.hl, 199)
       end
       return
     end
     -- Show with icons as the non-symbol scopes should have paths
-    return H.show_with_icons(buf_id, items_to_show, query)
+    return show_with_icons(buf_id, items_to_show, query)
   end
 
   local choose = function(item)
@@ -233,37 +181,109 @@ H.lsp_make_on_list = function(source, opts)
     items = process(items)
 
     local source_opts = { name = string.format('LSP (%s)', source), show = show, choose = choose }
-    return H.pick_start(items, { source = source_opts }, opts)
+    return pick_start(items, { source = source_opts }, opts)
   end
 end
 
-H.get_symbol_kind_map = function()
-  -- Compute symbol kind map from "resolved" string kind to its "original" (as in
-  -- LSP protocol). Those can be different after `MiniIcons.tweak_lsp_kind()`.
-  local res = {}
-  local double_map = vim.lsp.protocol.SymbolKind
-  for k, v in pairs(double_map) do
-    if type(k) == 'string' and type(v) == 'number' then res[double_map[v]] = k end
+local get_fd = function()
+  local fd
+  if vim.fn.executable('fd') == 1 then
+    fd = 'fd'
+  elseif vim.fn.executable('fdfind') == 1 then
+    fd = 'fdfind'
   end
-  return res
+  return fd
 end
 
-H.lsp_items_compare = function(a, b)
-  local a_path, b_path = a.path or '', b.path or ''
-  if a_path < b_path then return true end
-  if a_path > b_path then return false end
+local make_items_func = function(hidden, no_ignore)
+  local minipick = require('mini.pick')
+  local fd = get_fd()
+  local items_func
 
-  local a_lnum, b_lnum = a.lnum or 1, b.lnum or 1
-  if a_lnum < b_lnum then return true end
-  if a_lnum > b_lnum then return false end
-
-  local a_col, b_col = a.col or 1, b.col or 1
-  if a_col < b_col then return true end
-  if a_col > b_col then return false end
-
-  return tostring(a) < tostring(b)
+  if fd then
+    local command = { fd, '--type', 'd', '--color', 'never' }
+    if hidden then table.insert(command, '--hidden') end
+    if no_ignore then table.insert(command, '--no-ignore') end
+    items_func = vim.schedule_wrap(function() minipick.set_picker_items_from_cli(command) end)
+  else
+    items_func = vim.schedule_wrap(function()
+      minipick.set_picker_items(
+        vim
+          .iter(vim.fs.dir(vim.uv.cwd() or '.', { depth = math.huge }))
+          :filter(function(_, type) return type == 'directory' end)
+          :map(function(item) return item .. '/' end)
+          :totable()
+      )
+    end)
+  end
+  return items_func
 end
 
-H.error = function(msg) vim.notify(msg, vim.log.levels.ERROR) end
+local make_name_prefix = function(hidden, no_ignore)
+  local prefix
+  if hidden and no_ignore then
+    prefix = 'Hidden and ignored f'
+  elseif hidden then
+    prefix = 'Hidden f'
+  elseif no_ignore then
+    prefix = 'Ignored f'
+  else
+    prefix = 'F'
+  end
+  return prefix
+end
 
-return M
+local folders = function(local_opts, opts)
+  local hidden, no_ignore = local_opts.hidden, local_opts.no_ignore
+
+  local items_func = make_items_func(hidden, no_ignore)
+  local prefix = make_name_prefix(hidden, no_ignore)
+
+  local minipick = require('mini.pick')
+  local minifiles = require('mini.files')
+  minifiles.close()
+  local default_opts = {
+    source = {
+      name = prefix .. 'olders',
+      show = function(buf_id, items, query)
+        minipick.default_show(buf_id, items, query, { show_icons = true })
+      end,
+      choose = function(item)
+        vim.schedule(function()
+          minifiles.open(item, false)
+          minifiles.reveal_cwd()
+        end)
+      end,
+    },
+  }
+  minipick.start(vim.tbl_deep_extend('force', default_opts, opts or {}, {
+    source = { items = items_func },
+  }))
+end
+
+local lsp = function(local_opts, opts)
+  local_opts = vim.tbl_deep_extend('force', { scope = nil, symbol_query = '' }, local_opts or {})
+  if local_opts.scope == nil then
+    vim.ui.select(allowed_scopes, { prompt = 'Select scope: ' }, function(scope)
+      if scope == nil then return end
+      local_opts.scope = scope
+    end)
+  end
+  if local_opts.scope == nil then return end
+
+  local scope = pick_validate_scope(local_opts, allowed_scopes, 'lsp')
+
+  if scope == 'references' then
+    return vim.lsp.buf[scope](nil, { on_list = lsp_make_on_list(local_opts.scope, opts) })
+  end
+  if scope == 'workspace_symbol' then
+    local query = tostring(local_opts.symbol_query)
+    return vim.lsp.buf[scope](query, { on_list = lsp_make_on_list(local_opts.scope, opts) })
+  end
+  vim.lsp.buf[scope]({ on_list = lsp_make_on_list(local_opts.scope, opts) })
+end
+
+return {
+  folders = folders,
+  lsp = lsp,
+}
