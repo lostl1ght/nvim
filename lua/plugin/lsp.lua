@@ -107,7 +107,9 @@ now(function()
         },
       },
     },
-    -- PylspInstall pyls-isort pylsp-mypy pylsp-rope python-lsp-ruff
+    -- cd ~/.local/share/nvim/mason/packages/python-lsp-server
+    -- source venv/bin/activate
+    -- pip install pyls-isort pylsp-mypy pylsp-rope python-lsp-ruff
     pylsp = {
       settings = {
         pylsp = {
@@ -125,10 +127,8 @@ now(function()
     local server_opts = vim.tbl_deep_extend('force', {
       capabilities = vim.deepcopy(capabilities),
     }, servers[server] or {})
-    ---@diagnostic disable-next-line: inject-field
-    if server == 'clangd' then server_opts.capabilities.offsetEncoding = { 'utf-8' } end
-
-    require('lspconfig')[server].setup(server_opts)
+    vim.lsp.config(server, server_opts)
+    vim.lsp.enable(server)
   end
 
   local mlsp = require('mason-lspconfig')
