@@ -41,6 +41,7 @@ set('n', 'go', "v:lua.require'util'.put_empty_line(v:false)", {
   expr = true,
   desc = 'Put empty line below',
 })
+set('n', '<c-s>', '<cmd>write<cr>', { desc = 'Write' })
 
 local prefix = '\\'
 ---@param lhs string
