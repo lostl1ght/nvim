@@ -26,16 +26,6 @@
         ],
         "description": "center environment"
     },
-    "": {
-        "prefix": "",
-        "body": [
-        "\\begin{align${1:ed}}",
-        "\t\\label{eq:${2}}",
-        "\t$0",
-        "\\end{align$1}"
-        ],
-        "description": "align(ed) environment"
-    },
     "equation": {
         "prefix": "eq",
         "body": [
@@ -44,16 +34,6 @@
             "\\end{equation}"
         ],
         "description": "equation environment"
-    },
-    "labeled equation": {
-        "prefix": "",
-        "body": [
-            "\\begin{equation}",
-            "\t\\label{eq:${2}}",
-            "\t$0",
-            "\\end{equation}"
-        ],
-        "description": "labeled equation environment"
     },
     "unnumbered equation": {
         "prefix": "eq*",
@@ -121,8 +101,7 @@
     "section": {
         "prefix": "sec",
         "body": [
-            "\\section{${1:section name}}",
-            "\\label{sec:${2:$1}}",
+            "\\section{${1:section}}",
             "${0}"
         ],
         "description": ""
@@ -130,8 +109,7 @@
     "unnumbered section": {
         "prefix": "sec*",
         "body": [
-            "\\section*{${1:section name}}",
-            "\\label{sec:${2:$1}}",
+            "\\section*{${1:section}}",
             "${0}"
         ],
         "description": "unnumbered section"
@@ -139,8 +117,7 @@
     "subsection": {
         "prefix": "sub",
         "body": [
-            "\\subsection{${1:subsection name}}",
-            "\\label{sub:${2:$1}}",
+            "\\subsection{${1:subsection}}",
             "${0}"
         ],
         "description": "subsection"
@@ -148,8 +125,7 @@
     "unnumbered subsection": {
         "prefix": "sub*",
         "body": [
-            "\\subsection*{${1:subsection name}}",
-            "\\label{sub:${2:$1}}",
+            "\\subsection*{${1:subsection}}",
             "${0}"
         ],
         "description": "unnumbered subsection"
@@ -157,8 +133,7 @@
     "subsubsection": {
         "prefix": "ssub",
         "body": [
-            "\\subsubsection{${1:subsection name}}",
-            "\\label{ssub:${2:$1}}",
+            "\\subsubsection{${1:subsection}}",
             "${0}"
         ],
         "description": "sub subsection"
@@ -166,8 +141,7 @@
     "unnumbered sub subsection": {
         "prefix": "ssub*",
         "body": [
-            "\\subsubsection*{${1:subsection name}}",
-            "\\label{ssub:${2:$1}}",
+            "\\subsubsection*{${1:subsection}}",
             "${0}"
         ],
         "description": "unnumbered sub subsection"
