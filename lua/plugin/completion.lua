@@ -65,14 +65,12 @@ now(function()
     keymap = {
       preset = 'default',
       ['<cr>'] = { 'select_and_accept', 'fallback' },
-      ['<c-b>'] = { 'snippet_backward', 'fallback' },
-      ['<c-f>'] = { 'snippet_forward', 'fallback' },
-      ['<c-u>'] = { 'scroll_documentation_up', 'fallback' },
-      ['<c-d>'] = { 'scroll_documentation_down', 'fallback' },
       ['<c-s>'] = { 'show_signature', 'hide_signature', 'fallback' },
       ['<c-k>'] = { 'fallback' },
-      ['<tab>'] = { 'fallback' },
-      ['<s-tab>'] = { 'fallback' },
+      ['<c-n>'] = { 'fallback_to_mappings' },
+      ['<c-p>'] = { 'fallback_to_mappings' },
+      ['<tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
+      ['<s-tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
     },
   })
 end)
