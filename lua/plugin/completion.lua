@@ -65,6 +65,12 @@ now(function()
     keymap = {
       preset = 'default',
       ['<cr>'] = { 'select_and_accept', 'fallback' },
+      ['<c-e>'] = {
+        'hide',
+        function(_)
+          if vim.snippet.active() then vim.snippet.stop() end
+        end,
+      },
       ['<c-s>'] = { 'show_signature', 'hide_signature', 'fallback' },
       ['<c-k>'] = { 'fallback' },
       ['<c-n>'] = { 'fallback_to_mappings' },
