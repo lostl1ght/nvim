@@ -93,7 +93,6 @@
         "prefix": "cha",
         "body": [
             "\\chapter{${1:chapter name}}",
-            "\\label{cha:${2:$1}}",
             "${0}"
         ],
         "description": "chapter"
