@@ -4,38 +4,10 @@ local add, now, later = minideps.add, minideps.now, minideps.later
 now(function()
   add({
     source = 'nvim-treesitter/nvim-treesitter',
-    -- checkout = 'main',
+    checkout = 'main',
     hooks = { post_checkout = function() vim.cmd('TSUpdate') end },
   })
-  --[[
-  local has_cli = vim.fn.executable('tree-sitter') == 1
-  require('nvim-treesitter').setup({
-    -- stylua: ignore
-    ensure_install = has_cli and {
-      'bash',  'c', 'lua', 'luadoc',
-      'luap',  'markdown', 'markdown_inline',
-      'query', 'regex',    'vim', 'vimdoc',
-
-      'gitattributes', -- 'gitcommit',
-      'gitignore',     'git_config',
-      'git_rebase',    'json', 'toml',
-      'yaml',
-    },
-  })
-  ]]
-  require('nvim-treesitter.configs').setup({
-    -- stylua: ignore
-    ensure_installed = {
-      'bash',  'c', 'lua', 'luadoc',
-      'luap',  'markdown', 'markdown_inline',
-      'query', 'regex',    'vim', 'vimdoc',
-
-      'gitattributes', 'gitcommit',
-      'gitignore',     'git_config',
-      'git_rebase',    'json', 'toml',
-      'yaml',
-    },
-  })
+  -- TSInstall bash c lua luadoc luap markdown markdown_inline query regex vim vimdoc gitattributes gitcommit gitignore git_config git_rebase json toml yaml
 end)
 
 now(function()
@@ -57,8 +29,7 @@ now(function()
   local rd = require('rainbow-delimiters')
   vim.g.rainbow_delimiters = {
     strategy = {
-      [''] = rd.strategy['global'], -- https://github.com/HiPhish/rainbow-delimiters.nvim/issues/2
-      -- [''] = rd.strategy['local'],
+      [''] = rd.strategy['global'],
     },
     query = {
       [''] = 'rainbow-delimiters',

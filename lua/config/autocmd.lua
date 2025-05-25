@@ -66,7 +66,6 @@ au('BufEnter', {
   desc = 'Set treesitter fold expr',
 })
 
---[[
 au('FileType', {
   group = aug('TreesitterIndent'),
   callback = function()
@@ -77,7 +76,6 @@ au('FileType', {
   end,
   desc = 'Enable treesitter indent',
 })
-]]
 
 au('LspAttach', {
   callback = function(data)
