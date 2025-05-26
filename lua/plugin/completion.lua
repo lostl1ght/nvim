@@ -79,4 +79,5 @@ now(function()
       ['<s-tab>'] = { 'select_prev', 'snippet_backward', 'fallback' },
     },
   })
+  vim.lsp.config('*', { capabilities = require('blink.cmp').get_lsp_capabilities(nil, true) })
 end)
