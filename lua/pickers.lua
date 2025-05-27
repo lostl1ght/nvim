@@ -219,7 +219,7 @@ local make_items_func = function(hidden, no_ignore)
   return items_func
 end
 
-local make_name_prefix = function(hidden, no_ignore)
+local make_name = function(hidden, no_ignore)
   local prefix
   if hidden and no_ignore then
     prefix = 'Hidden and ignored f'
@@ -230,21 +230,21 @@ local make_name_prefix = function(hidden, no_ignore)
   else
     prefix = 'F'
   end
-  return prefix
+  return prefix .. 'olders'
 end
 
 local folders = function(local_opts, opts)
   local hidden, no_ignore = local_opts.hidden, local_opts.no_ignore
 
   local items_func = make_items_func(hidden, no_ignore)
-  local prefix = make_name_prefix(hidden, no_ignore)
+  local name = make_name(hidden, no_ignore)
 
   local minipick = require('mini.pick')
   local minifiles = require('mini.files')
   minifiles.close()
   local default_opts = {
     source = {
-      name = prefix .. 'olders',
+      name = name,
       show = function(buf_id, items, query)
         minipick.default_show(buf_id, items, query, { show_icons = true })
       end,
