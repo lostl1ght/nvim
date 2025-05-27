@@ -4,7 +4,10 @@ local add, now, later = minideps.add, minideps.now, minideps.later
 now(function()
   add({
     source = 'williamboman/mason.nvim',
-    hooks = { post_checkout = function() vim.cmd('MasonUpdate') end },
+    hooks = {
+      post_install = function() vim.cmd('MasonUpdate') end,
+      post_checkout = function() vim.cmd('MasonUpdate') end,
+    },
   })
   require('mason').setup({
     ui = {
@@ -26,7 +29,7 @@ now(function()
       'saghen/blink.cmp',
     },
   })
-  require('mason-lspconfig').setup({ automatic_enable = true })
+  require('mason-lspconfig').setup({ automatic_enable = { exclude = { 'ruff' } } })
 
   require('typescript-tools').setup({})
 end)

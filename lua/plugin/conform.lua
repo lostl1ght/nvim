@@ -29,6 +29,7 @@ later(function()
       cpp = { 'clang_format' },
       go = { 'gofumpt', --[['golines',]] 'goimports' },
       lua = { 'stylua' },
+      python = { 'ruff_format' },
       rust = { 'rustfmt' },
       tex = { 'latexindent' },
     },
