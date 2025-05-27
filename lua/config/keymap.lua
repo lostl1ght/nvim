@@ -33,14 +33,6 @@ set('n', 'gV', '"`[" . strpart(getregtype(), 0, 1) . "`]"', {
   desc = 'Visually select changed text',
 })
 set('x', 'g/', '<esc>/\\%V', { silent = false, desc = 'Search inside visual selection' })
-set('n', 'gO', "v:lua.require'util'.put_empty_line(v:true)", {
-  expr = true,
-  desc = 'Put empty line above',
-})
-set('n', 'go', "v:lua.require'util'.put_empty_line(v:false)", {
-  expr = true,
-  desc = 'Put empty line below',
-})
 set('n', '<c-s>', '<cmd>write<cr>', { desc = 'Write' })
 
 local prefix = '\\'
