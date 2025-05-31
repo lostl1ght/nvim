@@ -1,5 +1,5 @@
 local minideps = require('mini.deps')
-local add, now, later = minideps.add, minideps.now, minideps.later
+local add, now = minideps.add, minideps.now
 
 now(function()
   add({
@@ -43,5 +43,3 @@ now(function()
     },
   })
 end)
-
-later(function() add({ source = 'lostl1ght/lightbulb.nvim' }) end)
