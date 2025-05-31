@@ -1,5 +1,5 @@
 local minideps = require('mini.deps')
-local add, later, now = minideps.add, minideps.later, minideps.now
+local add, later = minideps.add, minideps.later
 
 later(function()
   add({ source = 'windwp/nvim-autopairs' })
@@ -48,7 +48,7 @@ later(function()
   end
 end)
 
-now(function()
+later(function()
   add({
     source = 'saghen/blink.cmp',
     hooks = {
