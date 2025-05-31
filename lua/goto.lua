@@ -1,12 +1,15 @@
-local pos_before = function(pos1, pos2)
+local M = {}
+local H = {}
+
+H.pos_before = function(pos1, pos2)
   return pos1[1] == pos2[1] and pos1[2] < pos2[2] or pos1[1] < pos2[1]
 end
 
-local bisect_left = function(refs, pos)
+H.bisect_left = function(refs, pos)
   local left, right = 1, #refs + 1
   while left < right do
     local mid = left + math.floor((right - left) / 2)
-    if pos_before(refs[mid], pos) then
+    if H.pos_before(refs[mid], pos) then
       left = mid + 1
     else
       right = mid
@@ -15,26 +18,26 @@ local bisect_left = function(refs, pos)
   return left
 end
 
-local pos_equal = function(pos1, pos2) return pos1[1] == pos2[1] and pos1[2] == pos2[2] end
+H.pos_equal = function(pos1, pos2) return pos1[1] == pos2[1] and pos1[2] == pos2[2] end
 
-local sorted_refs = function(result)
+H.sorted_refs = function(result)
   local refs = {}
   for _, v in ipairs(result) do
     table.insert(refs, { v.range.start.line + 1, v.range.start.character })
   end
-  table.sort(refs, pos_before)
+  table.sort(refs, H.pos_before)
   return refs
 end
 
-local notify_error = function(msg) vim.api.nvim_echo({ { msg } }, true, { err = true }) end
+H.notify_error = function(msg) vim.api.nvim_echo({ { msg } }, true, { err = true }) end
 
-local err_top = function() notify_error('E384: search hit TOP of the references') end
+H.err_top = function() H.notify_error('E384: search hit TOP of the references') end
 
-local err_bot = function() notify_error('E385: search hit BOTTOM of the references') end
+H.err_bot = function() H.notify_error('E385: search hit BOTTOM of the references') end
 
-local err_req = function() notify_error('Reference request error') end
+H.err_req = function() H.notify_error('Reference request error') end
 
-local move_index = function(idx, len, step)
+H.move_index = function(idx, len, step)
   idx = idx + step
   if idx < 1 or idx > len then
     if vim.o.wrapscan then
@@ -46,32 +49,32 @@ local move_index = function(idx, len, step)
   return idx
 end
 
-local goto_ref = function(result, count, dir)
+H.goto_ref = function(result, count, dir)
   if not result or #result <= 1 then return end
-  local refs = sorted_refs(result)
+  local refs = H.sorted_refs(result)
   local len = #refs
   local cursor = vim.api.nvim_win_get_cursor(0)
-  local idx = bisect_left(refs, cursor)
+  local idx = H.bisect_left(refs, cursor)
 
   if dir > 0 then
-    if not refs[idx] or pos_equal(cursor, refs[idx]) then
-      idx = move_index(idx, len, 1)
-      if idx == 0 then return err_bot() end
+    if not refs[idx] or H.pos_equal(cursor, refs[idx]) then
+      idx = H.move_index(idx, len, 1)
+      if idx == 0 then return H.err_bot() end
     end
     for _ = 1, count do
-      idx = move_index(idx, len, 1)
-      if idx == 0 then return err_bot() end
+      idx = H.move_index(idx, len, 1)
+      if idx == 0 then return H.err_bot() end
     end
   else
-    if not pos_equal(cursor, refs[math.min(idx, len)]) then
-      idx = move_index(idx, len, -1)
-      if idx == 0 then return err_top() end
+    if not H.pos_equal(cursor, refs[math.min(idx, len)]) then
+      idx = H.move_index(idx, len, -1)
+      if idx == 0 then return H.err_top() end
     end
-    idx = move_index(idx, len, -1)
-    if idx == 0 then return err_top() end
+    idx = H.move_index(idx, len, -1)
+    if idx == 0 then return H.err_top() end
     for _ = 1, count do
-      idx = move_index(idx, len, -1)
-      if idx == 0 then return err_top() end
+      idx = H.move_index(idx, len, -1)
+      if idx == 0 then return H.err_top() end
     end
   end
 
@@ -79,62 +82,62 @@ local goto_ref = function(result, count, dir)
   vim.api.nvim_win_set_cursor(0, refs[idx])
 end
 
-local goto_next = function(count)
+H.goto_next = function(count)
   return function(err, result)
-    if err then return err_req() end
-    goto_ref(result, count, 1)
+    if err then return H.err_req() end
+    H.goto_ref(result, count, 1)
   end
 end
 
-local goto_prev = function(count)
+H.goto_prev = function(count)
   return function(err, result)
-    if err then return err_req() end
-    goto_ref(result, count, -1)
+    if err then return H.err_req() end
+    H.goto_ref(result, count, -1)
   end
 end
 
-local goto_first = function()
+H.goto_first = function()
   return function(err, result)
-    if err then return err_req() end
+    if err then return H.err_req() end
     if not result or #result <= 1 then return end
-    local pos = sorted_refs(result)[1]
+    local pos = H.sorted_refs(result)[1]
     vim.cmd('normal! m`')
     vim.api.nvim_win_set_cursor(0, pos)
   end
 end
 
-local goto_last = function()
+H.goto_last = function()
   return function(err, result)
-    if err then return err_req() end
+    if err then return H.err_req() end
     if not result or #result <= 1 then return end
-    local pos = sorted_refs(result)[#result]
+    local pos = H.sorted_refs(result)[#result]
     vim.cmd('normal! m`')
     vim.api.nvim_win_set_cursor(0, pos)
   end
 end
 
-local method = vim.lsp.protocol.Methods.textDocument_documentHighlight
+H.method = vim.lsp.protocol.Methods.textDocument_documentHighlight
 
-local get_client = function(bufnr)
-  local clients = vim.lsp.get_clients({ bufnr = bufnr, method = method })
+H.get_client = function(bufnr)
+  local clients = vim.lsp.get_clients({ bufnr = bufnr, method = H.method })
   if #clients == 0 then return end
   return clients[1]
 end
 
-local make_goto_func = function(callback)
+H.make_goto_func = function(callback)
   return function(count)
-    local client = get_client()
+    local client = H.get_client()
     if not client then return end
     local params = vim.lsp.util.make_position_params(0, client.offset_encoding)
     ---@diagnostic disable-next-line: inject-field
     params.context = { includeDeclaration = true }
-    client:request(method, params, callback(count - 1), 0)
+    client:request(H.method, params, callback(count - 1), 0)
   end
 end
 
-return {
-  next = make_goto_func(goto_next),
-  prev = make_goto_func(goto_prev),
-  first = make_goto_func(goto_first),
-  last = make_goto_func(goto_last),
-}
+M.next = H.make_goto_func(H.goto_next)
+M.prev = H.make_goto_func(H.goto_prev)
+M.first = H.make_goto_func(H.goto_first)
+M.last = H.make_goto_func(H.goto_last)
+
+return M

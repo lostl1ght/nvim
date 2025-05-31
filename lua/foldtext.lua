@@ -1,8 +1,9 @@
 local M = {}
+local H = {}
 
 ---@param fdt {[1]:string,[2]:string}[]
 ---@return {[1]:string,[2]:string}
-local fill = function(fdt)
+H.fill = function(fdt)
   local wininfo = vim.fn.getwininfo(vim.fn.win_getid())[1]
   local n = wininfo.width - wininfo.textoff
   for _, part in ipairs(fdt) do
@@ -13,14 +14,14 @@ end
 
 ---@param fdt {[1]:string,[2]:string}[]
 ---@return {[1]:string,[2]:string}[]
-local suffix = function(fdt)
+H.suffix = function(fdt)
   table.insert(fdt, { ' <-- ', 'Folded' })
   table.insert(fdt, { ('%d lines '):format(vim.v.foldend - vim.v.foldstart), 'Folded' })
-  table.insert(fdt, #fdt, fill(fdt))
+  table.insert(fdt, #fdt, H.fill(fdt))
   return fdt
 end
 
 ---@return {[1]:string,[2]:string}[]
-M.get = function() return suffix({ { vim.fn.getline(vim.v.foldstart), 'Folded' } }) end
+M.get = function() return H.suffix({ { vim.fn.getline(vim.v.foldstart), 'Folded' } }) end
 
 return M

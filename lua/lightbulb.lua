@@ -1,25 +1,27 @@
 local api, lsp, fn = vim.api, vim.lsp, vim.fn
 local uv = vim.uv or vim.loop
 
-local C = {
-  options = {
-    debounce = 100,
-    enable_in_insert = false,
-    ignored_clients = {},
-    sign = {
-      enabled = false,
-      priority = 40,
-      text = '',
-      hl = 'LightBulbText',
-    },
-    virtual_text = {
-      enabled = true,
-      spacing = 0,
-      priority = 80,
-      text = '',
-      hl = 'LightBulbVirtualText',
-      hl_mode = 'combine',
-    },
+local M = {}
+local H = {}
+local C = {}
+
+C.options = {
+  debounce = 100,
+  enable_in_insert = false,
+  ignored_clients = {},
+  sign = {
+    enabled = false,
+    priority = 40,
+    text = '',
+    hl = 'LightBulbText',
+  },
+  virtual_text = {
+    enabled = true,
+    spacing = 0,
+    priority = 80,
+    text = '',
+    hl = 'LightBulbVirtualText',
+    hl_mode = 'combine',
   },
 }
 
@@ -28,8 +30,6 @@ C.setup = function(opts) C.options = vim.tbl_deep_extend('force', C.options, opt
 setmetatable(C, {
   __index = function(self, key) return self.options[key] end,
 })
-
-local H = {}
 
 H.inrender_row = -1
 H.inrender_buf = nil
@@ -122,7 +122,6 @@ H.update = function(buf, position_encoding)
   end)
 end
 
-local M = {}
 M.setup_opt = C.setup
 
 M.setup_au = function()

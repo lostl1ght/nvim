@@ -1,4 +1,7 @@
-local allowed_scopes = {
+local M = {}
+local H = {}
+
+H.allowed_scopes = {
   'declaration',
   'definition',
   'document_symbol',
@@ -8,15 +11,15 @@ local allowed_scopes = {
   'workspace_symbol',
 }
 
-local ns_id = { pickers = vim.api.nvim_create_namespace('MiniPickLsp') }
+H.ns_id = { pickers = vim.api.nvim_create_namespace('MiniPickLsp') }
 
-local perror = function(msg) vim.notify(msg, vim.log.levels.ERROR) end
+H.perror = function(msg) vim.notify(msg, vim.log.levels.ERROR) end
 
-local is_valid_buf = function(buf_id)
+H.is_valid_buf = function(buf_id)
   return type(buf_id) == 'number' and vim.api.nvim_buf_is_valid(buf_id)
 end
 
-local pick_validate_one_of = function(target, opts, values, picker_name)
+H.pick_validate_one_of = function(target, opts, values, picker_name)
   if vim.tbl_contains(values, opts[target]) then return opts[target] end
   local msg = string.format(
     '`Picker %s` has wrong "%s" local option (%s). Should be one of %s.',
@@ -25,10 +28,10 @@ local pick_validate_one_of = function(target, opts, values, picker_name)
     vim.inspect(opts[target]),
     table.concat(vim.tbl_map(vim.inspect, values), ', ')
   )
-  perror(msg)
+  H.perror(msg)
 end
 
-local get_symbol_kind_map = function()
+H.get_symbol_kind_map = function()
   -- Compute symbol kind map from "resolved" string kind to its "original" (as in
   -- LSP protocol). Those can be different after `MiniIcons.tweak_lsp_kind()`.
   local res = {}
@@ -39,7 +42,7 @@ local get_symbol_kind_map = function()
   return res
 end
 
-local lsp_items_compare = function(a, b)
+H.lsp_items_compare = function(a, b)
   local a_path, b_path = a.path or '', b.path or ''
   if a_path < b_path then return true end
   if a_path > b_path then return false end
@@ -55,7 +58,7 @@ local lsp_items_compare = function(a, b)
   return tostring(a) < tostring(b)
 end
 
-local pick_start = function(items, default_opts, opts)
+H.pick_start = function(items, default_opts, opts)
   local pick = require('mini.pick')
   local fallback = {
     source = {
@@ -69,17 +72,17 @@ local pick_start = function(items, default_opts, opts)
   return pick.start(opts_final)
 end
 
-local pick_highlight_line = function(buf_id, line, hl_group, priority)
+H.pick_highlight_line = function(buf_id, line, hl_group, priority)
   local opts =
     { end_row = line, end_col = 0, hl_mode = 'blend', hl_group = hl_group, priority = priority }
-  vim.api.nvim_buf_set_extmark(buf_id, ns_id.pickers, line - 1, 0, opts)
+  vim.api.nvim_buf_set_extmark(buf_id, H.ns_id.pickers, line - 1, 0, opts)
 end
 
-local pick_prepend_position = function(item)
+H.pick_prepend_position = function(item)
   local path
   if item.path ~= nil then
     path = item.path
-  elseif is_valid_buf(item.bufnr) then
+  elseif H.is_valid_buf(item.bufnr) then
     local name = vim.api.nvim_buf_get_name(item.bufnr)
     path = name == '' and ('Buffer_' .. item.bufnr) or name
   end
@@ -92,13 +95,13 @@ local pick_prepend_position = function(item)
   return item
 end
 
-local pick_clear_namespace = function(buf_id, ns)
+H.pick_clear_namespace = function(buf_id, ns)
   pcall(vim.api.nvim_buf_clear_namespace, buf_id, ns, 0, -1)
 end
 
-local pick_validate_scope = function(...) return pick_validate_one_of('scope', ...) end
+H.pick_validate_scope = function(...) return H.pick_validate_one_of('scope', ...) end
 
-local pick_get_config = function()
+H.pick_get_config = function()
   return vim.tbl_deep_extend(
     'force',
     (require('mini.pick') or {}).config or {},
@@ -106,11 +109,11 @@ local pick_get_config = function()
   )
 end
 
-local show_with_icons = function(buf_id, items, query)
+H.show_with_icons = function(buf_id, items, query)
   require('mini.pick').default_show(buf_id, items, query, { show_icons = true })
 end
 
-local lsp_make_on_list = function(source, opts)
+H.lsp_make_on_list = function(source, opts)
   local is_symbol = source == 'document_symbol' or source == 'workspace_symbol'
 
   local ok, miniicons = pcall(require, 'mini.icons')
@@ -134,35 +137,35 @@ local lsp_make_on_list = function(source, opts)
   end
 
   local process = function(items)
-    if source ~= 'document_symbol' then items = vim.tbl_map(pick_prepend_position, items) end
+    if source ~= 'document_symbol' then items = vim.tbl_map(H.pick_prepend_position, items) end
     -- Input `item.kind` is a string (resolved before `on_list`). Account for
     -- possibly tweaked symbol map (like after `MiniIcons.tweak_lsp_kind`).
-    local kind_map = get_symbol_kind_map()
+    local kind_map = H.get_symbol_kind_map()
     for _, item in ipairs(items) do
       item.kind_orig, item.kind = item.kind, kind_map[item.kind]
       add_decor_data(item)
       item.kind_orig = nil
     end
-    table.sort(items, lsp_items_compare)
+    table.sort(items, H.lsp_items_compare)
     return items
   end
 
   local minipick = require('mini.pick')
-  local show_explicit = pick_get_config().source.show
+  local show_explicit = H.pick_get_config().source.show
   local show = function(buf_id, items_to_show, query)
     if show_explicit ~= nil then return show_explicit(buf_id, items_to_show, query) end
     if is_symbol then
       minipick.default_show(buf_id, items_to_show, query)
 
       -- Highlight whole lines with pre-computed symbol kind highlight groups
-      pick_clear_namespace(buf_id, ns_id.pickers)
+      H.pick_clear_namespace(buf_id, H.ns_id.pickers)
       for i, item in ipairs(items_to_show) do
-        pick_highlight_line(buf_id, i, item.hl, 199)
+        H.pick_highlight_line(buf_id, i, item.hl, 199)
       end
       return
     end
     -- Show with icons as the non-symbol scopes should have paths
-    return show_with_icons(buf_id, items_to_show, query)
+    return H.show_with_icons(buf_id, items_to_show, query)
   end
 
   local choose = function(item)
@@ -181,11 +184,11 @@ local lsp_make_on_list = function(source, opts)
     items = process(items)
 
     local source_opts = { name = string.format('LSP (%s)', source), show = show, choose = choose }
-    return pick_start(items, { source = source_opts }, opts)
+    return H.pick_start(items, { source = source_opts }, opts)
   end
 end
 
-local get_fd = function()
+H.get_fd = function()
   local fd
   if vim.fn.executable('fd') == 1 then
     fd = 'fd'
@@ -195,9 +198,9 @@ local get_fd = function()
   return fd
 end
 
-local make_items_func = function(hidden, no_ignore)
+H.make_items_func = function(hidden, no_ignore)
   local minipick = require('mini.pick')
-  local fd = get_fd()
+  local fd = H.get_fd()
   local items_func
 
   if fd then
@@ -219,7 +222,7 @@ local make_items_func = function(hidden, no_ignore)
   return items_func
 end
 
-local make_name = function(hidden, no_ignore)
+H.make_folders_name = function(hidden, no_ignore)
   local prefix
   if hidden and no_ignore then
     prefix = 'Hidden and ignored f'
@@ -233,11 +236,11 @@ local make_name = function(hidden, no_ignore)
   return prefix .. 'olders'
 end
 
-local folders = function(local_opts, opts)
+M.folders = function(local_opts, opts)
   local hidden, no_ignore = local_opts.hidden, local_opts.no_ignore
 
-  local items_func = make_items_func(hidden, no_ignore)
-  local name = make_name(hidden, no_ignore)
+  local items_func = H.make_items_func(hidden, no_ignore)
+  local name = H.make_folders_name(hidden, no_ignore)
 
   local minipick = require('mini.pick')
   local minifiles = require('mini.files')
@@ -261,29 +264,26 @@ local folders = function(local_opts, opts)
   }))
 end
 
-local lsp = function(local_opts, opts)
+M.lsp = function(local_opts, opts)
   local_opts = vim.tbl_deep_extend('force', { scope = nil, symbol_query = '' }, local_opts or {})
   if local_opts.scope == nil then
-    vim.ui.select(allowed_scopes, { prompt = 'Select scope: ' }, function(scope)
+    vim.ui.select(H.allowed_scopes, { prompt = 'Select scope: ' }, function(scope)
       if scope == nil then return end
       local_opts.scope = scope
     end)
   end
   if local_opts.scope == nil then return end
 
-  local scope = pick_validate_scope(local_opts, allowed_scopes, 'lsp')
+  local scope = H.pick_validate_scope(local_opts, H.allowed_scopes, 'lsp')
 
   if scope == 'references' then
-    return vim.lsp.buf[scope](nil, { on_list = lsp_make_on_list(local_opts.scope, opts) })
+    return vim.lsp.buf[scope](nil, { on_list = H.lsp_make_on_list(local_opts.scope, opts) })
   end
   if scope == 'workspace_symbol' then
     local query = tostring(local_opts.symbol_query)
-    return vim.lsp.buf[scope](query, { on_list = lsp_make_on_list(local_opts.scope, opts) })
+    return vim.lsp.buf[scope](query, { on_list = H.lsp_make_on_list(local_opts.scope, opts) })
   end
-  vim.lsp.buf[scope]({ on_list = lsp_make_on_list(local_opts.scope, opts) })
+  vim.lsp.buf[scope]({ on_list = H.lsp_make_on_list(local_opts.scope, opts) })
 end
 
-return {
-  folders = folders,
-  lsp = lsp,
-}
+return M

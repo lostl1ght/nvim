@@ -1,30 +1,28 @@
----@class KSDefaultConfig
+---@class KeymapSwitch
+---@field setup fun(opts:keymap_switch.Config) Setup keymap-switch.nvim
+---@field condition fun():boolean Status line condition
+---@field provider fun():string Status line provider
+local M = {}
+local H = {}
+
+---@class keymap_switch.DefaultConfig
 ---@field keymap string
 ---@field iminsert integer
 ---@field imsearch integer
 ---@field format fun(keymap_name:string):string
-local C = {
-  iminsert = 0,
-  imsearch = -1,
-  format = function(keymap_name) return keymap_name end,
-}
-
-local H = {}
+local C = {}
+C.iminsert = 0
+C.imsearch = -1
+C.format = function(keymap_name) return keymap_name end
 
 H.switch_nsx = function() vim.o.iminsert = bit.bxor(vim.o.iminsert, 1) end
 
 H.key = vim.api.nvim_replace_termcodes('<c-^>', true, true, true)
 H.switch_ic = function() vim.api.nvim_feedkeys(H.key, 'n', false) end
 
----@class KSConfig
+---@class keymap_switch.Config
 ---@field keymap string
 ---@field format (fun(keymap_name:string):string)|nil
-
----@class KeymapSwitch
----@field setup fun(opts:KSConfig) Setup keymap-switch.nvim
----@field condition fun():boolean Status line condition
----@field provider fun():string Status line provider
-local M = {}
 
 M.setup = function(opts)
   vim.validate({

@@ -1,6 +1,7 @@
 local M = {}
+local H = {}
 
-local get_signs = function(buf, lnum)
+H.get_signs = function(buf, lnum)
   local signs = {}
 
   -- Get extmark signs
@@ -26,7 +27,7 @@ local get_signs = function(buf, lnum)
   return signs
 end
 
-local icon = function(sign, len)
+H.icon = function(sign, len)
   sign = sign or {}
   len = len or 1
   local text = vim.fn.strcharpart(sign.text or '', 0, len)
@@ -45,7 +46,7 @@ M.get = function()
   if vim.v.virtnum ~= 0 then return '' end
 
   if show_signs then
-    local signs = get_signs(buf, vim.v.lnum)
+    local signs = H.get_signs(buf, vim.v.lnum)
 
     local git, other, dap
     for _, s in ipairs(signs) do
@@ -58,9 +59,9 @@ M.get = function()
       end
     end
 
-    components[2] = icon(git)
-    components[3] = icon(other)
-    components[5] = icon(dap)
+    components[2] = H.icon(git)
+    components[3] = H.icon(other)
+    components[5] = H.icon(dap)
   end
 
   return table.concat(components, '')
