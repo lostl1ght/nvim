@@ -38,7 +38,7 @@ end
 ---@param items any[]
 ---@param opts util.SelectOpts
 ---@param on_choice any
-H.ui_select = function(items, opts, on_choice)
+M.ui_select = function(items, opts, on_choice)
   local itemx_ext = {}
   local format_item = opts.format_item or H.item_to_string
   for idx, item in ipairs(items) do
