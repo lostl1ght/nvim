@@ -35,6 +35,7 @@ now(function()
     },
     query = {
       [''] = 'rainbow-delimiters',
+      ['latex'] = 'rainbow-delimiters',
     },
     priority = {
       [''] = 250,

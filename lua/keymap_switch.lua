@@ -25,14 +25,13 @@ H.switch_ic = function() vim.api.nvim_feedkeys(H.key, 'n', false) end
 ---@field format (fun(keymap_name:string):string)|nil
 
 M.setup = function(opts)
-  vim.validate({
-    keymap = { opts.keymap, 'string' },
-    format = {
-      opts.format,
-      function(v) return v == nil or type(v) == 'function' end,
-      "'format' must be a function with 1 string argument",
-    },
-  })
+  vim.validate('keymap', opts.keymap, 'string')
+  vim.validate(
+    'format',
+    opts.format,
+    function(v) return v == nil or type(v) == 'function' end,
+    "'format' must be a function with 1 string argument"
+  )
 
   C.keymap = opts.keymap
   C.format = opts.format or C.format
