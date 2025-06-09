@@ -1,3 +1,5 @@
+if true then return end
+
 local minideps = require('mini.deps')
 local add, later = minideps.add, minideps.later
 
