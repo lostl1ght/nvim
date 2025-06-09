@@ -7,8 +7,8 @@ now(function()
 end)
 
 later(function()
-  add({ source = 'echasnovski/mini.ai' })
-  require('mini.ai').setup()
+  add({ source = 'echasnovski/mini.move' })
+  require('mini.move').setup()
 end)
 
 later(function()
@@ -29,6 +29,11 @@ later(function()
 end)
 
 later(function()
+  add({ source = 'folke/ts-comments.nvim' })
+  require('ts-comments').setup()
+end)
+
+later(function()
   add({ source = 'echasnovski/mini.bufremove' })
   require('mini.bufremove').setup()
   vim.api.nvim_create_user_command('Bdelete', function(data)
@@ -41,34 +46,4 @@ later(function()
     local buf_id = vim.fn.bufnr(name)
     require('mini.bufremove').unshow(buf_id)
   end, { nargs = '?', desc = 'Mini bunshow', complete = 'buffer' })
-end)
-
-later(function()
-  add({ source = 'echasnovski/mini.comment', depends = { 'folke/ts-comments.nvim' } })
-  require('ts-comments').setup()
-  require('mini.comment').setup({ options = { ignore_blank_line = true } })
-end)
-
-later(function()
-  add({ source = 'echasnovski/mini.move' })
-  require('mini.move').setup()
-end)
-
-later(function()
-  add({ source = 'echasnovski/mini.surround' })
-  local prefix = 's'
-  require('mini.surround').setup({
-    mappings = {
-      add = prefix .. 'a',
-      delete = prefix .. 'd',
-      find = prefix .. 'f',
-      find_left = prefix .. 'F',
-      highlight = prefix .. 'h',
-      replace = prefix .. 'r',
-      update_n_lines = prefix .. 'n',
-
-      suffix_last = 'l',
-      suffix_next = 'n',
-    },
-  })
 end)

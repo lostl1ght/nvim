@@ -1,3 +1,5 @@
+if vim.g.vscode then return end
+
 local au = vim.api.nvim_create_autocmd
 
 ---@param name string

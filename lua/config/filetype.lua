@@ -1,3 +1,5 @@
+if vim.g.vscode then return end
+
 vim.treesitter.language.register('bash', { 'sh', 'zsh' })
 vim.filetype.add({
   extension = {

@@ -43,3 +43,5 @@ now(function()
     },
   })
 end)
+
+now(function() require('lightbulb').setup_au() end)

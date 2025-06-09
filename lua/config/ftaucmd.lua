@@ -1,3 +1,5 @@
+if vim.g.vscode then return end
+
 ---@param ft string|string[]
 ---@param cb function
 local function au(ft, cb)

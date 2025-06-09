@@ -1,6 +1,13 @@
 local cache_dir = vim.fn.stdpath('cache')
 
 local o = vim.o
+
+if not vim.g.vscode then
+  o.foldtext = "v:lua.require'foldtext'.get()"
+  o.statuscolumn = "%!v:lua.require'statuscolumn'.get()"
+  o.titlestring = "%{%v:lua.require'titlestring'.get()%}"
+end
+
 o.background = 'dark'
 o.backup = false
 o.backupdir = cache_dir .. '/backup'
@@ -17,7 +24,6 @@ o.fillchars = 'diff:╱'
 o.foldcolumn = 'auto'
 o.foldlevel = 99
 o.foldlevelstart = 99
-o.foldtext = "v:lua.require'foldtext'.get()"
 o.guifont = 'JetBrainsMono Nerd Font Mono:h09'
 o.history = 2000
 o.ignorecase = true
@@ -46,7 +52,6 @@ o.showmode = false
 o.splitkeep = 'cursor'
 o.shiftround = true
 o.signcolumn = 'yes'
-o.statuscolumn = "%!v:lua.require'statuscolumn'.get()"
 o.smartcase = true
 o.smartindent = true
 o.swapfile = false
@@ -54,7 +59,6 @@ o.tabstop = 4
 o.termguicolors = true
 o.timeoutlen = 500
 o.title = true
-o.titlestring = "%{%v:lua.require'titlestring'.get()%}"
 o.undodir = cache_dir .. '/undo'
 o.undofile = true
 o.undolevels = 10000

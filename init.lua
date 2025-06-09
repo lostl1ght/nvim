@@ -47,13 +47,19 @@ end
 
 minideps.setup({ path = { package = path_package } })
 vim.g.border = 'single'
-vim.g.notify_toggle = true
+vim.g.notify_toggle = not vim.g.vscode
 
 local now = minideps.now
 for f in vim.fs.dir(vim.fn.stdpath('config') .. '/lua/config') do
   now(function() require('config.' .. vim.fn.fnamemodify(f, ':r')) end)
 end
 
-for f in vim.fs.dir(vim.fn.stdpath('config') .. '/lua/plugin') do
-  require('plugin.' .. vim.fn.fnamemodify(f, ':r'))
+for f in vim.fs.dir(vim.fn.stdpath('config') .. '/lua/plugin/universal') do
+  require('plugin.universal.' .. vim.fn.fnamemodify(f, ':r'))
+end
+
+if not vim.g.vscode then
+  for f in vim.fs.dir(vim.fn.stdpath('config') .. '/lua/plugin/nocode') do
+    require('plugin.nocode.' .. vim.fn.fnamemodify(f, ':r'))
+  end
 end

@@ -1,3 +1,5 @@
+if vim.g.vscode then return end
+
 local s = vim.diagnostic.severity
 vim.diagnostic.config({
   signs = {
