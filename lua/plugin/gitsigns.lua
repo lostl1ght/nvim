@@ -38,7 +38,7 @@ later(function()
       map('n', '[C', function() gs.nav_hunk('first') end, { desc = 'Hunk first' })
 
       -- Actions
-      local prefix = 'gs'
+      local prefix = 'gz'
       map('n', prefix .. 's', gs.stage_hunk, { desc = 'Toggle stage hunk' })
       map('n', prefix .. 'r', gs.reset_hunk, { desc = 'Reset hunk' })
       map(

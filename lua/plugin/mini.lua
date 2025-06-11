@@ -56,7 +56,7 @@ end)
 
 later(function()
   add({ source = 'echasnovski/mini.surround' })
-  local prefix = 's'
+  local prefix = 'gs'
   require('mini.surround').setup({
     mappings = {
       add = prefix .. 'a',
