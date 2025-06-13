@@ -32,6 +32,7 @@ later(function()
       python = { 'ruff_format' },
       rust = { 'rustfmt' },
       tex = { 'latexindent' },
+      typst = { 'prettypst' },
     },
     default_format_opts = {
       async = true,
