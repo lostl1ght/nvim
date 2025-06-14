@@ -49,6 +49,7 @@ now(function()
       {
         { mode = 'n', keys = 'gf', desc = '+file' },
         { mode = 'n', keys = 'gr', desc = '+code' },
+        { mode = 'n', keys = 'gs', desc = '+surround' },
       },
     },
     window = { delay = 500, config = { border = vim.g.border } },
