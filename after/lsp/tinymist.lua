@@ -1,8 +1,5 @@
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('TinyMistPinCmd', {}),
-  callback = function(ev)
-    local client = vim.lsp.get_client_by_id(ev.data.client_id)
-    if not client or client.name ~= 'tinymist' then return end
+return {
+  on_attach = function(client, bufnr)
     local name = 'Tinymist'
     local commands = {
       pin = function()
@@ -20,7 +17,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         }, { bufnr = vim.fn.bufnr() })
       end,
     }
-    vim.api.nvim_buf_create_user_command(ev.buf, name, function(data)
+    vim.api.nvim_buf_create_user_command(bufnr, name, function(data)
       local prefix = require('util').parse(name, data.args)
       commands[prefix]()
     end, {
@@ -29,7 +26,4 @@ vim.api.nvim_create_autocmd('LspAttach', {
       complete = function(_, line) return require('util').complete(line, name, commands) end,
     })
   end,
-})
-return {
-  on_attach = function(_, _) end,
 }
