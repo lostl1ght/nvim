@@ -9,19 +9,7 @@ now(function()
       post_checkout = function() require('nvim-treesitter').update(nil, { summary = true }) end,
     },
   })
-  --stylua: ignore
-  require('nvim-treesitter').install({
-    'bash', 'c', 'lua', 'luadoc', 'luap',
-    'markdown', 'markdown_inline', 'query',
-    'regex', 'vim', 'vimdoc',
-
-    'gitattributes', 'gitcommit', 'gitignore',
-    'git_config', 'git_rebase', 'json', 'toml',
-    'yaml',
-
-    'go', 'gomod', 'gosum', 'gowork',
-    'python', 'rust',
-  }, { summary = false })
+  -- TSInstall bash c lua luadoc luap markdown markdown_inline query regex vim vimdoc gitattributes gitcommit gitignore git_config git_rebase json toml yaml go gomod gosum gowork python rust
 end)
 
 now(function()
