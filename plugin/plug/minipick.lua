@@ -21,10 +21,7 @@ later(function()
     minipick.builtin.buffers({}, {
       source = {
         show = function(buf_id, items, query)
-          vim.tbl_map(function(i)
-            local path = vim.uv.fs_realpath(vim.fn.fnamemodify(i.text, ':p'))
-            if path then i.text = vim.fn.fnamemodify(path, ':~:.') end
-          end, items)
+          vim.tbl_map(function(i) i.text = vim.fn.fnamemodify(i.text, ':~:.') end, items)
           minipick.default_show(buf_id, items, query, {
             show_icons = true,
             icons = { none = icons.none },
