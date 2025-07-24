@@ -13,6 +13,9 @@ later(function()
   set('n', 'grs', '<cmd>Trouble symbols toggle<cr>', {
     desc = 'Symbols',
   })
+  set('n', 'grq', '<cmd>Trouble quickfix toggle<cr>', {
+    desc = 'Quickfix',
+  })
   require('trouble').setup({
     modes = {
       diagnostics = {

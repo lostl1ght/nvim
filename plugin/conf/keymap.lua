@@ -134,4 +134,5 @@ set('n', '[E', function() require('goto').first() end, {
 pcall(vim.keymap.del, { 'i', 's' }, '<tab>')
 pcall(vim.keymap.del, 'n', 'grr')
 pcall(vim.keymap.del, 'n', 'gri')
+pcall(vim.keymap.del, 'n', 'grt')
 pcall(vim.keymap.del, { 'i', 's' }, '<c-s>')
