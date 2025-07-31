@@ -9,7 +9,7 @@ now(function()
       post_checkout = function() require('nvim-treesitter').update(nil, { summary = true }) end,
     },
   })
-  -- TSInstall bash c lua luadoc luap markdown markdown_inline query regex vim vimdoc gitattributes gitcommit gitignore git_config git_rebase json toml yaml go gomod gosum gowork python rust
+  -- TSInstall bash c lua luadoc luap markdown markdown_inline query regex vim vimdoc gitattributes gitcommit gitignore git_config git_rebase json toml yaml go gomod gosum gowork python rust make
 end)
 
 now(function()
