@@ -32,7 +32,6 @@ if not vim.uv.fs_stat(deps_path) then
   vim.cmd('packadd mini.deps')
   vim.cmd('helptags ALL')
   vim.api.nvim_echo({ { 'Installed `mini.deps`', 'MoreMsg' } }, true, {})
-  vim.g.bootstrapping = true
 end
 
 local ok, minideps = pcall(require, 'mini.deps')

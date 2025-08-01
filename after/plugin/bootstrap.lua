@@ -1,4 +1,4 @@
-if vim.g.bootstrapping then
+if vim.g.bootstrap then
   vim.cmd('MasonInstall tree-sitter-cli')
 
   -- stylua: ignore
@@ -11,5 +11,5 @@ if vim.g.bootstrapping then
 
   vim.cmd('KanagawaCompile')
 
-  vim.g.bootstrapping = false
+  vim.g.bootstrap = false
 end

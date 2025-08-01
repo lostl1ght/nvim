@@ -1,2 +1,2 @@
 #!/bin/env bash
-nvim --headless --cmd 'lua vim.g.bootstrapping = true' -c qall
+nvim --headless --cmd 'lua vim.g.bootstrap = true' -c qall
