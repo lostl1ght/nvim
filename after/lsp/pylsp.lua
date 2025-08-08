@@ -5,8 +5,8 @@ return {
   settings = {
     pylsp = {
       plugins = {
-        autopep8 = {
-          enabled = false,
+        ruff = {
+          enabled = true,
         },
       },
     },
