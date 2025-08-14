@@ -1,5 +1,5 @@
 local minideps = require('mini.deps')
-local add, now = minideps.add, minideps.now
+local add, now, later = minideps.add, minideps.now, minideps.later
 
 now(function()
   add({
@@ -42,3 +42,5 @@ now(function()
     },
   })
 end)
+
+later(function() require('lightbulb').setup_au() end)
