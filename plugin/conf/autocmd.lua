@@ -66,6 +66,19 @@ au('BufEnter', {
   desc = 'Set treesitter fold expr',
 })
 
+au({ 'BufRead', 'BufNewFile' }, {
+  callback = function(ev)
+    local f = vim.fn.fnamemodify(ev.file, ':~:.')
+    if vim.bo[ev.buf].buftype == '' and vim.fn.filereadable(ev.file) == 1 and f ~= ev.file then
+      vim.cmd('silent file ' .. f)
+      if not vim.bo[ev.buf].readonly then vim.cmd('silent! write!') end
+      vim.cmd('silent! edit!')
+    end
+  end,
+  group = aug('RelativeFile'),
+  desc = 'Make file name relative',
+})
+
 au('FileType', {
   group = aug('TreesitterIndent'),
   callback = function()
