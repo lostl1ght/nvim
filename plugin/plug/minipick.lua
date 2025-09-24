@@ -3,7 +3,6 @@ local add, later = minideps.add, minideps.later
 
 later(function()
   add({ source = 'echasnovski/mini.pick', depends = { 'echasnovski/mini.icons' } })
-  vim.ui.select = require('select').ui_select
 
   local set = vim.keymap.set
   set('n', 'gff', '<cmd>Pick files<cr>', { desc = 'Files' })
@@ -57,4 +56,6 @@ later(function()
   for name, func in pairs(require('pickers')) do
     minipick.registry[name] = func
   end
+
+  vim.ui.select = require('select').ui_select
 end)
