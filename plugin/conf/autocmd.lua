@@ -49,7 +49,7 @@ au('FileType', {
 ---@param query string
 ---@return boolean
 local check_query = function(ft, query)
-  return pcall(vim.treesitter.get_parser) and vim.treesitter.query.get(ft, query) ~= nil
+  return vim.treesitter.language.get_lang(ft) ~= nil and vim.treesitter.query.get(ft, query) ~= nil
 end
 
 au('BufEnter', {
