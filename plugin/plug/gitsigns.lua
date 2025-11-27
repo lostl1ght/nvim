@@ -6,6 +6,9 @@ later(function()
   require('gitsigns').setup({
     attach_to_untracked = true,
     current_line_blame = true,
+    current_line_blame_opts = {
+      virt_text_pos = 'right_align',
+    },
     on_attach = function(bufnr)
       local gs = require('gitsigns')
       ---@param mode string|string[]

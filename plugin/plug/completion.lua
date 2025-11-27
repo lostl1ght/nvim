@@ -58,9 +58,14 @@ later(function()
   })
 
   require('blink-cmp').setup({
-    signature = { enabled = true },
+    signature = { enabled = true, window = { border = vim.g.border } },
     fuzzy = { prebuilt_binaries = { download = false } },
-    completion = { accept = { auto_brackets = { enabled = true } } },
+    completion = {
+      accept = { auto_brackets = { enabled = true } },
+      documentation = { window = { border = vim.g.border } },
+      ghost_text = { enabled = true, show_with_menu = false },
+      menu = { auto_show = true },
+    },
     sources = { providers = { buffer = { min_keyword_length = 4 } } },
     keymap = {
       preset = 'default',

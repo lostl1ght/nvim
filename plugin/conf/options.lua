@@ -6,7 +6,7 @@ o.backup = false
 o.backupdir = cache_dir .. '/backup'
 o.breakindent = true
 o.breakindentopt = 'shift:2,min:20'
-o.cmdheight = 1
+o.cmdheight = 0
 o.completeopt = 'menu,menuone,noselect'
 o.cursorline = true
 o.clipboard = 'unnamedplus'
@@ -74,3 +74,5 @@ g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.markdown_recommended_style = 0
 g.tex_flavor = 'latex'
+
+require('vim._extui').enable({})
