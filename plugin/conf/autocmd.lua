@@ -113,13 +113,6 @@ au('LspAttach', {
         group = group,
         desc = 'Enable inlay hints on insert leave',
       })
-
-      --[[
-      vim.defer_fn(function()
-        local mode = vim.api.nvim_get_mode().mode
-        vim.lsp.inlay_hint.enable(mode == 'n' or mode == 'v', { bufnr = buf_id })
-      end, 500)
-      ]]
     end
 
     if client.server_capabilities.documentHighlightProvider then
@@ -138,19 +131,28 @@ au('LspAttach', {
       })
     end
 
-    --[[
-    -- FIXME: breaks neovim
-    if client.server_capabilities.codeLensProvider then
-      local group = aug('LspCodeLens', false)
-      au({ 'InsertLeave', 'BufEnter' }, {
-        callback = function(d) vim.lsp.codelens.refresh({ bufnr = d.buf }) end,
+    if client.server_capabilities.hoverProvider then
+      vim.keymap.set('n', 'K', function() vim.lsp.buf.hover({ border = vim.g.border }) end, {
         buffer = buf_id,
-        group = group,
-        desc = 'Refresh code lens'
+        desc = 'LSP hover',
       })
     end
-    ]]
   end,
   group = aug('LspOptions'),
   desc = 'Setup LSP highlight & inlay hints',
+})
+
+au('LspProgress', {
+  callback = function(ev)
+    local value = ev.data.params.value
+    if value.kind == 'begin' then
+      vim.api.nvim_ui_send('\027]9;4;1;0\027\\')
+    elseif value.kind == 'end' then
+      vim.api.nvim_ui_send('\027]9;4;0\027\\')
+    elseif value.kind == 'report' then
+      vim.api.nvim_ui_send(string.format('\027]9;4;1;%d\027\\', value.percentage or 0))
+    end
+  end,
+  group = aug('LspProgress'),
+  desc = 'Show LSP progress as OSC 9;4',
 })
