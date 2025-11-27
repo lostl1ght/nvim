@@ -37,9 +37,9 @@ au('BufRead', {
 })
 
 au('FileType', {
-  callback = function(data)
+  callback = function(ev)
     if vim.bo.buftype ~= '' then return end
-    pcall(vim.treesitter.start, data.buf)
+    pcall(vim.treesitter.start, ev.buf)
   end,
   group = aug('TreesitterHighlight'),
   desc = 'Enable treesitter highlight',
@@ -91,10 +91,10 @@ au('FileType', {
 })
 
 au('LspAttach', {
-  callback = function(data)
-    local client = vim.lsp.get_client_by_id(data.data.client_id)
+  callback = function(ev)
+    local client = vim.lsp.get_client_by_id(ev.data.client_id)
     if not client then return end
-    local buf_id = data.buf
+    local buf_id = ev.buf
     if client.server_capabilities.inlayHintProvider then
       local group = aug('LspInlayHints', false)
 
@@ -142,17 +142,49 @@ au('LspAttach', {
   desc = 'Setup LSP highlight & inlay hints',
 })
 
+--[[
+-- TODO: wait until extui can replace messages
+local token_to_id = {}
+local echo_func = {
+  report = function(text, percent, token)
+    vim.api.nvim_echo({ { text } }, false, {
+      kind = 'progress',
+      status = 'running',
+      percent = percent,
+      id = token_to_id[token],
+    })
+  end,
+  begin = function(text, percent, token)
+    token_to_id[token] = vim.api.nvim_echo({ { text } }, false, {
+      kind = 'progress',
+      status = 'running',
+      percent = percent,
+    })
+  end,
+  ['end'] = function(text, _, token)
+    vim.api.nvim_echo({ { text } }, false, {
+      kind = 'progress',
+      status = 'success',
+      percent = 100,
+      id = token_to_id[token],
+    })
+    token_to_id[token] = nil
+  end,
+}
+local callback = function(ev)
+  local text, percent, token, kind =
+    ev.data.params.value.title,
+    ev.data.params.value.percentage,
+    ev.data.params.token,
+    ev.data.params.value.kind
+  echo_func[kind](text, percent, token)
+end
+]]
+
 au('LspProgress', {
   callback = function(ev)
-    local value = ev.data.params.value
-    if value.kind == 'begin' then
-      vim.api.nvim_ui_send('\027]9;4;1;0\027\\')
-    elseif value.kind == 'end' then
-      vim.api.nvim_ui_send('\027]9;4;0\027\\')
-    elseif value.kind == 'report' then
-      vim.api.nvim_ui_send(string.format('\027]9;4;1;%d\027\\', value.percentage or 0))
-    end
+    vim.api.nvim_ui_send(('\027]9;4;1;%d\027\\'):format(ev.data.params.value.percentage or 0))
   end,
   group = aug('LspProgress'),
-  desc = 'Show LSP progress as OSC 9;4',
+  desc = 'Show LSP progress',
 })
