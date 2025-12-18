@@ -142,48 +142,9 @@ au('LspAttach', {
   desc = 'Setup LSP highlight & inlay hints',
 })
 
---[[
--- TODO: wait until extui can replace messages
-local token_to_id = {}
-local echo_func = {
-  report = function(text, percent, token)
-    vim.api.nvim_echo({ { text } }, false, {
-      kind = 'progress',
-      status = 'running',
-      percent = percent,
-      id = token_to_id[token],
-    })
-  end,
-  begin = function(text, percent, token)
-    token_to_id[token] = vim.api.nvim_echo({ { text } }, false, {
-      kind = 'progress',
-      status = 'running',
-      percent = percent,
-    })
-  end,
-  ['end'] = function(text, _, token)
-    vim.api.nvim_echo({ { text } }, false, {
-      kind = 'progress',
-      status = 'success',
-      percent = 100,
-      id = token_to_id[token],
-    })
-    token_to_id[token] = nil
-  end,
-}
-local callback = function(ev)
-  local text, percent, token, kind =
-    ev.data.params.value.title,
-    ev.data.params.value.percentage,
-    ev.data.params.token,
-    ev.data.params.value.kind
-  echo_func[kind](text, percent, token)
-end
-]]
-
 au('LspProgress', {
   callback = function(ev)
-    vim.api.nvim_ui_send(('\027]9;4;1;%d\027\\'):format(ev.data.params.value.percentage or 0))
+    vim.api.nvim_echo({ { ev.data.params.value.title, 'NonText' } }, false, {})
   end,
   group = aug('LspProgress'),
   desc = 'Show LSP progress',
