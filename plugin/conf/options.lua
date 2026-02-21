@@ -75,4 +75,4 @@ g.loaded_ruby_provider = 0
 g.markdown_recommended_style = 0
 g.tex_flavor = 'latex'
 
-require('vim._extui').enable({})
+require('vim._core.ui2').enable({})
