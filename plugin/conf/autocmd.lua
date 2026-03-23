@@ -137,15 +137,23 @@ au('LspAttach', {
         desc = 'LSP hover',
       })
     end
+
+    au('LspProgress', {
+      callback = function(evl)
+        local value = evl.data.params.value
+        vim.api.nvim_echo({ { value.message or 'done' } }, false, {
+          id = 'lsp',
+          kind = 'progress',
+          title = value.title,
+          status = value.kind ~= 'end' and 'running' or 'success',
+          percent = value.percentage,
+        })
+      end,
+      buffer = buf_id,
+      group = aug('LspProgress'),
+      desc = 'Show LSP progress',
+    })
   end,
   group = aug('LspOptions'),
   desc = 'Setup LSP highlight & inlay hints',
-})
-
-au('LspProgress', {
-  callback = function(ev)
-    vim.api.nvim_echo({ { ev.data.params.value.title, 'NonText' } }, false, {})
-  end,
-  group = aug('LspProgress'),
-  desc = 'Show LSP progress',
 })
