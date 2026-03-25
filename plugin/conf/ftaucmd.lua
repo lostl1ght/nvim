@@ -30,7 +30,7 @@ au({ 'help', 'man' }, function(data)
   vim.fn.win_execute(winid, 'noautocmd wincmd L')
 end)
 
-au({ 'lua', 'tex' }, function() vim.bo.shiftwidth = 2 end)
+au({ 'json', 'lua', 'tex' }, function() vim.bo.shiftwidth = 2 end)
 
 au('noice', function(data)
   local ok, clue = pcall(require, 'mini.clue')

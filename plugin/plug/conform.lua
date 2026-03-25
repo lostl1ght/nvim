@@ -28,6 +28,7 @@ later(function()
       c = { 'clang_format' },
       cpp = { 'clang_format' },
       go = { 'gofumpt', --[['golines',]] 'goimports' },
+      json = { 'jq' },
       lua = { 'stylua' },
       python = { 'ruff_format' },
       rust = { 'rustfmt' },
