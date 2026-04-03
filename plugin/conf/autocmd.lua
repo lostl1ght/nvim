@@ -142,8 +142,9 @@ au('LspAttach', {
       callback = function(evl)
         local value = evl.data.params.value
         vim.api.nvim_echo({ { value.message or 'done' } }, false, {
-          id = 'lsp',
+          id = 'lsp.' .. evl.data.client_id,
           kind = 'progress',
+          source = 'vim.lsp',
           title = value.title,
           status = value.kind ~= 'end' and 'running' or 'success',
           percent = value.percentage,
