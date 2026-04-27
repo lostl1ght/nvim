@@ -51,15 +51,15 @@ end)
 later(function()
   add({
     source = 'saghen/blink.cmp',
+    depends = { 'saghen/blink.lib' },
     hooks = {
-      post_checkout = require('util').build_package({ 'cargo', 'build', '--release' }),
-      post_install = require('util').build_package({ 'cargo', 'build', '--release' }),
+      post_checkout = function() require('blink.cmp').build():wait(60000) end,
+      post_install = function() require('blink.cmp').build():wait(60000) end,
     },
   })
 
   require('blink-cmp').setup({
     signature = { enabled = true, window = { border = vim.g.border } },
-    fuzzy = { prebuilt_binaries = { download = false } },
     completion = {
       accept = { auto_brackets = { enabled = true } },
       documentation = { window = { border = vim.g.border } },

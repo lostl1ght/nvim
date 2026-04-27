@@ -23,14 +23,9 @@ now(function()
     depends = {
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-      'pmizio/typescript-tools.nvim',
-      'nvim-lua/plenary.nvim',
-      'saghen/blink.cmp',
     },
   })
   require('mason-lspconfig').setup({ automatic_enable = { exclude = { 'ruff' } } })
-
-  require('typescript-tools').setup({})
 end)
 
 now(function()
