@@ -1,8 +1,4 @@
-local minideps = require('mini.deps')
-local add, now, later = minideps.add, minideps.now, minideps.later
-
-later(function()
-  add({ source = 'folke/snacks.nvim' })
+safely('later', function()
   require('snacks').setup({
     indent = {},
     input = {},
@@ -32,9 +28,7 @@ later(function()
   })
 end)
 
-now(function()
-  -- add({ source = 'willothy/flatten.nvim' })
-  add({ source = 'lostl1ght/flatten.nvim', checkout = 'develop' })
+safely('now', function()
   require('flatten').setup({
     window = { open = 'smart' },
     callbacks = {

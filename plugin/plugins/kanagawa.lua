@@ -1,8 +1,4 @@
-local minideps = require('mini.deps')
-local add, now = minideps.add, minideps.now
-
-now(function()
-  add({ source = 'rebelot/kanagawa.nvim', depends = { 'echasnovski/mini.icons' } })
+safely('now', function()
   require('kanagawa').setup({
     compile = true,
     undercurl = true,

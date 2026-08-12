@@ -1,9 +1,4 @@
-local minideps = require('mini.deps')
-local add, now = minideps.add, minideps.now
-
-now(function()
-  add({ source = 'rebelot/heirline.nvim', depends = { 'echasnovski/mini.icons' } })
-
+safely('now', function()
   local is_active = function()
     local winid = vim.api.nvim_get_current_win()
     local curwin = tonumber(vim.g.actual_curwin)

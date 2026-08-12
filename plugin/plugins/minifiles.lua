@@ -1,8 +1,4 @@
-local minideps = require('mini.deps')
-local add, now = minideps.add, minideps.now
-
-now(function()
-  add({ source = 'echasnovski/mini.files' })
+safely('now', function()
   require('mini.files').setup({ windows = { preview = true } })
 
   vim.keymap.set('n', 'gft', function()

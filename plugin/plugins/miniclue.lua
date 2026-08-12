@@ -1,8 +1,4 @@
-local minideps = require('mini.deps')
-local add, now = minideps.add, minideps.now
-
-now(function()
-  add({ source = 'echasnovski/mini.clue' })
+safely('now', function()
   local MiniClue = require('mini.clue')
   MiniClue.setup({
     triggers = {

@@ -1,8 +1,4 @@
-local minideps = require('mini.deps')
-local add, later = minideps.add, minideps.later
-
-later(function()
-  add({ source = 'lewis6991/gitsigns.nvim' })
+safely('later', function()
   require('gitsigns').setup({
     attach_to_untracked = true,
     current_line_blame = true,

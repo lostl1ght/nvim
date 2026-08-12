@@ -1,8 +1,4 @@
-local minideps = require('mini.deps')
-local add, later = minideps.add, minideps.later
-
-later(function()
-  add({ source = 'mfussenegger/nvim-lint' })
+safely('later', function()
   require('lint').linters_by_ft = {
     go = { 'golangcilint' },
   }

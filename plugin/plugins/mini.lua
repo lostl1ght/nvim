@@ -1,23 +1,8 @@
-local minideps = require('mini.deps')
-local add, now, later = minideps.add, minideps.now, minideps.later
+safely('now', function() require('mini.icons').setup() end)
 
-now(function()
-  add({ source = 'echasnovski/mini.icons' })
-  require('mini.icons').setup()
-end)
-
-later(function()
-  add({ source = 'echasnovski/mini.ai' })
+safely('later', function()
   require('mini.ai').setup()
-end)
-
-later(function()
-  add({ source = 'echasnovski/mini.align' })
   require('mini.align').setup()
-end)
-
-later(function()
-  add({ source = 'echasnovski/mini.bracketed' })
   require('mini.bracketed').setup({
     diagnostic = { suffix = 'd' },
     comment = { suffix = '' },
@@ -26,10 +11,7 @@ later(function()
     indent = { suffix = '' },
     oldfile = { suffix = '' },
   })
-end)
 
-later(function()
-  add({ source = 'echasnovski/mini.bufremove' })
   require('mini.bufremove').setup()
   vim.api.nvim_create_user_command('Bdelete', function(data)
     local name = vim.fn.bufname(vim.fn.expand(data.args))
@@ -41,21 +23,12 @@ later(function()
     local buf_id = vim.fn.bufnr(name)
     require('mini.bufremove').unshow(buf_id)
   end, { nargs = '?', desc = 'Mini bunshow', complete = 'buffer' })
-end)
 
-later(function()
-  add({ source = 'echasnovski/mini.comment', depends = { 'folke/ts-comments.nvim' } })
   require('ts-comments').setup()
   require('mini.comment').setup({ options = { ignore_blank_line = true } })
-end)
 
-later(function()
-  add({ source = 'echasnovski/mini.move' })
   require('mini.move').setup()
-end)
 
-later(function()
-  add({ source = 'echasnovski/mini.surround' })
   local prefix = 'gs'
   require('mini.surround').setup({
     mappings = {

@@ -1,8 +1,4 @@
-local minideps = require('mini.deps')
-local add, later = minideps.add, minideps.later
-
-later(function()
-  add({ source = 'echasnovski/mini.hipatterns' })
+safely('later', function()
   local cmd = 'Hipatterns'
   local commands = {
     enable = function() require('mini.hipatterns').enable() end,

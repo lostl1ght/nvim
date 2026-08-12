@@ -1,9 +1,4 @@
-local minideps = require('mini.deps')
-local add, later = minideps.add, minideps.later
-
-later(function()
-  add({ source = 'echasnovski/mini.pick', depends = { 'echasnovski/mini.icons' } })
-
+safely('later', function()
   local set = vim.keymap.set
   set('n', 'gff', '<cmd>Pick files<cr>', { desc = 'Files' })
   set('n', 'gfg', '<cmd>Pick grep<cr>', { desc = 'Grep' })

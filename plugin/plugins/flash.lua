@@ -1,9 +1,4 @@
-local minideps = require('mini.deps')
-local add, later = minideps.add, minideps.later
-
-later(function()
-  add({ source = 'folke/flash.nvim' })
-
+safely('later', function()
   require('flash').setup({
     search = {
       exclude = {

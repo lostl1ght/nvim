@@ -1,14 +1,7 @@
 if vim.fn.executable('deno') == 1 then
-  local minideps = require('mini.deps')
-  local add, now, later = minideps.add, minideps.now, minideps.later
-
-  later(function()
-    add({
-      source = 'toppair/peek.nvim',
-      hooks = {
-        post_install = require('util').build_package({ 'deno', 'task', '--quiet', 'build:fast' }),
-      },
-    })
+  safely('later', function()
+    vim.pack.add({ 'https://github.com/toppair/peek.nvim' })
+    -- require('util').build_package({ 'deno', 'task', '--quiet', 'build:fast' })
     require('peek').setup({
       auto_load = false,
       app = vim.fn.has('wsl') == 1 and 'firefox.exe' or 'app',
@@ -16,7 +9,7 @@ if vim.fn.executable('deno') == 1 then
     })
   end)
 
-  now(function()
+  safely('now', function()
     local cmd = 'Peek'
     local commands = {
       open = function() require('peek').open() end,

@@ -1,8 +1,4 @@
-local minideps = require('mini.deps')
-local add, later = minideps.add, minideps.later
-
-later(function()
-  add({ source = 'stevearc/conform.nvim' })
+safely('later', function()
   vim.keymap.set({ 'n', 'x' }, 'grf', function()
     require('conform').format({
       async = true,
@@ -27,7 +23,10 @@ later(function()
       bib = { 'latexindent' },
       c = { 'clang_format' },
       cpp = { 'clang_format' },
-      go = { 'gofumpt', --[['golines',]] 'goimports' },
+      go = {
+        'gofumpt', --[['golines',]]
+        'goimports',
+      },
       json = { 'jq' },
       lua = { 'stylua' },
       python = { 'ruff_format' },

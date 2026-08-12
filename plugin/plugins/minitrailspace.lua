@@ -1,9 +1,5 @@
-local minideps = require('mini.deps')
-local add, later = minideps.add, minideps.later
-
-later(function()
+safely('later', function()
   local option_name = 'autorim_disable'
-  add({ source = 'echasnovski/mini.trailspace' })
   require('mini.trailspace').setup({})
   local function toggle(buf)
     vim.b[buf][option_name] = not vim.b[buf][option_name]

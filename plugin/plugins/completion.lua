@@ -1,9 +1,4 @@
-local minideps = require('mini.deps')
-local add, later = minideps.add, minideps.later
-
-later(function()
-  add({ source = 'windwp/nvim-autopairs' })
-
+safely('later', function()
   local apairs = require('nvim-autopairs')
   local Rule = require('nvim-autopairs.rule')
   local cond = require('nvim-autopairs.conds')
@@ -48,16 +43,7 @@ later(function()
   end
 end)
 
-later(function()
-  add({
-    source = 'saghen/blink.cmp',
-    depends = { 'saghen/blink.lib' },
-    hooks = {
-      post_checkout = function() require('blink.cmp').build():wait(60000) end,
-      post_install = function() require('blink.cmp').build():wait(60000) end,
-    },
-  })
-
+safely('later', function()
   require('blink-cmp').setup({
     signature = { enabled = true, window = { border = vim.g.border } },
     completion = {

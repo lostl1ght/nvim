@@ -1,8 +1,4 @@
-local minideps = require('mini.deps')
-local add, later = minideps.add, minideps.later
-
-later(function()
-  add({ source = 'folke/trouble.nvim' })
+safely('later', function()
   local set = vim.keymap.set
   set('n', 'gd', '<cmd>Trouble lsp<cr>', {
     desc = 'Definitions / references / ...',

@@ -117,7 +117,7 @@ au('LspAttach', {
 
     if client.server_capabilities.documentHighlightProvider then
       local group = aug('LspCursor', false)
-      au({ 'CursorHold', 'InsertLeave', 'BufEnter' }, {
+      au({ 'CursorHold', 'InsertLeave' }, {
         callback = vim.lsp.buf.document_highlight,
         buffer = buf_id,
         group = group,

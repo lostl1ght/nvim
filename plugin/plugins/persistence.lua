@@ -1,8 +1,4 @@
-local minideps = require('mini.deps')
-local add, now, later = minideps.add, minideps.now, minideps.later
-
-later(function()
-  add({ source = 'folke/persistence.nvim' })
+safely('later', function()
   require('persistence').setup({ need = 1 })
 
   local cmd = 'Persistence'
@@ -32,7 +28,7 @@ later(function()
   })
 end)
 
-now(function()
+safely('now', function()
   local set = vim.keymap.set
   set('n', 'gS', '<cmd>Persistence load<cr>', { desc = 'Load session' })
 
