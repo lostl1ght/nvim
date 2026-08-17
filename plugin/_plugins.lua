@@ -1,20 +1,20 @@
 safely('now', function()
   vim.api.nvim_create_autocmd('PackChanged', {
     callback = function(ev)
-      local name, kind = ev.data.spec.name, ev.data.kind
+      local name, kind, active = ev.data.spec.name, ev.data.kind, ev.data.active
       if kind == 'update' or kind == 'install' then
         if name == 'nvim-treesitter' then
-          if not ev.data.active then vim.cmd.packadd('nvim-treesitter') end
+          if not active then vim.cmd.packadd('nvim-treesitter') end
           vim.cmd('TSUpdate')
         end
 
         if name == 'mason.nvim' then
-          if not ev.data.active then vim.cmd.packadd('mason.nvim') end
+          if not active then vim.cmd.packadd('mason.nvim') end
           vim.cmd('MasonUpdate')
         end
 
         if name == 'blink.cmp' then
-          if not ev.data.active then
+          if not active then
             vim.cmd.packadd('blink.lib')
             vim.cmd.packadd('blink.cmp')
           end
@@ -22,6 +22,7 @@ safely('now', function()
         end
       end
     end,
+    desc = 'Post install actions for Pack',
   })
   -- TSInstall bash c lua luadoc luap markdown markdown_inline query regex vim vimdoc gitattributes gitcommit gitignore git_config git_rebase json toml yaml go gomod gosum gowork python rust make
   vim.pack.add({
