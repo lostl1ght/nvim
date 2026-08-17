@@ -1,15 +1,15 @@
-if vim.g.bootstrap then
-  vim.cmd('MasonInstall tree-sitter-cli')
+if not vim.g.bootstrap then return end
 
-  -- stylua: ignore
-  require('nvim-treesitter').install({
-    'bash', 'c', 'lua', 'luadoc', 'luap', 'markdown', 'markdown_inline',
-    'query', 'regex', 'vim', 'vimdoc', 'gitattributes', 'gitcommit',
-    'gitignore', 'git_config', 'git_rebase', 'json', 'toml', 'yaml',
-    'go', 'gomod', 'gosum', 'gowork', 'python', 'rust', 'make'
-  }, { summary = true }):wait(150000)
+vim.cmd('MasonInstall tree-sitter-cli')
 
-  vim.cmd('KanagawaCompile')
+-- stylua: ignore
+require('nvim-treesitter').install({
+  'bash', 'c', 'lua', 'luadoc', 'luap', 'markdown', 'markdown_inline',
+  'query', 'regex', 'vim', 'vimdoc', 'gitattributes', 'gitcommit',
+  'gitignore', 'git_config', 'git_rebase', 'json', 'toml', 'yaml',
+  'go', 'gomod', 'gosum', 'gowork', 'python', 'rust', 'make'
+}, { summary = true }):wait(150000)
 
-  vim.g.bootstrap = false
-end
+vim.cmd('KanagawaCompile')
+
+vim.g.bootstrap = false
