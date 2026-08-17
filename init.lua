@@ -15,5 +15,9 @@ end
 vim.g.border = 'single'
 vim.g.notify_toggle = true
 
-vim.pack.add({ 'https://github.com/nvim-mini/mini.misc' })
+---@param path string
+---@return string
+_G.gh = function(path) return 'https://github.com/' .. path end
+
+vim.pack.add({ gh('nvim-mini/mini.misc') })
 require('mini.misc').setup({ make_global = { 'put', 'safely' } })
