@@ -22,6 +22,7 @@ safely(
       library = {
         { path = 'luvit-meta/library', words = { 'vim%.uv' } },
         { path = 'lazy.nvim', words = { 'Lazy%a' } },
+        { path = 'mini.misc', words = { 'safely' } },
       },
     })
   end
