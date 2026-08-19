@@ -20,4 +20,6 @@ vim.g.notify_toggle = true
 _G.gh = function(path) return 'https://github.com/' .. path end
 
 vim.pack.add({ gh('nvim-mini/mini.misc') })
-require('mini.misc').setup({ make_global = { 'put', 'safely' } })
+require('mini.misc').setup({ make_global = {} })
+_G.put = MiniMisc.put
+_G.safely = MiniMisc.safely
