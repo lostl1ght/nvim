@@ -2,6 +2,8 @@ if not vim.g.bootstrap then return end
 
 vim.cmd('MasonInstall tree-sitter-cli')
 
+require('blink.cmp').build():pwait()
+
 -- stylua: ignore
 require('nvim-treesitter').install({
   'bash', 'c', 'lua', 'luadoc', 'luap', 'markdown', 'markdown_inline',
