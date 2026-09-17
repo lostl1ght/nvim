@@ -11,8 +11,8 @@ au('FileType', {
   desc = "Set 'formatoptions'",
 })
 
-au('TextYankPost', {
-  callback = function() vim.hl.on_yank({ higroup = 'YankHighlight', timeout = 350 }) end,
+au({ 'TextYankPost', 'TextPutPost' }, {
+  callback = function() vim.hl.hl_op({ higroup = 'YankHighlight', timeout = 350 }) end,
   group = aug('YankHighlight'),
   desc = 'Setup yank highlight',
 })
