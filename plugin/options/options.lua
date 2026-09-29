@@ -40,6 +40,7 @@ o.sessionoptions = 'buffers,curdir,tabpages,winsize'
 o.shada = "!,'300,<50,@100,s10,h"
 o.shiftround = true
 o.shiftwidth = 4
+o.showcmdloc = 'statusline'
 o.showtabline = 1
 o.sidescrolloff = 5
 o.shortmess = 'ltToOCFIc'

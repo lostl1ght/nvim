@@ -298,6 +298,11 @@ safely('now', function()
     },
   }
 
+  local ShowCmd = {
+    condition = is_active,
+    provider = '%S ',
+  }
+
   local Macro = {
     condition = is_active,
     provider = function()
@@ -427,6 +432,7 @@ safely('now', function()
     Trunc,
     Filename,
     Align,
+    ShowCmd,
     Macro,
     Keymap,
     FileInfo,
