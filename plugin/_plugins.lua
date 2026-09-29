@@ -26,7 +26,7 @@ safely('now', function()
   })
   -- TSInstall bash c lua luadoc luap markdown markdown_inline query regex vim vimdoc gitattributes gitcommit gitignore git_config git_rebase json toml yaml go gomod gosum gowork python rust make
   vim.pack.add({
-    gh('echasnovski/mini.icons'),
+    gh('nvim-mini/mini.icons'),
     gh('rebelot/kanagawa.nvim'),
     gh('rebelot/heirline.nvim'),
     gh('nvim-treesitter/nvim-treesitter'),
@@ -36,8 +36,8 @@ safely('now', function()
     gh('neovim/nvim-lspconfig'),
     gh('folke/lazydev.nvim'),
     gh('Bilal2453/luvit-meta'),
-    gh('echasnovski/mini.clue'),
-    gh('echasnovski/mini.files'),
+    gh('nvim-mini/mini.clue'),
+    gh('nvim-mini/mini.files'),
     { src = gh('lostl1ght/flatten.nvim'), version = 'develop' },
   })
 end)
@@ -46,18 +46,18 @@ safely(
   'later',
   function()
     vim.pack.add({
-      gh('echasnovski/mini.icons'),
-      gh('echasnovski/mini.pick'),
-      gh('echasnovski/mini.ai'),
-      gh('echasnovski/mini.align'),
-      gh('echasnovski/mini.bracketed'),
-      gh('echasnovski/mini.bufremove'),
+      gh('nvim-mini/mini.icons'),
+      gh('nvim-mini/mini.pick'),
+      gh('nvim-mini/mini.ai'),
+      gh('nvim-mini/mini.align'),
+      gh('nvim-mini/mini.bracketed'),
+      gh('nvim-mini/mini.bufremove'),
       gh('folke/ts-comments.nvim'),
-      gh('echasnovski/mini.comment'),
-      gh('echasnovski/mini.move'),
-      gh('echasnovski/mini.surround'),
-      gh('echasnovski/mini.hipatterns'),
-      gh('echasnovski/mini.trailspace'),
+      gh('nvim-mini/mini.comment'),
+      gh('nvim-mini/mini.move'),
+      gh('nvim-mini/mini.surround'),
+      gh('nvim-mini/mini.hipatterns'),
+      gh('nvim-mini/mini.trailspace'),
       gh('saghen/blink.lib'),
       gh('saghen/blink.cmp'),
       gh('windwp/nvim-autopairs'),
