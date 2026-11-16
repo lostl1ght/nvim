@@ -41,6 +41,14 @@ safely('now', function()
     lsp = 10,
   }
 
+  local Host = {
+    hl = function()
+      if is_active() then return { fg = 'active_fg', bg = 'host' } end
+    end,
+    condition = function() return vim.env.SSH_CONNECTION end,
+    provider = function() return require('vim._core.util').remote_host() end,
+  }
+
   local CTRL_S = vim.api.nvim_replace_termcodes('<C-S>', true, true, true)
   local CTRL_V = vim.api.nvim_replace_termcodes('<C-V>', true, true, true)
   local modes = setmetatable({
@@ -427,6 +435,7 @@ safely('now', function()
         return { fg = 'inactive_fg', bg = 'inactive_bg' }
       end
     end,
+    Host,
     Mode,
     DevInfo,
     Trunc,
@@ -509,6 +518,8 @@ safely('now', function()
       git_plus = get_hl('DiagnosticOk').fg,
       git_delta = get_hl('DiagnosticWarn').fg,
       git_minus = get_hl('DiagnosticError').fg,
+
+      host = get_hl('DiagnosticOk').fg,
 
       mode_normal = get_hl('Function').fg,
       mode_insert = get_hl('String').fg,
