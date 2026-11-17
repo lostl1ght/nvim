@@ -100,7 +100,7 @@ au('LspAttach', {
 
       au('InsertEnter', {
         callback = function() vim.lsp.inlay_hint.enable(false, { bufnr = buf_id }) end,
-        buffer = buf_id,
+        buf = buf_id,
         group = group,
         desc = 'Disable inlay hints on insert enter',
       })
@@ -109,7 +109,7 @@ au('LspAttach', {
         callback = function()
           vim.lsp.inlay_hint.enable(vim.b.inlay_hint_enabled or false, { bufnr = buf_id })
         end,
-        buffer = buf_id,
+        buf = buf_id,
         group = group,
         desc = 'Enable inlay hints on insert leave',
       })
@@ -119,22 +119,78 @@ au('LspAttach', {
       local group = aug('LspCursor', false)
       au({ 'CursorHold', 'InsertLeave' }, {
         callback = vim.lsp.buf.document_highlight,
-        buffer = buf_id,
+        buf = buf_id,
         group = group,
         desc = 'Enable references highlighting',
       })
       au({ 'CursorMoved', 'InsertEnter', 'BufLeave' }, {
         callback = vim.lsp.buf.clear_references,
-        buffer = buf_id,
+        buf = buf_id,
         group = group,
         desc = 'Clear references',
       })
     end
 
+    local set = vim.keymap.set
+
     if client.server_capabilities.hoverProvider then
-      vim.keymap.set('n', 'K', function() vim.lsp.buf.hover({ border = vim.g.border }) end, {
-        buffer = buf_id,
-        desc = 'LSP hover',
+      set('n', 'K', function() vim.lsp.buf.hover({ border = vim.g.border }) end, {
+        buf = buf_id,
+        desc = 'Hover',
+      })
+    end
+    if client.server_capabilities.definitionProvider then
+      set('n', 'gd', function() vim.lsp.buf.definition() end, {
+        buf = buf_id,
+        desc = 'Definition',
+      })
+    end
+    if client.server_capabilities.documentHighlightProvider then
+      vim.keymap.set('n', ']e', function() require('goto').next(vim.v.count1) end, {
+        desc = 'Reference forward',
+        buf = buf_id,
+      })
+      set('n', '[e', function() require('goto').prev(vim.v.count1) end, {
+        desc = 'Reference backward',
+        buf = buf_id,
+      })
+      set('n', ']E', function() require('goto').last() end, {
+        desc = 'Reference last',
+        buf = buf_id,
+      })
+      set('n', '[E', function() require('goto').first() end, {
+        desc = 'Reference first',
+        buf = buf_id,
+      })
+    end
+    if client.server_capabilities.codeActionProvider then
+      set({ 'n', 'x' }, 'gra', vim.lsp.buf.code_action, {
+        desc = 'Code action',
+        buf = buf_id,
+      })
+    end
+    if client.server_capabilities.renameProvider then
+      set('n', 'grn', vim.lsp.buf.rename, {
+        desc = 'Rename',
+        buf = buf_id,
+      })
+    end
+    if client.server_capabilities.referencesProvider then
+      set('n', 'grr', vim.lsp.buf.references, {
+        desc = 'References',
+        buf = buf_id,
+      })
+    end
+    if client.server_capabilities.implementationProvider then
+      set('n', 'gri', vim.lsp.buf.references, {
+        desc = 'Implementation',
+        buf = buf_id,
+      })
+    end
+    if client.server_capabilities.typeDefinitionProvider then
+      set('n', 'grt', vim.lsp.buf.type_definition, {
+        desc = 'Type definition',
+        buf = buf_id,
       })
     end
 
@@ -150,7 +206,7 @@ au('LspAttach', {
           percent = value.percentage,
         })
       end,
-      buffer = buf_id,
+      buf = buf_id,
       group = aug('LspProgress'),
       desc = 'Show LSP progress',
     })

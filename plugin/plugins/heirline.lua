@@ -264,6 +264,13 @@ safely('now', function()
         path = ''
       end
       if file == '' then file = '[No Name]' end
+      if vim.bo.filetype == 'canola' then
+        local dir = require('canola').get_current_dir()
+        if dir then
+          path = vim.fn.fnamemodify(dir, ':~:h')
+          file = ''
+        end
+      end
       self.path = path
       self.file = file
 

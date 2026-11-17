@@ -110,30 +110,14 @@ map_toggle('l', function()
     vim.notify(msg)
   end
 end, 'Virtual lines')
-set('n', 'grn', vim.lsp.buf.rename, {
-  desc = 'Rename',
+set('n', 'grd', vim.diagnostic.setloclist, {
+  desc = 'File diagnostics',
 })
-set({ 'n', 'x' }, 'gra', vim.lsp.buf.code_action, {
-  desc = 'Code action',
-})
-set('i', '<c-s>', vim.lsp.buf.signature_help, {
-  desc = 'Signature help',
-})
-set('n', ']e', function() require('goto').next(vim.v.count1) end, {
-  desc = 'Reference forward',
-})
-set('n', '[e', function() require('goto').prev(vim.v.count1) end, {
-  desc = 'Reference backward',
-})
-set('n', ']E', function() require('goto').last() end, {
-  desc = 'Reference last',
-})
-set('n', '[E', function() require('goto').first() end, {
-  desc = 'Reference first',
+set('n', 'grD', vim.diagnostic.setloclist, {
+  desc = 'Workspace diagnostics',
 })
 pcall(vim.keymap.del, { 'i', 's' }, '<tab>')
 pcall(vim.keymap.del, 'n', 'grr')
 pcall(vim.keymap.del, 'n', 'gri')
 pcall(vim.keymap.del, 'n', 'grt')
 pcall(vim.keymap.del, 'n', 'grx')
-pcall(vim.keymap.del, { 'i', 's' }, '<c-s>')
