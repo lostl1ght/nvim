@@ -1,6 +1,15 @@
-safely('now', function() require('mini.icons').setup() end)
-
 safely('later', function()
+  vim.pack.add({
+    gh('nvim-mini/mini.ai'),
+    gh('nvim-mini/mini.align'),
+    gh('nvim-mini/mini.bracketed'),
+    gh('nvim-mini/mini.bufremove'),
+    gh('folke/ts-comments.nvim'),
+    gh('nvim-mini/mini.comment'),
+    gh('nvim-mini/mini.move'),
+    gh('nvim-mini/mini.surround'),
+  }, { confirm = false })
+
   require('mini.ai').setup()
   require('mini.align').setup()
   require('mini.bracketed').setup({

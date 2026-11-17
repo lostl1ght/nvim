@@ -1,4 +1,6 @@
 safely('later', function()
+  vim.pack.add({ gh('folke/trouble.nvim') }, { confirm = false })
+
   local set = vim.keymap.set
   set('n', 'gd', '<cmd>Trouble lsp<cr>', {
     desc = 'Definitions / references / ...',

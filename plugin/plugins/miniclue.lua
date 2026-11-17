@@ -1,4 +1,6 @@
 safely('now', function()
+  vim.pack.add({ gh('nvim-mini/mini.clue') }, { confirm = false })
+
   local MiniClue = require('mini.clue')
   MiniClue.setup({
     triggers = {

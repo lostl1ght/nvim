@@ -1,4 +1,6 @@
 safely('later', function()
+  vim.pack.add({ gh('folke/persistence.nvim') }, { confirm = false })
+
   require('persistence').setup({ need = 1 })
 
   local cmd = 'Persistence'

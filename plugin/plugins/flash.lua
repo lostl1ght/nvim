@@ -1,4 +1,6 @@
 safely('later', function()
+  vim.pack.add({ gh('folke/flash.nvim') }, { confirm = false })
+
   require('flash').setup({
     search = {
       exclude = {

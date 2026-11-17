@@ -1,4 +1,6 @@
 safely('later', function()
+  vim.pack.add({ gh('lewis6991/gitsigns.nvim') }, { confirm = false })
+
   require('gitsigns').setup({
     attach_to_untracked = true,
     current_line_blame = true,

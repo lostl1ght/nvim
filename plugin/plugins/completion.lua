@@ -1,4 +1,6 @@
 safely('later', function()
+  vim.pack.add({ gh('windwp/nvim-autopairs') }, { confirm = false })
+
   local apairs = require('nvim-autopairs')
   local Rule = require('nvim-autopairs.rule')
   local cond = require('nvim-autopairs.conds')
@@ -43,7 +45,30 @@ safely('later', function()
   end
 end)
 
+safely('now', function()
+  vim.api.nvim_create_autocmd('PackChanged', {
+    callback = function(ev)
+      local name, kind, active = ev.data.spec.name, ev.data.kind, ev.data.active
+      if kind == 'update' or kind == 'install' then
+        if name == 'blink.cmp' then
+          if not active then
+            vim.cmd.packadd('blink.lib')
+            vim.cmd.packadd('blink.cmp')
+          end
+          require('blink.cmp').build()
+        end
+      end
+    end,
+    desc = 'Build blink.cmp',
+  })
+end)
+
 safely('later', function()
+  vim.pack.add({
+    gh('saghen/blink.lib'),
+    gh('saghen/blink.cmp'),
+  }, { confirm = false })
+
   require('blink-cmp').setup({
     signature = { enabled = true, window = { border = vim.g.border } },
     completion = {

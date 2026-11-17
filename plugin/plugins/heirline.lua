@@ -1,4 +1,6 @@
 safely('now', function()
+  vim.pack.add({ gh('rebelot/heirline.nvim') }, { confirm = false })
+
   local is_active = function()
     local winid = vim.api.nvim_get_current_win()
     local curwin = tonumber(vim.g.actual_curwin)

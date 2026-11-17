@@ -1,4 +1,6 @@
 safely('now', function()
+  vim.pack.add({ gh('rebelot/kanagawa.nvim') }, { confirm = false })
+
   require('kanagawa').setup({
     compile = true,
     undercurl = true,

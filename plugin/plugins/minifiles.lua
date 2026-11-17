@@ -1,4 +1,6 @@
 safely('now', function()
+  vim.pack.add({ gh('nvim-mini/mini.files') }, { confirm = false })
+
   require('mini.files').setup({ windows = { preview = true } })
 
   vim.keymap.set('n', 'gft', function()

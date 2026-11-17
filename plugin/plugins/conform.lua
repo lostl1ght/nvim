@@ -1,4 +1,6 @@
 safely('later', function()
+  vim.pack.add({ gh('stevearc/conform.nvim') }, { confirm = false })
+
   vim.keymap.set({ 'n', 'x' }, 'grf', function()
     require('conform').format({
       async = true,

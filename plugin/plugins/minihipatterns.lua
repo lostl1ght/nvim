@@ -1,4 +1,6 @@
 safely('later', function()
+  vim.pack.add({ gh('nvim-mini/mini.hipatterns') }, { confirm = false })
+
   local cmd = 'Hipatterns'
   local commands = {
     enable = function() require('mini.hipatterns').enable() end,
