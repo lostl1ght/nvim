@@ -1,5 +1,5 @@
 safely('now', function()
-  vim.pack.add({ gh('rebelot/kanagawa.nvim') }, { confirm = false })
+  packadd({ 'rebelot/kanagawa.nvim' })
 
   require('kanagawa').setup({
     compile = true,

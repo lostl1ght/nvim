@@ -1,5 +1,5 @@
 safely('later', function()
-  vim.pack.add({ gh('mfussenegger/nvim-lint') }, { confirm = false })
+  packadd({ 'mfussenegger/nvim-lint' })
 
   require('lint').linters_by_ft = {
     go = { 'golangcilint' },

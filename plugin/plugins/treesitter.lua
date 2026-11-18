@@ -12,11 +12,11 @@ safely('now', function()
     desc = 'Update treesitter'
   })
   -- TSInstall bash c lua luadoc luap markdown markdown_inline query regex vim vimdoc gitattributes gitcommit gitignore git_config git_rebase json toml yaml go gomod gosum gowork python rust make
-  vim.pack.add({ gh('nvim-treesitter/nvim-treesitter') }, { confirm = false })
+  packadd({ 'nvim-treesitter/nvim-treesitter' })
 end)
 
 safely('now', function()
-  vim.pack.add({ gh('HiPhish/rainbow-delimiters.nvim') }, { confirm = false })
+  packadd({ 'HiPhish/rainbow-delimiters.nvim' })
 
   local cmd = 'Rainbow'
   local commands = {
@@ -48,7 +48,7 @@ safely('now', function()
 end)
 
 safely('later', function()
-  vim.pack.add({ gh('m-demare/hlargs.nvim') }, { confirm = false })
+  packadd({ 'm-demare/hlargs.nvim' })
   require('hlargs').setup({
     excluded_argnames = {
       usages = {
@@ -60,7 +60,7 @@ safely('later', function()
 end)
 
 safely('later', function()
-  vim.pack.add({ gh('nvim-treesitter/nvim-treesitter-context') }, { confirm = false })
+  packadd({ 'nvim-treesitter/nvim-treesitter-context' })
   vim.keymap.set('n', '\\c', function()
     local tsc = require('treesitter-context')
     tsc.toggle()

@@ -1,5 +1,5 @@
 safely('later', function()
-  vim.pack.add({ gh('folke/snacks.nvim') }, { confirm = false })
+  packadd({ 'folke/snacks.nvim' })
 
   require('snacks').setup({
     indent = {},
@@ -27,7 +27,7 @@ safely('later', function()
 end)
 
 safely('now', function()
-  vim.pack.add({ { src = gh('lostl1ght/flatten.nvim'), version = 'develop' } }, { confirm = false })
+  packadd({ { src = 'lostl1ght/flatten.nvim', version = 'develop' } })
   require('flatten').setup({
     window = { open = 'smart' },
     callbacks = {

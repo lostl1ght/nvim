@@ -1,5 +1,5 @@
 safely('later', function()
-  vim.pack.add({ gh('folke/flash.nvim') }, { confirm = false })
+  packadd({ 'folke/flash.nvim' })
 
   require('flash').setup({
     search = {

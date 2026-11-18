@@ -1,5 +1,5 @@
 safely('later', function()
-  vim.pack.add({ gh('folke/persistence.nvim') }, { confirm = false })
+  packadd({ 'folke/persistence.nvim' })
 
   require('persistence').setup({ need = 1 })
 

@@ -1,5 +1,5 @@
 safely('later', function()
-  vim.pack.add({ gh('windwp/nvim-autopairs') }, { confirm = false })
+  packadd({ 'windwp/nvim-autopairs' })
 
   local apairs = require('nvim-autopairs')
   local Rule = require('nvim-autopairs.rule')
@@ -64,10 +64,7 @@ safely('now', function()
 end)
 
 safely('later', function()
-  vim.pack.add({
-    gh('saghen/blink.lib'),
-    gh('saghen/blink.cmp'),
-  }, { confirm = false })
+  packadd({ 'saghen/blink.lib', 'saghen/blink.cmp' })
 
   require('blink-cmp').setup({
     signature = { enabled = true, window = { border = vim.g.border } },

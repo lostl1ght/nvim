@@ -1,5 +1,5 @@
 safely('later', function()
-  vim.pack.add({ gh('nvim-mini/mini.pick') }, { confirm = false })
+  packadd({ 'nvim-mini/mini.pick' })
 
   local set = vim.keymap.set
   set('n', 'gff', '<cmd>Pick files<cr>', { desc = 'Files' })

@@ -1,4 +1,4 @@
 safely('now', function()
-  vim.pack.add({ gh('nvim-mini/mini.icons') }, { confirm = false })
+  packadd({ 'nvim-mini/mini.icons' })
   require('mini.icons').setup()
 end)

@@ -1,5 +1,5 @@
 safely('later', function()
-  vim.pack.add({ gh('nvim-mini/mini.hipatterns') }, { confirm = false })
+  packadd({ 'nvim-mini/mini.hipatterns' })
 
   local cmd = 'Hipatterns'
   local commands = {

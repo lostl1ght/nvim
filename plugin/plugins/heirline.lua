@@ -1,5 +1,5 @@
 safely('now', function()
-  vim.pack.add({ gh('rebelot/heirline.nvim') }, { confirm = false })
+  packadd({ 'rebelot/heirline.nvim' })
 
   local is_active = function()
     local winid = vim.api.nvim_get_current_win()

@@ -1,5 +1,5 @@
 safely('now', function()
-  vim.pack.add({ gh('nvim-mini/mini.clue') }, { confirm = false })
+  packadd({ 'nvim-mini/mini.clue' })
 
   local MiniClue = require('mini.clue')
   MiniClue.setup({

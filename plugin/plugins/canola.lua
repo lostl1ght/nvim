@@ -9,8 +9,8 @@ safely('now', function()
   }
   vim.g.canola_git = {}
 
-  vim.pack.add({
-    { src = gh('barrettruth/canola.nvim'), version = 'canola' },
-    gh('barrettruth/canola-collection'),
-  }, { confirm = false })
+  packadd({
+    { src = 'barrettruth/canola.nvim', version = 'canola' },
+    'barrettruth/canola-collection',
+  })
 end)

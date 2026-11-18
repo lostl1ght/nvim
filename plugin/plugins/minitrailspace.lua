@@ -1,5 +1,5 @@
 safely('later', function()
-  vim.pack.add({ gh('nvim-mini/mini.trailspace') }, { confirm = false })
+  packadd({ 'nvim-mini/mini.trailspace' })
 
   local option_name = 'autorim_disable'
   require('mini.trailspace').setup({})

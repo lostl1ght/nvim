@@ -1,14 +1,14 @@
 safely('later', function()
-  vim.pack.add({
-    gh('nvim-mini/mini.ai'),
-    gh('nvim-mini/mini.align'),
-    gh('nvim-mini/mini.bracketed'),
-    gh('nvim-mini/mini.bufremove'),
-    gh('folke/ts-comments.nvim'),
-    gh('nvim-mini/mini.comment'),
-    gh('nvim-mini/mini.move'),
-    gh('nvim-mini/mini.surround'),
-  }, { confirm = false })
+  packadd({
+    'nvim-mini/mini.ai',
+    'nvim-mini/mini.align',
+    'nvim-mini/mini.bracketed',
+    'nvim-mini/mini.bufremove',
+    'folke/ts-comments.nvim',
+    'nvim-mini/mini.comment',
+    'nvim-mini/mini.move',
+    'nvim-mini/mini.surround',
+  })
 
   require('mini.ai').setup()
   require('mini.align').setup()

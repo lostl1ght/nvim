@@ -1,5 +1,5 @@
 safely('later', function()
-  vim.pack.add({ gh('stevearc/conform.nvim') }, { confirm = false })
+  packadd({ 'stevearc/conform.nvim' })
 
   vim.keymap.set({ 'n', 'x' }, 'grf', function()
     require('conform').format({

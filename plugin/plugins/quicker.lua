@@ -1,5 +1,5 @@
 safely('later', function()
-  vim.pack.add({ gh('stevearc/quicker.nvim') }, { confirm = false })
+  packadd({ 'stevearc/quicker.nvim' })
 
   local set = vim.keymap.set
   set('n', 'grq', function() require('quicker').toggle() end, { desc = 'Quickfix' })

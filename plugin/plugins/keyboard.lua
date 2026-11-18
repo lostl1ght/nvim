@@ -1,5 +1,5 @@
 safely('later', function()
-  vim.pack.add({ gh('kawre/neotab.nvim') }, { confirm = false })
+  packadd({ 'kawre/neotab.nvim' })
 
   require('neotab').setup({
     pairs = {

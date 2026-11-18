@@ -3,21 +3,16 @@ safely('now', function()
     callback = function(ev)
       local name, kind, active = ev.data.spec.name, ev.data.kind, ev.data.active
       if kind == 'update' or kind == 'install' then
-
         if name == 'mason.nvim' then
           if not active then vim.cmd.packadd('mason.nvim') end
           vim.cmd('MasonUpdate')
         end
-
       end
     end,
     desc = 'Update mason',
   })
 
-  vim.pack.add({
-    gh('neovim/nvim-lspconfig'),
-    gh('williamboman/mason.nvim'),
-  }, { confirm = false })
+  packadd({ 'neovim/nvim-lspconfig', 'williamboman/mason.nvim' })
 
   require('mason').setup({
     ui = {
@@ -26,16 +21,13 @@ safely('now', function()
       height = 0.8,
     },
   })
-  vim.pack.add({ gh('williamboman/mason-lspconfig.nvim') }, { confirm = false })
+  packadd({ 'williamboman/mason-lspconfig.nvim' }, { confirm = false })
 
   require('mason-lspconfig').setup({ automatic_enable = { exclude = { 'ruff' } } })
 end)
 
 safely('now', function()
-  vim.pack.add({
-    gh('folke/lazydev.nvim'),
-    gh('Bilal2453/luvit-meta'),
-  }, { confirm = false })
+  packadd({ 'folke/lazydev.nvim', 'Bilal2453/luvit-meta' })
 
   require('lazydev').setup({
     library = {
