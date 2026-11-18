@@ -5,10 +5,7 @@ local set = vim.keymap.set
 set('t', '<esc><esc>', '<c-\\><c-n>', { desc = 'Escape terminal' })
 set('i', 'ii', '<esc>', { desc = 'Escape isert' })
 set('', '<f1>', '', { remap = true, desc = 'Unmap help' })
-set({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", {
-  expr = true,
-  desc = 'Down but respect wrap',
-})
+set({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, desc = 'Down but respect wrap' })
 set({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, desc = 'Up but respect wrap' })
 set('n', 'x', '"_x', { desc = 'Delete single char without clipboard' })
 set('n', '<c-w>+', function() return vim.v.count1 * 3 .. '<c-w>+' end, {
@@ -113,7 +110,7 @@ end, 'Virtual lines')
 set('n', 'grd', vim.diagnostic.setloclist, {
   desc = 'File diagnostics',
 })
-set('n', 'grD', vim.diagnostic.setloclist, {
+set('n', 'grD', vim.diagnostic.setqflist, {
   desc = 'Workspace diagnostics',
 })
 pcall(vim.keymap.del, { 'i', 's' }, '<tab>')
