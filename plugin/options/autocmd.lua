@@ -140,7 +140,18 @@ au('LspAttach', {
       })
     end
     if client.server_capabilities.definitionProvider then
-      set('n', 'gd', function() vim.lsp.buf.definition() end, {
+      set('n', 'gd', function()
+        vim.lsp.buf.definition({
+          on_list = function(opts)
+            vim.fn.setqflist({}, ' ', {
+              title = opts.title,
+              items = opts.items,
+              context = opts.context,
+            })
+            vim.cmd('botright copen')
+          end,
+        })
+      end, {
         buf = buf_id,
         desc = 'Definition',
       })
