@@ -30,7 +30,6 @@ set('n', 'gV', '"`[" . strpart(getregtype(), 0, 1) . "`]"', {
   desc = 'Visually select changed text',
 })
 set('x', 'g/', '<esc>/\\%V', { silent = false, desc = 'Search inside visual selection' })
-set('n', '<c-s>', '<cmd>write<cr>', { desc = 'Write' })
 
 local prefix = '\\'
 ---@param lhs string
